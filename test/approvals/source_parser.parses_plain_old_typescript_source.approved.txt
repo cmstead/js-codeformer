@@ -1,0 +1,64 @@
+{
+  "body": [
+    {
+      "async": false,
+      "body": {
+        "body": [
+          {
+            "argument": {
+              "left": {
+                "name": "a",
+                "type": "Identifier"
+              },
+              "operator": "+",
+              "right": {
+                "name": "b",
+                "type": "Identifier"
+              },
+              "type": "BinaryExpression"
+            },
+            "type": "ReturnStatement"
+          }
+        ],
+        "type": "BlockStatement"
+      },
+      "expression": false,
+      "generator": false,
+      "id": {
+        "name": "add",
+        "type": "Identifier"
+      },
+      "params": [
+        {
+          "name": "a",
+          "type": "Identifier",
+          "typeAnnotation": {
+            "type": "TSTypeAnnotation",
+            "typeAnnotation": {
+              "type": "TSNumberKeyword"
+            }
+          }
+        },
+        {
+          "name": "b",
+          "type": "Identifier",
+          "typeAnnotation": {
+            "type": "TSTypeAnnotation",
+            "typeAnnotation": {
+              "type": "TSNumberKeyword"
+            }
+          }
+        }
+      ],
+      "returnType": {
+        "type": "TSTypeAnnotation",
+        "typeAnnotation": {
+          "type": "TSNumberKeyword"
+        }
+      },
+      "type": "FunctionDeclaration"
+    }
+  ],
+  "sourceType": "script",
+  "type": "Program"
+}

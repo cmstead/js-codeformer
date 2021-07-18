@@ -1,0 +1,46 @@
+{
+	"name": "js-codeformer",
+	"displayName": "JS CodeFormer",
+	"description": "A code building and refactoring tool",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.58.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:js-codeformer.helloWorld"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "js-codeformer.helloWorld",
+				"title": "Hello World"
+			}
+		]
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"test": "mocha ./test/**/*.test.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "14.x",
+		"@types/vscode": "^1.58.0",
+		"approvals": "^3.0.5",
+		"chai": "^4.3.4",
+		"eslint": "^7.27.0",
+		"glob": "^7.1.7",
+		"mocha": "^8.4.0",
+		"typescript": "^4.3.2",
+		"vscode-test": "^1.5.2"
+	},
+	"dependencies": {
+		"@typescript-eslint/typescript-estree": "^4.28.3",
+		"espree": "^8.0.0",
+		"estraverse": "^5.2.0"
+	}
+}
