@@ -26,7 +26,11 @@
     "aliases": [
         {
             "name": "push",
-            "command": "git push"
+            "command": "gittey commit; git push"
+        },
+        {
+            "name": "pull",
+            "command": "gittey commit; git pull"
         }
     ],
     "collaborators": [
