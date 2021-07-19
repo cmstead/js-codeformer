@@ -1,24 +1,30 @@
 const vscode = require('vscode');
 const parser = require('./modules/parser/parser');
 const nodePath = require('./modules/node-path');
+const { transformSelectionToLocation } = require('./modules/code-range-transforms');
 
 function activate(context) {
 
-	let disposable = vscode.commands.registerCommand('cmstead.js-codeformer.helloWorld', function () {
+	function prepareActionSetup(vscode) {
 		const activeTextEditor = vscode.window.activeTextEditor;
 
-		const selection = activeTextEditor.selection;
+		const location = transformSelectionToLocation(activeTextEditor.selection);
 		const source = activeTextEditor.document.getText()
 		const ast = parser.parse(source);
-		const selectionPath = nodePath.buildNodePath(ast, selection);
+		const selectionPath = nodePath.buildNodePath(ast, location);
 
-		const actionSetup = {
+		return {
 			activeTextEditor,
-			selection,
 			source,
+			
+			location,
 			ast,
 			selectionPath
 		};
+	}
+
+	let disposable = vscode.commands.registerCommand('cmstead.js-codeformer.helloWorld', function () {
+		const actionSetup = prepareActionSetup(vscode);
 
 		console.log(actionSetup);
 	});
@@ -27,7 +33,7 @@ function activate(context) {
 }
 
 // this method is called when your extension is deactivated
-function deactivate() {}
+function deactivate() { }
 
 module.exports = {
 	activate,
