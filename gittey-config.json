@@ -31,6 +31,10 @@
         {
             "name": "pull",
             "command": "gittey commit; git pull"
+        },
+        {
+            "name": "test",
+            "command": "npm test; gittey commit"
         }
     ],
     "collaborators": [
