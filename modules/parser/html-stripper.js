@@ -1,4 +1,4 @@
-const ScriptMode = require('./ScriptMode');
+const { buildNewScriptState } = require('./ScriptState');
 const { buildParseMode } = require('./ParseMode');
 
 function isScriptStartLine(sourceLine) {
@@ -9,7 +9,7 @@ function isScriptEndLine(sourceLine) {
     return /.*<\/script.*/ig.test(sourceLine);
 }
 
-function getNewScriptModeBuilder(sourceLine) {
+function getNewScriptStateBuilder(sourceLine) {
     return function (currentScriptMode) {
         if (isScriptStartLine(sourceLine)) {
             return true;
@@ -26,19 +26,19 @@ function isHtml(source) {
 }
 
 function stripHtml(source) {
-    let sourceScriptMode = new ScriptMode();
+    let sourceScriptState = buildNewScriptState();
 
     return source
         .split(/\r?\n/)
         .map(sourceLine => {
-            const scriptModeBuilder = getNewScriptModeBuilder(sourceLine)
-            sourceScriptMode.updateMode(scriptModeBuilder);
+            const scriptStateBuilder = getNewScriptStateBuilder(sourceLine)
+            sourceScriptState.updateState(scriptStateBuilder);
 
-            const scriptModeUnchanged = !sourceScriptMode.didModeChange()
-            const inScriptMode = sourceScriptMode.readCurrentMode();
+            const scriptStateUnchanged = !sourceScriptState.didStateChange()
+            const inScriptState = sourceScriptState.readCurrentState();
 
-            return inScriptMode
-                && scriptModeUnchanged
+            return inScriptState
+                && scriptStateUnchanged
                 ? sourceLine
                 : '';
         })

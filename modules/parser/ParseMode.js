@@ -10,5 +10,6 @@ function buildParseMode({ verify, prepare }) {
 }
 
 module.exports = {
+    ParseMode,
     buildParseMode
 };
