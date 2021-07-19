@@ -1,0 +1,42 @@
+{
+  "activeTextEditor": {
+    "document": {},
+    "selection": {
+      "end": {
+        "character": 10,
+        "line": 10
+      },
+      "start": {
+        "character": 0,
+        "line": 0
+      }
+    }
+  },
+  "ast": {
+    "body": [],
+    "loc": {
+      "end": {
+        "column": 0,
+        "line": 1
+      },
+      "start": {
+        "column": 0,
+        "line": 1
+      }
+    },
+    "sourceType": "script",
+    "type": "Program"
+  },
+  "location": {
+    "end": {
+      "column": 10,
+      "line": 11
+    },
+    "start": {
+      "column": 0,
+      "line": 1
+    }
+  },
+  "selectionPath": [],
+  "source": ""
+}

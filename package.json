@@ -16,7 +16,7 @@
 	"main": "./extension.js",
 	"scripts": {
 		"lint": "eslint .",
-		"test": "mocha ./test/**/*.test.js & gittey commit"
+		"test": "mocha ./test/**/*.test.js && gittey commit"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.3",
