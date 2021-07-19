@@ -40,7 +40,6 @@
 	},
 	"dependencies": {
 		"@typescript-eslint/typescript-estree": "^4.28.3",
-		"espree": "^8.0.0",
 		"estraverse": "^5.2.0"
 	}
 }
