@@ -1,10 +1,6 @@
 const tsEsTree = require('@typescript-eslint/typescript-estree');
 
-const { parseMode: htmlParseMode } = require('./html-stripper');
-
-const parseModes = [
-    htmlParseMode
-];
+const { parseModes } = require('./parse-modes');
 
 function applyParseModeTransformations(originalSource) {
     return parseModes
