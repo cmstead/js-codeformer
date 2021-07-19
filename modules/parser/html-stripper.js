@@ -48,6 +48,6 @@ function stripHtml(source) {
 module.exports = {
     parseMode: buildParseMode({
         verify: isHtml,
-        prepare: stripHtml
+        transform: stripHtml
     })
 };

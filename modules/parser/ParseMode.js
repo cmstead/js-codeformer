@@ -1,12 +1,12 @@
 class ParseMode{
     constructor(verify, prepare) {
         this.verify = verify;
-        this.prepare = prepare;
+        this.transform = prepare;
     }
 }
 
-function buildParseMode({ verify, prepare }) {
-    return new ParseMode(verify, prepare);
+function buildParseMode({ verify, transform }) {
+    return new ParseMode(verify, transform);
 }
 
 module.exports = {
