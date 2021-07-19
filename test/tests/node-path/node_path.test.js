@@ -3,7 +3,7 @@ require('../../utilities/approvals').configure();
 const { readFileSource } = require('../../utilities/file-reader');
 const { loadModule } = require('../../utilities/module-loader');
 
-const { parse } = loadModule('parser');
+const { parse } = loadModule('parser/parser');
 const { buildNodePath } = loadModule('node-path');
 
 describe('node path builder', function () {

@@ -5,23 +5,21 @@ function configure() {
 
     approvals
         .configure({
-            reporters: ['vscode'],
+            reporters: ['kdiff3'],
 
             normalizeLineEndingsTo: '\n',
 
             appendEOL: true,
 
-            EOL: require('os').EOL,
+            EOL: "\n",
 
             errorOnStaleApprovedFiles: false,
 
             shouldIgnoreStaleApprovedFile: function (/*fileName*/) { return false; },
 
-            stripBOM: false,
+            stripBOM: true,
 
-            forceApproveAll: false,
-
-            failOnLineEndingDifferences: true
+            forceApproveAll: false
 
         })
         .mocha(outputDirectory);

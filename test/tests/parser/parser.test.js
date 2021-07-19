@@ -3,7 +3,7 @@ require('../../utilities/approvals').configure();
 const { loadModule } = require('../../utilities/module-loader')
 const { readFileSource } = require('../../utilities/file-reader');
 
-const { parse } = loadModule('parser');
+const { parse } = loadModule('parser/parser');
 
 describe('source parser', function () {
     it('parses plain old javascript source', function () {

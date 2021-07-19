@@ -14,8 +14,8 @@
 		"sourceType": "module"
 	},
 	"rules": {
-		"no-const-assign": "warn",
-		"no-this-before-super": "warn",
+		"no-const-assign": "error",
+		"no-this-before-super": "error",
 		"no-undef": "warn",
 		"no-unreachable": "warn",
 		"no-unused-vars": "warn",
