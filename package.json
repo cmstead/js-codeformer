@@ -3,6 +3,7 @@
 	"displayName": "JS CodeFormer",
 	"description": "A refactoring and coding tool for building better source",
 	"version": "0.0.1",
+	"publisher": "cmstead",
 	"engines": {
 		"vscode": "^1.58.0"
 	},
@@ -10,17 +11,9 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:js-codeformer.helloWorld"
+		"onCommand:cmstead.js-codeformer.helloWorld"
 	],
 	"main": "./extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "js-codeformer.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
 	"scripts": {
 		"lint": "eslint .",
 		"test": "mocha ./test/**/*.test.js & gittey commit"
@@ -41,5 +34,13 @@
 	"dependencies": {
 		"@typescript-eslint/typescript-estree": "^4.28.3",
 		"estraverse": "^5.2.0"
+	},
+	"contributes": {
+		"commands": [
+			{
+				"command": "cmstead.js-codeformer.helloWorld",
+				"title": "Hello World"
+			}
+		]
 	}
 }
