@@ -1,20 +1,20 @@
 const estraverse = require('estraverse');
 
-function startLocationIsOkay(node, selectionLocation) {
+function nodeStartContainsSelectionStart(node, selectionLocation) {
     return (node.loc.start.line < selectionLocation.start.line
         || (node.loc.start.line === selectionLocation.start.line
             && node.loc.start.column <= selectionLocation.start.column));
 }
 
-function endLocationIsOkay(node, selectionLocation) {
+function nodeEndContainsSelectionEnd(node, selectionLocation) {
     return (node.loc.end.line > selectionLocation.end.line
         || (node.loc.end.line === selectionLocation.end.line
             && node.loc.end.column >= selectionLocation.end.column));
 }
 
 function nodeContainsSelection(node, selectionLocation) {
-    return startLocationIsOkay(node, selectionLocation)
-        && endLocationIsOkay(node, selectionLocation);
+    return nodeStartContainsSelectionStart(node, selectionLocation)
+        && nodeEndContainsSelectionEnd(node, selectionLocation);
 }
 
 function buildNodePath(parsedSource, selectionLocation) {
