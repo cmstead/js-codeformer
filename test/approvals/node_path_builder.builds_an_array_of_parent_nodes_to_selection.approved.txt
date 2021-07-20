@@ -12,5 +12,8 @@
   "BlockStatement",
   "ReturnStatement",
   "ArrayExpression",
+  "ArrowFunctionExpression",
+  "BlockStatement",
+  "ReturnStatement",
   "Identifier"
 ]

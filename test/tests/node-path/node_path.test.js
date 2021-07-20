@@ -14,11 +14,11 @@ describe('node path builder', function () {
 
         const selection = {
             "end": {
-                "column": 21,
+                "column": 36,
                 "line": 7
             },
             "start": {
-                "column": 20,
+                "column": 35,
                 "line": 7
             }
         };
