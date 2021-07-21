@@ -14,13 +14,24 @@
 // 5. select location for variable declaration insertion
 // 6. create array of edits: [value replacement + location, variable declaration + location]
 
-const ExtractionPathBuilder = require('./ExtractionPathBuilder');
+const {
+    ARROW_FUNCTION_EXPRESSION,
+    FUNCTION_DECLARATION,
+    FUNCTION_EXPRESSION,
+    IF_STATEMENT,
+    METHOD_DEFINITION,
+} = require('../../ast-node-types');
 
-function buildExtractionPath(nodePath) {
-    return new ExtractionPathBuilder(nodePath)
-        .buildExtractionPath()
-        .toArray()
-}
+const { buildExtractionPath } = require('./ExtractionPathBuilder');
+
+const acceptableNodeTypes = [
+    ARROW_FUNCTION_EXPRESSION,
+    FUNCTION_DECLARATION,
+    FUNCTION_EXPRESSION,
+    IF_STATEMENT,
+    METHOD_DEFINITION
+]
 
 module.exports = {
+    acceptableNodeTypes
 };

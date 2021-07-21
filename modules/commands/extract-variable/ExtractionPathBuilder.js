@@ -1,10 +1,5 @@
 const {
-    ARROW_FUNCTION_EXPRESSION,
     BLOCK_STATEMENT,
-    FUNCTION_DECLARATION,
-    FUNCTION_EXPRESSION,
-    IF_STATEMENT,
-    METHOD_DEFINITION,
     OBJECT_EXPRESSION,
     PROGRAM
 } = require('../../ast-node-types');
@@ -40,14 +35,8 @@ class NodeSet {
 }
 
 class ExtractionPathBuilder {
-    constructor(nodePath) {
-        this.acceptableNodeTypes = [
-            ARROW_FUNCTION_EXPRESSION,
-            FUNCTION_DECLARATION,
-            FUNCTION_EXPRESSION,
-            IF_STATEMENT,
-            METHOD_DEFINITION
-        ];
+    constructor(nodePath, acceptableNodeTypes) {
+        this.acceptableNodeTypes = acceptableNodeTypes;
 
         this.extractionPath = new ExtractionPath();
         this.currentNodeSet = null;
@@ -56,7 +45,7 @@ class ExtractionPathBuilder {
         this.reversedNodePath.reverse();
     }
 
-    updateExtractionPath(nodeSet = this.currentNodeSet) {
+    updateExtractionPath(nodeSet) {
         this.extractionPath.insertNodeSet(nodeSet);
     }
 
@@ -68,17 +57,21 @@ class ExtractionPathBuilder {
         return new NodeSet(node);
     }
 
+    updateExtractionPathAndResetNodeSet() {
+        this.updateExtractionPath(this.currentNodeSet);
+        this.resetCurrentNodeSet();
+    }
+
     buildExtractionPath() {
         this.reversedNodePath.forEach(node => {
             const seekingParentNode = this.currentNodeSet !== null;
             const nodeTypeIsAcceptable = this.acceptableNodeTypes.includes(node.type);
             const nodeTypeNotAcceptable = !nodeTypeIsAcceptable;
-    
+
             if (nodeTypeNotAcceptable) {
-                this.updateExtractionPath();
-                this.resetCurrentNodeSet();
+                this.updateExtractionPathAndResetNodeSet();
             }
-    
+
             if (node.type === PROGRAM || node.type === OBJECT_EXPRESSION) {
                 this.updateExtractionPath(this.createNodeSet(node));
             } else if (node.type === BLOCK_STATEMENT) {
@@ -87,13 +80,13 @@ class ExtractionPathBuilder {
                 this.currentNodeSet.addNode(node);
             }
         });
-    
+
         return this.extractionPath;
     }
 }
 
-function buildExtractionPath(nodePath) {
-    return new ExtractionPathBuilder(nodePath)
+function buildExtractionPath(nodePath, acceptableNodeTypes) {
+    return new ExtractionPathBuilder(nodePath, acceptableNodeTypes)
         .buildExtractionPath()
         .toArray()
 }
