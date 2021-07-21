@@ -12,6 +12,7 @@ const { parse } = loadModule('parser/parser');
 const { buildNodePath } = loadModule('node-path');
 
 const { buildExtractionPath } = loadModule('commands/extract-variable/extract-variable');
+const ExtractionPathBuilder = loadModule('commands/extract-variable/ExtractionPathBuilder')
 
 describe('extract variable', function () {
     describe('extraction path construction', function () {
@@ -26,7 +27,9 @@ describe('extract variable', function () {
 
             const nodePath = buildNodePath(parsedSource, selection);
 
-            const extractionPath = buildExtractionPath(nodePath);
+            const extractionPath = new ExtractionPathBuilder(nodePath)
+                .buildExtractionPath()
+                .toArray();
 
             const last = values => values[values.length -1];
 
