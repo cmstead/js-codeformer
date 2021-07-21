@@ -14,26 +14,26 @@
 // 5. select location for variable declaration insertion
 // 6. create array of edits: [value replacement + location, variable declaration + location]
 
-const nodeTypes = {
-    ARROW_FUNCTION_EXPRESSION: 'ArrowFunctionExpression',
-    FUNCTION_DECLARATION: 'FunctionDeclaration',
-    FUNCTION_EXPRESSION: 'FunctionExpression',
-    IF_STATEMENT: 'IfStatement',
-    METHOD_DEFINITION: 'MethodDefinition'
-};
+const {
+    ARROW_FUNCTION_EXPRESSION,
+    FUNCTION_DECLARATION,
+    FUNCTION_EXPRESSION,
+    IF_STATEMENT,
+    METHOD_DEFINITION
+} = require('../../ast-node-types');
 
 function buildExtractionPath(nodePath) {
     let extractionPath = [];
+    let currentNodeSet = [];
     let seekingParentNode = false;
 
     let acceptableNodeTypes = [
-        nodeTypes.ARROW_FUNCTION_EXPRESSION,
-        nodeTypes.FUNCTION_DECLARATION,
-        nodeTypes.FUNCTION_EXPRESSION,
-        nodeTypes.IF_STATEMENT,
-        nodeTypes.METHOD_DEFINITION
+        ARROW_FUNCTION_EXPRESSION,
+        FUNCTION_DECLARATION,
+        FUNCTION_EXPRESSION,
+        IF_STATEMENT,
+        METHOD_DEFINITION
     ];
-    let currentNodeSet = [];
 
     const copiedNodePath = nodePath.slice();
     copiedNodePath.reverse()
