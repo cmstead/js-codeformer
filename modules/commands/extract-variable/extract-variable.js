@@ -95,7 +95,7 @@ function buildExtractionPath(nodePath) {
         const nodeTypeIsAcceptable = acceptableNodeTypes.includes(node.type);
         const nodeTypeNotAcceptable = !nodeTypeIsAcceptable;
 
-        if (seekingParentNode && nodeTypeNotAcceptable) {
+        if (nodeTypeNotAcceptable) {
             updateExtractionPath(currentNodeSet);
             resetCurrentNodeSet();
         }
