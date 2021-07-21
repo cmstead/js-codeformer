@@ -6,7 +6,6 @@
 // - Function
 // - FunctionExpression
 // - ArrowFunctionExpression (only with FunctionBody)
-// - Class (ClassBody)
 
 // 1. get the scope for extraction (window.showQuickPick)
 // 2. get the variable name (window.showInputBox)
@@ -15,3 +14,6 @@
 // 5. select location for variable declaration insertion
 // 6. create array of edits: [value replacement + location, variable declaration + location]
 
+function getVariableScopePath(nodePath) {
+    return nodePath.filter();
+}

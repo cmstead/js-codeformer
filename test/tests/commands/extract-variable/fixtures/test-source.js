@@ -1,20 +1,18 @@
-class Nesting {
+class Nesting{
     testMethod() {
         return {
             foo: function (a, b) {
-                if (a === b) {
+                if(a === b) {
                     return []
-                } else if(a < b) {
+                } else {
                     return [
                         a,
                         () => { return b; }
-                    ];
-                } else {
-                    return null
+                    ];    
                 }
             }
         }
     }
 
-    otherMethod() { }
+    otherMethod() {}
 }
