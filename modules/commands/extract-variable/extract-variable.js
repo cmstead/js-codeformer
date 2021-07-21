@@ -16,16 +16,63 @@
 
 const {
     ARROW_FUNCTION_EXPRESSION,
+    BLOCK_STATEMENT,
     FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
     IF_STATEMENT,
-    METHOD_DEFINITION
+    METHOD_DEFINITION,
+    OBJECT_EXPRESSION,
+    PROGRAM
 } = require('../../ast-node-types');
 
+class ExtractionPath {
+    constructor() {
+        this.path = [];
+    }
+
+    toArray() {
+        return this.path.slice(0);
+    }
+
+    insertNodeSet(nodeSet) {
+        if (nodeSet !== null) {
+            this.path.push(nodeSet.toArray());
+        }
+    }
+}
+
+class NodeSet {
+    constructor(node) {
+        this.nodeSet = [node];
+    }
+
+    toArray() {
+        return this.nodeSet.slice(0);
+    }
+
+    addNode(node) {
+        this.nodeSet.push(node);
+    }
+}
+
+class ExtractionPathBuilder{
+    constructor(){
+        this.acceptableNodeTypes = [
+            ARROW_FUNCTION_EXPRESSION,
+            FUNCTION_DECLARATION,
+            FUNCTION_EXPRESSION,
+            IF_STATEMENT,
+            METHOD_DEFINITION
+        ];
+
+        this.extractionPath = new ExtractionPath();
+        this.currentNodeSet = null;
+    }
+}
+
 function buildExtractionPath(nodePath) {
-    let extractionPath = [];
-    let currentNodeSet = [];
-    let seekingParentNode = false;
+    let extractionPath = new ExtractionPath();
+    let currentNodeSet = null;
 
     let acceptableNodeTypes = [
         ARROW_FUNCTION_EXPRESSION,
@@ -36,29 +83,41 @@ function buildExtractionPath(nodePath) {
     ];
 
     const copiedNodePath = nodePath.slice();
-    copiedNodePath.reverse()
+    copiedNodePath.reverse();
+
+    const updateExtractionPath = (nodeSet) =>
+        extractionPath.insertNodeSet(nodeSet);
+
+    const resetCurrentNodeSet = () => currentNodeSet = null;
 
     copiedNodePath.forEach(node => {
-        if (node.type === 'Program' || node.type === 'ObjectExpression') {
-            extractionPath.push([node])
-        } else if (node.type === 'BlockStatement') {
-            if(currentNodeSet.length > 0) {
-                extractionPath.push(currentNodeSet);
-            }
-            seekingParentNode = true;
-            currentNodeSet = [node];
-        } else if (seekingParentNode) {
-            if (acceptableNodeTypes.includes(node.type)) {
-                currentNodeSet.push(node);
-            } else {
-                extractionPath.push(currentNodeSet);
-                currentNodeSet = [];
-                seekingParentNode = false;
-            }
+        const seekingParentNode = currentNodeSet !== null;
+        const nodeTypeIsAcceptable = acceptableNodeTypes.includes(node.type);
+        const nodeTypeNotAcceptable = !nodeTypeIsAcceptable;
+
+        // if (seekingParentNode && nodeTypeNotAcceptable) {
+        //     updateExtractionPath();
+        //     resetCurrentNodeSet();
+        // }
+
+        if (node.type === PROGRAM || node.type === OBJECT_EXPRESSION) {
+            // updateExtractionPath();
+            // resetCurrentNodeSet();
+
+            updateExtractionPath(new NodeSet(node));
+        } else if (node.type === BLOCK_STATEMENT) {
+            updateExtractionPath(currentNodeSet);
+
+            currentNodeSet = new NodeSet(node);
+        } else if (seekingParentNode && nodeTypeIsAcceptable) {
+            currentNodeSet.addNode(node);
+        } else if (seekingParentNode && nodeTypeNotAcceptable) {
+            updateExtractionPath(currentNodeSet);
+            resetCurrentNodeSet();
         }
     });
 
-    return extractionPath;
+    return extractionPath.toArray();
 }
 
 module.exports = {
