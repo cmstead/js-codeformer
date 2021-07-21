@@ -5,7 +5,7 @@ const { loadModule } = require('../../utilities/module-loader');
 const { transformSelectionToLocation, transformLocationToSelection } = loadModule('code-range-transforms');
 
 describe('Code Range Transforms', function () {
-    it('transforms vs code selections to ast locations', function () {
+    it('transforms editor selection to ast location', function () {
         const selectionObject = {
             start: {
                 character: 0,
@@ -22,7 +22,7 @@ describe('Code Range Transforms', function () {
         this.verifyAsJSON(astLocation);
     });
 
-    it('transforms ast locations to vs code selections', function () {
+    it('transforms ast location to editor selection', function () {
         const selectionObject = {
             start: {
                 column: 0,
