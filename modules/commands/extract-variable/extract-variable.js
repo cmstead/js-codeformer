@@ -14,16 +14,24 @@
 // 5. select location for variable declaration insertion
 // 6. create array of edits: [value replacement + location, variable declaration + location]
 
+const nodeTypes = {
+    ARROW_FUNCTION_EXPRESSION: 'ArrowFunctionExpression',
+    FUNCTION_DECLARATION: 'FunctionDeclaration',
+    FUNCTION_EXPRESSION: 'FunctionExpression',
+    IF_STATEMENT: 'IfStatement',
+    METHOD_DEFINITION: 'MethodDefinition'
+};
+
 function buildExtractionPath(nodePath) {
     let extractionPath = [];
     let seekingParentNode = false;
 
     let acceptableNodeTypes = [
-        'ArrowFunctionExpression',
-        'FunctionDeclaration',
-        'FunctionExpression',
-        'IfStatement',
-        'MethodDefinition'
+        nodeTypes.ARROW_FUNCTION_EXPRESSION,
+        nodeTypes.FUNCTION_DECLARATION,
+        nodeTypes.FUNCTION_EXPRESSION,
+        nodeTypes.IF_STATEMENT,
+        nodeTypes.METHOD_DEFINITION
     ];
     let currentNodeSet = [];
 
