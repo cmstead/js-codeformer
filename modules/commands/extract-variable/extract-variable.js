@@ -95,25 +95,17 @@ function buildExtractionPath(nodePath) {
         const nodeTypeIsAcceptable = acceptableNodeTypes.includes(node.type);
         const nodeTypeNotAcceptable = !nodeTypeIsAcceptable;
 
-        // if (seekingParentNode && nodeTypeNotAcceptable) {
-        //     updateExtractionPath();
-        //     resetCurrentNodeSet();
-        // }
+        if (seekingParentNode && nodeTypeNotAcceptable) {
+            updateExtractionPath(currentNodeSet);
+            resetCurrentNodeSet();
+        }
 
         if (node.type === PROGRAM || node.type === OBJECT_EXPRESSION) {
-            // updateExtractionPath();
-            // resetCurrentNodeSet();
-
             updateExtractionPath(new NodeSet(node));
         } else if (node.type === BLOCK_STATEMENT) {
-            updateExtractionPath(currentNodeSet);
-
             currentNodeSet = new NodeSet(node);
         } else if (seekingParentNode && nodeTypeIsAcceptable) {
             currentNodeSet.addNode(node);
-        } else if (seekingParentNode && nodeTypeNotAcceptable) {
-            updateExtractionPath(currentNodeSet);
-            resetCurrentNodeSet();
         }
     });
 
