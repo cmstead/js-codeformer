@@ -6,8 +6,6 @@ function activate(context) {
 
 	let disposable = vscode.commands.registerCommand('cmstead.js-codeformer.extractVariable', function () {
 		const actionSetup = prepareActionSetup(vscode);
-
-		console.log(actionSetup);
 	});
 
 	context.subscriptions.push(disposable);

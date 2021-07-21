@@ -1,0 +1,8 @@
+[
+  "IfStatement",
+  "FunctionDeclaration",
+  "FunctionExpression",
+  "ObjectExpression",
+  "MethodDefinition",
+  "Program"
+]

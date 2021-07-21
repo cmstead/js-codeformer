@@ -22,9 +22,6 @@ function buildNodePath(parsedSource, selectionLocation) {
 
     estraverse.traverse(parsedSource, {
         enter: function (node) {
-            if(node.type === 'IfStatement') {
-                console.log(node);
-            }
             if (nodeContainsSelection(node, selectionLocation)) {
                 nodePath.push(node);
             }

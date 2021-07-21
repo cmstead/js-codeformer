@@ -18,8 +18,8 @@ describe('node path builder', function () {
         const parsedSource = parse(fileSource);
 
         const selection = buildSelectionFromEditorCoordinates({
-            start: buildEditorCoordinates({ line: 10, column: 40 }),
-            end: buildEditorCoordinates({ line: 10, column: 41 })
+            start: buildEditorCoordinates({ line: 11, column: 44 }),
+            end: buildEditorCoordinates({ line: 11, column: 45 })
         });
 
         const nodePath = buildNodePath(parsedSource, selection);
