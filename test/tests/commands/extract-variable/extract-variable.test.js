@@ -11,8 +11,8 @@ const { loadModule } = require('../../../utilities/module-loader');
 const { parse } = loadModule('parser/parser');
 const { buildNodePath } = loadModule('node-path');
 
-const { buildExtractionPath } = loadModule('commands/extract-variable/extract-variable');
-const ExtractionPathBuilder = loadModule('commands/extract-variable/ExtractionPathBuilder')
+// const { buildExtractionPath } = loadModule('commands/extract-variable/extract-variable');
+const {ExtractionPathBuilder} = loadModule('commands/extract-variable/ExtractionPathBuilder')
 
 describe('extract variable', function () {
     describe('extraction path construction', function () {

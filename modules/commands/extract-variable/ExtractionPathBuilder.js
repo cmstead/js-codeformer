@@ -92,4 +92,13 @@ class ExtractionPathBuilder {
     }
 }
 
-module.exports = ExtractionPathBuilder;
+function buildExtractionPath(nodePath) {
+    return new ExtractionPathBuilder(nodePath)
+        .buildExtractionPath()
+        .toArray()
+}
+
+module.exports = {
+    ExtractionPathBuilder,
+    buildExtractionPath
+};
