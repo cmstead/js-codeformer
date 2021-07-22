@@ -79,6 +79,24 @@ describe('extract variable', function () {
                 subordinateScope: last(selectedScopes.subordinateScope).type
             });
         });
+
+        it('sets subordinate scope to null when extraction scope is the local scope', function () {
+            const selection = getSharedSelection();
+            const nodePath = buildPathToSelection(selection);
+
+            const extractionPath = buildExtractionPath(nodePath, acceptableNodeTypes);
+
+            const extractionScopeList = buildExtractionScopeList(extractionPath);
+
+            const userSelection = extractionScopeList[0];
+
+            const selectedScopes = selectExtractionScopes(extractionPath, userSelection);
+
+            this.verifyAsJSON({
+                extractionScope: last(selectedScopes.extractionScope).type,
+                subordinateScope: selectedScopes.subordinateScope
+            });
+        });
     });
 
 });

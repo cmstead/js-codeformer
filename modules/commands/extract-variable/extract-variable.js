@@ -74,7 +74,9 @@ function selectExtractionScopes(extractionPath, userSelection) {
 
     return {
         extractionScope: extractionPath[selectionIndex],
-        subordinateScope: extractionPath[selectionIndex - 1]
+        subordinateScope: selectionIndex > 0 
+            ? extractionPath[selectionIndex - 1]
+            : null
     };
 }
 
