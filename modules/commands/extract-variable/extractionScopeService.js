@@ -1,20 +1,12 @@
-const {
-    ARROW_FUNCTION_EXPRESSION,
-    FUNCTION_DECLARATION,
-    FUNCTION_EXPRESSION,
-    IF_STATEMENT,
-    METHOD_DEFINITION,
-    OBJECT_EXPRESSION,
-    PROGRAM
-} = require('../../ast-node-types');
+const astNodeTypes = require('../../ast-node-types');
 
 const typeTransforms = {
-    [ARROW_FUNCTION_EXPRESSION]: () => 'arrow function',
-    [FUNCTION_DECLARATION]: (node) => `the function named '${node.id.name}'`,
-    [FUNCTION_EXPRESSION]: () => 'function expression',
-    [IF_STATEMENT]: () => 'if statement',
-    [METHOD_DEFINITION]: (node) => `the method named '${node.key.name}'`,
-    [OBJECT_EXPRESSION]: () => 'object literal'
+    [astNodeTypes.ARROW_FUNCTION_EXPRESSION]: () => 'arrow function',
+    [astNodeTypes.FUNCTION_DECLARATION]: (node) => `the function named '${node.id.name}'`,
+    [astNodeTypes.FUNCTION_EXPRESSION]: () => 'function expression',
+    [astNodeTypes.IF_STATEMENT]: () => 'if statement',
+    [astNodeTypes.METHOD_DEFINITION]: (node) => `the method named '${node.key.name}'`,
+    [astNodeTypes.OBJECT_EXPRESSION]: () => 'object literal'
 }
 
 
@@ -23,7 +15,7 @@ const last = values => values[values.length - 1];
 function getScopeMessage(displayNode, index) {
     if (index === 0) {
         return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
-    } else if (displayNode.type === PROGRAM) {
+    } else if (displayNode.type === astNodeTypes.PROGRAM) {
         return 'Extract to top of file';
     } else {
         return `Extract to scope in ${typeTransforms[displayNode.type](displayNode)}`
