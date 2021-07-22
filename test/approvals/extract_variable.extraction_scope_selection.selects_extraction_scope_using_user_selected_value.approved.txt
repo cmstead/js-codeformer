@@ -1,0 +1,4 @@
+{
+  "extractionScope": "FunctionExpression",
+  "subordinateScope": "FunctionDeclaration"
+}

@@ -46,9 +46,9 @@ const acceptableNodeTypes = [
 const last = values => values[values.length - 1];
 
 function getScopeMessage(displayNode, index) {
-    if(index === 0) {
+    if (index === 0) {
         return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
-    } else if(displayNode.type === PROGRAM) {
+    } else if (displayNode.type === PROGRAM) {
         return 'Extract to top of file';
     } else {
         return `Extract to scope in ${typeTransforms[displayNode.type](displayNode)}`
@@ -56,7 +56,6 @@ function getScopeMessage(displayNode, index) {
 }
 
 function buildExtractionScopeList(extractionPath) {
-    console.log(Object.keys(typeTransforms));
     return extractionPath.map((nodeSet, index) => {
         const displayNode = last(nodeSet);
 
@@ -64,7 +63,23 @@ function buildExtractionScopeList(extractionPath) {
     });
 }
 
+function getUserSelectionIndex(userSelection) {
+    const userSelectionPosition = userSelection.split(/\s+[-]\s+/ig)[0];
+
+    return parseInt(userSelectionPosition) - 1;
+}
+
+function selectExtractionScopes(extractionPath, userSelection) {
+    const selectionIndex = getUserSelectionIndex(userSelection);
+
+    return {
+        extractionScope: extractionPath[selectionIndex],
+        subordinateScope: extractionPath[selectionIndex - 1]
+    };
+}
+
 module.exports = {
     acceptableNodeTypes,
-    buildExtractionScopeList
+    buildExtractionScopeList,
+    selectExtractionScopes
 };

@@ -11,7 +11,11 @@ const { loadModule } = require('../../../utilities/module-loader');
 const { parse } = loadModule('parser/parser');
 const { buildNodePath } = loadModule('node-path');
 
-const { acceptableNodeTypes, buildExtractionScopeList } = loadModule('commands/extract-variable/extract-variable');
+const { 
+    acceptableNodeTypes,
+    buildExtractionScopeList,
+    selectExtractionScopes
+ } = loadModule('commands/extract-variable/extract-variable');
 const { buildExtractionPath } = loadModule('commands/extract-variable/ExtractionPathBuilder')
 
 function buildPathToSelection(selection) {
@@ -28,6 +32,8 @@ function getSharedSelection() {
     });
 }
 
+const last = values => values[values.length - 1];
+
 describe('extract variable', function () {
 
     describe('extraction path construction', function () {
@@ -37,7 +43,6 @@ describe('extract variable', function () {
 
             const extractionPath = buildExtractionPath(nodePath, acceptableNodeTypes);
 
-            const last = values => values[values.length - 1];
 
             this.verifyAsJSON(extractionPath.map(nodes => last(nodes).type));
         });
@@ -53,6 +58,26 @@ describe('extract variable', function () {
             const extractionScopeList = buildExtractionScopeList(extractionPath);
 
             this.verifyAsJSON(extractionScopeList);
+        });
+    });
+
+    describe('extraction scope selection', function () {
+        it('selects extraction scope using user selected value', function () {
+            const selection = getSharedSelection();
+            const nodePath = buildPathToSelection(selection);
+
+            const extractionPath = buildExtractionPath(nodePath, acceptableNodeTypes);
+
+            const extractionScopeList = buildExtractionScopeList(extractionPath);
+
+            const userSelection = extractionScopeList[2];
+
+            const selectedScopes = selectExtractionScopes(extractionPath, userSelection);
+
+            this.verifyAsJSON({
+                extractionScope: last(selectedScopes.extractionScope).type,
+                subordinateScope: last(selectedScopes.subordinateScope).type
+            });
         });
     });
 
