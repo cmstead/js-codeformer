@@ -20,7 +20,18 @@ const {
     FUNCTION_EXPRESSION,
     IF_STATEMENT,
     METHOD_DEFINITION,
+    OBJECT_EXPRESSION,
+    PROGRAM
 } = require('../../ast-node-types');
+
+const typeTransforms = {
+    [ARROW_FUNCTION_EXPRESSION]: () => 'arrow function',
+    [FUNCTION_DECLARATION]: (node) => `the function named '${node.id.name}'`,
+    [FUNCTION_EXPRESSION]: () => 'function expression',
+    [IF_STATEMENT]: () => 'if statement',
+    [METHOD_DEFINITION]: (node) => `the method named '${node.key.name}'`,
+    [OBJECT_EXPRESSION]: () => 'object literal'
+}
 
 const { buildExtractionPath } = require('./ExtractionPathBuilder');
 
@@ -32,6 +43,28 @@ const acceptableNodeTypes = [
     METHOD_DEFINITION
 ]
 
+const last = values => values[values.length - 1];
+
+function getScopeMessage(displayNode, index) {
+    if(index === 0) {
+        return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
+    } else if(displayNode.type === PROGRAM) {
+        return 'Extract to top of file';
+    } else {
+        return `Extract to scope in ${typeTransforms[displayNode.type](displayNode)}`
+    }
+}
+
+function buildExtractionScopeList(extractionPath) {
+    console.log(Object.keys(typeTransforms));
+    return extractionPath.map((nodeSet, index) => {
+        const displayNode = last(nodeSet);
+
+        return `${index + 1} - ${getScopeMessage(displayNode, index)}`;
+    });
+}
+
 module.exports = {
-    acceptableNodeTypes
+    acceptableNodeTypes,
+    buildExtractionScopeList
 };
