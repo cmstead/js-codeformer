@@ -14,7 +14,7 @@
 // 1. [x] build extraction scope path
 // 2. [x] prepare extraction scope data for user scope selection
 // 3. [ ] create variable declaration code
-//     1. [ ] capture selected text
+//     1. [x] capture selected text
 //     2. [ ] build variable source string using
 //              variable type, variable name, and selected source code
 //     3. [ ] Semicolons?? -- I never did figure this out before.
@@ -39,6 +39,12 @@ const acceptableNodeTypes = [
     astNodeTypes.IF_STATEMENT,
     astNodeTypes.METHOD_DEFINITION
 ];
+
+const acceptableVariableTypes = {
+    CONST: 'const',
+    LET: 'let',
+    VAR: 'var'
+};
 
 function locationToSourceSelection({ start, end }) {
     return {
@@ -72,9 +78,15 @@ function getSourceSelection(sourceCode, location) {
 
 }
 
+function buildVariableDeclaration({ variableType, variableName, source }) {
+    return `${variableType} ${variableName} = ${source};`;
+}
+
 module.exports = {
     acceptableNodeTypes,
+    acceptableVariableTypes,
     buildExtractionScopeList,
+    buildVariableDeclaration,
     selectExtractionScopes,
     getSourceSelection
 };

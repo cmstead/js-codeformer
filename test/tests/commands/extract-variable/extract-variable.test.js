@@ -12,7 +12,9 @@ const { loadModule } = require('../../../utilities/module-loader');
 
 const {
     acceptableNodeTypes,
+    acceptableVariableTypes,
     buildExtractionScopeList,
+    buildVariableDeclaration,
     selectExtractionScopes,
     getSourceSelection
 } = loadModule('commands/extract-variable/extract-variable');
@@ -116,6 +118,18 @@ describe('extract variable', function () {
             const sourceSelection = getSourceSelection(sourceCode, selection);
 
             this.verify(sourceSelection);
+        });
+    });
+
+    describe('build variable declaration for source insertion', function () {
+        it('given a variable type, variable name, and source substring, a variable declaration should be created', function () {
+            const variableType = acceptableVariableTypes.CONST;
+            const variableName = 'testVar';
+            const source = '[\na, \n() => { return b; } \n]';
+
+            const variableDeclaration = buildVariableDeclaration({ variableType, variableName, source });
+
+            assert.equal(variableDeclaration, `${variableType} ${variableName} = ${source};`);
         });
     });
 
