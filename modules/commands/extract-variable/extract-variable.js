@@ -79,7 +79,8 @@ function getSourceSelection(sourceCode, location) {
 }
 
 function buildVariableDeclaration({ variableType, variableName, source }) {
-    return `${variableType} ${variableName} = ${source};`;
+    const sanitizedSource = source.replace(/(.*)\;+$/, '$1');
+    return `${variableType} ${variableName} = ${sanitizedSource};`;
 }
 
 module.exports = {

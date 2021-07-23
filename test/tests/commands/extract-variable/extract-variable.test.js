@@ -131,6 +131,18 @@ describe('extract variable', function () {
 
             assert.equal(variableDeclaration, `${variableType} ${variableName} = ${source};`);
         });
+
+        it('does not double trailing semicolon if source already contains one', function () {
+            const variableType = acceptableVariableTypes.CONST;
+            const variableName = 'testVar';
+            const source = '[\na, \n() => { return b; } \n];';
+
+            const variableDeclaration = buildVariableDeclaration({ variableType, variableName, source });
+
+            console.log(variableDeclaration);
+
+            assert.equal(variableDeclaration, `${variableType} ${variableName} = ${source}`);
+        });
     });
 
 });
