@@ -1,28 +1,33 @@
+class EditorCoordinates {
+    constructor(line = 0, column = 0) {
+        this.line = line,
+            this.column = column;
+    }
+}
+
+class EditorSelection{
+    constructor(start = new EditorCoordinates(), end = new EditorCoordinates()){
+        this.start = start;
+        this.end = end;
+    }
+}
+
 function buildEditorCoordinates({ line, column }) {
-    return {
-        line: line,
-        column: column
-    };
+    return new EditorCoordinates(line, column);
 }
 
 function buildLocationFromEditorCoordinates({
-    start: { line: startLine, column: startColumn },
-    end: { line: endLine, column: endColumn }
+    start = new EditorCoordinates(),
+    end = new EditorCoordinates()
 }) {
     return {
-        start: {
-            line: startLine,
-            column: startColumn - 1
-        },
-        end: {
-            line: endLine,
-            column: endColumn - 1
-        }
+        start: new EditorCoordinates(start.line, start.column - 1),
+        end: new EditorCoordinates(end.line, end.column - 1)
     };
 }
 
-function buildSelectionLocation({ start, end }) {
-    return buildLocationFromEditorCoordinates({ start, end });
+function buildSelectionLocation(selection = new EditorSelection()) {
+    return buildLocationFromEditorCoordinates(selection);
 }
 
 module.exports = {
