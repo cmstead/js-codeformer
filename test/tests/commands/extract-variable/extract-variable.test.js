@@ -4,7 +4,8 @@ const { assert } = require('chai');
 
 const {
     buildEditorCoordinates,
-    buildLocationFromEditorCoordinates
+    buildLocationFromEditorCoordinates,
+    buildSelectionLocation
 } = require('../../../utilities/selection-builder');
 
 const { loadModule } = require('../../../utilities/module-loader');
@@ -92,9 +93,9 @@ describe('extract variable', function () {
 
     describe('capture selected text', function () {
         it('returns a single line of selected text', function () {
-            const selection = buildLocationFromEditorCoordinates({
-                start: buildEditorCoordinates({ line: 6, column: 25 }),
-                end: buildEditorCoordinates({ line: 6, column: 32 })
+            const selection = buildSelectionLocation({
+                start: { line: 6, column: 25 },
+                end: { line: 6, column: 32 }
             });
 
             const sourceCode = readTestSource();

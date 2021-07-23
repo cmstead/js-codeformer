@@ -5,20 +5,28 @@ function buildEditorCoordinates({ line, column }) {
     };
 }
 
-function buildLocationFromEditorCoordinates({ start, end }) {
+function buildLocationFromEditorCoordinates({
+    start: { line: startLine, column: startColumn },
+    end: { line: endLine, column: endColumn }
+}) {
     return {
         start: {
-            line: start.line,
-            column: start.column - 1
+            line: startLine,
+            column: startColumn - 1
         },
         end: {
-            line: end.line,
-            column: end.column - 1
+            line: endLine,
+            column: endColumn - 1
         }
     };
 }
 
+function buildSelectionLocation({ start, end }) {
+    return buildLocationFromEditorCoordinates({ start, end });
+}
+
 module.exports = {
     buildEditorCoordinates,
-    buildLocationFromEditorCoordinates
+    buildLocationFromEditorCoordinates,
+    buildSelectionLocation
 };
