@@ -122,6 +122,19 @@ describe('extract variable', function () {
 
             assert.equal(sourceSelection, 'a === b');
         });
+
+        it('returns multiple lines of selected text', function () {
+            const selection = buildSelectionFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 9, column: 32 }),
+                end: buildEditorCoordinates({ line: 12, column: 26 })
+            });
+
+            const sourceCode = readTestSource();
+
+            const sourceSelection = getSourceSelection(sourceCode, selection);
+
+            this.verify(sourceSelection);
+        });
     });
 
 });
