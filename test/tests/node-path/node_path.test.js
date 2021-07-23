@@ -3,7 +3,7 @@ require('../../utilities/approvals').configure();
 const {
     buildEditorCoordinates,
     buildLocationFromEditorCoordinates
-} = require('../../utilities/selection-builder');
+} = require('../../utilities/editor-to-location-selection-builder');
 
 const { readFileSource } = require('../../utilities/file-reader');
 const { loadModule } = require('../../utilities/module-loader');

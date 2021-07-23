@@ -7,7 +7,7 @@ const { buildNodePath } = loadModule('node-path');
 const {
     buildEditorCoordinates,
     buildLocationFromEditorCoordinates
-} = require('../../../utilities/selection-builder');
+} = require('../../../utilities/editor-to-location-selection-builder');
 
 
 function readTestSource() {

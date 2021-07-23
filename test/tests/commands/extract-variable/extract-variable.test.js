@@ -6,7 +6,7 @@ const {
     buildEditorCoordinates,
     buildLocationFromEditorCoordinates,
     buildSelectionLocation
-} = require('../../../utilities/selection-builder');
+} = require('../../../utilities/editor-to-location-selection-builder');
 
 const { loadModule } = require('../../../utilities/module-loader');
 
