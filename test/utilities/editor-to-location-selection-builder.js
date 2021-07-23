@@ -1,12 +1,12 @@
 class EditorCoordinates {
     constructor(line = 0, column = 0) {
-        this.line = line,
-            this.column = column;
+        this.line = line;
+        this.column = column;
     }
 }
 
-class EditorSelection{
-    constructor(start = new EditorCoordinates(), end = new EditorCoordinates()){
+class EditorSelection {
+    constructor(start = new EditorCoordinates(), end = new EditorCoordinates()) {
         this.start = start;
         this.end = end;
     }
