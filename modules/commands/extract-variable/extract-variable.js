@@ -40,8 +40,31 @@ const acceptableNodeTypes = [
     astNodeTypes.METHOD_DEFINITION
 ];
 
+function locationToSourceSelection({ start, end }) {
+    return {
+        startLine: start.line - 1,
+        endLine: end.line - 1,
+        startColumn: start.column,
+        endColumn: end.column
+    };
+}
+
+function getSourceSelection(sourceCode, location) {
+    const {
+        startLine,
+        endLine,
+        startColumn,
+        endColumn
+    } = locationToSourceSelection(location);
+
+    const selectedLines = sourceCode.split('\n')[startLine];
+
+    return selectedLines.slice(startColumn, endColumn);
+}
+
 module.exports = {
     acceptableNodeTypes,
     buildExtractionScopeList,
-    selectExtractionScopes
+    selectExtractionScopes,
+    getSourceSelection
 };

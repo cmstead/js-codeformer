@@ -1,5 +1,7 @@
 require('../../../utilities/approvals').configure();
 
+const { assert } = require('chai');
+
 const {
     buildEditorCoordinates,
     buildSelectionFromEditorCoordinates
@@ -11,15 +13,23 @@ const { loadModule } = require('../../../utilities/module-loader');
 const { parse } = loadModule('parser/parser');
 const { buildNodePath } = loadModule('node-path');
 
-const { 
+const {
     acceptableNodeTypes,
     buildExtractionScopeList,
-    selectExtractionScopes
- } = loadModule('commands/extract-variable/extract-variable');
-const { buildExtractionPath } = loadModule('commands/extract-variable/ExtractionPathBuilder')
+    selectExtractionScopes,
+    getSourceSelection
+} = loadModule('commands/extract-variable/extract-variable');
+
+const { buildExtractionPath } = loadModule('commands/extract-variable/ExtractionPathBuilder');
+
+const { transformSelectionToLocation } = loadModule('code-range-transforms');
+
+function readTestSource() {
+    return readFileSource(__dirname, 'fixtures/test-source.js');
+}
 
 function buildPathToSelection(selection) {
-    const sourceCode = readFileSource(__dirname, 'fixtures/test-source.js');
+    const sourceCode = readTestSource();
     const parsedSource = parse(sourceCode);
 
     return buildNodePath(parsedSource, selection);
@@ -96,6 +106,21 @@ describe('extract variable', function () {
                 extractionScope: last(selectedScopes.extractionScope).type,
                 subordinateScope: selectedScopes.subordinateScope
             });
+        });
+    });
+
+    describe('capture selected text', function () {
+        it('returns a single line of selected text', function () {
+            const selection = buildSelectionFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 6, column: 25 }),
+                end: buildEditorCoordinates({ line: 6, column: 32 })
+            });
+
+            const sourceCode = readTestSource();
+
+            const sourceSelection = getSourceSelection(sourceCode, selection);
+
+            assert.equal(sourceSelection, 'a === b');
         });
     });
 
