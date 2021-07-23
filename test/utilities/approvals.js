@@ -5,7 +5,7 @@ function configure() {
 
     approvals
         .configure({
-            reporters: ['vscode'],
+            reporters: ['kdiff3'],
 
             normalizeLineEndingsTo: '\n',
 

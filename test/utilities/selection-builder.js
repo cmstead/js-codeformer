@@ -5,7 +5,7 @@ function buildEditorCoordinates({ line, column }) {
     };
 }
 
-function buildSelectionFromEditorCoordinates({ start, end }) {
+function buildLocationFromEditorCoordinates({ start, end }) {
     return {
         start: {
             line: start.line,
@@ -20,5 +20,5 @@ function buildSelectionFromEditorCoordinates({ start, end }) {
 
 module.exports = {
     buildEditorCoordinates,
-    buildSelectionFromEditorCoordinates
+    buildLocationFromEditorCoordinates
 };

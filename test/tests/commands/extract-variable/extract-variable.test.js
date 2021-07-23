@@ -4,14 +4,10 @@ const { assert } = require('chai');
 
 const {
     buildEditorCoordinates,
-    buildSelectionFromEditorCoordinates
+    buildLocationFromEditorCoordinates
 } = require('../../../utilities/selection-builder');
 
-const { readFileSource } = require('../../../utilities/file-reader');
 const { loadModule } = require('../../../utilities/module-loader');
-
-const { parse } = loadModule('parser/parser');
-const { buildNodePath } = loadModule('node-path');
 
 const {
     acceptableNodeTypes,
@@ -22,27 +18,12 @@ const {
 
 const { buildExtractionPath } = loadModule('commands/extract-variable/ExtractionPathBuilder');
 
-const { transformSelectionToLocation } = loadModule('code-range-transforms');
-
-function readTestSource() {
-    return readFileSource(__dirname, 'fixtures/test-source.js');
-}
-
-function buildPathToSelection(selection) {
-    const sourceCode = readTestSource();
-    const parsedSource = parse(sourceCode);
-
-    return buildNodePath(parsedSource, selection);
-}
-
-function getSharedSelection() {
-    return buildSelectionFromEditorCoordinates({
-        start: buildEditorCoordinates({ line: 10, column: 40 }),
-        end: buildEditorCoordinates({ line: 10, column: 41 })
-    });
-}
-
-const last = values => values[values.length - 1];
+const {
+    readTestSource,
+    buildPathToSelection,
+    getSharedSelection,
+    last
+} = require('./extract-variable-test-helpers');
 
 describe('extract variable', function () {
 
@@ -111,7 +92,7 @@ describe('extract variable', function () {
 
     describe('capture selected text', function () {
         it('returns a single line of selected text', function () {
-            const selection = buildSelectionFromEditorCoordinates({
+            const selection = buildLocationFromEditorCoordinates({
                 start: buildEditorCoordinates({ line: 6, column: 25 }),
                 end: buildEditorCoordinates({ line: 6, column: 32 })
             });
@@ -124,7 +105,7 @@ describe('extract variable', function () {
         });
 
         it('returns multiple lines of selected text', function () {
-            const selection = buildSelectionFromEditorCoordinates({
+            const selection = buildLocationFromEditorCoordinates({
                 start: buildEditorCoordinates({ line: 9, column: 32 }),
                 end: buildEditorCoordinates({ line: 12, column: 26 })
             });

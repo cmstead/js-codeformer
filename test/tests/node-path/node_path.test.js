@@ -2,7 +2,7 @@ require('../../utilities/approvals').configure();
 
 const {
     buildEditorCoordinates,
-    buildSelectionFromEditorCoordinates
+    buildLocationFromEditorCoordinates
 } = require('../../utilities/selection-builder');
 
 const { readFileSource } = require('../../utilities/file-reader');
@@ -17,7 +17,7 @@ describe('node path builder', function () {
 
         const parsedSource = parse(fileSource);
 
-        const selection = buildSelectionFromEditorCoordinates({
+        const selection = buildLocationFromEditorCoordinates({
             start: buildEditorCoordinates({ line: 11, column: 44 }),
             end: buildEditorCoordinates({ line: 11, column: 45 })
         });
