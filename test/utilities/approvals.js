@@ -13,7 +13,7 @@ function configure() {
 
             EOL: "\n",
 
-            errorOnStaleApprovedFiles: false,
+            errorOnStaleApprovedFiles: true,
 
             shouldIgnoreStaleApprovedFile: function (/*fileName*/) { return false; },
 
