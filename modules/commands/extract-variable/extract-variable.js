@@ -65,14 +65,14 @@ function getSourceSelection(sourceCode, location) {
 
     const selectedLines = sourceCode.split('\n').slice(startLine, endLine + 1);
 
-    if(selectedLines.length === 1) {
+    if (selectedLines.length === 1) {
         return selectedLines[0].slice(startColumn, endColumn)
     } else {
         const lastIndex = selectedLines.length - 1;
 
         selectedLines[0] = selectedLines[0].slice(startColumn);
         selectedLines[lastIndex] = selectedLines[lastIndex].slice(0, endColumn);
-        
+
         return selectedLines.join('\n');
     }
 
@@ -83,11 +83,25 @@ function buildVariableDeclaration({ variableType, variableName, source }) {
     return `${variableType} ${variableName} = ${sanitizedSource};`;
 }
 
+function selectExtractionLocation(nodePath, extractionBlock) {
+    let extractionNode = null;
+
+    for (let i = 0; i < nodePath.length; i++) {
+        if (nodePath[i] === extractionBlock) {
+            extractionNode = nodePath[i + 1];
+            break;
+        }
+    }
+
+    return extractionNode.loc;
+}
+
 module.exports = {
     acceptableNodeTypes,
     acceptableVariableTypes,
     buildExtractionScopeList,
     buildVariableDeclaration,
     selectExtractionScopes,
+    selectExtractionLocation,
     getSourceSelection
 };

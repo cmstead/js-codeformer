@@ -16,6 +16,7 @@ const {
     buildExtractionScopeList,
     buildVariableDeclaration,
     selectExtractionScopes,
+    selectExtractionLocation,
     getSourceSelection
 } = loadModule('commands/extract-variable/extract-variable');
 
@@ -139,9 +140,27 @@ describe('extract variable', function () {
 
             const variableDeclaration = buildVariableDeclaration({ variableType, variableName, source });
 
-            console.log(variableDeclaration);
-
             assert.equal(variableDeclaration, `${variableType} ${variableName} = ${source}`);
+        });
+    });
+
+    describe('select extraction location', function () {
+        it('selects next surrounding node down from current selected block location', function () {
+            const selection = getSharedSelection();
+            const nodePath = buildPathToSelection(selection);
+
+            const extractionPath = buildExtractionPath(nodePath, acceptableNodeTypes);
+
+            const extractionScopeList = buildExtractionScopeList(extractionPath);
+
+            const userSelection = extractionScopeList[0];
+
+            const selectedScopes = selectExtractionScopes(extractionPath, userSelection);
+
+            const extractionBlock = selectedScopes.extractionScope[0];
+            const extractionLocation = selectExtractionLocation(nodePath, extractionBlock);
+
+            this.verifyAsJSON(extractionLocation);
         });
     });
 
