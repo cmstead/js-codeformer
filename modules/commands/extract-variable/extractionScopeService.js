@@ -40,10 +40,7 @@ function selectExtractionScopes(extractionPath, userSelection) {
     const selectionIndex = getUserSelectionIndex(userSelection);
 
     return {
-        extractionScope: extractionPath[selectionIndex],
-        subordinateScope: selectionIndex > 0 
-            ? extractionPath[selectionIndex - 1]
-            : null
+        extractionScope: extractionPath[selectionIndex]
     };
 }
 

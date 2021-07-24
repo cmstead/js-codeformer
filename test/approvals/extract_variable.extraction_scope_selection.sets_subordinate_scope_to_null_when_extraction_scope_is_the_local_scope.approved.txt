@@ -1,4 +1,3 @@
 {
-  "extractionScope": "IfStatement",
-  "subordinateScope": null
+  "extractionScope": "IfStatement"
 }

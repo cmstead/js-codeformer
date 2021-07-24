@@ -70,8 +70,7 @@ describe('extract variable', function () {
             const selectedScopes = selectExtractionScopes(extractionPath, userSelection);
 
             this.verifyAsJSON({
-                extractionScope: last(selectedScopes.extractionScope).type,
-                subordinateScope: last(selectedScopes.subordinateScope).type
+                extractionScope: last(selectedScopes.extractionScope).type
             });
         });
 
@@ -88,8 +87,7 @@ describe('extract variable', function () {
             const selectedScopes = selectExtractionScopes(extractionPath, userSelection);
 
             this.verifyAsJSON({
-                extractionScope: last(selectedScopes.extractionScope).type,
-                subordinateScope: selectedScopes.subordinateScope
+                extractionScope: last(selectedScopes.extractionScope).type
             });
         });
     });
