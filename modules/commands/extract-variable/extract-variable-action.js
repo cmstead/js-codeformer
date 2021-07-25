@@ -1,9 +1,3 @@
-// 1. [x] get the scope for extraction (window.showQuickPick)
-// 2. [x] get the variable name (window.showInputBox)
-// 3. [ ] get variable type (const, let, var -- in that order -- window.showQuickPick)
-// 4. [ ] replace original selection with variable name
-// 5. [ ] insert variable declaration
-
 const { prepareActionSetup } = require('../../action-setup');
 
 const { buildExtractionPath } = require('./ExtractionPathBuilder');
@@ -11,11 +5,23 @@ const { buildExtractionPath } = require('./ExtractionPathBuilder');
 const {
     buildExtractionScopeList,
     selectExtractionScopes,
+    selectExtractionLocation,
     acceptableNodeTypes,
     variableTypeList,
     buildVariableDeclaration,
     getSourceSelection
 } = require('./extract-variable');
+
+function transformLocationPartToPosition(Position, { line, column }) {
+    return new Position(line - 1, column);
+}
+
+function transformLocationToRange({ Position, Range }, { start, end }) {
+    return new Range(
+        transformLocationPartToPosition(Position, start),
+        transformLocationPartToPosition(Position, end)
+    );
+}
 
 function extractVariable(vscode) {
     const {
@@ -26,6 +32,7 @@ function extractVariable(vscode) {
     const actionSetup = prepareActionSetup(vscode);
     const sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location)
 
+    const nodePath = actionSetup.selectionPath;
     const extractionPath = buildExtractionPath(actionSetup.selectionPath, acceptableNodeTypes);
     const extractionScopeList = buildExtractionScopeList(extractionPath);
 
@@ -77,6 +84,22 @@ function extractVariable(vscode) {
                 variableName: newVariableName,
                 source: sourceSelection
             })
+        })
+        .then(function () {
+            const uri = vscode.window.activeTextEditor.document.uri;
+
+            const extractionBlock = extractionScopes.extractionScope[0];
+            const extractionLocation = selectExtractionLocation(nodePath, extractionBlock);
+
+            const extractionPosition = transformLocationPartToPosition(extractionLocation.start);
+            const replacementRange = transformLocationToRange(vscode, actionSetup.location);
+
+            const workspaceEdit = new vscode.WorkspaceEdit();
+
+            workspaceEdit.replace(uri, replacementRange, newVariableName);
+            workspaceEdit.insert(uri, extractionPosition, variableDeclaration + '\n');
+
+            vscode.workspace.applyEdit(workspaceEdit);
         })
         .catch(function (error) {
             vscode.window.showErrorMessage(error.message);
