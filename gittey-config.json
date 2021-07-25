@@ -29,6 +29,10 @@
             "command": "gittey commit; git push"
         },
         {
+            "name": "push-minor",
+            "command": "gittey commit; npm version minor; git push"
+        },
+        {
             "name": "pull",
             "command": "gittey commit; git pull"
         }
