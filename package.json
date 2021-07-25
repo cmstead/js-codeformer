@@ -5,13 +5,13 @@
 	"version": "0.0.1",
 	"publisher": "cmstead",
 	"engines": {
-		"vscode": "^1.58.0"
+		"vscode": "^1.56.0"
 	},
 	"categories": [
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:cmstead.js-codeformer.helloWorld"
+		"onCommand:cmstead.js-codeformer.extractVariable"
 	],
 	"main": "./extension.js",
 	"scripts": {
@@ -39,8 +39,8 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "cmstead.js-codeformer.helloWorld",
-				"title": "Hello World"
+				"command": "cmstead.js-codeformer.extractVariable",
+				"title": "JS Codeformer: Extract Variable"
 			}
 		]
 	}

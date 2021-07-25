@@ -7,20 +7,15 @@
 // - FunctionExpression
 // - ArrowFunctionExpression (only with FunctionBody)
 
-// 1. [ ] get the scope for extraction (window.showQuickPick)
-// 2. [ ] get the variable name (window.showInputBox)
-// 3. [ ] get variable type (const, let, var -- in that order -- window.showQuickPick)
-
 // 1. [x] build extraction scope path
 // 2. [x] prepare extraction scope data for user scope selection
-// 3. [ ] create variable declaration code
+// 3. [x] create variable declaration code
 //     1. [x] capture selected text
-//     2. [ ] build variable source string using
+//     2. [x] build variable source string using
 //              variable type, variable name, and selected source code
-//     3. [ ] Semicolons?? -- I never did figure this out before.
-// 4. [ ] select location for variable declaration insertion
-// 5. [ ] select location for variable name input
-// 6. [ ] create array of edits: [value replacement + location, variable declaration + location]
+//     3. [x] Semicolons?? -- I never did figure this out before.
+// 4. [x] select location for variable declaration insertion
+// 5. [x] select location for variable name input
 
 
 const {
@@ -45,6 +40,10 @@ const acceptableVariableTypes = {
     LET: 'let',
     VAR: 'var'
 };
+
+const variableTypeList = Object
+    .keys(acceptableVariableTypes)
+    .map(key => acceptableVariableTypes[key]);
 
 function locationToSourceSelection({ start, end }) {
     return {
@@ -103,5 +102,6 @@ module.exports = {
     buildVariableDeclaration,
     selectExtractionScopes,
     selectExtractionLocation,
-    getSourceSelection
+    getSourceSelection,
+    variableTypeList
 };

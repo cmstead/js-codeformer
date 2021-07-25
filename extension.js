@@ -1,12 +1,14 @@
 const vscode = require('vscode');
 
-const { prepareActionSetup } = require('./modules/action-setup');
+const { extractVariable } = require('./modules/commands/extract-variable/extract-variable-action');
 
 function activate(context) {
 
-	let disposable = vscode.commands.registerCommand('cmstead.js-codeformer.extractVariable', function () {
-		const actionSetup = prepareActionSetup(vscode);
-	});
+	let disposable = vscode.commands.registerCommand(
+		'cmstead.js-codeformer.extractVariable',
+		function () {
+			extractVariable(vscode);
+		});
 
 	context.subscriptions.push(disposable);
 }
