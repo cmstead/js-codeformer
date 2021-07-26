@@ -9,6 +9,7 @@ const {
     window: {
         activeTextEditor,
         showErrorMessage,
+        showInformationMessage,
         showInputBox,
         showQuickPick
     },

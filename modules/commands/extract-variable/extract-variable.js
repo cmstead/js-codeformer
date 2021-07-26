@@ -28,11 +28,17 @@ const { buildExtractionPath } = require('./ExtractionPathBuilder');
 const astNodeTypes = require('../../ast-node-types');
 
 const acceptableNodeTypes = [
-    astNodeTypes.ARROW_FUNCTION_EXPRESSION,
     astNodeTypes.FUNCTION_DECLARATION,
+    astNodeTypes.ARROW_FUNCTION_EXPRESSION,
     astNodeTypes.FUNCTION_EXPRESSION,
+    astNodeTypes.FUNCTION,
     astNodeTypes.IF_STATEMENT,
-    astNodeTypes.METHOD_DEFINITION
+    astNodeTypes.FOR_STATEMENT,
+    astNodeTypes.FOR_IN_STATEMENT,
+    astNodeTypes.WHILE_STATEMENT,
+    astNodeTypes.DO_WHILE_STATEMENT,
+    astNodeTypes.METHOD_DEFINITION,
+    astNodeTypes.OBJECT_EXPRESSION
 ];
 
 const acceptableVariableTypes = {

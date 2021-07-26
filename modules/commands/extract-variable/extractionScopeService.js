@@ -4,7 +4,12 @@ const typeTransforms = {
     [astNodeTypes.ARROW_FUNCTION_EXPRESSION]: () => 'arrow function',
     [astNodeTypes.FUNCTION_DECLARATION]: (node) => `the function named '${node.id.name}'`,
     [astNodeTypes.FUNCTION_EXPRESSION]: () => 'function expression',
+    [astNodeTypes.FUNCTION]: () => 'function',
     [astNodeTypes.IF_STATEMENT]: () => 'if statement',
+    [astNodeTypes.FOR_STATEMENT]: () => 'for statement',
+    [astNodeTypes.FOR_IN_STATEMENT]: () => 'for in statement',
+    [astNodeTypes.WHILE_STATEMENT]: () => 'while statement',
+    [astNodeTypes.DO_WHILE_STATEMENT]: () => 'do while statement',
     [astNodeTypes.METHOD_DEFINITION]: (node) => `the method named '${node.key.name}'`,
     [astNodeTypes.OBJECT_EXPRESSION]: () => 'object literal'
 }
