@@ -91,7 +91,7 @@ function extractVariable(vscode) {
             const extractionBlock = extractionScopes.extractionScope[0];
             const extractionLocation = selectExtractionLocation(nodePath, extractionBlock);
 
-            const extractionPosition = transformLocationPartToPosition(extractionLocation.start);
+            const extractionPosition = transformLocationPartToPosition(vscode.Position, extractionLocation.start);
             const replacementRange = transformLocationToRange(vscode, actionSetup.location);
 
             const workspaceEdit = new vscode.WorkspaceEdit();
