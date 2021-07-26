@@ -4,6 +4,7 @@ const { prepareActionSetup } = require('../../action-setup');
 
 const { buildExtractionPath } = require('./ExtractionPathBuilder');
 
+const vscode = vscodeService.getVscode();
 const {
     window: {
         activeTextEditor,
@@ -17,7 +18,7 @@ const {
     Position,
     Range,
     WorkspaceEdit
- } = vscodeService.getVscode();
+} = vscode;
 
 const {
     buildExtractionScopeList,
@@ -40,7 +41,96 @@ function transformLocationToRange({ start, end }) {
     );
 }
 
-function extractVariable(vscode) {
+function openSelectList({ values, title }) {
+    return showQuickPick(values, {
+        title: title,
+        ignoreFocusOut: true
+    });
+}
+
+function openInputBox(title) {
+    return showInputBox({
+        title: title,
+        ignoreFocusOut: true
+    })
+}
+
+function selectExtractionPoint(
+    extractionScopeList,
+    extractionPath
+) {
+    const values = extractionScopeList;
+    const title = 'Extract variable to where?';
+
+    return openSelectList({ values, title })
+
+        .then(function (selectedScope) {
+
+            if (typeof selectedScope === 'undefined') {
+                throw new Error('Scope not selected; cannot extract variable');
+            }
+
+            return selectExtractionScopes(extractionPath, selectedScope);
+        });
+}
+
+function selectVariableType() {
+    return openSelectList({
+        values: variableTypeList,
+        title: 'Select variable type'
+    })
+        .then(function (variableType) {
+            if (typeof variableType === 'undefined') {
+                throw new Error('No variable type selected; cannot extract variable');
+            }
+
+            return variableType;
+        })
+}
+
+function getVariableName() {
+    return openInputBox('New variable name')
+        .then(function (variableName) {
+            if (typeof variableName === 'undefined') {
+                throw new Error('No variable name entered; cannot extract variable');
+            }
+
+            return variableName;
+        });
+}
+
+function buildEditLocations({
+    extractionScopes,
+    nodePath,
+    actionSetup
+}) {
+    const extractionBlock = extractionScopes.extractionScope[0];
+    const extractionLocation = selectExtractionLocation(nodePath, extractionBlock);
+
+    return {
+        extractionPosition: transformLocationPartToPosition(extractionLocation.start),
+        replacementRange: transformLocationToRange(actionSetup.location)
+    }
+
+}
+
+function applyCodeEdits({
+    newVariableName,
+    variableDeclaration,
+    extractionPosition,
+    replacementRange
+}) {
+    const uri = activeTextEditor.document.uri;
+
+    const workspaceEdit = new WorkspaceEdit();
+
+    workspaceEdit.replace(uri, replacementRange, newVariableName);
+    workspaceEdit.insert(uri, extractionPosition, variableDeclaration + '\n');
+
+    applyEdit(workspaceEdit);
+}
+
+function extractVariable() {
     const actionSetup = prepareActionSetup(vscode);
     const sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location)
 
@@ -54,65 +144,44 @@ function extractVariable(vscode) {
 
     let variableDeclaration = null;
 
-    showQuickPick(extractionScopeList, {
-        title: 'Extract variable to where?',
-        ignoreFocusOut: true
-    })
-        .then(function (selectedScope) {
+    return selectExtractionPoint(
+        extractionScopeList,
+        extractionPath
+    )
+        .then((extractionPoint) =>
+            extractionScopes = extractionPoint)
 
-            if (typeof selectedScope === 'undefined') {
-                throw new Error('Scope not selected; cannot extract variable');
-            }
+        .then(() => selectVariableType())
+        .then((variableType) =>
+            newVariableType = variableType)
 
-            extractionScopes = selectExtractionScopes(extractionPath, selectedScope);
+        .then(() => getVariableName())
+        .then((variableName) =>
+            newVariableName = variableName)
 
-            return showInputBox({
-                title: 'New variable name',
-                ignoreFocusOut: true
-            })
-        })
-        .then(function (variableName) {
-            if (typeof variableName === 'undefined') {
-                throw new Error('No variable name entered; cannot extract variable');
-            }
-
-            newVariableName = variableName;
-
-            return showQuickPick(variableTypeList, {
-                title: 'Select variable type',
-                ignoreFocusOut: true
-            })
-        })
-        .then(function (variableType) {
-            if (typeof variableType === 'undefined') {
-                throw new Error('No variable type selected; cannot extract variable');
-            }
-
-            newVariableType = variableType;
-        })
-        .then(function () {
-            variableDeclaration = buildVariableDeclaration({
+        .then(() => buildVariableDeclaration({
                 variableType: newVariableType,
                 variableName: newVariableName,
                 source: sourceSelection
-            })
-        })
-        .then(function () {
-            const uri = activeTextEditor.document.uri;
+            }))
+        .then((newVariableDeclaration) =>
+            variableDeclaration = newVariableDeclaration)
 
-            const extractionBlock = extractionScopes.extractionScope[0];
-            const extractionLocation = selectExtractionLocation(nodePath, extractionBlock);
+        .then(() =>
+            buildEditLocations({
+                extractionScopes,
+                nodePath,
+                actionSetup
+            }))
 
-            const extractionPosition = transformLocationPartToPosition(extractionLocation.start);
-            const replacementRange = transformLocationToRange(actionSetup.location);
+        .then(({ extractionPosition, replacementRange }) =>
+            applyCodeEdits({
+                newVariableName,
+                variableDeclaration,
+                extractionPosition,
+                replacementRange
+            }))
 
-            const workspaceEdit = new WorkspaceEdit();
-
-            workspaceEdit.replace(uri, replacementRange, newVariableName);
-            workspaceEdit.insert(uri, extractionPosition, variableDeclaration + '\n');
-
-            applyEdit(workspaceEdit);
-        })
         .catch(function (error) {
             showErrorMessage(error.message);
         });
