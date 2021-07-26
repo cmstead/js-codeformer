@@ -1,3 +1,5 @@
+const vscodeService = require('../../vscodeService');
+
 const { prepareActionSetup } = require('../../action-setup');
 
 const { buildExtractionPath } = require('./ExtractionPathBuilder');
