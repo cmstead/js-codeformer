@@ -4,6 +4,12 @@ const { prepareActionSetup } = require('../../action-setup');
 
 const { buildExtractionPath } = require('./ExtractionPathBuilder');
 
+const {window: {
+    showErrorMessage,
+    showInputBox,
+    showQuickPick
+}} = vscodeService.getVscode();
+
 const {
     buildExtractionScopeList,
     selectExtractionScopes,
@@ -26,11 +32,6 @@ function transformLocationToRange({ Position, Range }, { start, end }) {
 }
 
 function extractVariable(vscode) {
-    const {
-        showInputBox,
-        showQuickPick
-    } = vscode.window;
-
     const actionSetup = prepareActionSetup(vscode);
     const sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location)
 
@@ -104,7 +105,7 @@ function extractVariable(vscode) {
             vscode.workspace.applyEdit(workspaceEdit);
         })
         .catch(function (error) {
-            vscode.window.showErrorMessage(error.message);
+            showErrorMessage(error.message);
         });
 }
 
