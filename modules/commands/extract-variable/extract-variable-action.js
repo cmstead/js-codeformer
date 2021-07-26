@@ -4,11 +4,20 @@ const { prepareActionSetup } = require('../../action-setup');
 
 const { buildExtractionPath } = require('./ExtractionPathBuilder');
 
-const {window: {
-    showErrorMessage,
-    showInputBox,
-    showQuickPick
-}} = vscodeService.getVscode();
+const {
+    window: {
+        activeTextEditor,
+        showErrorMessage,
+        showInputBox,
+        showQuickPick
+    },
+    workspace: {
+        applyEdit
+    },
+    Position,
+    Range,
+    WorkspaceEdit
+ } = vscodeService.getVscode();
 
 const {
     buildExtractionScopeList,
@@ -20,14 +29,14 @@ const {
     getSourceSelection
 } = require('./extract-variable');
 
-function transformLocationPartToPosition(Position, { line, column }) {
+function transformLocationPartToPosition({ line, column }) {
     return new Position(line - 1, column);
 }
 
-function transformLocationToRange({ Position, Range }, { start, end }) {
+function transformLocationToRange({ start, end }) {
     return new Range(
-        transformLocationPartToPosition(Position, start),
-        transformLocationPartToPosition(Position, end)
+        transformLocationPartToPosition(start),
+        transformLocationPartToPosition(end)
     );
 }
 
@@ -45,7 +54,7 @@ function extractVariable(vscode) {
 
     let variableDeclaration = null;
 
-    showQuickPick(extractionScopeList, { 
+    showQuickPick(extractionScopeList, {
         title: 'Extract variable to where?',
         ignoreFocusOut: true
     })
@@ -57,13 +66,13 @@ function extractVariable(vscode) {
 
             extractionScopes = selectExtractionScopes(extractionPath, selectedScope);
 
-            return showInputBox({ 
+            return showInputBox({
                 title: 'New variable name',
                 ignoreFocusOut: true
             })
         })
         .then(function (variableName) {
-            if(typeof variableName === 'undefined') {
+            if (typeof variableName === 'undefined') {
                 throw new Error('No variable name entered; cannot extract variable');
             }
 
@@ -75,7 +84,7 @@ function extractVariable(vscode) {
             })
         })
         .then(function (variableType) {
-            if(typeof variableType === 'undefined') {
+            if (typeof variableType === 'undefined') {
                 throw new Error('No variable type selected; cannot extract variable');
             }
 
@@ -89,20 +98,20 @@ function extractVariable(vscode) {
             })
         })
         .then(function () {
-            const uri = vscode.window.activeTextEditor.document.uri;
+            const uri = activeTextEditor.document.uri;
 
             const extractionBlock = extractionScopes.extractionScope[0];
             const extractionLocation = selectExtractionLocation(nodePath, extractionBlock);
 
-            const extractionPosition = transformLocationPartToPosition(vscode.Position, extractionLocation.start);
-            const replacementRange = transformLocationToRange(vscode, actionSetup.location);
+            const extractionPosition = transformLocationPartToPosition(extractionLocation.start);
+            const replacementRange = transformLocationToRange(actionSetup.location);
 
-            const workspaceEdit = new vscode.WorkspaceEdit();
+            const workspaceEdit = new WorkspaceEdit();
 
             workspaceEdit.replace(uri, replacementRange, newVariableName);
             workspaceEdit.insert(uri, extractionPosition, variableDeclaration + '\n');
 
-            vscode.workspace.applyEdit(workspaceEdit);
+            applyEdit(workspaceEdit);
         })
         .catch(function (error) {
             showErrorMessage(error.message);
