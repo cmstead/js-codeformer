@@ -26,7 +26,7 @@
     "aliases": [
         {
             "name": "push",
-            "command": "gittey commit; git push"
+            "command": "gittey pull; git push"
         },
         {
             "name": "push-minor",
