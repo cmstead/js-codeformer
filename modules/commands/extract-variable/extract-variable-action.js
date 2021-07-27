@@ -4,20 +4,23 @@ const { prepareActionSetup } = require('../../action-setup');
 
 const { buildExtractionPath } = require('./ExtractionPathBuilder');
 
+const {
+    transformLocationPartToPosition,
+    transformLocationToRange
+} = require('../../textEditTransforms');
+
 const vscode = vscodeService.getVscode();
 const {
     window: {
         activeTextEditor,
         showErrorMessage,
-        showInformationMessage,
         showInputBox,
         showQuickPick
     },
     workspace: {
         applyEdit
     },
-    Position,
-    Range,
+
     WorkspaceEdit
 } = vscode;
 
@@ -30,17 +33,6 @@ const {
     buildVariableDeclaration,
     getSourceSelection
 } = require('./extract-variable');
-
-function transformLocationPartToPosition({ line, column }) {
-    return new Position(line - 1, column);
-}
-
-function transformLocationToRange({ start, end }) {
-    return new Range(
-        transformLocationPartToPosition(start),
-        transformLocationPartToPosition(end)
-    );
-}
 
 function openSelectList({ values, title }) {
     return showQuickPick(values, {

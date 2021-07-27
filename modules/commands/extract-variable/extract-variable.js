@@ -1,29 +1,7 @@
-
-// Stuff to do to extract a variable:
-
-// Acceptable scopes:
-// - Program
-// - Function
-// - FunctionExpression
-// - ArrowFunctionExpression (only with FunctionBody)
-
-// 1. [x] build extraction scope path
-// 2. [x] prepare extraction scope data for user scope selection
-// 3. [x] create variable declaration code
-//     1. [x] capture selected text
-//     2. [x] build variable source string using
-//              variable type, variable name, and selected source code
-//     3. [x] Semicolons?? -- I never did figure this out before.
-// 4. [x] select location for variable declaration insertion
-// 5. [x] select location for variable name input
-
-
 const {
     buildExtractionScopeList,
     selectExtractionScopes
 } = require('./extractionScopeService');
-
-const { buildExtractionPath } = require('./ExtractionPathBuilder');
 
 const astNodeTypes = require('../../ast-node-types');
 
