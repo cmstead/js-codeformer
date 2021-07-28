@@ -30,7 +30,7 @@
         },
         {
             "name": "push-minor",
-            "command": "gittey commit; npm version minor; git push"
+            "command": "gittey pull; npm version minor; git push origin main --tags"
         },
         {
             "name": "pull",
