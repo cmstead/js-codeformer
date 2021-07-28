@@ -2,7 +2,7 @@
 	"name": "js-codeformer",
 	"displayName": "JS CodeFormer",
 	"description": "A refactoring and coding tool for building better source",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"publisher": "cmstead",
 	"engines": {
 		"vscode": "^1.56.0"
