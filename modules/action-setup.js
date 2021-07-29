@@ -2,7 +2,9 @@ const parser = require('./parser/parser');
 const nodePath = require('./node-path');
 const { transformSelectionToLocation } = require('./code-range-transforms');
 
-function prepareActionSetup(vscode) {
+const vscode = require('./vscodeService').getVscode();
+
+function prepareActionSetup() {
     const activeTextEditor = vscode.window.activeTextEditor;
 
     const location = transformSelectionToLocation(activeTextEditor.selection);

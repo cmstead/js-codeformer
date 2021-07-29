@@ -1,4 +1,4 @@
-const vscodeService = require('../../vscodeService');
+const vscodeService = require('./vscodeService');
 
 const {
     Position,

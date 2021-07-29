@@ -33,6 +33,10 @@
             "command": "gittey pull; npm version minor; git push origin main --tags"
         },
         {
+            "name": "push-patch",
+            "command": "gittey pull; npm version patch; git push origin main --tags"
+        },
+        {
             "name": "pull",
             "command": "gittey commit; git pull"
         }

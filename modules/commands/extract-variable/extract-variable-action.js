@@ -1,28 +1,14 @@
-const vscodeService = require('../../vscodeService');
-
 const { prepareActionSetup } = require('../../action-setup');
-
-const { buildExtractionPath } = require('./ExtractionPathBuilder');
+const { buildExtractionPath } = require('../../ExtractionPathBuilder');
+const { getNewSourceEdit } = require('../../SourceEdit');
+const { showErrorMessage } = require('../../messageService');
+const { validateUserInput } = require('../../validatorService');
+const { openInputBox, openSelectList } = require('../../inputService');
 
 const {
     transformLocationPartToPosition,
     transformLocationToRange
 } = require('../../textEditTransforms');
-
-const vscode = vscodeService.getVscode();
-const {
-    window: {
-        activeTextEditor,
-        showErrorMessage,
-        showInputBox,
-        showQuickPick
-    },
-    workspace: {
-        applyEdit
-    },
-
-    WorkspaceEdit
-} = vscode;
 
 const {
     buildExtractionScopeList,
@@ -34,104 +20,82 @@ const {
     getSourceSelection
 } = require('./extract-variable');
 
-function openSelectList({ values, title }) {
-    return showQuickPick(values, {
-        title: title,
-        ignoreFocusOut: true
-    });
-}
-
-function openInputBox(title) {
-    return showInputBox({
-        title: title,
-        ignoreFocusOut: true
-    })
-}
 
 function selectExtractionPoint(
     extractionScopeList,
     extractionPath
 ) {
-    const values = extractionScopeList;
-    const title = 'Extract variable to where?';
-
-    return openSelectList({ values, title })
+    return openSelectList({
+        values: extractionScopeList,
+        title: 'Extract variable to where?'
+    })
 
         .then(function (selectedScope) {
-
-            if (typeof selectedScope === 'undefined') {
-                throw new Error('Scope not selected; cannot extract variable');
-            }
+            validateUserInput({
+                value: selectedScope,
+                validator: (selectedScope) => selectedScope !== null,
+                message: 'Scope not selected; cannot extract variable'
+            });
 
             return selectExtractionScopes(extractionPath, selectedScope);
         });
 }
+
 
 function selectVariableType() {
     return openSelectList({
         values: variableTypeList,
         title: 'Select variable type'
     })
-        .then(function (variableType) {
-            if (typeof variableType === 'undefined') {
-                throw new Error('No variable type selected; cannot extract variable');
-            }
-
-            return variableType;
-        })
+        .then((variableType) =>
+            validateUserInput({
+                value: variableType,
+                validator: (variableType) => variableTypeList.includes(variableType),
+                message: 'Invalid variable type, or no variable type selected; cannot extract variable'
+            })
+        )
 }
+
 
 function getVariableName() {
     return openInputBox('New variable name')
-        .then(function (variableName) {
-            if (typeof variableName === 'undefined') {
-                throw new Error('No variable name entered; cannot extract variable');
-            }
-
-            return variableName;
-        });
+        .then((variableName) =>
+            validateUserInput({
+                value: variableName,
+                validator: (variableName) => variableName !== '',
+                message: 'No variable name entered; cannot extract variable'
+            })
+        );
 }
 
+
 function buildEditLocations({
-    extractionScopes,
+    extractionBlock,
     nodePath,
-    actionSetup
+    actionSetup: { location: selectionLocation }
 }) {
-    const extractionBlock = extractionScopes.extractionScope[0];
-    const extractionLocation = selectExtractionLocation(nodePath, extractionBlock);
+    const { start: extractionLocationStart } = selectExtractionLocation(nodePath, extractionBlock);
 
     return {
-        extractionPosition: transformLocationPartToPosition(extractionLocation.start),
-        replacementRange: transformLocationToRange(actionSetup.location)
+        extractionPosition: transformLocationPartToPosition(extractionLocationStart),
+        replacementRange: transformLocationToRange(selectionLocation)
     }
 
 }
 
-function applyCodeEdits({
-    newVariableName,
-    variableDeclaration,
-    extractionPosition,
-    replacementRange
-}) {
-    const uri = activeTextEditor.document.uri;
-
-    const workspaceEdit = new WorkspaceEdit();
-
-    workspaceEdit.replace(uri, replacementRange, newVariableName);
-    workspaceEdit.insert(uri, extractionPosition, variableDeclaration + '\n');
-
-    applyEdit(workspaceEdit);
+function retrieveExtractionBlock(extractionPoint) {
+    return extractionPoint.extractionScope[0];
 }
 
 function extractVariable() {
-    const actionSetup = prepareActionSetup(vscode);
-    const sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location)
+    const actionSetup = prepareActionSetup();
+    const sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location);
 
     const nodePath = actionSetup.selectionPath;
     const extractionPath = buildExtractionPath(actionSetup.selectionPath, acceptableNodeTypes);
     const extractionScopeList = buildExtractionScopeList(extractionPath);
 
-    let extractionScopes = null;
+    let extractionBlock = null;
     let newVariableName = null;
     let newVariableType = null;
 
@@ -142,7 +106,7 @@ function extractVariable() {
         extractionPath
     )
         .then((extractionPoint) =>
-            extractionScopes = extractionPoint)
+            extractionBlock = retrieveExtractionBlock(extractionPoint))
 
         .then(() => selectVariableType())
         .then((variableType) =>
@@ -153,32 +117,31 @@ function extractVariable() {
             newVariableName = variableName)
 
         .then(() => buildVariableDeclaration({
-                variableType: newVariableType,
-                variableName: newVariableName,
-                source: sourceSelection
-            }))
+            variableType: newVariableType,
+            variableName: newVariableName,
+            source: sourceSelection
+        }))
         .then((newVariableDeclaration) =>
             variableDeclaration = newVariableDeclaration)
 
         .then(() =>
             buildEditLocations({
-                extractionScopes,
+                extractionBlock,
                 nodePath,
                 actionSetup
             }))
 
         .then(({ extractionPosition, replacementRange }) =>
-            applyCodeEdits({
-                newVariableName,
-                variableDeclaration,
-                extractionPosition,
-                replacementRange
-            }))
+            getNewSourceEdit()
+                .addReplacementEdit(replacementRange, newVariableName)
+                .addInsertEdit(extractionPosition, variableDeclaration + '\n')
+                .applyEdit())
 
         .catch(function (error) {
             showErrorMessage(error.message);
         });
 }
+
 
 module.exports = {
     extractVariable

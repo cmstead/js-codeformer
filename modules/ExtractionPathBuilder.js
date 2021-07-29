@@ -2,7 +2,7 @@ const {
     BLOCK_STATEMENT,
     OBJECT_EXPRESSION,
     PROGRAM
-} = require('../../ast-node-types');
+} = require('./ast-node-types');
 
 class ExtractionPath {
     constructor() {

@@ -1,7 +1,7 @@
 const {
     buildExtractionScopeList,
     selectExtractionScopes
-} = require('./extractionScopeService');
+} = require('./variableExtractionScopeService');
 
 const astNodeTypes = require('../../ast-node-types');
 
