@@ -20,7 +20,7 @@ const {
     getSourceSelection
 } = loadModule('commands/extract-variable/extract-variable');
 
-const { buildExtractionPath } = loadModule('commands/extract-variable/ExtractionPathBuilder');
+const { buildExtractionPath } = loadModule('ExtractionPathBuilder');
 
 const {
     readTestSource,
