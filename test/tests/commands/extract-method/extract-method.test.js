@@ -1,6 +1,6 @@
 require('../../../utilities/approvals').configure();
 
-// const { assert } = require('chai');
+const { assert } = require('chai');
 
 const {
     buildEditorCoordinates,
@@ -27,6 +27,20 @@ describe('extract method behaviors', function () {
             const parsedSelection = parseSelectedText(testSource, selectedLocation);
 
             this.verifyAsJSON(parsedSelection);
+        });
+
+        it('throws human readable error when selection is unparseable', function () {
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 9, column: 33 }),
+                end: buildEditorCoordinates({ line: 12, column: 26 })
+            });
+
+            const testSource = readFileSource(__dirname, 'fixtures/test-source.js');
+
+            assert.throws(
+                () => parseSelectedText(testSource, selectedLocation),
+                'Selected source cannot be interpreted, unable to extract method'
+            );
         });
     });
 
