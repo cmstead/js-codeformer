@@ -11,7 +11,17 @@ class Nesting {
                             () => { return b; }
                         ];
                     } else {
-                        return null
+                        const d = 1234;
+
+                        const addSomething = (a) => a + b;
+
+                        function multiplySomething(c, d) {
+                            return c * d;
+                        }
+
+                        foo.bar.baz('test');
+
+                        return addSomething(a) * d;
                     }
     
                 }

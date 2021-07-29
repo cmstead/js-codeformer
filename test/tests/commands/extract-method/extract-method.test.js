@@ -11,7 +11,10 @@ const { loadModule } = require('../../../utilities/module-loader');
 
 const { readFileSource } = require('../../../utilities/file-reader');
 
-const { parseSelectedText } = loadModule('commands/extract-method/extract-method');
+const {
+    findAppropriateParameters,
+    parseSelectedText
+} = loadModule('commands/extract-method/extract-method');
 
 describe('extract method behaviors', function () {
 
@@ -45,10 +48,10 @@ describe('extract method behaviors', function () {
     });
 
     describe('select parameters', function () {
-        it.skip('captures necessary parameters for all bound variables from simple local scope', function () {
+        it('captures necessary parameters for all bound variables from simple local scope', function () {
             const selectedLocation = buildLocationFromEditorCoordinates({
-                start: buildEditorCoordinates({ line: 9, column: 32 }),
-                end: buildEditorCoordinates({ line: 12, column: 26 })
+                start: buildEditorCoordinates({ line: 14, column: 25 }),
+                end: buildEditorCoordinates({ line: 24, column: 52 })
             });
 
             const testSource = readFileSource(__dirname, 'fixtures/test-source.js');
@@ -57,7 +60,7 @@ describe('extract method behaviors', function () {
 
             const selectedParameters = findAppropriateParameters(parsedSelection);
 
-            this.verifyAsJSON(selectedParameters);
+            assert.equal(JSON.stringify(selectedParameters), JSON.stringify(['b', 'a']));
         });
     });
 
