@@ -15,8 +15,7 @@ const acceptableNodeTypes = [
     astNodeTypes.FOR_IN_STATEMENT,
     astNodeTypes.WHILE_STATEMENT,
     astNodeTypes.DO_WHILE_STATEMENT,
-    astNodeTypes.METHOD_DEFINITION,
-    astNodeTypes.OBJECT_EXPRESSION
+    astNodeTypes.METHOD_DEFINITION
 ];
 
 const acceptableVariableTypes = {
