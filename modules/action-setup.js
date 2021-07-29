@@ -13,19 +13,38 @@ function prepareActionSetup(vscode = null) {
 
     const location = transformSelectionToLocation(activeTextEditor.selection);
     const source = activeTextEditor.document.getText()
-    const ast = parser.parse(source);
-    const selectionPath = nodePath.buildNodePath(ast, location);
 
-    return {
-        activeTextEditor,
-        source,
-        
-        location,
-        ast,
-        selectionPath
-    };
+    try {
+        const ast = parser.parse(source);
+        const selectionPath = nodePath.buildNodePath(ast, location);
+    
+        return {
+            activeTextEditor,
+            source,
+            
+            location,
+            ast,
+            selectionPath
+        };
+    
+    } catch (_) {
+        throw new Error('Unable to interpret source code; JS CodeFormer cannot start');
+    }
+}
+
+function asyncPrepareActionSetup(vscode = null) {
+    return new Promise(function (resolve, reject) {
+        try{
+            const actionSetup = prepareActionSetup(vscode);
+
+            resolve(actionSetup);
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
 module.exports = {
-    prepareActionSetup
+    prepareActionSetup,
+    asyncPrepareActionSetup
 };

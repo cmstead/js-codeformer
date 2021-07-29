@@ -1,4 +1,4 @@
-const { prepareActionSetup } = require('../../action-setup');
+const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../ExtractionPathBuilder');
 const { getNewSourceEdit } = require('../../SourceEdit');
 const { showErrorMessage } = require('../../messageService');
@@ -88,12 +88,12 @@ function retrieveExtractionBlock(extractionPoint) {
 }
 
 function extractVariable() {
-    const actionSetup = prepareActionSetup();
-    const sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location);
+    let actionSetup = null;
+    let sourceSelection = null;
 
-    const nodePath = actionSetup.selectionPath;
-    const extractionPath = buildExtractionPath(actionSetup.selectionPath, acceptableNodeTypes);
-    const extractionScopeList = buildExtractionScopeList(extractionPath);
+    let nodePath = null;
+    let extractionPath = null;
+    let extractionScopeList = null;
 
     let extractionBlock = null;
     let newVariableName = null;
@@ -101,10 +101,20 @@ function extractVariable() {
 
     let variableDeclaration = null;
 
-    return selectExtractionPoint(
-        extractionScopeList,
-        extractionPath
-    )
+    return asyncPrepareActionSetup()
+        .then(function (newActionSetup) {
+            actionSetup = newActionSetup;
+            sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location);
+        
+            nodePath = actionSetup.selectionPath;
+            extractionPath = buildExtractionPath(actionSetup.selectionPath, acceptableNodeTypes);
+            extractionScopeList = buildExtractionScopeList(extractionPath);        
+        })
+
+        .then(() => selectExtractionPoint(
+            extractionScopeList,
+            extractionPath
+        ))
         .then((extractionPoint) =>
             extractionBlock = retrieveExtractionBlock(extractionPoint))
 
