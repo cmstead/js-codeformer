@@ -1,0 +1,118 @@
+{
+  "body": [
+    {
+      "expression": {
+        "elements": [
+          {
+            "loc": {
+              "end": {
+                "column": 29,
+                "line": 2
+              },
+              "start": {
+                "column": 28,
+                "line": 2
+              }
+            },
+            "name": "a",
+            "type": "Identifier"
+          },
+          {
+            "async": false,
+            "body": {
+              "body": [
+                {
+                  "argument": {
+                    "loc": {
+                      "end": {
+                        "column": 44,
+                        "line": 3
+                      },
+                      "start": {
+                        "column": 43,
+                        "line": 3
+                      }
+                    },
+                    "name": "b",
+                    "type": "Identifier"
+                  },
+                  "loc": {
+                    "end": {
+                      "column": 45,
+                      "line": 3
+                    },
+                    "start": {
+                      "column": 36,
+                      "line": 3
+                    }
+                  },
+                  "type": "ReturnStatement"
+                }
+              ],
+              "loc": {
+                "end": {
+                  "column": 47,
+                  "line": 3
+                },
+                "start": {
+                  "column": 34,
+                  "line": 3
+                }
+              },
+              "type": "BlockStatement"
+            },
+            "expression": false,
+            "generator": false,
+            "id": null,
+            "loc": {
+              "end": {
+                "column": 47,
+                "line": 3
+              },
+              "start": {
+                "column": 28,
+                "line": 3
+              }
+            },
+            "params": [],
+            "type": "ArrowFunctionExpression"
+          }
+        ],
+        "loc": {
+          "end": {
+            "column": 25,
+            "line": 4
+          },
+          "start": {
+            "column": 0,
+            "line": 1
+          }
+        },
+        "type": "ArrayExpression"
+      },
+      "loc": {
+        "end": {
+          "column": 25,
+          "line": 4
+        },
+        "start": {
+          "column": 0,
+          "line": 1
+        }
+      },
+      "type": "ExpressionStatement"
+    }
+  ],
+  "loc": {
+    "end": {
+      "column": 25,
+      "line": 4
+    },
+    "start": {
+      "column": 0,
+      "line": 1
+    }
+  },
+  "sourceType": "script",
+  "type": "Program"
+}
