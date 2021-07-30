@@ -18,6 +18,11 @@ const acceptableNodeTypes = [
     astNodeTypes.WHILE_STATEMENT
 ];
 
+const terminalNodes = [
+    astNodeTypes.CLASS_BODY,
+    astNodeTypes.OBJECT_EXPRESSION
+];
+
 function parseSelectedText(sourceCodeText, selectionLocation) {
     const sourceSelection = getSourceSelection(sourceCodeText, selectionLocation);
 
@@ -28,7 +33,26 @@ function parseSelectedText(sourceCodeText, selectionLocation) {
     }
 }
 
+function buildMethodText({
+    destinationType,
+    methodBody,
+    methodName,
+    parameters
+}) {
+    const parameterString = parameters.join(',');
+
+    if(destinationType === astNodeTypes.CLASS_BODY) {
+        return `${methodName} (${parameterString}) {\n${methodBody}\n}`;
+    } else if(destinationType === astNodeTypes.OBJECT_EXPRESSION) {
+        return `${methodName}: function (${parameterString}) {\n${methodBody}\n}`;
+    }else {
+        return `function ${methodName} (${parameterString}) {\n${methodBody}\n}`;
+    }
+}
 module.exports = {
+    acceptableNodeTypes,
+    buildMethodText,
+    terminalNodes,
     findAppropriateParameters,
     parseSelectedText
 };
