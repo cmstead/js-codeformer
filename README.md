@@ -1,3 +1,3 @@
 # JS CodeFormer #
 
-JS CodeFormer is a refactoring and code automation extension for VS Code.
+JS CodeFormer is a JS refactoring and code automation extension for VS Code.
