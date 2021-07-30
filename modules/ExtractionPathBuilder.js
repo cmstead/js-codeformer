@@ -1,6 +1,5 @@
 const {
     BLOCK_STATEMENT,
-    OBJECT_EXPRESSION,
     PROGRAM
 } = require('./ast-node-types');
 
@@ -62,7 +61,7 @@ class ExtractionPathBuilder {
         this.resetCurrentNodeSet();
     }
 
-    buildExtractionPath() {
+    buildExtractionPath(customTerminalNodeTypes = []) {
         this.reversedNodePath.forEach(node => {
             const seekingParentNode = this.currentNodeSet !== null;
             const nodeTypeIsAcceptable = this.acceptableNodeTypes.includes(node.type);
@@ -72,7 +71,10 @@ class ExtractionPathBuilder {
                 this.updateExtractionPathAndResetNodeSet();
             }
 
-            if (node.type === PROGRAM) {
+            if (
+                node.type === PROGRAM
+                || customTerminalNodeTypes.includes(node.type)
+            ) {
                 this.updateExtractionPath(this.createNodeSet(node));
             } else if (node.type === BLOCK_STATEMENT) {
                 this.currentNodeSet = this.createNodeSet(node);
