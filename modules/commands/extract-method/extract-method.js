@@ -33,7 +33,7 @@ function parseSelectedText(sourceCodeText, selectionLocation) {
     }
 }
 
-const methodConstructors = {
+const methodBuilders = {
     [astNodeTypes.CLASS_BODY]:
         (methodBody, methodName, parameterString) =>
             `${methodName} (${parameterString}) {\n${methodBody}\n}`,
@@ -55,11 +55,13 @@ function buildMethodText({
 }) {
     const parameterString = parameters.join(',');
 
-    const constructorKey = typeof methodConstructors[destinationType] === 'undefined'
+    const constructorKey = typeof methodBuilders[destinationType] === 'undefined'
         ? astNodeTypes.BLOCK_STATEMENT
         : destinationType;
 
-    return methodConstructors[constructorKey](methodBody, methodName, parameterString);
+    const buildMethod = methodBuilders[constructorKey];
+
+    return buildMethod(methodBody, methodName, parameterString);
 }
 module.exports = {
     acceptableNodeTypes,
