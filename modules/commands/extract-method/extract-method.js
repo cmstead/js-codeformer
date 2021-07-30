@@ -33,6 +33,20 @@ function parseSelectedText(sourceCodeText, selectionLocation) {
     }
 }
 
+const methodConstructors = {
+    [astNodeTypes.CLASS_BODY]:
+        (methodBody, methodName, parameterString) =>
+            `${methodName} (${parameterString}) {\n${methodBody}\n}`,
+
+    [astNodeTypes.OBJECT_EXPRESSION]:
+        (methodBody, methodName, parameterString) =>
+            `${methodName}: function (${parameterString}) {\n${methodBody}\n}`,
+
+    [astNodeTypes.BLOCK_STATEMENT]:
+        (methodBody, methodName, parameterString) =>
+            `function ${methodName} (${parameterString}) {\n${methodBody}\n}`
+};
+
 function buildMethodText({
     destinationType,
     methodBody,
@@ -41,13 +55,11 @@ function buildMethodText({
 }) {
     const parameterString = parameters.join(',');
 
-    if(destinationType === astNodeTypes.CLASS_BODY) {
-        return `${methodName} (${parameterString}) {\n${methodBody}\n}`;
-    } else if(destinationType === astNodeTypes.OBJECT_EXPRESSION) {
-        return `${methodName}: function (${parameterString}) {\n${methodBody}\n}`;
-    }else {
-        return `function ${methodName} (${parameterString}) {\n${methodBody}\n}`;
-    }
+    const constructorKey = typeof methodConstructors[destinationType] === 'undefined'
+        ? astNodeTypes.BLOCK_STATEMENT
+        : destinationType;
+
+    return methodConstructors[constructorKey](methodBody, methodName, parameterString);
 }
 module.exports = {
     acceptableNodeTypes,
