@@ -2,7 +2,6 @@
   "1 - Extract to local scope in if statement",
   "2 - Extract to scope in the function named 'testing'",
   "3 - Extract to scope in function expression",
-  "4 - Extract to scope in object literal",
-  "5 - Extract to scope in the method named 'testMethod'",
-  "6 - Extract to top of file"
+  "4 - Extract to scope in the method named 'testMethod'",
+  "5 - Extract to top of file"
 ]

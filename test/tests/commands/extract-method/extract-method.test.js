@@ -64,4 +64,9 @@ describe('extract method behaviors', function () {
         });
     });
 
+    describe('create method text', function () {
+        it('creates a function declaration by default', function () {
+            
+        });
+    });
 });

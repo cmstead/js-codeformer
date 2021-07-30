@@ -72,7 +72,7 @@ class ExtractionPathBuilder {
                 this.updateExtractionPathAndResetNodeSet();
             }
 
-            if (node.type === PROGRAM || node.type === OBJECT_EXPRESSION) {
+            if (node.type === PROGRAM) {
                 this.updateExtractionPath(this.createNodeSet(node));
             } else if (node.type === BLOCK_STATEMENT) {
                 this.currentNodeSet = this.createNodeSet(node);

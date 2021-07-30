@@ -8,7 +8,6 @@ const astNodeTypes = require('../../ast-node-types');
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
     astNodeTypes.DO_WHILE_STATEMENT,
-    astNodeTypes.CLASS_BODY,
     astNodeTypes.FOR_STATEMENT,
     astNodeTypes.FOR_IN_STATEMENT,
     astNodeTypes.FUNCTION_DECLARATION,
@@ -16,7 +15,6 @@ const acceptableNodeTypes = [
     astNodeTypes.FUNCTION,
     astNodeTypes.IF_STATEMENT,
     astNodeTypes.METHOD_DEFINITION,
-    astNodeTypes.OBJECT_EXPRESSION,
     astNodeTypes.WHILE_STATEMENT
 ];
 
