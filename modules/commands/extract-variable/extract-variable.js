@@ -1,4 +1,5 @@
 const { getSourceSelection } = require('../../source-utilities');
+const { selectExtractionLocation } = require('../../extraction-location-service');
 
 const {
     buildExtractionScopeList,
@@ -34,20 +35,6 @@ const variableTypeList = Object
 function buildVariableDeclaration({ variableType, variableName, source }) {
     const sanitizedSource = source.replace(/(.*)\;+$/, '$1');
     return `${variableType} ${variableName} = ${sanitizedSource};`;
-}
-
-
-function selectExtractionLocation(nodePath, extractionBlock) {
-    let extractionNode = null;
-
-    for (let i = 0; i < nodePath.length; i++) {
-        if (nodePath[i] === extractionBlock) {
-            extractionNode = nodePath[i + 1];
-            break;
-        }
-    }
-
-    return extractionNode.loc;
 }
 
 module.exports = {

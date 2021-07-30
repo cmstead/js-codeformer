@@ -1,6 +1,6 @@
 const { parse } = require('../../parser/parser');
 const { getSourceSelection } = require('../../source-utilities');
-const { selectExtractionLocation } = require('./extraction-location-service');
+const { selectExtractionLocation } = require('../../extraction-location-service');
 
 const { findAppropriateParameters } = require('./parameter-search');
 
