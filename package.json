@@ -2,7 +2,7 @@
 	"name": "js-codeformer",
 	"displayName": "JS CodeFormer",
 	"description": "A refactoring and coding tool for building better source",
-	"version": "0.3.5",
+	"version": "0.4.0",
 	"publisher": "cmstead",
 	"repository": {
 		"type": "git",
@@ -107,8 +107,7 @@
 			{
 				"command": "cmstead.js-codeformer.extractMethod",
 				"title": "JS Codeformer: Extract Method"
-			}
-,
+			},
 			{
 				"command": "cmstead.js-codeformer.extractVariable",
 				"title": "JS Codeformer: Extract Variable"
