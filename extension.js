@@ -6,7 +6,7 @@ const { extractMethod } = require('./modules/commands/extract-method/extract-met
 function activate(context) {
 
 	let extractVarDisposable = vscode.commands.registerCommand(
-		'cmstead.js-codeformer.extractVariable',
+		'cmstead.jscodeformer.extractVariable',
 		function () {
 			extractVariable();
 		});
@@ -14,7 +14,7 @@ function activate(context) {
 	context.subscriptions.push(extractVarDisposable);
 
 	let extractMethodDisposable = vscode.commands.registerCommand(
-		'cmstead.js-codeformer.extractMethod',
+		'cmstead.jscodeformer.extractMethod',
 		function () {
 			extractMethod();
 		});

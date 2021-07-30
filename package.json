@@ -42,74 +42,17 @@
 	},
 	"main": "./extension.js",
 	"activationEvents": [
-		"onCommand:cmstead.js-codeformer.extractMethod",
-		"onCommand:cmstead.js-codeformer.extractVariable"
+		"onCommand:cmstead.jscodeformer.extractMethod",
+		"onCommand:cmstead.jscodeformer.extractVariable"
 	],
 	"contributes": {
-		"languages": [
-			{
-				"id": "javascript",
-				"extensions": [
-					".js",
-					".vue"
-				],
-				"aliases": [
-					"JS"
-				]
-			},
-			{
-				"id": "vue",
-				"extensions": [
-					".vue",
-					".js"
-				],
-				"aliases": [
-					"Vue"
-				]
-			},
-			{
-				"id": "javascriptreact",
-				"extensions": [
-					".jsx",
-					".js"
-				],
-				"aliases": []
-			},
-			{
-				"id": "typescript",
-				"extensions": [
-					".ts"
-				],
-				"aliases": [
-					"TS"
-				]
-			},
-			{
-				"id": "typescriptreact",
-				"extensions": [
-					".tsx",
-					".ts"
-				],
-				"aliases": []
-			},
-			{
-				"id": "html",
-				"extensions": [
-					".htm",
-					".html"
-				],
-				"aliases": [
-					"HTML"
-				]
-			}
-		],
 		"commands": [
 			{
-				"command": "cmstead.js-codeformer.extractMethod",
+				"command": "cmstead.jscodeformer.extractMethod",
 				"title": "JS Codeformer: Extract Method"
 			},
 			{
-				"command": "cmstead.js-codeformer.extractVariable",
+				"command": "cmstead.jscodeformer.extractVariable",
 				"title": "JS Codeformer: Extract Variable"
 			}
 		]
