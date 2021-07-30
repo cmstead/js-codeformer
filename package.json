@@ -4,6 +4,10 @@
 	"description": "A refactoring and coding tool for building better source",
 	"version": "0.3.5",
 	"publisher": "cmstead",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cmstead/js-codeformer.git"
+	},
 	"engines": {
 		"vscode": "^1.56.0"
 	},
