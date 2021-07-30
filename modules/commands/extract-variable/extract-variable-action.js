@@ -77,7 +77,7 @@ function extractVariable() {
     let extractionPath = null;
     let extractionScopeList = null;
 
-    let extractionBlock = null;
+    let extractionLocation = null;
     let newVariableName = null;
     let newVariableType = null;
 
@@ -98,7 +98,7 @@ function extractVariable() {
             extractionPath
         ))
         .then((extractionPoint) =>
-            extractionBlock = retrieveExtractionLocation(extractionPoint))
+            extractionLocation = retrieveExtractionLocation(extractionPoint))
 
         .then(() => selectVariableType())
         .then((variableType) =>
@@ -117,14 +117,14 @@ function extractVariable() {
             variableDeclaration = newVariableDeclaration)
 
         .then(() =>{
-            const extractionLocation = selectExtractionLocation(
+            const extractionPoint = selectExtractionLocation(
                 nodePath,
                 extractionLocation
             );
 
             return buildEditLocations({
                 actionSetup,
-                extractionLocation
+                extractionLocation: extractionPoint
             })
         })
 

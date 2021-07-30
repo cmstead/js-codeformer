@@ -145,14 +145,14 @@ function extractMethod() {
             methodCallText = newMethodCallText)
 
         .then(() => {
-            const extractionLocation = selectExtractionLocation(
+            const extractionPoint = selectExtractionLocation(
                 nodePath,
                 extractionLocation
             );
 
             return buildEditLocations({
                 actionSetup,
-                extractionLocation
+                extractionLocation: extractionPoint
             })
         })
 
