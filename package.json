@@ -10,10 +10,6 @@
 	"categories": [
 		"Other"
 	],
-	"activationEvents": [
-		"onCommand:cmstead.js-codeformer.extractVariable"
-	],
-	"main": "./extension.js",
 	"scripts": {
 		"lint": "eslint .",
 		"test-only": "mocha ./test/**/*.test.js",
@@ -40,7 +36,68 @@
 		"@typescript-eslint/typescript-estree": "^4.28.3",
 		"estraverse": "^5.2.0"
 	},
+	"main": "./extension.js",
+	"activationEvents": [
+		"onCommand:cmstead.js-codeformer.extractVariable"
+	],
 	"contributes": {
+		"languages": [
+			{
+				"id": "javascript",
+				"extensions": [
+					".js",
+					".vue"
+				],
+				"aliases": [
+					"JS"
+				]
+			},
+			{
+				"id": "vue",
+				"extensions": [
+					".vue",
+					".js"
+				],
+				"aliases": [
+					"Vue"
+				]
+			},
+			{
+				"id": "javascriptreact",
+				"extensions": [
+					".jsx",
+					".js"
+				],
+				"aliases": []
+			},
+			{
+				"id": "typescript",
+				"extensions": [
+					".ts"
+				],
+				"aliases": [
+					"TS"
+				]
+			},
+			{
+				"id": "typescriptreact",
+				"extensions": [
+					".tsx",
+					".ts"
+				],
+				"aliases": []
+			},
+			{
+				"id": "html",
+				"extensions": [
+					".htm",
+					".html"
+				],
+				"aliases": [
+					"HTML"
+				]
+			}
+		],
 		"commands": [
 			{
 				"command": "cmstead.js-codeformer.extractVariable",
