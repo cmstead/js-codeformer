@@ -11,6 +11,12 @@ function selectExtractionLocation(nodePath, extractionBlock) {
     return extractionNode.loc;
 }
 
+
+function retrieveExtractionLocation(extractionPoint) {
+    return extractionPoint.extractionScope[0];
+}
+
 module.exports = {
+    retrieveExtractionLocation,
     selectExtractionLocation
 };

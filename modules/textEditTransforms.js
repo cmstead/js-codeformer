@@ -5,9 +5,11 @@ const {
     Range,
 } = vscodeService.getVscode();
 
+
 function transformLocationPartToPosition({ line, column }) {
     return new Position(line - 1, column);
 }
+
 
 function transformLocationToRange({ start, end }) {
     return new Range(
@@ -16,7 +18,23 @@ function transformLocationToRange({ start, end }) {
     );
 }
 
+
+function buildEditLocations({
+    actionSetup: { location: selectionLocation },
+    extractionLocation
+}) {
+    const extractionLocationStart = extractionLocation.start;
+
+    return {
+        extractionPosition: transformLocationPartToPosition(extractionLocationStart),
+        replacementRange: transformLocationToRange(selectionLocation)
+    }
+
+}
+
+
 module.exports = {
+    buildEditLocations,
     transformLocationPartToPosition,
     transformLocationToRange
 };

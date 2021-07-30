@@ -5,6 +5,12 @@ const { showErrorMessage } = require('../../messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../inputService');
 const { getSourceSelection } = require('../../source-utilities');
+const {buildEditLocations} = require('../../textEditTransforms');
+
+const {
+    selectExtractionLocation,
+    retrieveExtractionLocation
+} = require('../../extraction-location-service');
 
 const {
     selectExtractionScopes,
@@ -12,18 +18,12 @@ const {
 } = require('../../extractionScopeService');
 
 const {
-    transformLocationPartToPosition,
-    transformLocationToRange
-} = require('../../textEditTransforms');
-
-const {
     acceptableNodeTypes,
     buildMethodText,
     buildMethodCallText,
     terminalNodes,
     findAppropriateParameters,
-    parseSelectedText,
-    selectExtractionLocation
+    parseSelectedText
 } = require('./extract-method');
 
 
@@ -59,24 +59,6 @@ function getMethodName() {
         );
 }
 
-
-function buildEditLocations({
-    extractionBlock,
-    nodePath,
-    actionSetup: { location: selectionLocation }
-}) {
-    const { start: extractionLocationStart } = selectExtractionLocation(nodePath, extractionBlock);
-
-    return {
-        extractionPosition: transformLocationPartToPosition(extractionLocationStart),
-        replacementRange: transformLocationToRange(selectionLocation)
-    }
-
-}
-
-function retrieveExtractionLocation(extractionPoint) {
-    return extractionPoint.extractionScope[0];
-}
 
 function getEditedParameters(suggestedParameters) {
     return openInputBox({
@@ -121,46 +103,58 @@ function extractMethod() {
             extractionScopeList = buildExtractionScopeList(extractionPath);
         })
 
-        .then(() => selectExtractionPoint(
-            extractionScopeList,
-            extractionPath
-        ))
+        .then(() =>
+            selectExtractionPoint(
+                extractionScopeList,
+                extractionPath
+            ))
         .then((extractionPoint) =>
             extractionLocation = retrieveExtractionLocation(extractionPoint))
 
-        .then(() => getMethodName())
+        .then(() =>
+            getMethodName())
         .then((methodName) =>
             newMethodName = methodName)
 
-        .then(() => parseSelectedText(actionSetup.source, actionSetup.location))
-        .then((parsedSelection) => findAppropriateParameters(parsedSelection))
-        .then((suggestedParameters) => getEditedParameters(suggestedParameters))
+        .then(() =>
+            parseSelectedText(actionSetup.source, actionSetup.location))
+        .then((parsedSelection) =>
+            findAppropriateParameters(parsedSelection))
+        .then((suggestedParameters) =>
+            getEditedParameters(suggestedParameters))
         .then((newParameterText) =>
             parameterText = newParameterText)
 
-        .then(() => buildMethodText({
-            destinationType: extractionLocation.type,
-            methodName: newMethodName,
-            methodBody: sourceSelection,
-            parameters: parameterText.split(',').map(parameter => parameter.trim())
-        }))
+        .then(() =>
+            buildMethodText({
+                destinationType: extractionLocation.type,
+                methodName: newMethodName,
+                methodBody: sourceSelection,
+                parameters: parameterText.split(',').map(parameter => parameter.trim())
+            }))
         .then((newMethodText) =>
             methodText = newMethodText)
 
-        .then(() => buildMethodCallText({
-            destinationType: extractionLocation.type,
-            methodName: newMethodName,
-            parameters: parameterText
-        }))
+        .then(() =>
+            buildMethodCallText({
+                destinationType: extractionLocation.type,
+                methodName: newMethodName,
+                parameters: parameterText
+            }))
         .then((newMethodCallText) =>
             methodCallText = newMethodCallText)
 
-        .then(() =>
-            buildEditLocations({
-                extractionBlock: extractionLocation,
+        .then(() => {
+            const extractionLocation = selectExtractionLocation(
                 nodePath,
-                actionSetup
-            }))
+                extractionLocation
+            );
+
+            return buildEditLocations({
+                actionSetup,
+                extractionLocation
+            })
+        })
 
         .then(({ extractionPosition, replacementRange }) =>
             getNewSourceEdit()

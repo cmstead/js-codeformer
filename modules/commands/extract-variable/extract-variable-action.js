@@ -4,16 +4,16 @@ const { getNewSourceEdit } = require('../../SourceEdit');
 const { showErrorMessage } = require('../../messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../inputService');
+const {buildEditLocations} = require('../../textEditTransforms');
 
 const {
-    transformLocationPartToPosition,
-    transformLocationToRange
-} = require('../../textEditTransforms');
+    selectExtractionLocation,
+    retrieveExtractionLocation
+} = require('../../extraction-location-service');
 
 const {
     buildExtractionScopeList,
     selectExtractionScopes,
-    selectExtractionLocation,
     acceptableNodeTypes,
     variableTypeList,
     buildVariableDeclaration,
@@ -69,24 +69,6 @@ function getVariableName() {
 }
 
 
-function buildEditLocations({
-    extractionBlock,
-    nodePath,
-    actionSetup: { location: selectionLocation }
-}) {
-    const { start: extractionLocationStart } = selectExtractionLocation(nodePath, extractionBlock);
-
-    return {
-        extractionPosition: transformLocationPartToPosition(extractionLocationStart),
-        replacementRange: transformLocationToRange(selectionLocation)
-    }
-
-}
-
-function retrieveExtractionBlock(extractionPoint) {
-    return extractionPoint.extractionScope[0];
-}
-
 function extractVariable() {
     let actionSetup = null;
     let sourceSelection = null;
@@ -116,7 +98,7 @@ function extractVariable() {
             extractionPath
         ))
         .then((extractionPoint) =>
-            extractionBlock = retrieveExtractionBlock(extractionPoint))
+            extractionBlock = retrieveExtractionLocation(extractionPoint))
 
         .then(() => selectVariableType())
         .then((variableType) =>
@@ -134,12 +116,17 @@ function extractVariable() {
         .then((newVariableDeclaration) =>
             variableDeclaration = newVariableDeclaration)
 
-        .then(() =>
-            buildEditLocations({
-                extractionBlock,
+        .then(() =>{
+            const extractionLocation = selectExtractionLocation(
                 nodePath,
-                actionSetup
-            }))
+                extractionLocation
+            );
+
+            return buildEditLocations({
+                actionSetup,
+                extractionLocation
+            })
+        })
 
         .then(({ extractionPosition, replacementRange }) =>
             getNewSourceEdit()
