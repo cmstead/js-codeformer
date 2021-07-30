@@ -1,3 +1,5 @@
+const { locationToSourceSelection } = require('../../source-utilities');
+
 const {
     buildExtractionScopeList,
     selectExtractionScopes
@@ -28,14 +30,6 @@ const variableTypeList = Object
     .keys(acceptableVariableTypes)
     .map(key => acceptableVariableTypes[key]);
 
-function locationToSourceSelection({ start, end }) {
-    return {
-        startLine: start.line - 1,
-        endLine: end.line - 1,
-        startColumn: start.column,
-        endColumn: end.column
-    };
-}
 
 function getSourceSelection(sourceCode, location) {
     const {

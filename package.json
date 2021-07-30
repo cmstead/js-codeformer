@@ -18,7 +18,7 @@
 		"lint": "eslint .",
 		"test-only": "mocha ./test/**/*.test.js",
 		"test": "npm run test-only && gittey commit",
-		"build": "vsce package",
+		"build": "rm *.vsix & vsce package",
 		"push-patch": "npm run test-only && gittey push-patch",
 		"push-minor": "npm run test-only && gittey push-minor"
 	},
