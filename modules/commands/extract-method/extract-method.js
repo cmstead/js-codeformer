@@ -1,5 +1,6 @@
 const { parse } = require('../../parser/parser');
 const { getSourceSelection } = require('../../source-utilities');
+const { selectExtractionLocation } = require('./extraction-location-service');
 
 const { findAppropriateParameters } = require('./parameter-search');
 
@@ -80,19 +81,6 @@ function buildMethodCallText({
     return destinationType === astNodeTypes.BLOCK_STATEMENT
         ? methodCall
         : `this.${methodCall}`;
-}
-
-function selectExtractionLocation(nodePath, extractionBlock) {
-    let extractionNode = null;
-
-    for (let i = 0; i < nodePath.length; i++) {
-        if (nodePath[i] === extractionBlock) {
-            extractionNode = nodePath[i + 1];
-            break;
-        }
-    }
-
-    return extractionNode.loc;
 }
 
 module.exports = {

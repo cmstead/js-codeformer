@@ -36,6 +36,7 @@ function buildVariableDeclaration({ variableType, variableName, source }) {
     return `${variableType} ${variableName} = ${sanitizedSource};`;
 }
 
+
 function selectExtractionLocation(nodePath, extractionBlock) {
     let extractionNode = null;
 
