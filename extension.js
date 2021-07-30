@@ -1,16 +1,25 @@
 const vscode = require('vscode');
 
 const { extractVariable } = require('./modules/commands/extract-variable/extract-variable-action');
+const { extractMethod } = require('./modules/commands/extract-method/extract-method-action');
 
 function activate(context) {
 
-	let disposable = vscode.commands.registerCommand(
+	let extractVarDisposable = vscode.commands.registerCommand(
 		'cmstead.js-codeformer.extractVariable',
 		function () {
-			extractVariable(vscode);
+			extractVariable();
 		});
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(extractVarDisposable);
+
+	let extractMethodDisposable = vscode.commands.registerCommand(
+		'cmstead.js-codeformer.extractMethod',
+		function () {
+			extractMethod();
+		});
+
+	context.subscriptions.push(extractMethodDisposable);
 }
 
 // this method is called when your extension is deactivated

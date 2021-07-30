@@ -1,3 +1,4 @@
+const astNodeTypes = require('./ast-node-types');
 const {
     BLOCK_STATEMENT,
     PROGRAM
@@ -87,6 +88,8 @@ class ExtractionPathBuilder {
     }
 }
 
+const last = values => values[values.length - 1];
+
 function buildExtractionPath(
     nodePath,
     acceptableNodeTypes,
@@ -95,6 +98,8 @@ function buildExtractionPath(
     return new ExtractionPathBuilder(nodePath, acceptableNodeTypes)
         .buildExtractionPath(customTerminalNodeTypes)
         .toArray()
+        .filter(extractionNode => 
+            last(extractionNode).type !== astNodeTypes.BLOCK_STATEMENT);
 }
 
 module.exports = {

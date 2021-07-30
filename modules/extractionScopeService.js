@@ -19,6 +19,8 @@ const typeTransforms = {
 const last = values => values[values.length - 1];
 
 function getScopeMessage(displayNode, index) {
+    console.log(displayNode);
+    
     if (index === 0) {
         return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
     } else if (displayNode.type === astNodeTypes.PROGRAM) {
@@ -29,11 +31,12 @@ function getScopeMessage(displayNode, index) {
 }
 
 function buildExtractionScopeList(extractionPath) {
-    return extractionPath.map((nodeSet, index) => {
-        const displayNode = last(nodeSet);
+    return extractionPath
+        .map((nodeSet, index) => {
+            const displayNode = last(nodeSet);
 
-        return `${index + 1} - ${getScopeMessage(displayNode, index)}`;
-    });
+            return `${index + 1} - ${getScopeMessage(displayNode, index)}`;
+        });
 }
 
 function getUserSelectionIndex(userSelection) {

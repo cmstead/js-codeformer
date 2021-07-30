@@ -16,16 +16,6 @@ const {
     transformLocationToRange
 } = require('../../textEditTransforms');
 
-// const {
-//     buildExtractionScopeList,
-//     selectExtractionScopes,
-//     selectExtractionLocation,
-//     acceptableNodeTypes,
-//     variableTypeList,
-//     buildVariableDeclaration,
-//     getSourceSelection
-// } = require('./extract-variable');
-
 const {
     acceptableNodeTypes,
     buildMethodText,
@@ -35,6 +25,7 @@ const {
     parseSelectedText,
     selectExtractionLocation
 } = require('./extract-method');
+
 
 function selectExtractionPoint(
     extractionScopeList,

@@ -38,6 +38,7 @@
 	},
 	"main": "./extension.js",
 	"activationEvents": [
+		"onCommand:cmstead.js-codeformer.extractMethod",
 		"onCommand:cmstead.js-codeformer.extractVariable"
 	],
 	"contributes": {
@@ -99,6 +100,11 @@
 			}
 		],
 		"commands": [
+			{
+				"command": "cmstead.js-codeformer.extractMethod",
+				"title": "JS Codeformer: Extract Method"
+			}
+,
 			{
 				"command": "cmstead.js-codeformer.extractVariable",
 				"title": "JS Codeformer: Extract Variable"

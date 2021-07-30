@@ -7,13 +7,9 @@ const astNodeTypes = require('../../ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
-    astNodeTypes.DO_WHILE_STATEMENT,
-    astNodeTypes.FOR_STATEMENT,
-    astNodeTypes.FOR_IN_STATEMENT,
     astNodeTypes.FUNCTION_DECLARATION,
     astNodeTypes.FUNCTION_EXPRESSION,
     astNodeTypes.FUNCTION,
-    astNodeTypes.IF_STATEMENT,
     astNodeTypes.METHOD_DEFINITION,
     astNodeTypes.WHILE_STATEMENT
 ];
@@ -40,12 +36,20 @@ const methodBuilders = {
 
     [astNodeTypes.OBJECT_EXPRESSION]:
         (methodBody, methodName, parameterString) =>
-            `${methodName}: function (${parameterString}) {\n${methodBody}\n}`,
+            `${methodName}: function (${parameterString}) {\n${methodBody}\n},`,
 
     [astNodeTypes.BLOCK_STATEMENT]:
         (methodBody, methodName, parameterString) =>
             `function ${methodName} (${parameterString}) {\n${methodBody}\n}`
 };
+
+function insertReturnIfExpression(methodBody) {
+    const parsedBody = parse(methodBody);
+
+    return parsedBody.body.length === 1
+        ? `return ${methodBody}`
+        : methodBody;
+}
 
 function buildMethodText({
     destinationType,
@@ -53,15 +57,16 @@ function buildMethodText({
     methodName,
     parameters
 }) {
-    const parameterString = parameters.join(',');
+    const parameterString = parameters.join(', ');
 
     const constructorKey = typeof methodBuilders[destinationType] === 'undefined'
         ? astNodeTypes.BLOCK_STATEMENT
         : destinationType;
 
     const buildMethod = methodBuilders[constructorKey];
+    const modifiedBody = insertReturnIfExpression(methodBody);
 
-    return buildMethod(methodBody, methodName, parameterString);
+    return buildMethod(modifiedBody, methodName, parameterString);
 }
 
 
