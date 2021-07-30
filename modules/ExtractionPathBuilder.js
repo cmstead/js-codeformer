@@ -87,9 +87,13 @@ class ExtractionPathBuilder {
     }
 }
 
-function buildExtractionPath(nodePath, acceptableNodeTypes) {
+function buildExtractionPath(
+    nodePath,
+    acceptableNodeTypes,
+    customTerminalNodeTypes = []
+) {
     return new ExtractionPathBuilder(nodePath, acceptableNodeTypes)
-        .buildExtractionPath()
+        .buildExtractionPath(customTerminalNodeTypes)
         .toArray()
 }
 

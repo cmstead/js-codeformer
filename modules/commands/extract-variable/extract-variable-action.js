@@ -58,7 +58,7 @@ function selectVariableType() {
 
 
 function getVariableName() {
-    return openInputBox('New variable name')
+    return openInputBox({ title: 'New variable name' })
         .then((variableName) =>
             validateUserInput({
                 value: variableName,

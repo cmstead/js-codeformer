@@ -12,9 +12,10 @@ function openSelectList({ values, title }) {
     });
 }
 
-function openInputBox(title) {
+function openInputBox({ title, value = '' }) {
     return showInputBox({
         title: title,
+        value: value,
         ignoreFocusOut: true
     })
 }

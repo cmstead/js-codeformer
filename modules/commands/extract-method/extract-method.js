@@ -63,10 +63,39 @@ function buildMethodText({
 
     return buildMethod(methodBody, methodName, parameterString);
 }
+
+
+function buildMethodCallText({
+    destinationType,
+    methodName,
+    parameters
+}){
+    const methodCall = `${methodName}(${parameters})`;
+
+    return destinationType === astNodeTypes.BLOCK_STATEMENT
+        ? methodCall
+        : `this.${methodCall}`;
+}
+
+function selectExtractionLocation(nodePath, extractionBlock) {
+    let extractionNode = null;
+
+    for (let i = 0; i < nodePath.length; i++) {
+        if (nodePath[i] === extractionBlock) {
+            extractionNode = nodePath[i + 1];
+            break;
+        }
+    }
+
+    return extractionNode.loc;
+}
+
 module.exports = {
     acceptableNodeTypes,
     buildMethodText,
+    buildMethodCallText,
     terminalNodes,
     findAppropriateParameters,
-    parseSelectedText
+    parseSelectedText,
+    selectExtractionLocation
 };
