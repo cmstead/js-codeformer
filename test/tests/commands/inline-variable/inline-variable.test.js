@@ -11,8 +11,8 @@ describe('inline variable', function () {
             const parsedSource = parse(sourceCode);
 
             const selection = buildLocationFromEditorCoordinates({
-                start: buildEditorCoordinates({ line: 4, column: 12}),
-                end: buildEditorCoordinates({ line: 4, column: 12})
+                start: buildEditorCoordinates({ line: 4, column: 12 }),
+                end: buildEditorCoordinates({ line: 4, column: 12 })
             });
 
             const selectionPath = buildNodePath(parsedSource, selection);
@@ -20,6 +20,22 @@ describe('inline variable', function () {
             const surroundingScope = getSurroundingScope(selectionPath);
 
             this.verifyAsJSON(surroundingScope);
-        });        
+        });
+
+        it('selects program scope when not inside of any block', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/test-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 1, column: 8 }),
+                end: buildEditorCoordinates({ line: 1, column: 8 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const surroundingScope = getSurroundingScope(selectionPath);
+
+            this.verifyAsJSON(surroundingScope);
+        });
     });
 });
