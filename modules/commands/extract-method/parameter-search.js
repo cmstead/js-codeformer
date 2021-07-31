@@ -1,4 +1,5 @@
 const estraverse = require('estraverse');
+const { getNodeType } = require('../../core-utils');
 
 const astNodeTypes = require('../../ast-node-types');
 const {
@@ -19,10 +20,6 @@ const declarationTypes = [
     astNodeTypes.FUNCTION_EXPRESSION,
     astNodeTypes.VARIABLE_DECLARATOR
 ];
-
-function getNodeType(node) {
-    return node !== null ? node.type : '';
-}
 
 function isVariableBeingDeclared(parentNode, node) {
     const parentNodeType = getNodeType(parentNode);

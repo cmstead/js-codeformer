@@ -1,5 +1,5 @@
 const { traverse, VisitorOption } = require("estraverse");
-const { reverse } = require('../../core-utils');
+const { reverse, getNodeType } = require('../../core-utils');
 
 const { BLOCK_STATEMENT, PROGRAM, VARIABLE_DECLARATOR, IDENTIFIER, MEMBER_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, ARROW_FUNCTION_EXPRESSION } = require("../../ast-node-types");
 
@@ -14,10 +14,6 @@ function getVariableDeclaractor(selectionPath) {
     return reverse(selectionPath)
         .find(node =>
             node.type === VARIABLE_DECLARATOR);
-}
-
-function getNodeType(node) {
-    return typeof node === 'undefined' ? '' : node.type;
 }
 
 function isAnArrowFunctionParameter(node, parentNode) {

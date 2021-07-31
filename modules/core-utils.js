@@ -6,7 +6,7 @@ function reverse(values) {
 }
 
 function getNodeType(node) {
-    return typeof node === 'undefined' ? '' : node.type;
+    return node !== null && typeof node !== 'undefined' ? node.type : '';
 }
 
 const last = values => values[values.length - 1];
