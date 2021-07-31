@@ -1,0 +1,42 @@
+[
+  {
+    "end": {
+      "column": 21,
+      "line": 7
+    },
+    "start": {
+      "column": 20,
+      "line": 7
+    }
+  },
+  {
+    "end": {
+      "column": 23,
+      "line": 11
+    },
+    "start": {
+      "column": 22,
+      "line": 11
+    }
+  },
+  {
+    "end": {
+      "column": 35,
+      "line": 21
+    },
+    "start": {
+      "column": 34,
+      "line": 21
+    }
+  },
+  {
+    "end": {
+      "column": 27,
+      "line": 23
+    },
+    "start": {
+      "column": 26,
+      "line": 23
+    }
+  }
+]

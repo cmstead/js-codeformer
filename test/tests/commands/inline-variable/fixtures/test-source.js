@@ -18,6 +18,8 @@ function testFunction() {
             return a;
         }
 
-        return ((a) => a * b)(a)
+        ((a) => { return a + b })(a)
+
+        return ((a) => a)(a)
     }
 }

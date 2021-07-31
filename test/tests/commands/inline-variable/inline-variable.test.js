@@ -1,4 +1,4 @@
-const { getSurroundingScope, getVariableDeclaractor } = require("../../../../modules/commands/inline-variable/inline-variable");
+const { getSurroundingScope, getVariableDeclaractor, selectReplacementLocations } = require("../../../../modules/commands/inline-variable/inline-variable");
 const { buildNodePath } = require("../../../../modules/node-path");
 const { parse } = require("../../../../modules/parser/parser");
 const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require("../../../utilities/editor-to-location-selection-builder");
@@ -58,7 +58,7 @@ describe('inline variable', function () {
     });
 
     describe('select replacement locations', function () {
-        it.skip('captures only appropriate identifiers for replacement', function () {
+        it('captures only appropriate identifiers for replacement', function () {
             const sourceCode = readFileSource(__dirname, 'fixtures/test-source.js');
             const parsedSource = parse(sourceCode);
 
@@ -70,7 +70,11 @@ describe('inline variable', function () {
             const selectionPath = buildNodePath(parsedSource, selection);
 
             const surroundingScope = getSurroundingScope(selectionPath);
+            const variableDeclarator = getVariableDeclaractor(selectionPath);
 
+            const selectedLocations = selectReplacementLocations(surroundingScope, variableDeclarator);
+
+            this.verifyAsJSON(selectedLocations);
         });
     });
 });

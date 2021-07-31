@@ -1,4 +1,5 @@
-const { BLOCK_STATEMENT, PROGRAM, VARIABLE_DECLARATOR } = require("../../ast-node-types");
+const { traverse, VisitorOption } = require("estraverse");
+const { BLOCK_STATEMENT, PROGRAM, VARIABLE_DECLARATOR, IDENTIFIER, MEMBER_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, ARROW_FUNCTION_EXPRESSION, METHOD_DEFINITION } = require("../../ast-node-types");
 
 function reverse(values) {
     const reversedValues = values.slice(0);
@@ -20,7 +21,97 @@ function getVariableDeclaractor(selectionPath) {
             node.type === VARIABLE_DECLARATOR);
 }
 
+function getNodeType(node) {
+    return typeof node === 'undefined' ? '' : node.type;
+}
+
+function isAnArrowFunctionParameter(node, parentNode) {
+    return parentNode.type === ARROW_FUNCTION_EXPRESSION
+        && parentNode.params.includes(node);
+}
+
+function isAVariableDeclaration(node, parentNode) {
+    const parentNodeType = getNodeType(parentNode);
+
+    if (parentNodeType === ARROW_FUNCTION_EXPRESSION) {
+        console.log(parentNode);
+    }
+
+    const declarationParentTypes = [
+        FUNCTION,
+        FUNCTION_DECLARATION,
+        FUNCTION_EXPRESSION,
+        VARIABLE_DECLARATOR,
+    ];
+
+    return declarationParentTypes.includes(parentNodeType)
+        || isAnArrowFunctionParameter(node, parentNode);
+}
+
+function isAcceptableIdentifier(node, parentNode) {
+
+    if (getNodeType(parentNode) === MEMBER_EXPRESSION) {
+        return parentNode.object === node;
+    } else {
+        return !isAVariableDeclaration(node, parentNode);
+    }
+}
+
+function isAMatchingIdentifier(node, variableName) {
+    return node.type === IDENTIFIER
+        && node.name === variableName;
+}
+
+const descentScopeTypes = [
+    ARROW_FUNCTION_EXPRESSION,
+    BLOCK_STATEMENT
+];
+
+function isDescendableNode(node) {
+    return descentScopeTypes.includes(getNodeType(node));
+}
+
+function selectReplacementLocations(searchScope, variableDeclarator) {
+    let declarationFound = false;
+    let replacementLocations = [];
+
+    const variableName = variableDeclarator.id.name;
+
+    traverse(searchScope, {
+        enter: function (node, parent) {
+            const nodeIsNotRoot = node !== searchScope;
+            const nodeIsNotRootDeclarator = parent !== variableDeclarator;
+
+            if (declarationFound) {
+                return;
+            } else if (
+                nodeIsNotRootDeclarator
+                && isAMatchingIdentifier(node, variableName)
+                && isAVariableDeclaration(node, parent)) {
+                declarationFound = true;
+                return;
+            }
+
+            if (isDescendableNode(node) && nodeIsNotRoot) {
+                const newReplacementLocations = selectReplacementLocations(node, variableDeclarator);
+
+                replacementLocations = replacementLocations.concat(newReplacementLocations);
+
+                return VisitorOption.Skip;
+            } else if (isAMatchingIdentifier(node, variableName)
+                && isAcceptableIdentifier(node, parent)
+            ) {
+                replacementLocations.push(node.loc);
+            }
+        }
+    });
+
+    return replacementLocations;
+}
+
+
 module.exports = {
     getSurroundingScope,
-    getVariableDeclaractor
+    getVariableDeclaractor,
+    selectReplacementLocations
 };
