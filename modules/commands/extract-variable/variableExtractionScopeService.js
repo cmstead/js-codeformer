@@ -1,4 +1,5 @@
 const astNodeTypes = require('../../ast-node-types');
+const { last } = require('../../core-utils');
 
 const typeTransforms = {
     [astNodeTypes.ARROW_FUNCTION_EXPRESSION]: () => 'arrow function',
@@ -14,8 +15,6 @@ const typeTransforms = {
     [astNodeTypes.OBJECT_EXPRESSION]: () => 'object literal'
 }
 
-
-const last = values => values[values.length - 1];
 
 function getScopeMessage(displayNode, index) {
     if (index === 0) {

@@ -1,5 +1,6 @@
 const { readFileSource } = require('../../../utilities/file-reader');
 const { loadModule } = require('../../../utilities/module-loader');
+const { last } = require('../../../../modules/core-utils');
 
 const { parse } = loadModule('parser/parser');
 const { buildNodePath } = loadModule('node-path');
@@ -27,8 +28,6 @@ function getSharedSelection() {
         end: buildEditorCoordinates({ line: 10, column: 41 })
     });
 }
-
-const last = values => values[values.length - 1];
 
 module.exports = {
     readTestSource,

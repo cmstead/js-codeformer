@@ -1,4 +1,6 @@
 const astNodeTypes = require('./ast-node-types');
+const { last } = require('./core-utils');
+
 const {
     BLOCK_STATEMENT,
     PROGRAM
@@ -87,8 +89,6 @@ class ExtractionPathBuilder {
         return this.extractionPath;
     }
 }
-
-const last = values => values[values.length - 1];
 
 function buildExtractionPath(
     nodePath,
