@@ -10,6 +10,8 @@ function testFunction() {
     function somethingElse (b) {
         const stuff = a + b;
 
+        foo.a = 5678;
+
         function whatever() {
             const a = 'a new scope';
 

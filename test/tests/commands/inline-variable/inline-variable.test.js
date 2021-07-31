@@ -1,4 +1,4 @@
-const { getSurroundingScope } = require("../../../../modules/commands/inline-variable/inline-variable");
+const { getSurroundingScope, getVariableDeclaractor } = require("../../../../modules/commands/inline-variable/inline-variable");
 const { buildNodePath } = require("../../../../modules/node-path");
 const { parse } = require("../../../../modules/parser/parser");
 const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require("../../../utilities/editor-to-location-selection-builder");
@@ -36,6 +36,41 @@ describe('inline variable', function () {
             const surroundingScope = getSurroundingScope(selectionPath);
 
             this.verifyAsJSON(surroundingScope);
+        });
+    });
+
+    describe('select variable declarator', function () {
+        it('finds the variable declarator from the selection path', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/test-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 4, column: 12 }),
+                end: buildEditorCoordinates({ line: 4, column: 12 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const variableDeclarator = getVariableDeclaractor(selectionPath);
+
+            this.verifyAsJSON(variableDeclarator);
+        });
+    });
+
+    describe('select replacement locations', function () {
+        it.skip('captures only appropriate identifiers for replacement', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/test-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 4, column: 12 }),
+                end: buildEditorCoordinates({ line: 4, column: 12 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const surroundingScope = getSurroundingScope(selectionPath);
+
         });
     });
 });
