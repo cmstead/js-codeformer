@@ -1,19 +1,23 @@
 const { BLOCK_STATEMENT, PROGRAM, VARIABLE_DECLARATOR } = require("../../ast-node-types");
 
-function getSurroundingScope(selectionPath) {
-    const reversedPath = selectionPath.slice(0);
-    reversedPath.reverse();
+function reverse(values) {
+    const reversedValues = values.slice(0);
+    reversedValues.reverse();
 
-    return reversedPath.find(node => 
-        node.type === BLOCK_STATEMENT
-        || node.type === PROGRAM);
+    return reversedValues;
+}
+
+function getSurroundingScope(selectionPath) {
+    return reverse(selectionPath)
+        .find(node =>
+            node.type === BLOCK_STATEMENT
+            || node.type === PROGRAM);
 }
 
 function getVariableDeclaractor(selectionPath) {
-    const reversedPath = selectionPath.slice(0);
-    reversedPath.reverse();
-
-    return reversedPath.find(node => node.type === VARIABLE_DECLARATOR);
+    return reverse(selectionPath)
+        .find(node =>
+            node.type === VARIABLE_DECLARATOR);
 }
 
 module.exports = {
