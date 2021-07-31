@@ -1,12 +1,7 @@
 const { traverse, VisitorOption } = require("estraverse");
-const { BLOCK_STATEMENT, PROGRAM, VARIABLE_DECLARATOR, IDENTIFIER, MEMBER_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, ARROW_FUNCTION_EXPRESSION, METHOD_DEFINITION } = require("../../ast-node-types");
+const { reverse } = require('../../core-utils');
 
-function reverse(values) {
-    const reversedValues = values.slice(0);
-    reversedValues.reverse();
-
-    return reversedValues;
-}
+const { BLOCK_STATEMENT, PROGRAM, VARIABLE_DECLARATOR, IDENTIFIER, MEMBER_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, ARROW_FUNCTION_EXPRESSION } = require("../../ast-node-types");
 
 function getSurroundingScope(selectionPath) {
     return reverse(selectionPath)

@@ -1,5 +1,5 @@
 const astNodeTypes = require('./ast-node-types');
-const { last } = require('./core-utils');
+const { last, reverse } = require('./core-utils');
 
 const {
     BLOCK_STATEMENT,
@@ -43,8 +43,7 @@ class ExtractionPathBuilder {
         this.extractionPath = new ExtractionPath();
         this.currentNodeSet = null;
 
-        this.reversedNodePath = nodePath.slice(0);
-        this.reversedNodePath.reverse();
+        this.reversedNodePath = reverse(nodePath);
     }
 
     updateExtractionPath(nodeSet) {
