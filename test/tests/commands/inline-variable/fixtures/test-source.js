@@ -10,6 +10,10 @@ function testFunction() {
     function somethingElse (b) {
         const stuff = a + b;
 
+        let foo = {
+            a: 987
+        }
+
         foo.a = 5678;
 
         function whatever() {

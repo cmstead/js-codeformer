@@ -1,7 +1,18 @@
 const { traverse, VisitorOption } = require("estraverse");
 const { reverse, getNodeType } = require('../../core-utils');
 
-const { BLOCK_STATEMENT, PROGRAM, VARIABLE_DECLARATOR, IDENTIFIER, MEMBER_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, ARROW_FUNCTION_EXPRESSION } = require("../../ast-node-types");
+const {
+    BLOCK_STATEMENT,
+    PROGRAM,
+    VARIABLE_DECLARATOR,
+    IDENTIFIER,
+    MEMBER_EXPRESSION,
+    FUNCTION_DECLARATION,
+    FUNCTION_EXPRESSION,
+    FUNCTION,
+    ARROW_FUNCTION_EXPRESSION,
+    PROPERTY
+} = require("../../ast-node-types");
 
 function getSurroundingScope(selectionPath) {
     return reverse(selectionPath)
@@ -23,10 +34,6 @@ function isAnArrowFunctionParameter(node, parentNode) {
 
 function isAVariableDeclaration(node, parentNode) {
     const parentNodeType = getNodeType(parentNode);
-
-    if (parentNodeType === ARROW_FUNCTION_EXPRESSION) {
-        console.log(parentNode);
-    }
 
     const declarationParentTypes = [
         FUNCTION,
@@ -73,7 +80,7 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
             const nodeIsNotRoot = node !== searchScope;
             const nodeIsNotRootDeclarator = parent !== variableDeclarator;
 
-            if (declarationFound) {
+            if (declarationFound || getNodeType(parent) === PROPERTY) {
                 return;
             } else if (
                 nodeIsNotRootDeclarator
