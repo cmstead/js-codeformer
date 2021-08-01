@@ -79,8 +79,10 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
         enter: function (node, parent) {
             const nodeIsNotRoot = node !== searchScope;
             const nodeIsNotRootDeclarator = parent !== variableDeclarator;
+            const nodeIsAPropertyName = isAMatchingIdentifier(node, variableName)
+                && getNodeType(parent) === PROPERTY;
 
-            if (declarationFound || getNodeType(parent) === PROPERTY) {
+            if (declarationFound || nodeIsAPropertyName) {
                 return;
             } else if (
                 nodeIsNotRootDeclarator
