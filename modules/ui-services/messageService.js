@@ -1,4 +1,4 @@
-const { window } = require('./vscodeService').getVscode();
+const { window } = require('../vscodeService').getVscode();
 
 function showErrorMessage(message) {
     return window.showErrorMessage(message);

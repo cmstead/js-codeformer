@@ -1,9 +1,9 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
 const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
-const { showErrorMessage } = require('../../messageService');
+const { showErrorMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
-const { openInputBox, openSelectList } = require('../../inputService');
+const { openInputBox, openSelectList } = require('../../ui-services/inputService');
 const { getSourceSelection } = require('../../source-utilities');
 const {buildEditLocations} = require('../../edit-utils/textEditTransforms');
 

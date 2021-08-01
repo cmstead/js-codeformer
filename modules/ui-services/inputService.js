@@ -3,7 +3,7 @@ const {
         showInputBox,
         showQuickPick
     },
-} = require('./vscodeService').getVscode();
+} = require('../vscodeService').getVscode();
 
 function openSelectList({ values, title }) {
     return showQuickPick(values, {
