@@ -2,7 +2,7 @@ require('../../utilities/approvals').configure();
 
 const { loadModule } = require('../../utilities/module-loader');
 
-const { transformSelectionToLocation, transformLocationToSelection } = loadModule('code-range-transforms');
+const { transformSelectionToLocation, transformLocationToSelection } = loadModule('edit-utils/code-range-transforms');
 
 describe('Code Range Transforms', function () {
     it('transforms editor selection to ast location', function () {

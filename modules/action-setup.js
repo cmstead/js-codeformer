@@ -1,6 +1,6 @@
 const parser = require('./parser/parser');
 const nodePath = require('./node-path');
-const { transformSelectionToLocation } = require('./code-range-transforms');
+const { transformSelectionToLocation } = require('./edit-utils/code-range-transforms');
 
 function getVscodeInstance() {
     return require('./vscodeService').getVscode();
