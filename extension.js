@@ -5,11 +5,14 @@ const { extractMethod } = require('./modules/commands/extract-method/extract-met
 const { inlineVariable } = require('./modules/commands/inline-variable/inline-variable-action');
 
 function activate(context) {
+	const formatDocument = () =>
+		vscode.commands.executeCommand("editor.action.formatDocument")
 
 	let extractVarDisposable = vscode.commands.registerCommand(
 		'cmstead.jscodeformer.extractVariable',
 		function () {
-			extractVariable();
+			extractVariable()
+			.then(formatDocument);
 		});
 
 	context.subscriptions.push(extractVarDisposable);
@@ -17,7 +20,8 @@ function activate(context) {
 	let extractMethodDisposable = vscode.commands.registerCommand(
 		'cmstead.jscodeformer.extractMethod',
 		function () {
-			extractMethod();
+			extractMethod()
+			.then(formatDocument);
 		});
 
 	context.subscriptions.push(extractMethodDisposable);
@@ -25,7 +29,8 @@ function activate(context) {
 	let inlineVariableDisposable = vscode.commands.registerCommand(
 		'cmstead.jscodeformer.inlineVariable',
 		function () {
-			inlineVariable();
+			inlineVariable()
+			.then(formatDocument);
 		});
 
 	context.subscriptions.push(inlineVariableDisposable);
