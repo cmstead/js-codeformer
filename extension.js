@@ -2,6 +2,7 @@ const vscode = require('vscode');
 
 const { extractVariable } = require('./modules/commands/extract-variable/extract-variable-action');
 const { extractMethod } = require('./modules/commands/extract-method/extract-method-action');
+const { inlineVariable } = require('./modules/commands/inline-variable/inline-variable-action');
 
 function activate(context) {
 
@@ -20,6 +21,14 @@ function activate(context) {
 		});
 
 	context.subscriptions.push(extractMethodDisposable);
+
+	let inlineVariableDisposable = vscode.commands.registerCommand(
+		'cmstead.jscodeformer.inlineVariable',
+		function () {
+			inlineVariable();
+		});
+
+	context.subscriptions.push(inlineVariableDisposable);
 }
 
 // this method is called when your extension is deactivated

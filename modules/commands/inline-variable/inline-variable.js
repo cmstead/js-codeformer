@@ -11,7 +11,8 @@ const {
     FUNCTION_EXPRESSION,
     FUNCTION,
     ARROW_FUNCTION_EXPRESSION,
-    PROPERTY
+    PROPERTY,
+    VARIABLE_DECLARATION
 } = require("../../ast-node-types");
 const { getSourceSelection } = require("../../source-utilities");
 
@@ -22,10 +23,18 @@ function getSurroundingScope(selectionPath) {
             || node.type === PROGRAM);
 }
 
-function getVariableDeclaractor(selectionPath) {
+function findNodeInPath(selectionPath, nodeType) {
     return reverse(selectionPath)
         .find(node =>
-            node.type === VARIABLE_DECLARATOR);
+            node.type === nodeType);
+}
+
+function getVariableDeclaractor(selectionPath) {
+    return findNodeInPath(selectionPath, VARIABLE_DECLARATOR);
+}
+
+function getVariableDeclaration(selectionPath) {
+    return findNodeInPath(selectionPath, VARIABLE_DECLARATION);
 }
 
 function getDeclarationBody(declaratorNode, sourceCode) {
@@ -116,10 +125,17 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
     return replacementLocations;
 }
 
+function pickVariableDeletionLocation(declaratorNode, declarationNode) {
+    return declarationNode.declarations.length > 1
+        ? declaratorNode.loc
+        : declarationNode.loc;
+}
 
 module.exports = {
     getDeclarationBody,
     getSurroundingScope,
     getVariableDeclaractor,
+    getVariableDeclaration,
+    pickVariableDeletionLocation,
     selectReplacementLocations
 };
