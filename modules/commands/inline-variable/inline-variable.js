@@ -13,6 +13,7 @@ const {
     ARROW_FUNCTION_EXPRESSION,
     PROPERTY
 } = require("../../ast-node-types");
+const { getSourceSelection } = require("../../source-utilities");
 
 function getSurroundingScope(selectionPath) {
     return reverse(selectionPath)
@@ -25,6 +26,12 @@ function getVariableDeclaractor(selectionPath) {
     return reverse(selectionPath)
         .find(node =>
             node.type === VARIABLE_DECLARATOR);
+}
+
+function getDeclarationBody(declaratorNode, sourceCode) {
+    const bodyLocation = declaratorNode.init.loc;
+    
+    return getSourceSelection(sourceCode, bodyLocation);
 }
 
 function isAnArrowFunctionParameter(node, parentNode) {
@@ -111,6 +118,7 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
 
 
 module.exports = {
+    getDeclarationBody,
     getSurroundingScope,
     getVariableDeclaractor,
     selectReplacementLocations
