@@ -1,5 +1,5 @@
 const { getSourceSelection } = require('../../source-utilities');
-const { selectExtractionLocation } = require('../../extraction-location-service');
+const { selectExtractionLocation } = require('../../extraction-utils/extraction-location-service');
 
 const {
     buildExtractionScopeList,

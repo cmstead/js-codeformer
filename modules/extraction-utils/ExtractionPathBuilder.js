@@ -1,10 +1,10 @@
-const astNodeTypes = require('./ast-node-types');
-const { last, reverse } = require('./core-utils');
+const astNodeTypes = require('../ast-node-types');
+const { last, reverse } = require('../core-utils');
 
 const {
     BLOCK_STATEMENT,
     PROGRAM
-} = require('./ast-node-types');
+} = astNodeTypes;
 
 class ExtractionPath {
     constructor() {

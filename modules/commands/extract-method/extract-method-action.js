@@ -1,5 +1,5 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
-const { buildExtractionPath } = require('../../ExtractionPathBuilder');
+const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
 const { getNewSourceEdit } = require('../../SourceEdit');
 const { showErrorMessage } = require('../../messageService');
 const { validateUserInput } = require('../../validatorService');
@@ -10,12 +10,12 @@ const {buildEditLocations} = require('../../textEditTransforms');
 const {
     selectExtractionLocation,
     retrieveExtractionLocation
-} = require('../../extraction-location-service');
+} = require('../../extraction-utils/extraction-location-service');
 
 const {
     selectExtractionScopes,
     buildExtractionScopeList
-} = require('../../extractionScopeService');
+} = require('../../extraction-utils/extractionScopeService');
 
 const {
     acceptableNodeTypes,

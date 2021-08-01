@@ -1,5 +1,5 @@
-const astNodeTypes = require('./ast-node-types');
-const { last } = require('./core-utils');
+const astNodeTypes = require('../ast-node-types');
+const { last } = require('../core-utils');
 
 const typeTransforms = {
     [astNodeTypes.ARROW_FUNCTION_EXPRESSION]: () => 'arrow function',
