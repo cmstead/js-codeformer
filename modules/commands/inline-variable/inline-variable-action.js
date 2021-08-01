@@ -1,7 +1,7 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { showErrorMessage } = require("../../messageService");
-const { getNewSourceEdit } = require("../../SourceEdit");
-const { transformLocationToRange } = require("../../textEditTransforms");
+const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
+const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { validateUserInput } = require("../../validatorService");
 const {
     getVariableDeclaractor,

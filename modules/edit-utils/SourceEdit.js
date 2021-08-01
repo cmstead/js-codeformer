@@ -1,4 +1,4 @@
-const { WorkspaceEdit, window, workspace } = require("./vscodeService").getVscode();
+const { WorkspaceEdit, window, workspace } = require("../vscodeService").getVscode();
 
 class SourceEdit{
     constructor(){

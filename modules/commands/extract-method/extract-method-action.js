@@ -1,11 +1,11 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
-const { getNewSourceEdit } = require('../../SourceEdit');
+const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
 const { showErrorMessage } = require('../../messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../inputService');
 const { getSourceSelection } = require('../../source-utilities');
-const {buildEditLocations} = require('../../textEditTransforms');
+const {buildEditLocations} = require('../../edit-utils/textEditTransforms');
 
 const {
     selectExtractionLocation,

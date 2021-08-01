@@ -18,8 +18,6 @@ const typeTransforms = {
 
 
 function getScopeMessage(displayNode, index) {
-    console.log(displayNode);
-    
     if (index === 0) {
         return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
     } else if (displayNode.type === astNodeTypes.PROGRAM) {
