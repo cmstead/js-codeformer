@@ -13,7 +13,7 @@ const {
     ARROW_FUNCTION_EXPRESSION,
     PROPERTY,
     VARIABLE_DECLARATION
-} = require("../../ast-node-types");
+} = require("../../constants/ast-node-types");
 const { getSourceSelection } = require("../../source-utilities");
 
 function getSurroundingScope(selectionPath) {

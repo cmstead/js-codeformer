@@ -15,7 +15,7 @@ const {
     BLOCK_STATEMENT,
     CLASS_BODY,
     OBJECT_EXPRESSION
-} = loadModule('ast-node-types');
+} = loadModule('constants/ast-node-types');
 
 const {
     buildMethodText,

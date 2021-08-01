@@ -4,7 +4,7 @@ const { selectExtractionLocation } = require('../../extraction-utils/extraction-
 
 const { findAppropriateParameters } = require('./parameter-search');
 
-const astNodeTypes = require('../../ast-node-types');
+const astNodeTypes = require('../../constants/ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,

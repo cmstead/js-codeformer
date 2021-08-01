@@ -6,7 +6,7 @@ const {
     selectExtractionScopes
 } = require('./variableExtractionScopeService');
 
-const astNodeTypes = require('../../ast-node-types');
+const astNodeTypes = require('../../constants/ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.FUNCTION_DECLARATION,

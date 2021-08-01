@@ -1,4 +1,4 @@
-const astNodeTypes = require('../../ast-node-types');
+const astNodeTypes = require('../../constants/ast-node-types');
 const { last } = require('../../core-utils');
 
 const typeTransforms = {
