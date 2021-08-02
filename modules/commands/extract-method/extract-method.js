@@ -79,6 +79,7 @@ function buildMethodCallText({
     const methodCall = `${methodName}(${parameters})`;
 
     return destinationType === astNodeTypes.BLOCK_STATEMENT
+        || destinationType === astNodeTypes.PROGRAM
         ? methodCall
         : `this.${methodCall}`;
 }
