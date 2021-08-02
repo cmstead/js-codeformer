@@ -39,7 +39,7 @@ function getVariableDeclaration(selectionPath) {
 
 function getDeclarationBody(declaratorNode, sourceCode) {
     const bodyLocation = declaratorNode.init.loc;
-    
+
     return getSourceSelection(sourceCode, bodyLocation);
 }
 
@@ -77,6 +77,9 @@ function isAMatchingIdentifier(node, variableName) {
 }
 
 const descentScopeTypes = [
+    FUNCTION,
+    FUNCTION_DECLARATION,
+    FUNCTION_EXPRESSION,
     ARROW_FUNCTION_EXPRESSION,
     BLOCK_STATEMENT
 ];

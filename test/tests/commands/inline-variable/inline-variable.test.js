@@ -96,5 +96,24 @@ describe('inline variable', function () {
 
             this.verifyAsJSON(selectedLocations);
         });
+
+        it('captures variable use in a returned binary expression', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/nested-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 14, column: 31 }),
+                end: buildEditorCoordinates({ line: 14, column: 31 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const surroundingScope = getSurroundingScope(selectionPath);
+            const variableDeclarator = getVariableDeclaractor(selectionPath);
+
+            const selectedLocations = selectReplacementLocations(surroundingScope, variableDeclarator);
+
+            this.verifyAsJSON(selectedLocations);
+        });
     });
 });
