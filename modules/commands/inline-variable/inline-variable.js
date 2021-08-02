@@ -158,30 +158,31 @@ function getNormalizedSourceLines(source, selectedLocation) {
     return normalizeSelection(sourceLines);
 }
 
-function buildDeletionLocation(sourceIsDifferentThanLocation, selectedLocation, selectedNode) {
-    if (sourceIsDifferentThanLocation && selectedNode.type === VARIABLE_DECLARATION) {
+function buildDeletionLocation(
+    sourceIsDifferentThanLocation,
+    selectedLocation,
+    selectedNode
+) {
+    const {
+        start: { line: startLine, column: startColumn },
+        end: { line: endLine, column: endColumn}
+    } = selectedLocation;
+
+    const selectionIsADeclaration = selectedNode.type === VARIABLE_DECLARATION;
+    const selectionIsADeclarator = selectedNode.type === VARIABLE_DECLARATOR;
+    const onlyDeleteSelection = sourceIsDifferentThanLocation && selectionIsADeclaration;
+
+    if (onlyDeleteSelection) {
         return selectedLocation;
-    } else if (selectedNode.type === VARIABLE_DECLARATOR) {
+    } else if (selectionIsADeclarator) {
         return {
-            start: {
-                line: selectedLocation.start.line,
-                column: selectedLocation.start.column
-            },
-            end: {
-                line: selectedLocation.end.line,
-                column: selectedLocation.end.column + 1
-            }
+            start: { line: startLine, column: startColumn },
+            end: { line: endLine, column: endColumn + 1 }
         };
     } else {
         return {
-            start: {
-                line: selectedLocation.start.line,
-                column: 0
-            },
-            end: {
-                line: selectedLocation.end.line + 1,
-                column: 0
-            }
+            start: { line: startLine, column: 0 },
+            end: { line: endLine + 1, column: 0 }
         };
     }
 }
@@ -194,12 +195,14 @@ function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
     const selectedNode = chooseDeclarationNode(declaratorNode, declarationNode);
     const selectedLocation = selectedNode.loc;
 
-    const declarationSource = getNormalizedSourceSelection(source, selectedLocation);
-    const sourceLines = getNormalizedSourceLines(source, selectedLocation);
+    const declarationSourceLines = getNormalizedSourceSelection(source, selectedLocation);
+    const rawSourceLines = getNormalizedSourceLines(source, selectedLocation);
 
-    const sourceIsDifferentThanLocation = sourceLines !== declarationSource;
-
-    return buildDeletionLocation(sourceIsDifferentThanLocation, selectedLocation, selectedNode)
+    return buildDeletionLocation(
+        rawSourceLines !== declarationSourceLines,
+        selectedLocation,
+        selectedNode
+    );
 }
 
 module.exports = {
