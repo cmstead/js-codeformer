@@ -2,7 +2,7 @@
 	"name": "js-codeformer",
 	"displayName": "JS CodeFormer",
 	"description": "A Javascript/Typescript refactoring and code automation tool for building better source",
-	"version": "0.5.1",
+	"version": "0.6.0",
 	"publisher": "cmstead",
 	"repository": {
 		"type": "git",
@@ -82,7 +82,7 @@
 		"menus": {
 			"editor/context": [
 				{
-					"submenu":"cmstead.js-codeformer.refactor",
+					"submenu": "cmstead.js-codeformer.refactor",
 					"group": "js-codeformer@1",
 					"when": "editorLangId == javascript"
 				}
