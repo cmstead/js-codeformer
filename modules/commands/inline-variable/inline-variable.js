@@ -142,6 +142,22 @@ function getSourceLines(source, selectedLocation) {
 }
 
 
+function normalizeSelection(textSelection) {
+    return textSelection.trim().replace(/\s+/g, ' ');
+}
+
+function getNormalizedSourceSelection(source, selectedLocation) {
+    const selection = getSourceSelection(source, selectedLocation);
+
+    return normalizeSelection(selection);
+}
+
+function getNormalizedSourceLines(source, selectedLocation) {
+    const sourceLines = getSourceLines(source, selectedLocation);
+
+    return normalizeSelection(sourceLines);
+}
+
 function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
     const selectedNode = declarationNode.declarations.length > 1
         ? declaratorNode
@@ -149,8 +165,8 @@ function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
 
     const selectedLocation = selectedNode.loc;
 
-    const declarationSource = getSourceSelection(source, selectedLocation).trim().replace(/\s+/g, ' ');
-    const sourceLines = getSourceLines(source, selectedLocation).trim().replace(/\s+/g, ' ');
+    const declarationSource = getNormalizedSourceSelection(source, selectedLocation);
+    const sourceLines = getNormalizedSourceLines(source, selectedLocation);
 
     const sourceIsDifferentThanLocation = sourceLines.trim() !== declarationSource.trim();
 
