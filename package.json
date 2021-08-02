@@ -79,6 +79,25 @@
 				"description": "inline value of selected variable, and delete variable declaration"
 			}
 		],
+		"keybindings": [
+			{
+				"command": "cmstead.jscodeformer.extractMethod",
+				"key": "ctrl+shift+j m",
+				"mac": "cmd+shift+j m",
+				"when": "editorHasSelection"
+			},
+			{
+				"command": "cmstead.jscodeformer.extractVariable",
+				"key": "ctrl+shift+j v",
+				"mac": "cmd+shift+j v",
+				"when": "editorHasSelection"
+			},
+			{
+				"command": "cmstead.jscodeformer.inlineVariable",
+				"key": "ctrl+shift+j i",
+				"mac": "cmd+shift+j i"
+			}
+		],
 		"menus": {
 			"editor/context": [
 				{
