@@ -131,6 +131,17 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
 
 
 
+function getSourceLines(source, selectedLocation) {
+    const lineStart = selectedLocation.start.line - 1;
+    const lineEnd = selectedLocation.end.line - 1;
+
+    return source
+        .split(/\r?\n/g)
+        .slice(lineStart, lineEnd)
+        .join('\n')
+}
+
+
 function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
     const selectedNode = declarationNode.declarations.length > 1
         ? declaratorNode
@@ -138,15 +149,8 @@ function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
 
     const selectedLocation = selectedNode.loc;
 
-    let sourceLines = '';
     const declarationSource = getSourceSelection(source, selectedLocation);
-
-    const lineStart = selectedLocation.start.line - 1;
-    const lineEnd = selectedLocation.end.line - 1;
-    sourceLines = source
-        .split(/\r?\n/g)
-        .slice(lineStart, lineEnd)
-        .join('\n');
+    const sourceLines = getSourceLines(source, selectedLocation);
 
     const sourceIsDifferentThanLocation = sourceLines.trim() !== declarationSource.trim();
 
