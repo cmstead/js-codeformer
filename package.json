@@ -84,7 +84,7 @@
 				{
 					"submenu": "cmstead.js-codeformer.refactor",
 					"group": "js-codeformer@1",
-					"when": "editorLangId == javascript"
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				}
 			],
 			"cmstead.js-codeformer.refactor": [
