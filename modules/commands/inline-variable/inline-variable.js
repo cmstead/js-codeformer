@@ -129,28 +129,28 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
     return replacementLocations;
 }
 
+
+
 function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
     const selectedNode = declarationNode.declarations.length > 1
         ? declaratorNode
         : declarationNode;
-    
+
     const selectedLocation = selectedNode.loc;
 
-    let sourceLine = '';
+    let sourceLines = '';
     const declarationSource = getSourceSelection(source, selectedLocation);
 
-    if(selectedLocation.start.line === selectedLocation.end.line) {
-        const lineStart = selectedLocation.start.line - 1;
-        const lineEnd = selectedLocation.end.line - 1;
-        sourceLine = source
-            .split(/\r?\n/g)
-            .slice(lineStart, lineEnd)
-            .join('\n');
-    }
+    const lineStart = selectedLocation.start.line - 1;
+    const lineEnd = selectedLocation.end.line - 1;
+    sourceLines = source
+        .split(/\r?\n/g)
+        .slice(lineStart, lineEnd)
+        .join('\n');
 
-    const sourceIsDifferentThanLocation = sourceLine.trim() !== declarationSource.trim();
+    const sourceIsDifferentThanLocation = sourceLines.trim() !== declarationSource.trim();
 
-    if(sourceIsDifferentThanLocation && selectedNode.type === VARIABLE_DECLARATION) {
+    if (sourceIsDifferentThanLocation && selectedNode.type === VARIABLE_DECLARATION) {
         return selectedLocation;
     } else if (selectedNode.type === VARIABLE_DECLARATOR) {
         return {
