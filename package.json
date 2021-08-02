@@ -1,7 +1,7 @@
 {
 	"name": "js-codeformer",
 	"displayName": "JS CodeFormer",
-	"description": "A JS refactoring and code automation tool for building better source",
+	"description": "A Javascript/Typescript refactoring and code automation tool for building better source",
 	"version": "0.5.1",
 	"publisher": "cmstead",
 	"repository": {
@@ -13,6 +13,13 @@
 	},
 	"categories": [
 		"Other"
+	],
+	"tags": [
+		"Javascript",
+		"Typescript",
+		"Refactoring",
+		"Automation",
+		"Snippets"
 	],
 	"scripts": {
 		"lint": "eslint .",
@@ -47,18 +54,55 @@
 		"onCommand:cmstead.jscodeformer.inlineVariable"
 	],
 	"contributes": {
+		"snippets": [
+			{
+				"path": "./js-snippets.code-snippets"
+			},
+			{
+				"path": "./ts-snippets.code-snippets"
+			}
+		],
 		"commands": [
 			{
 				"command": "cmstead.jscodeformer.extractMethod",
-				"title": "JS Codeformer: Extract Method"
+				"title": "Extract Method",
+				"description": "Extract selected source as a function/method to selected scope"
 			},
 			{
 				"command": "cmstead.jscodeformer.extractVariable",
-				"title": "JS Codeformer: Extract Variable"
+				"title": "Extract Variable",
+				"description": "Extract selected source as a variable to selected scope"
 			},
 			{
 				"command": "cmstead.jscodeformer.inlineVariable",
-				"title": "JS Codeformer: Inline Variable"
+				"title": "Inline Variable",
+				"description": "inline value of selected variable, and delete variable declaration"
+			}
+		],
+		"menus": {
+			"editor/context": [
+				{
+					"submenu":"cmstead.js-codeformer.refactor",
+					"group": "js-codeformer@1",
+					"when": "editorLangId == javascript"
+				}
+			],
+			"cmstead.js-codeformer.refactor": [
+				{
+					"command": "cmstead.jscodeformer.extractMethod"
+				},
+				{
+					"command": "cmstead.jscodeformer.extractVariable"
+				},
+				{
+					"command": "cmstead.jscodeformer.inlineVariable"
+				}
+			]
+		},
+		"submenus": [
+			{
+				"id": "cmstead.js-codeformer.refactor",
+				"label": "JS Codeformer: Refactor"
 			}
 		]
 	}
