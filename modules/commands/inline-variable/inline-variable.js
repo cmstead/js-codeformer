@@ -129,10 +129,41 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
     return replacementLocations;
 }
 
-function pickVariableDeletionLocation(declaratorNode, declarationNode) {
-    return declarationNode.declarations.length > 1
-        ? declaratorNode.loc
-        : declarationNode.loc;
+function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
+    const selectedNode = declarationNode.declarations.length > 1
+        ? declaratorNode
+        : declarationNode;
+    
+    const selectedLocation = selectedNode.loc;
+
+    let sourceLine = '';
+    const declarationSource = getSourceSelection(source, selectedLocation);
+
+    if(selectedLocation.start.line === selectedLocation.end.line) {
+        const lineStart = selectedLocation.start.line - 1;
+        const lineEnd = selectedLocation.end.line - 1;
+        sourceLine = source
+            .split(/\r?\n/g)
+            .slice(lineStart, lineEnd)
+            .join('\n');
+    }
+
+    const sourceIsDifferentThanLocation = sourceLine.trim() !== declarationSource.trim();
+
+    if(sourceIsDifferentThanLocation && selectedNode.type === VARIABLE_DECLARATION) {
+        return selectedLocation;
+    } else if (selectedNode.type === VARIABLE_DECLARATOR) {
+        return {
+            start: {
+                line: selectedLocation.start.line,
+                column: selectedLocation.start.column
+            },
+            end: {
+                line: selectedLocation.end.line,
+                column: selectedLocation.end.column + 1
+            }
+        };
+    }
 }
 
 module.exports = {

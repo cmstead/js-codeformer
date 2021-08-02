@@ -1,4 +1,11 @@
-const { getSurroundingScope, getVariableDeclaractor, selectReplacementLocations, getDeclarationBody } = require("../../../../modules/commands/inline-variable/inline-variable");
+const {
+    getSurroundingScope,
+    getVariableDeclaractor,
+    selectReplacementLocations,
+    getDeclarationBody,
+    getVariableDeclaration,
+    pickVariableDeletionLocation
+} = require("../../../../modules/commands/inline-variable/inline-variable");
 const { buildNodePath } = require("../../../../modules/node-path");
 const { parse } = require("../../../../modules/parser/parser");
 const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require("../../../utilities/editor-to-location-selection-builder");
@@ -114,6 +121,100 @@ describe('inline variable', function () {
             const selectedLocations = selectReplacementLocations(surroundingScope, variableDeclarator);
 
             this.verifyAsJSON(selectedLocations);
+        });
+    });
+
+    describe('select replacement location', function () {
+        it('selects proper replacement location when multiple statements are on a single line', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/location-selection-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 2, column: 12 }),
+                end: buildEditorCoordinates({ line: 2, column: 12 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const variableDeclarator = getVariableDeclaractor(selectionPath);
+            const variableDeclaration = getVariableDeclaration(selectionPath);
+
+            const deletionLocation = pickVariableDeletionLocation(
+                variableDeclarator,
+                variableDeclaration,
+                sourceCode
+            );
+
+            this.verifyAsJSON(deletionLocation);
+        });
+
+        it('selects proper replacement location when multiple declarators are on a single line', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/location-selection-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 5, column: 12 }),
+                end: buildEditorCoordinates({ line: 5, column: 12 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const variableDeclarator = getVariableDeclaractor(selectionPath);
+            const variableDeclaration = getVariableDeclaration(selectionPath);
+
+            const deletionLocation = pickVariableDeletionLocation(
+                variableDeclarator,
+                variableDeclaration,
+                sourceCode
+            );
+
+            this.verifyAsJSON(deletionLocation);
+        });
+
+        it('selects all lines when declaration is the only statement', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/location-selection-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 6, column: 12 }),
+                end: buildEditorCoordinates({ line: 6, column: 12 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const variableDeclarator = getVariableDeclaractor(selectionPath);
+            const variableDeclaration = getVariableDeclaration(selectionPath);
+
+            const deletionLocation = pickVariableDeletionLocation(
+                variableDeclarator,
+                variableDeclaration,
+                sourceCode
+            );
+
+            this.verifyAsJSON(deletionLocation);
+        });
+
+        it('selects single line when declaration is the only expression', function () {
+            const sourceCode = readFileSource(__dirname, 'fixtures/location-selection-source.js');
+            const parsedSource = parse(sourceCode);
+
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 9, column: 12 }),
+                end: buildEditorCoordinates({ line: 9, column: 12 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const variableDeclarator = getVariableDeclaractor(selectionPath);
+            const variableDeclaration = getVariableDeclaration(selectionPath);
+
+            const deletionLocation = pickVariableDeletionLocation(
+                variableDeclarator,
+                variableDeclaration,
+                sourceCode
+            );
+
+            this.verifyAsJSON(deletionLocation);
         });
     });
 });

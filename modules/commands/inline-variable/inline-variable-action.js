@@ -83,7 +83,8 @@ function inlineVariable() {
 
             const deletionLocation = pickVariableDeletionLocation(
                 variableDeclarator,
-                variableDeclaration
+                variableDeclaration,
+                actionSetup.source
             );
 
             const replacementRange = prepareEditLocation(deletionLocation);
