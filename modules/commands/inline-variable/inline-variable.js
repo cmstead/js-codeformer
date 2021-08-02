@@ -158,18 +158,7 @@ function getNormalizedSourceLines(source, selectedLocation) {
     return normalizeSelection(sourceLines);
 }
 
-function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
-    const selectedNode = declarationNode.declarations.length > 1
-        ? declaratorNode
-        : declarationNode;
-
-    const selectedLocation = selectedNode.loc;
-
-    const declarationSource = getNormalizedSourceSelection(source, selectedLocation);
-    const sourceLines = getNormalizedSourceLines(source, selectedLocation);
-
-    const sourceIsDifferentThanLocation = sourceLines.trim() !== declarationSource.trim();
-
+function buildDeletionLocation(sourceIsDifferentThanLocation, selectedLocation, selectedNode) {
     if (sourceIsDifferentThanLocation && selectedNode.type === VARIABLE_DECLARATION) {
         return selectedLocation;
     } else if (selectedNode.type === VARIABLE_DECLARATOR) {
@@ -195,6 +184,22 @@ function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
             }
         };
     }
+}
+function chooseDeclarationNode(declaratorNode, declarationNode) {
+    const multipleDeclarationsExist = declarationNode.declarations.length > 1;
+    return multipleDeclarationsExist ? declaratorNode : declarationNode
+}
+
+function pickVariableDeletionLocation(declaratorNode, declarationNode, source) {
+    const selectedNode = chooseDeclarationNode(declaratorNode, declarationNode);
+    const selectedLocation = selectedNode.loc;
+
+    const declarationSource = getNormalizedSourceSelection(source, selectedLocation);
+    const sourceLines = getNormalizedSourceLines(source, selectedLocation);
+
+    const sourceIsDifferentThanLocation = sourceLines !== declarationSource;
+
+    return buildDeletionLocation(sourceIsDifferentThanLocation, selectedLocation, selectedNode)
 }
 
 module.exports = {
