@@ -12,7 +12,8 @@ const {
     FUNCTION,
     ARROW_FUNCTION_EXPRESSION,
     PROPERTY,
-    VARIABLE_DECLARATION
+    VARIABLE_DECLARATION,
+    IF_STATEMENT
 } = require("../../constants/ast-node-types");
 const { getSourceSelection } = require("../../source-utilities");
 
@@ -81,7 +82,7 @@ const descentScopeTypes = [
     FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
     ARROW_FUNCTION_EXPRESSION,
-    BLOCK_STATEMENT
+    IF_STATEMENT
 ];
 
 function isDescendableNode(node) {
