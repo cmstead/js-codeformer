@@ -51,7 +51,8 @@
 	"activationEvents": [
 		"onCommand:cmstead.jscodeformer.extractMethod",
 		"onCommand:cmstead.jscodeformer.extractVariable",
-		"onCommand:cmstead.jscodeformer.inlineVariable"
+		"onCommand:cmstead.jscodeformer.inlineVariable",
+		"onCommand:cmstead.jscodeformer.surroundWith"
 	],
 	"contributes": {
 		"snippets": [
@@ -76,7 +77,12 @@
 			{
 				"command": "cmstead.jscodeformer.inlineVariable",
 				"title": "Inline Variable",
-				"description": "inline value of selected variable, and delete variable declaration"
+				"description": "Inline value of selected variable, and delete variable declaration"
+			},
+			{
+				"command": "cmstead.jscodeformer.surroundWith",
+				"title": "Surround With",
+				"description": "Surround selection with snippet text"
 			}
 		],
 		"keybindings": [
@@ -115,6 +121,9 @@
 				},
 				{
 					"command": "cmstead.jscodeformer.inlineVariable"
+				},
+				{
+					"command": "cmstead.jscodeformer.surroundWith"
 				}
 			]
 		},

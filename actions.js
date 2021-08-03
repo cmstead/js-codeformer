@@ -13,6 +13,11 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.inlineVariable',
 		path: './modules/commands/inline-variable/inline-variable-action',
 		name: 'inlineVariable'
+	},
+	{
+		commandId: 'cmstead.jscodeformer.surroundWith',
+		path: './modules/commands/surround-with/surround-with-action',
+		name: 'surroundWith'
 	}
 ];
 
