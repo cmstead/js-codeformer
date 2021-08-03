@@ -110,6 +110,11 @@
 					"submenu": "cmstead.js-codeformer.refactor",
 					"group": "js-codeformer@1",
 					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
+				},
+				{
+					"submenu": "cmstead.js-codeformer.actions",
+					"group": "js-codeformer@2",
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				}
 			],
 			"cmstead.js-codeformer.refactor": [
@@ -121,7 +126,9 @@
 				},
 				{
 					"command": "cmstead.jscodeformer.inlineVariable"
-				},
+				}
+			],
+			"cmstead.js-codeformer.actions": [
 				{
 					"command": "cmstead.jscodeformer.surroundWith"
 				}
@@ -130,7 +137,11 @@
 		"submenus": [
 			{
 				"id": "cmstead.js-codeformer.refactor",
-				"label": "JS Codeformer: Refactor"
+				"label": "JS CodeFormer: Refactor"
+			},
+			{
+				"id": "cmstead.js-codeformer.actions",
+				"label": "JS CodeFormer: Actions"
 			}
 		]
 	}
