@@ -14,10 +14,17 @@ function applyParseModeTransformations(originalSource) {
 function parse(originalSource) {
     const parseableSource = applyParseModeTransformations(originalSource);
 
-    return tsEsTree.parse(parseableSource, {
-        loc: true,
-        jsx: true
-    });
+    try {
+        return tsEsTree.parse(parseableSource, {
+            loc: true,
+        });
+    } catch (error) {
+        return tsEsTree.parse(parseableSource, {
+            jsx: true,
+            loc: true,
+            useJSXTextNode: true,
+        });
+    }
 }
 
 module.exports = {

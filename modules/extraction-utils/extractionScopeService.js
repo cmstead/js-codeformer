@@ -18,12 +18,16 @@ const typeTransforms = {
 
 
 function getScopeMessage(displayNode, index) {
-    if (index === 0) {
-        return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
-    } else if (displayNode.type === astNodeTypes.PROGRAM) {
-        return 'Extract to top of file';
-    } else {
-        return `Extract to scope in ${typeTransforms[displayNode.type](displayNode)}`
+    try {
+        if (displayNode.type === astNodeTypes.PROGRAM) {
+            return 'Extract to top of file';
+        } else if (index === 0) {
+            return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
+        } else {
+            return `Extract to scope in ${typeTransforms[displayNode.type](displayNode)}`
+        }
+    } catch (_) {
+        throw new Error(`JS CodeFormer error: Cannot process node type "${displayNode.type}"`);
     }
 }
 

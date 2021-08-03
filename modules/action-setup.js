@@ -27,7 +27,8 @@ function prepareActionSetup(vscode = null) {
             selectionPath
         };
     
-    } catch (_) {
+    } catch (error) {
+        console.log(error);
         throw new Error('Unable to interpret source code; JS CodeFormer cannot start');
     }
 }
