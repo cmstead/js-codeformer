@@ -14,7 +14,10 @@ function applyParseModeTransformations(originalSource) {
 function parse(originalSource) {
     const parseableSource = applyParseModeTransformations(originalSource);
 
-    return tsEsTree.parse(parseableSource, { loc: true });
+    return tsEsTree.parse(parseableSource, {
+        loc: true,
+        jsx: true
+    });
 }
 
 module.exports = {

@@ -2,7 +2,7 @@
 	"name": "js-codeformer",
 	"displayName": "JS CodeFormer",
 	"description": "A Javascript/Typescript refactoring and code automation tool for building better source",
-	"version": "0.7.0",
+	"version": "0.8.0",
 	"publisher": "cmstead",
 	"repository": {
 		"type": "git",
@@ -51,7 +51,8 @@
 	"activationEvents": [
 		"onCommand:cmstead.jscodeformer.extractMethod",
 		"onCommand:cmstead.jscodeformer.extractVariable",
-		"onCommand:cmstead.jscodeformer.inlineVariable"
+		"onCommand:cmstead.jscodeformer.inlineVariable",
+		"onCommand:cmstead.jscodeformer.surroundWith"
 	],
 	"contributes": {
 		"snippets": [
@@ -76,7 +77,12 @@
 			{
 				"command": "cmstead.jscodeformer.inlineVariable",
 				"title": "Inline Variable",
-				"description": "inline value of selected variable, and delete variable declaration"
+				"description": "Inline value of selected variable, and delete variable declaration"
+			},
+			{
+				"command": "cmstead.jscodeformer.surroundWith",
+				"title": "Surround With",
+				"description": "Surround selection with snippet text"
 			}
 		],
 		"keybindings": [
@@ -104,6 +110,11 @@
 					"submenu": "cmstead.js-codeformer.refactor",
 					"group": "js-codeformer@1",
 					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
+				},
+				{
+					"submenu": "cmstead.js-codeformer.actions",
+					"group": "js-codeformer@2",
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				}
 			],
 			"cmstead.js-codeformer.refactor": [
@@ -116,12 +127,21 @@
 				{
 					"command": "cmstead.jscodeformer.inlineVariable"
 				}
+			],
+			"cmstead.js-codeformer.actions": [
+				{
+					"command": "cmstead.jscodeformer.surroundWith"
+				}
 			]
 		},
 		"submenus": [
 			{
 				"id": "cmstead.js-codeformer.refactor",
-				"label": "JS Codeformer: Refactor"
+				"label": "JS CodeFormer: Refactor"
+			},
+			{
+				"id": "cmstead.js-codeformer.actions",
+				"label": "JS CodeFormer: Actions"
 			}
 		]
 	}
