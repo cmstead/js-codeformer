@@ -1,4 +1,4 @@
-const estraverse = require('estraverse');
+const astTraverse = require('./astTraverse');
 
 function nodeStartContainsSelectionStart(node, selectionLocation) {
     return (node.loc.start.line < selectionLocation.start.line
@@ -20,7 +20,7 @@ function nodeContainsSelection(node, selectionLocation) {
 function buildNodePath(parsedSource, selectionLocation) {
     let nodePath = [];
 
-    estraverse.traverse(parsedSource, {
+    astTraverse.traverse(parsedSource, {
         enter: function (node) {
             if (nodeContainsSelection(node, selectionLocation)) {
                 nodePath.push(node);

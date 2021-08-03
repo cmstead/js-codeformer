@@ -1,5 +1,3 @@
-// const astTraverse = require('estraverse');
-
 const astTraverse = require('../../astTraverse');
 
 const { getNodeType } = require('../../core-utils');
