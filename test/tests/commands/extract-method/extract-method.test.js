@@ -69,6 +69,21 @@ describe('extract method behaviors', function () {
 
             assert.equal(JSON.stringify(selectedParameters), JSON.stringify(['b', 'a']));
         });
+
+        it('excludes variables declared in ancestor scopes to extraction location', function () {
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 5, column: 16 }),
+                end: buildEditorCoordinates({ line: 5, column: 21 })
+            });
+
+            const testSource = readFileSource(__dirname, 'fixtures/mixed-scope-var-declarations.js');
+
+            const parsedSelection = parseSelectedText(testSource, selectedLocation);
+
+            const selectedParameters = findAppropriateParameters(parsedSelection);
+
+            assert.equal(JSON.stringify(selectedParameters), JSON.stringify(['b']));
+        });
     });
 
     describe('create method text', function () {

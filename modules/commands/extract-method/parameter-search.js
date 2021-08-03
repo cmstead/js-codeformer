@@ -62,7 +62,34 @@ function diffVariableSets(declaredVariables, variablesInUse) {
     })
 }
 
-function findAppropriateParameters(parsedSelectionSource) {
+function getLocallyScopedDeclarations(nodePath) {
+    const selectionScopes = nodePath.filter(node => isNodeAScope(node));
+
+    const declaredVariables = {};
+
+    selectionScopes.forEach(function (scope) {
+        astTraverse.traverse(scope, {
+            enter: function (node, parentNode) {
+                if (node === scope) {
+                    return;
+                }
+    
+                const varibleIsBeingDeclared = isVariableBeingDeclared(parentNode, node);
+                const nodeIsAScope = isNodeAScope(node);
+    
+                if (nodeIsAScope) {
+                    return astTraverse.VisitorOption.Skip;
+                } if (varibleIsBeingDeclared) {
+                    declaredVariables[node.name] = true;
+                }
+            }
+        });
+    });
+
+    return declaredVariables;
+}
+
+function getSubordinateScopeParameters(parsedSelectionSource) {
     const declaredVariables = {};
     const variablesInUse = {};
 
@@ -90,7 +117,19 @@ function findAppropriateParameters(parsedSelectionSource) {
         }
     });
 
-    return diffVariableSets(declaredVariables, variablesInUse);
+    return {
+        declaredVariables,
+        variablesInUse
+    };
+}
+
+function findAppropriateParameters(parsedSelectionSource) {
+    const {
+        declaredVariables: declaredSelectionVars,
+        variablesInUse: selectionVarsInUse
+    } = getSubordinateScopeParameters(parsedSelectionSource);
+
+    return diffVariableSets(declaredSelectionVars, selectionVarsInUse);
 }
 
 module.exports = {

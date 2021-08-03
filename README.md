@@ -11,8 +11,14 @@ JS CodeFormer automated refactorings are built upon years of experience to be st
 Current refactorings:
 
 - Extract Method/Function
+    - Windows: ctrl+shift+j, m
+    - Mac: cmd+shift+j, m
 - Extract Variable
+    - Windows: ctrl+shift+j, v
+    - Mac: cmd+shift+j, v
 - Inline Variable
+    - Windows: ctrl+shift+j, i
+    - Mac: cmd+shift+j, i
 
 ## Actions ##
 
@@ -35,10 +41,12 @@ Current outstanding behavior work:
 - Refactorings
     - [ ] Rename (primarily for JS embedded in HTML support)
     - [ ] Extract to parameter
-    - [ ] Lift and name anonymous function
-- Actions
-    - [ ] Change variable type
+- Conversions
     - [ ] Convert to arrow function
     - [ ] Convert to function expression
+    - [ ] Convert to function declaration
     - [ ] Convert string to template literal
+- Actions
+    - [ ] Change variable type
     - [ ] Introduce variable
+    - [ ] Lift and name anonymous function
