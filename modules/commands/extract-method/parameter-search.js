@@ -1,4 +1,7 @@
-const estraverse = require('estraverse');
+// const astTraverse = require('estraverse');
+
+const astTraverse = require('../../astTraverse');
+
 const { getNodeType } = require('../../core-utils');
 
 const astNodeTypes = require('../../constants/ast-node-types');
@@ -65,7 +68,7 @@ function findAppropriateParameters(parsedSelectionSource) {
     const declaredVariables = {};
     const variablesInUse = {};
 
-    estraverse.traverse(parsedSelectionSource, {
+    astTraverse.traverse(parsedSelectionSource, {
         enter: function (node, parentNode) {
             if (node === parsedSelectionSource) {
                 return;
@@ -80,7 +83,7 @@ function findAppropriateParameters(parsedSelectionSource) {
 
                 insertUsedVariables(locatedParameters, variablesInUse);
 
-                return estraverse.VisitorOption.Skip;
+                return astTraverse.VisitorOption.Skip;
             } if (varibleIsBeingDeclared) {
                 declaredVariables[node.name] = true;
             } else if (variableIsBeingUsed) {
