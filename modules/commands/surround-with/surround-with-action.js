@@ -14,6 +14,18 @@ const vscode = require('../../vscodeService').getVscode();
 
 const snippetBasePath = '../../../';
 
+function getSnippetFilePath(actionSetup) {
+    const snippetName = getLanguageSnippetName(actionSetup.activeTextEditor.document);
+    const snippetFileName = `${snippetName}.code-snippets`;
+    return path.join(__dirname, snippetBasePath, snippetFileName);
+
+}
+
+function buildSnippetString(selectedOption, snippetJson) {
+    const snippetText = getSnippetText(selectedOption, snippetJson);
+    return new vscode.SnippetString(snippetText);
+}
+
 function surroundWith() {
     let actionSetup = null;
     let snippetJson = null;
@@ -24,9 +36,7 @@ function surroundWith() {
         })
 
         .then(function () {
-            const snippetName = getLanguageSnippetName(actionSetup.activeTextEditor.document);
-            const snippetFileName = `${snippetName}.code-snippets`;
-            const snippetFilePath = path.join(__dirname, snippetBasePath, snippetFileName);
+            const snippetFilePath = getSnippetFilePath(actionSetup);
 
             return promisify(fs.readFile)(snippetFilePath, { encoding: 'utf8' });
         })
@@ -50,14 +60,12 @@ function surroundWith() {
         }))
 
         .then(function (selectedOption) {
-            const snippetText = getSnippetText(selectedOption, snippetJson);
-            const snippetString = new vscode.SnippetString(snippetText);
+            const snippetString = buildSnippetString(selectedOption, snippetJson)
             const selectionRange = transformLocationToRange(actionSetup.location);
 
-            return actionSetup.activeTextEditor.insertSnippet(snippetString, selectionRange);
+            return actionSetup.activeTextEditor
+                .insertSnippet(snippetString, selectionRange);
         })
-
-        .then(() => showErrorMessage('Done'))
 
         .catch(function (error) {
             showErrorMessage(error.message);

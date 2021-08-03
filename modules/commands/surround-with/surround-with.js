@@ -1,4 +1,4 @@
-const excludePattern = /parameter|promise/ig;
+const excludePattern = /^(parameter|promise)/i;
 
 function getTemplateList(snippetJson) {
     return Object
