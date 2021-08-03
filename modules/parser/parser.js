@@ -11,20 +11,37 @@ function applyParseModeTransformations(originalSource) {
         )
 }
 
+function tryParseStandard(source) {
+    return tsEsTree.parse(source, {
+        loc: true,
+    });
+}
+
+function tryParseJsx(source) {
+    return tsEsTree.parse(source, {
+        jsx: true,
+        loc: true,
+        useJSXTextNode: true,
+    });
+}
+
+function parseText(source, { useJsx }) {
+    try {
+        return useJsx 
+            ? tryParseJsx(source)
+            : tryParseStandard(source);
+    } catch (error) {
+        if(useJsx) {
+            throw error;
+        } else {
+            parseText(source, { useJsx: true });
+        }
+    }
+}
+
 function parse(originalSource) {
     const parseableSource = applyParseModeTransformations(originalSource);
-
-    try {
-        return tsEsTree.parse(parseableSource, {
-            loc: true,
-        });
-    } catch (error) {
-        return tsEsTree.parse(parseableSource, {
-            jsx: true,
-            loc: true,
-            useJSXTextNode: true,
-        });
-    }
+    return parseText(parseableSource, { useJsx: false });
 }
 
 module.exports = {
