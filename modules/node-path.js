@@ -32,5 +32,6 @@ function buildNodePath(parsedSource, selectionLocation) {
 }
 
 module.exports = {
-    buildNodePath
+    buildNodePath,
+    nodeContainsSelection
 };

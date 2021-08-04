@@ -1,6 +1,7 @@
 const astTraverse = require('../../astTraverse');
 
-const { getNodeType } = require('../../core-utils');
+const { nodeContainsSelection } = require('../../node-path');
+const { getNodeType, last } = require('../../core-utils');
 
 const astNodeTypes = require('../../constants/ast-node-types');
 const {
@@ -57,13 +58,16 @@ function insertUsedVariables(parameterNames, variableNamesObject) {
 
 function diffVariableSets(declaredVariables, variablesInUse) {
     return Object.keys(variablesInUse)
-    .filter(function (variableName) {
-        return !declaredVariables[variableName];
-    })
+        .filter(function (variableName) {
+            return !declaredVariables[variableName];
+        })
 }
 
-function getLocallyScopedDeclarations(nodePath) {
-    const selectionScopes = nodePath.filter(node => isNodeAScope(node));
+function getLocallyScopedDeclarations(extractionPath, extractionLocation) {
+    const selectionScopes = extractionPath
+        .map(nodes => nodes[0])
+        .filter((node) =>
+            nodeContainsSelection(node, extractionLocation.loc));
 
     const declaredVariables = {};
 
@@ -73,10 +77,10 @@ function getLocallyScopedDeclarations(nodePath) {
                 if (node === scope) {
                     return;
                 }
-    
+
                 const varibleIsBeingDeclared = isVariableBeingDeclared(parentNode, node);
                 const nodeIsAScope = isNodeAScope(node);
-    
+
                 if (nodeIsAScope) {
                     return astTraverse.VisitorOption.Skip;
                 } if (varibleIsBeingDeclared) {
@@ -133,5 +137,6 @@ function findAppropriateParameters(parsedSelectionSource) {
 }
 
 module.exports = {
-    findAppropriateParameters
+    findAppropriateParameters,
+    getLocallyScopedDeclarations
 };

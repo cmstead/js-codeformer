@@ -3,12 +3,20 @@ require('../../../utilities/approvals').configure();
 const { assert } = require('chai');
 
 const {
+    getLocallyScopedDeclarations
+} = require('../../../../modules/commands/extract-method/parameter-search');
+
+const {
     buildEditorCoordinates,
     buildLocationFromEditorCoordinates
 } = require('../../../utilities/editor-to-location-selection-builder');
 
 const { loadModule } = require('../../../utilities/module-loader');
 const { readFileSource } = require('../../../utilities/file-reader');
+const { parse } = require('../../../../modules/parser/parser');
+const { buildNodePath } = require('../../../../modules/node-path');
+const { buildExtractionPath } = require('../../../../modules/extraction-utils/ExtractionPathBuilder');
+const { acceptableNodeTypes } = require('../../../../modules/commands/extract-method/extract-method');
 
 const { getSourceSelection } = loadModule('source-utilities');
 const {
@@ -78,11 +86,14 @@ describe('extract method behaviors', function () {
 
             const testSource = readFileSource(__dirname, 'fixtures/mixed-scope-var-declarations.js');
 
-            const parsedSelection = parseSelectedText(testSource, selectedLocation);
+            const parsedSource = parse(testSource);
+            const nodePath = buildNodePath(parsedSource, selectedLocation);
+            const extractionPath = buildExtractionPath(nodePath, acceptableNodeTypes);
+            const extractionLocation = extractionPath[1][0];
 
-            const selectedParameters = findAppropriateParameters(parsedSelection);
+            const capturedDeclarations = getLocallyScopedDeclarations(extractionPath, extractionLocation);
 
-            assert.equal(JSON.stringify(selectedParameters), JSON.stringify(['b']));
+            assert.equal(JSON.stringify(capturedDeclarations), JSON.stringify({a: true}));
         });
     });
 
