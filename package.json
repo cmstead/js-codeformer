@@ -52,6 +52,7 @@
 		"onCommand:cmstead.jscodeformer.extractMethod",
 		"onCommand:cmstead.jscodeformer.extractVariable",
 		"onCommand:cmstead.jscodeformer.inlineVariable",
+		"onCommand:cmstead.jscodeformer.pickBehavior",
 		"onCommand:cmstead.jscodeformer.surroundWith"
 	],
 	"contributes": {
@@ -83,6 +84,11 @@
 				"command": "cmstead.jscodeformer.surroundWith",
 				"title": "Surround With",
 				"description": "Surround selection with snippet text"
+			},
+			{
+				"command": "cmstead.jscodeformer.pickBehavior",
+				"title": "JS CodeFormer: Action Palette",
+				"description": "Open JS CodeFormer action palette to pick a behavior"
 			}
 		],
 		"keybindings": [
@@ -102,7 +108,18 @@
 				"command": "cmstead.jscodeformer.inlineVariable",
 				"key": "ctrl+shift+j i",
 				"mac": "cmd+shift+j i"
+			},
+			{
+				"command": "cmstead.jscodeformer.surroundWith",
+				"key": "ctrl+shift+j w",
+				"mac": "cmd+shift+j w"
+			},
+			{
+				"command": "cmstead.jscodeformer.pickBehavior",
+				"key": "ctrl+shift+j p",
+				"mac": "cmd+shift+j p"
 			}
+
 		],
 		"menus": {
 			"editor/context": [
@@ -115,7 +132,13 @@
 					"submenu": "cmstead.js-codeformer.actions",
 					"group": "js-codeformer@2",
 					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
+				},
+				{
+					"command": "cmstead.jscodeformer.pickBehavior",
+					"group": "js-codeformer@3",
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				}
+
 			],
 			"cmstead.js-codeformer.refactor": [
 				{

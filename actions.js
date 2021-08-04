@@ -28,7 +28,15 @@ const actions = [
 		name: 'surroundWith',
 		title: 'Surround With',
 		group: groups.ACTIONS
-	}
+	},
+	{
+		commandId: 'cmstead.jscodeformer.pickBehavior',
+		path: './modules/commands/pick-behavior/pick-behavior-action',
+		name: 'pickBehavior',
+		title: 'Surround With',
+		group: groups.NONE
+	},
+
 ];
 
 module.exports = actions;

@@ -27,10 +27,18 @@ Not everything we want to do with our code is a refactoring. That doesn't mean w
 Current Actions:
 
 - Surround with
-    - Arrow function
-    - Function
-    - Try/Catch
-    - Variable
+    - Keybindings (hot keys)
+        - Windows: ctrl+shift+j, w
+        - Mac: cmd+shift+j, w
+    - Available templates
+        - Arrow function
+        - Function
+        - Try/Catch
+        - Variable
+
+- Select Action (Action Palette)
+    - Windows: ctrl+shift+j, p
+    - Mac: cmd+shift+j, p
 
 ## What's Next ##
 
