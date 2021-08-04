@@ -3,6 +3,7 @@ require('../../../utilities/approvals').configure();
 const { assert } = require('chai');
 
 const {
+    diffVariableSets,
     getLocallyScopedDeclarations,
     getSubordinateScopeParameters
 } = require('../../../../modules/commands/extract-method/parameter-search');
@@ -75,12 +76,7 @@ describe('extract method behaviors', function () {
 
             const selectedParameters = getSubordinateScopeParameters(parsedSelection);
 
-            const expectedOutput = {
-                "declaredVariables": { "d": true, "addSomething": true, "foo": true },
-                "variablesInUse": { "b": true, "addSomething": true, "a": true, "d": true }
-            };
-
-            assert.equal(JSON.stringify(selectedParameters), JSON.stringify(expectedOutput));
+            assert.equal(JSON.stringify(selectedParameters), JSON.stringify(['b', 'a']))
         });
 
         it('excludes variables declared in ancestor scopes to extraction location', function () {
@@ -98,7 +94,7 @@ describe('extract method behaviors', function () {
 
             const capturedDeclarations = getLocallyScopedDeclarations(extractionPath, extractionLocation);
 
-            assert.equal(JSON.stringify(capturedDeclarations), JSON.stringify({ a: true }));
+            assert.equal(JSON.stringify(capturedDeclarations), JSON.stringify(['a']));
         });
     });
 

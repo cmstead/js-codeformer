@@ -90,7 +90,7 @@ function getLocallyScopedDeclarations(extractionPath, extractionLocation) {
         });
     });
 
-    return declaredVariables;
+    return Object.keys(declaredVariables);
 }
 
 function getSubordinateScopeParameters(parsedSelectionSource) {
@@ -108,7 +108,7 @@ function getSubordinateScopeParameters(parsedSelectionSource) {
             const nodeIsAScope = isNodeAScope(node);
 
             if (nodeIsAScope) {
-                const locatedParameters = findAppropriateParameters(node);
+                const locatedParameters = getSubordinateScopeParameters(node);
 
                 insertUsedVariables(locatedParameters, variablesInUse);
 
@@ -121,22 +121,22 @@ function getSubordinateScopeParameters(parsedSelectionSource) {
         }
     });
 
-    return {
-        declaredVariables,
-        variablesInUse
-    };
+    return diffVariableSets(declaredVariables, variablesInUse);
 }
 
-function findAppropriateParameters(parsedSelectionSource) {
-    const {
-        declaredVariables: declaredSelectionVars,
-        variablesInUse: selectionVarsInUse
-    } = getSubordinateScopeParameters(parsedSelectionSource);
+function findAppropriateParameters(
+    parsedSelectionSource,
+    extractionPath,
+    extractionLocation
+) {
+    const collectedParameters = getSubordinateScopeParameters(parsedSelectionSource);
+    const ancestorDeclarations = getLocallyScopedDeclarations(extractionPath, extractionLocation);
 
-    return diffVariableSets(declaredSelectionVars, selectionVarsInUse);
+    return collectedParameters.filter(key => !ancestorDeclarations.includes(key));
 }
 
 module.exports = {
+    diffVariableSets,
     findAppropriateParameters,
     getLocallyScopedDeclarations,
     getSubordinateScopeParameters

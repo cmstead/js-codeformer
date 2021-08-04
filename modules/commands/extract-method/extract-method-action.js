@@ -5,7 +5,7 @@ const { showErrorMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../ui-services/inputService');
 const { getSourceSelection } = require('../../source-utilities');
-const {buildEditLocations} = require('../../edit-utils/textEditTransforms');
+const { buildEditLocations } = require('../../edit-utils/textEditTransforms');
 
 const {
     selectExtractionLocation,
@@ -119,7 +119,10 @@ function extractMethod() {
         .then(() =>
             parseSelectedText(actionSetup.source, actionSetup.location))
         .then((parsedSelection) =>
-            findAppropriateParameters(parsedSelection))
+            findAppropriateParameters(
+                parsedSelection,
+                extractionPath,
+                extractionLocation))
         .then((suggestedParameters) =>
             getEditedParameters(suggestedParameters))
         .then((newParameterText) =>
