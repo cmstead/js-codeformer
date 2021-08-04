@@ -138,5 +138,6 @@ function findAppropriateParameters(parsedSelectionSource) {
 
 module.exports = {
     findAppropriateParameters,
-    getLocallyScopedDeclarations
+    getLocallyScopedDeclarations,
+    getSubordinateScopeParameters
 };
