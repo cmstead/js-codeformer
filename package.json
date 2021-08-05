@@ -50,6 +50,7 @@
 	"main": "./extension.js",
 	"activationEvents": [
 		"onCommand:cmstead.jscodeformer.extractMethod",
+		"onCommand:cmstead.jscodeformer.extractToParameter",
 		"onCommand:cmstead.jscodeformer.extractVariable",
 		"onCommand:cmstead.jscodeformer.inlineVariable",
 		"onCommand:cmstead.jscodeformer.pickBehavior",
@@ -69,6 +70,11 @@
 				"command": "cmstead.jscodeformer.extractMethod",
 				"title": "Extract Method",
 				"description": "Extract selected source as a function/method to selected scope"
+			},
+			{
+				"command": "cmstead.jscodeformer.extractToParameter",
+				"title": "Extract To Parameter",
+				"description": "Extract selected variable to a function parameter"
 			},
 			{
 				"command": "cmstead.jscodeformer.extractVariable",

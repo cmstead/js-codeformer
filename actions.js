@@ -9,6 +9,13 @@ const actions = [
 		group: groups.REFACTORINGS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.extractToParameter',
+		path: './modules/commands/extract-to-parameter/extract-to-parameter-action',
+		name: 'extractToParameter',
+		title: 'Extract To Parameter',
+		group: groups.REFACTORINGS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.extractMethod',
 		path: './modules/commands/extract-method/extract-method-action',
 		name: 'extractMethod',
