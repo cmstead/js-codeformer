@@ -9,7 +9,7 @@ function extractToParameter() {
     let variableDeclaration = null;
     let functionNode = null;
 
-    asyncPrepareActionSetup()
+    return asyncPrepareActionSetup()
         .then((newActionSetup) =>
             actionSetup = newActionSetup)
 
