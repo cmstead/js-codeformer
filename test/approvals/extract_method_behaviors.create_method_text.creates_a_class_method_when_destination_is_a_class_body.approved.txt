@@ -1,5 +1,5 @@
 testMethod (a, b, c) {
-const d = 1234;
+            const d = 1234;
 
                         const addSomething = (a) => a + b;
 
@@ -10,4 +10,4 @@ const d = 1234;
                         foo.bar.baz('test');
 
                         return addSomething(a) * d;
-}
+        }

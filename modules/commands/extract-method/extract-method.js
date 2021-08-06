@@ -5,6 +5,7 @@ const { selectExtractionLocation } = require('../../extraction-utils/extraction-
 const { findAppropriateParameters } = require('./parameter-search');
 
 const astNodeTypes = require('../../constants/ast-node-types');
+const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -33,7 +34,12 @@ function parseSelectedText(sourceCodeText, selectionLocation) {
 const methodBuilders = {
     [astNodeTypes.CLASS_BODY]:
         (methodBody, methodName, parameterString) =>
-            `${methodName} (${parameterString}) {\n${methodBody}\n}`,
+            getMethodBuilder({
+                functionType: methodTypes.METHOD_DEFINITION,
+                functionName: methodName,
+                functionParameters: parameterString,
+                functionBody: methodBody
+            }).buildNewMethod(),
 
     [astNodeTypes.OBJECT_EXPRESSION]:
         (methodBody, methodName, parameterString) =>
