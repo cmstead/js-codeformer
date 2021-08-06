@@ -43,7 +43,12 @@ const methodBuilders = {
 
     [astNodeTypes.OBJECT_EXPRESSION]:
         (methodBody, methodName, parameterString) =>
-            `${methodName}: function (${parameterString}) {\n${methodBody}\n},`,
+        getMethodBuilder({
+            functionType: methodTypes.OBJECT_METHOD,
+            functionName: methodName,
+            functionParameters: parameterString,
+            functionBody: methodBody
+        }).buildNewMethod(),
 
     [astNodeTypes.BLOCK_STATEMENT]:
         (methodBody, methodName, parameterString) =>
