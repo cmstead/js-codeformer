@@ -1,12 +1,12 @@
 const { FUNCTION_DECLARATION } = require("../../constants/ast-node-types");
 
 class MethodBuilder {
-    constructor(
-        functionType = FUNCTION_DECLARATION,
+    constructor({
+        functionBody = '',
         functionName = 'newMethod',
         functionParameters = '',
-        functionBody = ''
-    ) {
+        functionType = FUNCTION_DECLARATION,
+    }) {
         this.functionType = functionType;
         this.functionName = functionName;
         this.functionParameters = functionParameters;
@@ -14,8 +14,8 @@ class MethodBuilder {
     }
 
     buildFunctionDeclaration() {
-        return `function ${this.functionName} () {
-
+        return `function ${this.functionName} (${this.functionParameters}) {
+            ${this.functionBody}
         }`;
     }
 
@@ -30,7 +30,7 @@ function getMethodBuilder({
     functionParameters,
     functionBody
 }) {
-    return new MethodBuilder(functionType, functionName, functionParameters, functionBody);
+    return new MethodBuilder({ functionType, functionName, functionParameters, functionBody });
 }
 
 module.exports = {
