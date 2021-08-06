@@ -43,21 +43,21 @@ const methodBuilders = {
 
     [astNodeTypes.OBJECT_EXPRESSION]:
         (methodBody, methodName, parameterString) =>
-        getMethodBuilder({
-            functionType: methodTypes.OBJECT_METHOD,
-            functionName: methodName,
-            functionParameters: parameterString,
-            functionBody: methodBody
-        }).buildNewMethod(),
+            getMethodBuilder({
+                functionType: methodTypes.OBJECT_METHOD,
+                functionName: methodName,
+                functionParameters: parameterString,
+                functionBody: methodBody
+            }).buildNewMethod(),
 
     [astNodeTypes.BLOCK_STATEMENT]:
         (methodBody, methodName, parameterString) =>
-        getMethodBuilder({
-            functionType: methodTypes.FUNCTION_DECLARATION,
-            functionName: methodName,
-            functionParameters: parameterString,
-            functionBody: methodBody
-        }).buildNewMethod()
+            getMethodBuilder({
+                functionType: methodTypes.FUNCTION_DECLARATION,
+                functionName: methodName,
+                functionParameters: parameterString,
+                functionBody: methodBody
+            }).buildNewMethod()
 };
 
 function insertReturnIfExpression(methodBody) {
@@ -68,6 +68,16 @@ function insertReturnIfExpression(methodBody) {
         : methodBody;
 }
 
+function getFunctionType(destinationType) {
+    if(destinationType === astNodeTypes.CLASS_BODY) {
+        return methodTypes.METHOD_DEFINITION;
+    } else if(destinationType === astNodeTypes.OBJECT_EXPRESSION) {
+        return methodTypes.OBJECT_METHOD;
+    } else {
+        return methodTypes.FUNCTION_DECLARATION;
+    }
+}
+
 function buildMethodText({
     destinationType,
     methodBody,
@@ -75,15 +85,16 @@ function buildMethodText({
     parameters
 }) {
     const parameterString = parameters.join(', ');
-
-    const constructorKey = typeof methodBuilders[destinationType] === 'undefined'
-        ? astNodeTypes.BLOCK_STATEMENT
-        : destinationType;
-
-    const buildMethod = methodBuilders[constructorKey];
     const modifiedBody = insertReturnIfExpression(methodBody);
 
-    return buildMethod(modifiedBody, methodName, parameterString);
+    const methodBuilder = getMethodBuilder({
+        functionName: methodName,
+        functionParameters: parameterString,
+        functionBody: modifiedBody,
+        functionType: getFunctionType(destinationType)
+    });
+
+    return methodBuilder.buildNewMethod();
 }
 
 
@@ -91,7 +102,7 @@ function buildMethodCallText({
     destinationType,
     methodName,
     parameters
-}){
+}) {
     const methodCall = `${methodName}(${parameters})`;
 
     return destinationType === astNodeTypes.BLOCK_STATEMENT
