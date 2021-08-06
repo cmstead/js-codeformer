@@ -52,7 +52,12 @@ const methodBuilders = {
 
     [astNodeTypes.BLOCK_STATEMENT]:
         (methodBody, methodName, parameterString) =>
-            `function ${methodName} (${parameterString}) {\n${methodBody}\n}`
+        getMethodBuilder({
+            functionType: methodTypes.FUNCTION_DECLARATION,
+            functionName: methodName,
+            functionParameters: parameterString,
+            functionBody: methodBody
+        }).buildNewMethod()
 };
 
 function insertReturnIfExpression(methodBody) {
