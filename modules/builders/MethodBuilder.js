@@ -3,8 +3,8 @@ const {
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
     ARROW_FUNCTION_EXPRESSION
-} = require("../../constants/ast-node-types");
-const { parse } = require("../../parser/parser");
+} = require("../constants/ast-node-types");
+const { parse } = require("../parser/parser");
 
 const methodTypes = {
     FUNCTION_DECLARATION: FUNCTION_DECLARATION,

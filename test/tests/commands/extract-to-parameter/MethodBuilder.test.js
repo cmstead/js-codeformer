@@ -1,12 +1,12 @@
 require('../../../utilities/approvals').configure();
 
-const { MethodBuilder } = require("../../../../modules/commands/extract-to-parameter/MethodBuilder");
+const { MethodBuilder } = require("../../../../modules/builders/MethodBuilder");
 const {
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
     OBJECT_METHOD,
     ARROW_FUNCTION_EXPRESSION
-} = require('../../../../modules/commands/extract-to-parameter/MethodBuilder').methodTypes;
+} = require('../../../../modules/builders/MethodBuilder').methodTypes;
 
 describe('Method Builder', function () {
     it('builds a function declaration by default', function () {
