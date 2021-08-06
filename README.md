@@ -13,6 +13,8 @@ Current refactorings:
 - Extract Method/Function
     - Windows: ctrl+shift+j, m
     - Mac: cmd+shift+j, m
+- Extract to Parameter
+    - no keybinding
 - Extract Variable
     - Windows: ctrl+shift+j, v
     - Mac: cmd+shift+j, v
@@ -48,7 +50,7 @@ Current outstanding behavior work:
 
 - Refactorings
     - [ ] Rename (primarily for JS embedded in HTML support)
-    - [ ] Extract to parameter
+    - [x] Extract to parameter
 - Conversions
     - [ ] Convert to arrow function
     - [ ] Convert to function expression
