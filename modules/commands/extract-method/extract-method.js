@@ -31,35 +31,6 @@ function parseSelectedText(sourceCodeText, selectionLocation) {
     }
 }
 
-const methodBuilders = {
-    [astNodeTypes.CLASS_BODY]:
-        (methodBody, methodName, parameterString) =>
-            getMethodBuilder({
-                functionType: methodTypes.METHOD_DEFINITION,
-                functionName: methodName,
-                functionParameters: parameterString,
-                functionBody: methodBody
-            }).buildNewMethod(),
-
-    [astNodeTypes.OBJECT_EXPRESSION]:
-        (methodBody, methodName, parameterString) =>
-            getMethodBuilder({
-                functionType: methodTypes.OBJECT_METHOD,
-                functionName: methodName,
-                functionParameters: parameterString,
-                functionBody: methodBody
-            }).buildNewMethod(),
-
-    [astNodeTypes.BLOCK_STATEMENT]:
-        (methodBody, methodName, parameterString) =>
-            getMethodBuilder({
-                functionType: methodTypes.FUNCTION_DECLARATION,
-                functionName: methodName,
-                functionParameters: parameterString,
-                functionBody: methodBody
-            }).buildNewMethod()
-};
-
 function insertReturnIfExpression(methodBody) {
     const parsedBody = parse(methodBody);
 
