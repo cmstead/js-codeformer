@@ -1,13 +1,17 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
+const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
+const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { findVariableDeclarator, findVariableDeclaration, findFunction, getFunctionParametersString } = require("./extract-to-parameter");
+const { pickVariableDeletionLocation } = require("../inline-variable/inline-variable");
+const { findVariableDeclarator, findVariableDeclaration, findFunction, getFunctionParametersString, getFunctionString, getVariableName } = require("./extract-to-parameter");
 
 function extractToParameter() {
     let actionSetup = null;
     let variableDeclarator = null;
     let variableDeclaration = null;
     let functionNode = null;
+    let functionString = null;
 
     return asyncPrepareActionSetup()
         .then((newActionSetup) =>
@@ -41,9 +45,33 @@ function extractToParameter() {
         .then((newFunctionNode) =>
             functionNode = newFunctionNode)
 
-        .then(() => getFunctionParametersString(functionNode))
+        .then(() => {
+            const variableName = getVariableName(variableDeclarator);
+
+            return getFunctionString(functionNode, variableName, actionSetup.source);
+        })
+
+        .then((newFunctionString) => functionString = newFunctionString)
+
+        .then(() => {
+            const functionReplacementLocation = functionNode.loc;
+            const variableDeletionLocation = pickVariableDeletionLocation(
+                variableDeclarator,
+                variableDeclaration,
+                actionSetup.source)
+
+            const functionReplacementRange = transformLocationToRange(functionReplacementLocation);
+            const variableDeletionRange = transformLocationToRange(variableDeletionLocation);
+
+            getNewSourceEdit()
+                .addReplacementEdit(functionReplacementRange, functionString)
+                .addReplacementEdit(variableDeletionRange, '')
+                .applyEdit();
+        })
 
         .catch(function (error) {
+            console.log(error);
+            
             showErrorMessage(error.message);
         });
 }

@@ -54,7 +54,7 @@ class MethodBuilder {
     buildArrowFunction() {
         const parsedBody = parse(this.functionBody);
 
-        if(parsedBody.body.length === 1 && this.functionBody.trim() !== '') {
+        if (parsedBody.body.length === 1 && this.functionBody.trim() !== '') {
             return `(${this.functionParameters}) => ${this.functionBody}`;
         } else {
             return `(${this.functionParameters}) => {
@@ -64,11 +64,11 @@ class MethodBuilder {
     }
 
     buildNewMethod() {
-        if(this.functionType === methodTypes.FUNCTION_EXPRESSION) {
+        if (this.functionType === methodTypes.FUNCTION_EXPRESSION) {
             return this.buildFunctionExpression();
         } else if (this.functionType === methodTypes.METHOD_DEFINITION) {
             return this.buildClassMethod();
-        } else if(this.functionType === methodTypes.OBJECT_METHOD) {
+        } else if (this.functionType === methodTypes.OBJECT_METHOD) {
             return this.buildObjectMethod();
         } else if (this.functionType === methodTypes.ARROW_FUNCTION_EXPRESSION) {
             return this.buildArrowFunction();

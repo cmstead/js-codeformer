@@ -9,7 +9,20 @@ function getSurroundingScope(selectionPath) {
 }
 
 function findNodeByCheckFunction(selectionPath, isMatchingNode) {
-    return reverse(selectionPath).find(isMatchingNode);
+    let matchingNode = null;
+    const reversedSelectionPath = reverse(selectionPath);
+
+    for(const key in reversedSelectionPath) {
+        const node = reversedSelectionPath[key];
+
+        if(isMatchingNode(node)) {
+            matchingNode = node;
+        } else if (matchingNode !== null && !isMatchingNode(node)) {
+            break;
+        }
+    }
+
+    return matchingNode;
 }
 
 function findNodeInPath(selectionPath, nodeType) {
