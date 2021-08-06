@@ -1,10 +1,16 @@
-const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, METHOD_DEFINITION } = require("../../constants/ast-node-types");
+const {
+    FUNCTION_DECLARATION,
+    FUNCTION_EXPRESSION,
+    METHOD_DEFINITION,
+    ARROW_FUNCTION_EXPRESSION
+} = require("../../constants/ast-node-types");
 
 const methodTypes = {
     FUNCTION_DECLARATION: FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION: FUNCTION_EXPRESSION,
     METHOD_DEFINITION: METHOD_DEFINITION,
-    OBJECT_METHOD: 'ObjectMethod'
+    OBJECT_METHOD: 'ObjectMethod',
+    ARROW_FUNCTION_EXPRESSION: ARROW_FUNCTION_EXPRESSION
 };
 
 class MethodBuilder {
@@ -35,13 +41,17 @@ class MethodBuilder {
     buildClassMethod() {
         return `${this.functionName} (${this.functionParameters}) {
             ${this.functionBody}
-        }`
+        }`;
     }
 
     buildObjectMethod() {
         return `${this.functionName}: function (${this.functionParameters}) {
             ${this.functionBody}
-        }`
+        }`;
+    }
+
+    buildArrowFunction() {
+        return `(${this.functionParameters}) => ${this.functionBody}`
     }
 
     buildNewMethod() {
@@ -51,7 +61,9 @@ class MethodBuilder {
             return this.buildClassMethod();
         } else if(this.functionType === methodTypes.OBJECT_METHOD) {
             return this.buildObjectMethod();
-        }else {
+        } else if (this.functionType === methodTypes.ARROW_FUNCTION_EXPRESSION) {
+            return this.buildArrowFunction();
+        } else {
             return this.buildFunctionDeclaration()
         }
     }

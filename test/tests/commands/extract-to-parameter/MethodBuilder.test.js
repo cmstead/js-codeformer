@@ -4,7 +4,8 @@ const { MethodBuilder } = require("../../../../modules/commands/extract-to-param
 const {
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
-    OBJECT_METHOD
+    OBJECT_METHOD,
+    ARROW_FUNCTION_EXPRESSION
 } = require('../../../../modules/commands/extract-to-parameter/MethodBuilder').methodTypes;
 
 describe('Method Builder', function () {
@@ -63,4 +64,16 @@ describe('Method Builder', function () {
 
         this.verify(methodText);
     });
+
+    it('builds a single-line arrow function when type is arrow function expression, and body is a single line', function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: 'return a;',
+            functionType: ARROW_FUNCTION_EXPRESSION
+        });
+
+        const methodText = methodBuilder.buildNewMethod();
+
+        this.verify(methodText);
+    })
 });
