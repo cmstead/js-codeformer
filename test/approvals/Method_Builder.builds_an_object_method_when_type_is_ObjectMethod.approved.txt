@@ -1,0 +1,3 @@
+newMethod: function (a) {
+            return a;
+        }

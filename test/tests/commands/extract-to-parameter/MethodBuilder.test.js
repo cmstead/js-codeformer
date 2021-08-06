@@ -1,7 +1,11 @@
 require('../../../utilities/approvals').configure();
 
 const { MethodBuilder } = require("../../../../modules/commands/extract-to-parameter/MethodBuilder");
-const { FUNCTION_EXPRESSION } = require('../../../../modules/constants/ast-node-types');
+const {
+    FUNCTION_EXPRESSION,
+    METHOD_DEFINITION,
+    OBJECT_METHOD
+} = require('../../../../modules/commands/extract-to-parameter/MethodBuilder').methodTypes;
 
 describe('Method Builder', function () {
     it('builds a function declaration by default', function () {
@@ -24,11 +28,35 @@ describe('Method Builder', function () {
         this.verify(methodText);
     });
 
-    it('builds a function expression on matching function type',  function () {
+    it('builds a function expression when type is function expression',  function () {
         const methodBuilder = new MethodBuilder({
             functionParameters: 'a, b, c',
             functionBody: 'return a * b * c;',
             functionType: FUNCTION_EXPRESSION
+        });
+
+        const methodText = methodBuilder.buildNewMethod();
+
+        this.verify(methodText);
+    });
+
+    it('builds a class method when type is method',  function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: 'return a;',
+            functionType: METHOD_DEFINITION
+        });
+
+        const methodText = methodBuilder.buildNewMethod();
+
+        this.verify(methodText);
+    });
+
+    it('builds an object method when type is ObjectMethod',  function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: 'return a;',
+            functionType: OBJECT_METHOD
         });
 
         const methodText = methodBuilder.buildNewMethod();

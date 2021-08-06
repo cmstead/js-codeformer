@@ -1,4 +1,11 @@
-const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION } = require("../../constants/ast-node-types");
+const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, METHOD_DEFINITION } = require("../../constants/ast-node-types");
+
+const methodTypes = {
+    FUNCTION_DECLARATION: FUNCTION_DECLARATION,
+    FUNCTION_EXPRESSION: FUNCTION_EXPRESSION,
+    METHOD_DEFINITION: METHOD_DEFINITION,
+    OBJECT_METHOD: 'ObjectMethod'
+};
 
 class MethodBuilder {
     constructor({
@@ -25,11 +32,28 @@ class MethodBuilder {
         }`;
     }
 
+    buildClassMethod() {
+        return `${this.functionName} (${this.functionParameters}) {
+            ${this.functionBody}
+        }`
+    }
+
+    buildObjectMethod() {
+        return `${this.functionName}: function (${this.functionParameters}) {
+            ${this.functionBody}
+        }`
+    }
+
     buildNewMethod() {
-        if(this.functionType === FUNCTION_EXPRESSION) {
+        if(this.functionType === methodTypes.FUNCTION_EXPRESSION) {
             return this.buildFunctionExpression();
+        } else if (this.functionType === methodTypes.METHOD_DEFINITION) {
+            return this.buildClassMethod();
+        } else if(this.functionType === methodTypes.OBJECT_METHOD) {
+            return this.buildObjectMethod();
+        }else {
+            return this.buildFunctionDeclaration()
         }
-        return this.buildFunctionDeclaration()
     }
 }
 
@@ -43,6 +67,7 @@ function getMethodBuilder({
 }
 
 module.exports = {
+    getMethodBuilder,
     MethodBuilder,
-    getMethodBuilder
+    methodTypes
 }
