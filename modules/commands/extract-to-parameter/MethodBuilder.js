@@ -4,6 +4,7 @@ const {
     METHOD_DEFINITION,
     ARROW_FUNCTION_EXPRESSION
 } = require("../../constants/ast-node-types");
+const { parse } = require("../../parser/parser");
 
 const methodTypes = {
     FUNCTION_DECLARATION: FUNCTION_DECLARATION,
@@ -51,7 +52,15 @@ class MethodBuilder {
     }
 
     buildArrowFunction() {
-        return `(${this.functionParameters}) => ${this.functionBody}`
+        const parsedBody = parse(this.functionBody);
+
+        if(parsedBody.body.length === 1 && this.functionBody.trim() !== '') {
+            return `(${this.functionParameters}) => ${this.functionBody}`;
+        } else {
+            return `(${this.functionParameters}) => {
+                ${this.functionBody}
+            }`;
+        }
     }
 
     buildNewMethod() {
