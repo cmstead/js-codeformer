@@ -1,4 +1,4 @@
-const { FUNCTION_DECLARATION } = require("../../constants/ast-node-types");
+const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION } = require("../../constants/ast-node-types");
 
 class MethodBuilder {
     constructor({
@@ -19,7 +19,16 @@ class MethodBuilder {
         }`;
     }
 
+    buildFunctionExpression() {
+        return `function (${this.functionParameters}) {
+            ${this.functionBody}
+        }`;
+    }
+
     buildNewMethod() {
+        if(this.functionType === FUNCTION_EXPRESSION) {
+            return this.buildFunctionExpression();
+        }
         return this.buildFunctionDeclaration()
     }
 }
