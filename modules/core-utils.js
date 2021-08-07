@@ -10,9 +10,12 @@ function getNodeType(node) {
 }
 
 const last = values => values[values.length - 1];
+const first = values => values[0];
+
 
 module.exports = {
     reverse,
+    first,
     getNodeType,
     last
 };
