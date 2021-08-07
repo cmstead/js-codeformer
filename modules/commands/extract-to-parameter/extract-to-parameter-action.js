@@ -4,7 +4,7 @@ const { transformLocationToRange } = require("../../edit-utils/textEditTransform
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { pickVariableDeletionLocation } = require("../inline-variable/inline-variable");
-const { findVariableDeclarator, findVariableDeclaration, findFunction, getFunctionParametersString, getFunctionString, getVariableName } = require("./extract-to-parameter");
+const { findVariableDeclarator, findVariableDeclaration, findFunction, getFunctionString, getVariableName } = require("./extract-to-parameter");
 
 function extractToParameter() {
     let actionSetup = null;
