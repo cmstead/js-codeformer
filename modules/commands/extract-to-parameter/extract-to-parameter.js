@@ -1,6 +1,6 @@
 const { MethodBuilder } = require("../../builders/MethodBuilder");
 const { VARIABLE_DECLARATOR, ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, METHOD_DEFINITION, VARIABLE_DECLARATION } = require("../../constants/ast-node-types");
-const { getNodeType, last } = require("../../core-utils");
+const { getNodeType, last, first } = require("../../core-utils");
 const { findNodeInPath, findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 
 const { pickVariableDeletionLocation } = require('../../extraction-utils/variable-deletion-utils');
@@ -52,34 +52,40 @@ function getFunctionName(functionNode) {
 }
 
 function getBodyLocation(functionBodyNodes) {
-    const firstLoc = functionBodyNodes[0].loc;
-    const lastLoc = last(functionBodyNodes).loc;
+    const firstLocation = first(functionBodyNodes).loc;
+    const lastLocation = last(functionBodyNodes).loc;
 
     return {
-        start: firstLoc.start,
-        end: lastLoc.end
+        start: firstLocation.start,
+        end: lastLocation.end
     };
 }
 
-function getFunctionBody(functionNode, sourceText) {
-    const functionBody = typeof functionNode.value !== 'undefined'
+function getBodyFromFunctionNode(functionNode) {
+    return typeof functionNode.value !== 'undefined'
         ? functionNode.value.body
-        : functionNode.body;
+        : functionNode.body
+}
 
+function getFunctionBody(functionNode, sourceText) {
+    const functionBody = getBodyFromFunctionNode(functionNode);
     const bodyLocation = getBodyLocation(functionBody.body);
 
     return getSourceSelection(sourceText, bodyLocation);
 }
 
 function getFunctionString(functionNode, variableName, sourceText) {
-    const methodBuiler = new MethodBuilder({
-        functionName: getFunctionName(functionNode),
-        functionParameters: getFunctionParametersString(functionNode, variableName),
-        functionBody: getFunctionBody(functionNode, sourceText),
-        functionType: getNodeType(functionNode)
-    });
+    const functionName = getFunctionName(functionNode);
+    const functionParameters = getFunctionParametersString(functionNode, variableName);
+    const functionBody = getFunctionBody(functionNode, sourceText);
+    const functionType = getNodeType(functionNode);
 
-    return methodBuiler.buildNewMethod();
+    return new MethodBuilder({
+        functionName,
+        functionParameters,
+        functionBody,
+        functionType
+    }).buildNewMethod();
 }
 
 module.exports = {
