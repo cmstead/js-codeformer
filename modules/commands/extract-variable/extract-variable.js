@@ -7,7 +7,7 @@ const {
 } = require('./variableExtractionScopeService');
 
 const astNodeTypes = require('../../constants/ast-node-types');
-const { getNewVariableBuilder } = require('../../../test/tests/builders/VariableBuilder');
+const { getNewVariableBuilder, variableTypes } = require('../../../test/tests/builders/VariableBuilder');
 
 const acceptableNodeTypes = [
     astNodeTypes.FUNCTION_DECLARATION,
@@ -22,11 +22,7 @@ const acceptableNodeTypes = [
     astNodeTypes.METHOD_DEFINITION
 ];
 
-const acceptableVariableTypes = {
-    CONST: 'const',
-    LET: 'let',
-    VAR: 'var'
-};
+const acceptableVariableTypes = variableTypes;
 
 const variableTypeList = Object
     .keys(acceptableVariableTypes)
