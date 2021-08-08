@@ -71,17 +71,19 @@ function buildMethodText({
 }
 
 
+function isObjectMethodCall(destinationType) {
+    return destinationType === astNodeTypes.BLOCK_STATEMENT
+        || destinationType === astNodeTypes.PROGRAM
+}
+
 function buildMethodCallText({
     destinationType,
     methodName,
     parameters
 }) {
-    const methodCall = `${methodName}(${parameters})`;
+    const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
 
-    return destinationType === astNodeTypes.BLOCK_STATEMENT
-        || destinationType === astNodeTypes.PROGRAM
-        ? methodCall
-        : `this.${methodCall}`;
+    return`${prefix}${methodName}(${parameters})`;
 }
 
 module.exports = {
