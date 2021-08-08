@@ -61,14 +61,14 @@ function getBodyLocation(functionBodyNodes) {
     };
 }
 
-function getBodyFromFunctionNode(functionNode) {
+function getBodyNodeFromFunctionNode(functionNode) {
     return typeof functionNode.value !== 'undefined'
         ? functionNode.value.body
         : functionNode.body
 }
 
 function getFunctionBody(functionNode, sourceText) {
-    const functionBody = getBodyFromFunctionNode(functionNode);
+    const functionBody = getBodyNodeFromFunctionNode(functionNode);
     const bodyLocation = getBodyLocation(functionBody.body);
 
     return getSourceSelection(sourceText, bodyLocation);
