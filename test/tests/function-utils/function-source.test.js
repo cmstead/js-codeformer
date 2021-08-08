@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-const { FUNCTION_DECLARATION, METHOD_DEFINITION, FUNCTION_EXPRESSION } = require("../../../modules/constants/ast-node-types");
+const { FUNCTION_DECLARATION, METHOD_DEFINITION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require("../../../modules/constants/ast-node-types");
 const { getFunctionName } = require("../../../modules/function-utils/function-source");
 const { buildNodePath } = require("../../../modules/node-path");
 const { parse } = require("../../../modules/parser/parser");
@@ -79,6 +79,31 @@ describe('function source utils', function () {
         selectionPath.reverse();
 
         const functionNode = selectionPath.find(node => node.type === FUNCTION_EXPRESSION);
+
+        const functionName = getFunctionName(functionNode);
+
+        assert.equal(functionName, '');
+    });
+
+    it('returns empty string for arrow function', function () {
+        const sourceCode = readFileSource(__dirname, 'fixtures/function-source.js');
+        const ast = parse(sourceCode);
+
+        const selection = buildSelectionLocation({
+            start: buildEditorCoordinates({
+                line: 16,
+                column: 1
+            }),
+            end: buildEditorCoordinates({
+                line: 16,
+                column: 1
+            })
+        });
+
+        const selectionPath = buildNodePath(ast, selection);
+        selectionPath.reverse();
+
+        const functionNode = selectionPath.find(node => node.type === ARROW_FUNCTION_EXPRESSION);
 
         const functionName = getFunctionName(functionNode);
 
