@@ -7,6 +7,7 @@ const {
 } = require('./variableExtractionScopeService');
 
 const astNodeTypes = require('../../constants/ast-node-types');
+const { getNewVariableBuilder } = require('../../../test/tests/builders/VariableBuilder');
 
 const acceptableNodeTypes = [
     astNodeTypes.FUNCTION_DECLARATION,
@@ -33,8 +34,11 @@ const variableTypeList = Object
 
 
 function buildVariableDeclaration({ variableType, variableName, source }) {
-    const sanitizedSource = source.replace(/(.*)\;+$/, '$1');
-    return `${variableType} ${variableName} = ${sanitizedSource};`;
+    return getNewVariableBuilder({
+        type: variableType,
+        name: variableName,
+        value: source
+    }).buildVariableDeclaration();
 }
 
 module.exports = {
