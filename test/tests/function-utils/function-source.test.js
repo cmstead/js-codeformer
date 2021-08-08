@@ -1,6 +1,6 @@
 const { assert } = require('chai');
 
-const { FUNCTION_DECLARATION, METHOD_DEFINITION } = require("../../../modules/constants/ast-node-types");
+const { FUNCTION_DECLARATION, METHOD_DEFINITION, FUNCTION_EXPRESSION } = require("../../../modules/constants/ast-node-types");
 const { getFunctionName } = require("../../../modules/function-utils/function-source");
 const { buildNodePath } = require("../../../modules/node-path");
 const { parse } = require("../../../modules/parser/parser");
@@ -58,5 +58,30 @@ describe('function source utils', function () {
         const functionName = getFunctionName(functionNode);
 
         assert.equal(functionName, 'testMethod');
+    });
+
+    it('returns empty string for anonymous function', function () {
+        const sourceCode = readFileSource(__dirname, 'fixtures/function-source.js');
+        const ast = parse(sourceCode);
+
+        const selection = buildSelectionLocation({
+            start: buildEditorCoordinates({
+                line: 12,
+                column: 1
+            }),
+            end: buildEditorCoordinates({
+                line: 12,
+                column: 1
+            })
+        });
+
+        const selectionPath = buildNodePath(ast, selection);
+        selectionPath.reverse();
+
+        const functionNode = selectionPath.find(node => node.type === FUNCTION_EXPRESSION);
+
+        const functionName = getFunctionName(functionNode);
+
+        assert.equal(functionName, '');
     });
 });

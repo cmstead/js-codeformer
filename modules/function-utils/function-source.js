@@ -51,8 +51,7 @@ function getFunctionBody(functionNode, sourceText) {
 }
 
 function getFunctionName(functionNode) {
-    if (typeof functionNode.id !== 'undefined'
-        && typeof functionNode.id.name !== 'undefined') {
+    if (Boolean(functionNode.id)) {
         return functionNode.id.name;
     } else if (typeof functionNode.key !== 'undefined'
         && typeof functionNode.key.name !== 'undefined') {
