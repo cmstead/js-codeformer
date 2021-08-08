@@ -54,26 +54,25 @@ function getFunctionType(destinationType) {
 function buildMethodText({
     destinationType,
     methodBody,
-    methodName,
+    methodName: functionName,
     parameters
 }) {
-    const parameterString = parameters.join(', ');
-    const modifiedBody = insertReturnIfExpression(methodBody);
+    const functionParameters = parameters.join(', ');
+    const functionBody = insertReturnIfExpression(methodBody);
+    const functionType = getFunctionType(destinationType);
 
-    const methodBuilder = getMethodBuilder({
-        functionName: methodName,
-        functionParameters: parameterString,
-        functionBody: modifiedBody,
-        functionType: getFunctionType(destinationType)
-    });
-
-    return methodBuilder.buildNewMethod();
+    return getMethodBuilder({
+        functionName,
+        functionParameters,
+        functionBody,
+        functionType
+    }).buildNewMethod();
 }
 
 
 function isObjectMethodCall(destinationType) {
-    return destinationType === astNodeTypes.BLOCK_STATEMENT
-        || destinationType === astNodeTypes.PROGRAM
+    return destinationType !== astNodeTypes.BLOCK_STATEMENT
+        && destinationType !== astNodeTypes.PROGRAM
 }
 
 function buildMethodCallText({
@@ -83,7 +82,7 @@ function buildMethodCallText({
 }) {
     const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
 
-    return`${prefix}${methodName}(${parameters})`;
+    return `${prefix}${methodName}(${parameters})`;
 }
 
 module.exports = {
