@@ -4,15 +4,15 @@ class TestClass {
     }
 }
 
-function namedTestFunction () {
+function namedTestFunction (a, b) {
 
 }
 
-const anonymousFunction = function() {
+const anonymousFunction = function({ x, y, z}) {
 
 }
 
-const arrowFunctionWithBlock = () => {
+const arrowFunctionWithBlock = (a, { x }) => {
 
 }
 
