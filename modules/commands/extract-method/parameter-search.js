@@ -1,7 +1,7 @@
 const astTraverse = require('../../astTraverse');
 
 const { nodeContainsSelection } = require('../../node-path');
-const { getNodeType, last } = require('../../core-utils');
+const { getNodeType } = require('../../core-utils');
 
 const astNodeTypes = require('../../constants/ast-node-types');
 const {
