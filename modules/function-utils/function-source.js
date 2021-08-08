@@ -1,21 +1,6 @@
-const { getNewVariableBuilder, variableTypes } = require("../../../test/tests/builders/VariableBuilder");
-const { getMethodBuilder } = require("../../builders/MethodBuilder");
-const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION } = require("../../constants/ast-node-types");
-const { first, last } = require("../../core-utils");
-const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
-const { getSourceSelection } = require("../../source-utilities");
+const { first, last } = require("../core-utils");
+const { getSourceSelection } = require("../source-utilities");
 
-const functionNodeTypes = [
-    ARROW_FUNCTION_EXPRESSION,
-    FUNCTION_DECLARATION,
-    FUNCTION_EXPRESSION,
-    FUNCTION
-];
-
-function findFunction(nodePath) {
-    return findNodeByCheckFunction(nodePath, node =>
-        functionNodeTypes.includes(node.type));
-}
 
 function getParametersLocation(parameterNodes) {
     const startLocation = first(parameterNodes).loc.start;
@@ -77,29 +62,8 @@ function getFunctionName(functionNode) {
     }
 }
 
-function getNewFunctionString(functionNode, sourceText) {
-    const functionName = getFunctionName(functionNode);
-
-    const functionString = getMethodBuilder({
-        functionParameters: getFunctionParametersString(functionNode, sourceText),
-        functionBody: getFunctionBody(functionNode, sourceText),
-        functionType: ARROW_FUNCTION_EXPRESSION
-    })
-        .buildNewMethod()
-
-    if (functionName !== '') {
-        return getNewVariableBuilder({
-            name: functionName,
-            type: variableTypes.CONST,
-            value: functionString
-        })
-            .buildVariableDeclaration()
-    } else {
-        return functionString;
-    }
-}
-
 module.exports = {
-    findFunction,
-    getNewFunctionString
+    getFunctionBody,
+    getFunctionName,
+    getFunctionParametersString
 };
