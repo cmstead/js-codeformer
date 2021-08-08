@@ -39,14 +39,16 @@ function insertReturnIfExpression(methodBody) {
         : methodBody;
 }
 
+const functionTypeMap = {
+    [astNodeTypes.CLASS_BODY]: methodTypes.METHOD_DEFINITION,
+    [astNodeTypes.OBJECT_EXPRESSION]: methodTypes.OBJECT_METHOD,
+    default: methodTypes.FUNCTION_DECLARATION
+};
+
 function getFunctionType(destinationType) {
-    if(destinationType === astNodeTypes.CLASS_BODY) {
-        return methodTypes.METHOD_DEFINITION;
-    } else if(destinationType === astNodeTypes.OBJECT_EXPRESSION) {
-        return methodTypes.OBJECT_METHOD;
-    } else {
-        return methodTypes.FUNCTION_DECLARATION;
-    }
+    return typeof functionTypeMap[destinationType] !== 'undefined'
+        ? functionTypeMap[destinationType]
+        : functionTypeMap['default'];
 }
 
 function buildMethodText({
