@@ -70,8 +70,6 @@ function extractToParameter() {
         })
 
         .catch(function (error) {
-            console.log(error);
-            
             showErrorMessage(error.message);
         });
 }

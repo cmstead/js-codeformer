@@ -54,7 +54,8 @@
 		"onCommand:cmstead.jscodeformer.extractVariable",
 		"onCommand:cmstead.jscodeformer.inlineVariable",
 		"onCommand:cmstead.jscodeformer.pickBehavior",
-		"onCommand:cmstead.jscodeformer.surroundWith"
+		"onCommand:cmstead.jscodeformer.surroundWith",
+		"onCommand:cmstead.jscodeformer.convertToArrowFunction"
 	],
 	"contributes": {
 		"snippets": [
@@ -90,6 +91,11 @@
 				"command": "cmstead.jscodeformer.surroundWith",
 				"title": "Surround With",
 				"description": "Surround selection with snippet text"
+			},
+			{
+				"command": "cmstead.jscodeformer.convertToArrowFunction",
+				"title": "Convert to Arrow Function",
+				"description": "Convert Function to Arrow Function"
 			},
 			{
 				"command": "cmstead.jscodeformer.pickBehavior",
@@ -134,13 +140,18 @@
 					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				},
 				{
-					"submenu": "cmstead.js-codeformer.actions",
+					"submenu": "cmstead.js-codeformer.conversions",
 					"group": "js-codeformer@2",
 					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				},
 				{
-					"command": "cmstead.jscodeformer.pickBehavior",
+					"submenu": "cmstead.js-codeformer.actions",
 					"group": "js-codeformer@3",
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
+				},
+				{
+					"command": "cmstead.jscodeformer.pickBehavior",
+					"group": "js-codeformer@4",
 					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				}
 			],
@@ -155,6 +166,11 @@
 					"command": "cmstead.jscodeformer.inlineVariable"
 				}
 			],
+			"cmstead.js-codeformer.conversions": [
+				{
+					"command": "cmstead.jscodeformer.convertToArrowFunction"
+				}
+			],
 			"cmstead.js-codeformer.actions": [
 				{
 					"command": "cmstead.jscodeformer.surroundWith"
@@ -165,6 +181,10 @@
 			{
 				"id": "cmstead.js-codeformer.refactor",
 				"label": "JS CodeFormer: Refactor"
+			},
+			{
+				"id": "cmstead.js-codeformer.conversions",
+				"label": "JS CodeFormer: Conversions"
 			},
 			{
 				"id": "cmstead.js-codeformer.actions",

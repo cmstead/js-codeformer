@@ -40,8 +40,15 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.pickBehavior',
 		path: './modules/commands/pick-behavior/pick-behavior-action',
 		name: 'pickBehavior',
-		title: 'Surround With',
+		title: 'Pick Action',
 		group: groups.NONE
+	},
+	{
+		commandId: 'cmstead.jscodeformer.convertToArrowFunction',
+		path: './modules/commands/convert-to-arrow-function/convert-to-arrow-function-action',
+		name: 'convertToArrowFunction',
+		title: 'Convert Function to Arrow Function',
+		group: groups.CONVERSIONS
 	},
 
 ];

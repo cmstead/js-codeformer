@@ -1,20 +1,21 @@
-const { prepareActionSetup } = require("../../action-setup");
+const { asyncPrepareActionSetup } = require("../../action-setup");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
+const { findFunctionNode } = require("../../function-utils/function-node");
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { findFunction, getNewFunctionString } = require("./convert-to-arrow-function");
+const { functionNodeTypes, getNewFunctionString } = require("./convert-to-arrow-function");
 
 function convertToArrowFunction() {
     let actionSetup = null;
     let functionNode = null;
 
-    return prepareActionSetup()
+    return asyncPrepareActionSetup()
         .then((newActionSetup) =>
             actionSetup = newActionSetup)
 
         .then(() =>
-            findFunction(actionSetup.selectionPath))
+            findFunctionNode(actionSetup.selectionPath, functionNodeTypes))
 
         .then((newFunctionNode) =>
             functionNode = newFunctionNode)
@@ -26,7 +27,7 @@ function convertToArrowFunction() {
         }))
 
         .then(() =>
-            getNewFunctionString(functionNode))
+            getNewFunctionString(functionNode, actionSetup.source))
 
         .then((functionString) => {
             const replacementLocation = functionNode.loc;
