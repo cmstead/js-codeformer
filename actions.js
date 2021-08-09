@@ -44,6 +44,13 @@ const actions = [
 		group: groups.NONE
 	},
 	{
+		commandId: 'cmstead.jscodeformer.convert',
+		path: './modules/commands/convert/convert-action',
+		name: 'convert',
+		title: 'Pick a conversion',
+		group: groups.NONE
+	},
+	{
 		commandId: 'cmstead.jscodeformer.convertToArrowFunction',
 		path: './modules/commands/convert-to-arrow-function/convert-to-arrow-function-action',
 		name: 'convertToArrowFunction',

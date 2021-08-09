@@ -55,6 +55,7 @@
 		"onCommand:cmstead.jscodeformer.inlineVariable",
 		"onCommand:cmstead.jscodeformer.pickBehavior",
 		"onCommand:cmstead.jscodeformer.surroundWith",
+		"onCommand:cmstead.jscodeformer.convert",
 		"onCommand:cmstead.jscodeformer.convertToArrowFunction",
 		"onCommand:cmstead.jscodeformer.convertToFunctionExpression",
 		"onCommand:cmstead.jscodeformer.convertToFunctionDeclaration"
@@ -110,6 +111,11 @@
 				"description": "Convert Variable Declaration to Function Expression"
 			},
 			{
+				"command": "cmstead.jscodeformer.convert",
+				"title": "JS CodeFormer: Conversions",
+				"description": "Pick a conversion to run"
+			},
+			{
 				"command": "cmstead.jscodeformer.pickBehavior",
 				"title": "JS CodeFormer: Action Palette",
 				"description": "Open JS CodeFormer action palette to pick a behavior"
@@ -142,6 +148,11 @@
 				"command": "cmstead.jscodeformer.pickBehavior",
 				"key": "ctrl+shift+j p",
 				"mac": "cmd+shift+j p"
+			},
+			{
+				"command": "cmstead.jscodeformer.convert",
+				"key": "ctrl+shift+j c",
+				"mac": "cmd+shift+j c"
 			}
 		],
 		"menus": {
@@ -159,11 +170,6 @@
 				{
 					"submenu": "cmstead.js-codeformer.actions",
 					"group": "js-codeformer@3",
-					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
-				},
-				{
-					"command": "cmstead.jscodeformer.pickBehavior",
-					"group": "js-codeformer@4",
 					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
 				}
 			],

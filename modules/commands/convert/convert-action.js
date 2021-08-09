@@ -22,7 +22,7 @@ function convert() {
         .then((commandId) => vscode.commands.executeCommand(commandId))
 
         .catch(function (error) {
-            showErrorMessage(error.message)
+            showErrorMessage(error.message);
         });
 }
 
