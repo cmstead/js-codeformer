@@ -56,7 +56,8 @@
 		"onCommand:cmstead.jscodeformer.pickBehavior",
 		"onCommand:cmstead.jscodeformer.surroundWith",
 		"onCommand:cmstead.jscodeformer.convertToArrowFunction",
-		"onCommand:cmstead.jscodeformer.convertToFunctionExpression"
+		"onCommand:cmstead.jscodeformer.convertToFunctionExpression",
+		"onCommand:cmstead.jscodeformer.convertToFunctionDeclaration"
 	],
 	"contributes": {
 		"snippets": [
@@ -102,6 +103,11 @@
 				"command": "cmstead.jscodeformer.convertToFunctionExpression",
 				"title": "Convert to Function Expression",
 				"description": "Convert Function to Function Expression"
+			},
+			{
+				"command": "cmstead.jscodeformer.convertToFunctionDeclaration",
+				"title": "Convert to Function Declaration",
+				"description": "Convert Variable Declaration to Function Expression"
 			},
 			{
 				"command": "cmstead.jscodeformer.pickBehavior",
@@ -175,6 +181,9 @@
 			"cmstead.js-codeformer.conversions": [
 				{
 					"command": "cmstead.jscodeformer.convertToArrowFunction"
+				},
+				{
+					"command": "cmstead.jscodeformer.convertToFunctionDeclaration"
 				},
 				{
 					"command": "cmstead.jscodeformer.convertToFunctionExpression"

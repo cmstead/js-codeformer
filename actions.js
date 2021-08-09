@@ -51,6 +51,13 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.convertToFunctionDeclaration',
+		path: './modules/commands/convert-to-function-declaration/convert-to-function-declaration-action',
+		name: 'convertToFunctionDeclaration',
+		title: 'Convert Variable Declaration to Function Declaration',
+		group: groups.CONVERSIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.convertToFunctionExpression',
 		path: './modules/commands/convert-to-function-expression/convert-to-function-expression-action',
 		name: 'convertToFunctionExpression',

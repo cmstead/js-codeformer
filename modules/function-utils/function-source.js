@@ -43,10 +43,30 @@ function buildLocationFromBodyNodes(functionBodyNodes) {
     };
 }
 
+function getBodyLocationFromEmptyBody(functionBody) {
+    return {
+        start: {
+            line: functionBody.loc.start.line,
+            column: functionBody.loc.start.column + 1
+        },
+        end: {
+            line: functionBody.loc.end.line,
+            column: functionBody.loc.end.column - 1
+        }
+    };
+}
+
 function getBodyLocation(functionBody) {
-    return Array.isArray(functionBody.body)
-        ? buildLocationFromBodyNodes(functionBody.body)
-        : functionBody.loc;
+    const bodyIsABlock = Array.isArray(functionBody.body);
+    const bodyIsNonemptyBlock = bodyIsABlock && functionBody.body.length > 0;
+
+    if (bodyIsNonemptyBlock) {
+        return buildLocationFromBodyNodes(functionBody.body);
+    } else if (bodyIsABlock) {
+        return getBodyLocationFromEmptyBody(functionBody);
+    } else {
+        return functionBody.loc;
+    }
 }
 
 function getFunctionBody(functionNode, sourceText) {

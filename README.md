@@ -32,6 +32,9 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert to Function Expression
     - convert a function declaration or arrow function to a function expression
     - no keybinding
+- Convert to Function Declaration
+    - convert a function assigned to a variable declaration to a function declaration
+    - no keybinding
 
 ## Actions ##
 
@@ -65,7 +68,7 @@ Current outstanding behavior work:
 - Conversions
     - [x] Convert to arrow function
     - [x] Convert to function expression
-    - [ ] Convert to function declaration
+    - [x] Convert to function declaration
     - [ ] Convert string to template literal
 - Actions
     - [ ] Change variable type
