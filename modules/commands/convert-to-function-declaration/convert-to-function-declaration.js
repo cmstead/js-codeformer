@@ -6,7 +6,6 @@ const { getFunctionBody, getFunctionParametersString } = require("../../function
 
 const functionNodeTypes = [
     ARROW_FUNCTION_EXPRESSION,
-    FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
     FUNCTION
 ];

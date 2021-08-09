@@ -73,4 +73,5 @@ Current outstanding behavior work:
 - Actions
     - [ ] Change variable type
     - [ ] Introduce variable
+    - [ ] Introduce function
     - [ ] Lift and name anonymous function

@@ -29,7 +29,7 @@
         "scope": "javascript,html,javascriptreact,jsx",
         "prefix": "jscf-arrow-function-lambda",
         "body": [
-            "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}\n}}"
+            "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}\n\\}}"
         ],
         "description": "New Arrow Function"
     },
@@ -37,7 +37,7 @@
         "scope": "javascript,html,javascriptreact,jsx",
         "prefix": "jscf-promise-then",
         "body": [
-            ".then((${1:result}) => ${2:{\n\t${TM_SELECTED_TEXT}$0\n}})"
+            ".then((${1:result}) => ${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}})"
         ],
         "description": "Promise then function call"
     },
@@ -45,7 +45,7 @@
         "scope": "javascript,html,javascriptreact,jsx",
         "prefix": "jscf-promise-catch",
         "body": [
-            ".catch(function(${1:error})${2:{\n\t${TM_SELECTED_TEXT}$0\n}});"
+            ".catch(function(${1:error})${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}});"
         ],
         "description": "Promise catch function call"
     },
