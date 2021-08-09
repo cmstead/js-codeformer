@@ -33,7 +33,7 @@ function getBodyNodeFromFunctionNode(functionNode) {
         : functionNode.body
 }
 
-function getBodyLocation(functionBodyNodes) {
+function buildLocationFromBodyNodes(functionBodyNodes) {
     const firstLocation = first(functionBodyNodes).loc;
     const lastLocation = last(functionBodyNodes).loc;
 
@@ -43,9 +43,15 @@ function getBodyLocation(functionBodyNodes) {
     };
 }
 
+function getBodyLocation(functionBody) {
+    return Array.isArray(functionBody.body)
+        ? buildLocationFromBodyNodes(functionBody.body)
+        : functionBody.loc;
+}
+
 function getFunctionBody(functionNode, sourceText) {
     const functionBody = getBodyNodeFromFunctionNode(functionNode);
-    const bodyLocation = getBodyLocation(functionBody.body);
+    const bodyLocation = getBodyLocation(functionBody);
 
     return getSourceSelection(sourceText, bodyLocation);
 }
