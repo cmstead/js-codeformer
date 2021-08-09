@@ -36,7 +36,7 @@ function pickBehavior() {
             message: 'Selected action is not a valid action.'
         }))
 
-        .then((actionCommandId) => vscode.commands.executeCommnd(actionCommandId))
+        .then((actionCommandId) => vscode.commands.executeCommand(actionCommandId))
 
         .catch(function (error) {
             showErrorMessage(error.message);

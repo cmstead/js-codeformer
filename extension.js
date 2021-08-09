@@ -11,10 +11,14 @@ function activate(context) {
 			const disposable = vscode.commands.registerCommand(
 				action.commandId,
 				function () {
-					const codeAction = require(action.path);
+					try {
+						const codeAction = require(action.path);
 
-					codeAction[action.name]()
-						.then(formatDocument);
+						codeAction[action.name]()
+							.then(formatDocument);
+					} catch (error) {
+						console.log(error)
+					}
 				}
 			);
 
