@@ -55,7 +55,8 @@
 		"onCommand:cmstead.jscodeformer.inlineVariable",
 		"onCommand:cmstead.jscodeformer.pickBehavior",
 		"onCommand:cmstead.jscodeformer.surroundWith",
-		"onCommand:cmstead.jscodeformer.convertToArrowFunction"
+		"onCommand:cmstead.jscodeformer.convertToArrowFunction",
+		"onCommand:cmstead.jscodeformer.convertToFunctionExpression"
 	],
 	"contributes": {
 		"snippets": [
@@ -96,6 +97,11 @@
 				"command": "cmstead.jscodeformer.convertToArrowFunction",
 				"title": "Convert to Arrow Function",
 				"description": "Convert Function to Arrow Function"
+			},
+			{
+				"command": "cmstead.jscodeformer.convertToFunctionExpression",
+				"title": "Convert to Function Expression",
+				"description": "Convert Function to Function Expression"
 			},
 			{
 				"command": "cmstead.jscodeformer.pickBehavior",
@@ -169,6 +175,9 @@
 			"cmstead.js-codeformer.conversions": [
 				{
 					"command": "cmstead.jscodeformer.convertToArrowFunction"
+				},
+				{
+					"command": "cmstead.jscodeformer.convertToFunctionExpression"
 				}
 			],
 			"cmstead.js-codeformer.actions": [

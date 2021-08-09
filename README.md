@@ -29,6 +29,9 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert to Arrow Function
     - convert a function expression or declaration to an arrow function
     - no keybinding
+- Convert to Function Expression
+    - convert a function declaration or arrow function to a function expression
+    - no keybinding
 
 ## Actions ##
 
@@ -61,7 +64,7 @@ Current outstanding behavior work:
     - [x] Extract to parameter
 - Conversions
     - [x] Convert to arrow function
-    - [ ] Convert to function expression
+    - [x] Convert to function expression
     - [ ] Convert to function declaration
     - [ ] Convert string to template literal
 - Actions

@@ -50,6 +50,13 @@ const actions = [
 		title: 'Convert Function to Arrow Function',
 		group: groups.CONVERSIONS
 	},
+	{
+		commandId: 'cmstead.jscodeformer.convertToFunctionExpression',
+		path: './modules/commands/convert-to-function-expression/convert-to-function-expression-action',
+		name: 'convertToFunctionExpression',
+		title: 'Convert Function to Function Expression',
+		group: groups.CONVERSIONS
+	},
 
 ];
 
