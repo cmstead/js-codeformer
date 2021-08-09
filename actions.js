@@ -37,6 +37,13 @@ const actions = [
 		group: groups.ACTIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.changeVariableType',
+		path: './modules/commands/change-variable-type/change-variable-type-action',
+		name: 'changeVariableType',
+		title: 'Change Variable Type',
+		group: groups.ACTIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.pickBehavior',
 		path: './modules/commands/pick-behavior/pick-behavior-action',
 		name: 'pickBehavior',
