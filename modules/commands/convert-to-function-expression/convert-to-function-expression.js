@@ -1,4 +1,4 @@
-const { getNewVariableBuilder, variableTypes } = require("../../../test/tests/builders/VariableBuilder");
+const { getNewVariableBuilder, variableTypes } = require("../../builders/VariableBuilder");
 const { getMethodBuilder } = require("../../builders/MethodBuilder");
 const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION } = require("../../constants/ast-node-types");
 
