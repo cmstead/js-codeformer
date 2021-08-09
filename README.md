@@ -22,6 +22,14 @@ Current refactorings:
     - Windows: ctrl+shift+j, i
     - Mac: cmd+shift+j, i
 
+## Conversions ##
+
+Conversions may or may not introduce a different behavior. This means they are in a class of their own. The following conversions are currently available:
+
+- Convert to Arrow Function
+    - convert a function expression or declaration to an arrow function
+    - no keybinding
+
 ## Actions ##
 
 Not everything we want to do with our code is a refactoring. That doesn't mean we can't automate it. Actions aim to pair with the supported refactorings in order to provide a smooth development experience.
@@ -52,7 +60,7 @@ Current outstanding behavior work:
     - [ ] Rename (primarily for JS embedded in HTML support)
     - [x] Extract to parameter
 - Conversions
-    - [ ] Convert to arrow function
+    - [x] Convert to arrow function
     - [ ] Convert to function expression
     - [ ] Convert to function declaration
     - [ ] Convert string to template literal
