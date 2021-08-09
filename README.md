@@ -51,6 +51,9 @@ Current Actions:
         - Function
         - Try/Catch
         - Variable
+- Change variable type
+    - Change variable declaration type from current type to const, let, or var
+    - No keybinding
 
 - Select Action (Action Palette)
     - Windows: ctrl+shift+j, p
@@ -71,7 +74,7 @@ Current outstanding behavior work:
     - [x] Convert to function declaration
     - [ ] Convert string to template literal
 - Actions
-    - [ ] Change variable type
+    - [x] Change variable type
     - [ ] Introduce variable
     - [ ] Introduce function
     - [ ] Lift and name anonymous function
