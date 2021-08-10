@@ -23,33 +23,35 @@ class MethodBuilder {
         functionName = 'newMethod',
         functionParameters = '',
         functionType = FUNCTION_DECLARATION,
+        async = false
     }) {
         this.functionType = functionType;
         this.functionName = functionName;
         this.functionParameters = functionParameters;
         this.functionBody = functionBody;
+        this.asyncPrefix = async ? 'async ' : '';
     }
 
     buildFunctionDeclaration() {
-        return `function ${this.functionName} (${this.functionParameters}) {
+        return `${this.asyncPrefix}function ${this.functionName} (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }
 
     buildFunctionExpression() {
-        return `function (${this.functionParameters}) {
+        return `${this.asyncPrefix}function (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }
 
     buildClassMethod() {
-        return `${this.functionName} (${this.functionParameters}) {
+        return `${this.asyncPrefix}${this.functionName} (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }
 
     buildObjectMethod() {
-        return `${this.functionName}: function (${this.functionParameters}) {
+        return `${this.asyncPrefix}${this.functionName}: function (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }
@@ -83,10 +85,10 @@ class MethodBuilder {
         if (this.isSingleLine(parsedBody)
             && this.isNotEmpty(this.functionBody)
             && this.isReturnStatement(parsedBody)) {
-                
-            return `(${this.functionParameters}) => ${this.getSingleLineArrowBody(parsedBody)}`;
+
+            return `${this.asyncPrefix}(${this.functionParameters}) => ${this.getSingleLineArrowBody(parsedBody)}`;
         } else {
-            return `(${this.functionParameters}) => {
+            return `${this.asyncPrefix}(${this.functionParameters}) => {
                 ${this.functionBody}
             }`;
         }
@@ -111,9 +113,10 @@ function getMethodBuilder({
     functionType,
     functionName,
     functionParameters,
-    functionBody
+    functionBody,
+    async
 }) {
-    return new MethodBuilder({ functionType, functionName, functionParameters, functionBody });
+    return new MethodBuilder({ functionType, functionName, functionParameters, functionBody, async });
 }
 
 module.exports = {

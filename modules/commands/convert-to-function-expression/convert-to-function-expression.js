@@ -23,7 +23,8 @@ function getNewFunctionString(functionNode, sourceText) {
     const functionString = getMethodBuilder({
         functionParameters: functionParameters,
         functionBody: functionBody,
-        functionType: FUNCTION_EXPRESSION
+        functionType: FUNCTION_EXPRESSION,
+        async: functionNode.async
     })
         .buildNewMethod()
 

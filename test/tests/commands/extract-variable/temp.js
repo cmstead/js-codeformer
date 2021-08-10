@@ -5,7 +5,9 @@ const { getActionTitles, findCommandIdByTitle } = require("./convert");
 
 const vscode = require('../../vscodeService').getVscode()
 
-
+async function test() {
+    return 'foo';
+}
 
 function convert() {
     const actionList = getActionTitles();

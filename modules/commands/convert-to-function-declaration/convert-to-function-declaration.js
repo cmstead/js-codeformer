@@ -36,7 +36,8 @@ function buildFunctionString(variableDeclaration, source) {
         functionName,
         functionType,
         functionBody,
-        functionParameters
+        functionParameters,
+        async: functionNode.async
     })
     .buildNewMethod();
 }
