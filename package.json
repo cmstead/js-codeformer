@@ -48,6 +48,11 @@
 		"typescript": "^4.3.5"
 	},
 	"main": "./extension.js",
+	"icon": "icon/jscf-icon-vscode.png",
+	"galleryBanner": {
+	  "color": "#ffe518"
+	},
+	"public": true,
 	"activationEvents": [
 		"onCommand:cmstead.jscodeformer.extractMethod",
 		"onCommand:cmstead.jscodeformer.extractToParameter",
