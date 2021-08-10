@@ -69,7 +69,7 @@ class MethodBuilder {
         return parsedBody.body.length === 1;
     }
 
-    getSingleLineArrowSource(parsedBody) {
+    getSingleLineArrowBody(parsedBody) {
         const argument = parsedBody.body[0].argument;
         const argumentLocation = argument.loc;
         const arrowSource = getSourceSelection(this.functionBody, argumentLocation);
@@ -83,9 +83,8 @@ class MethodBuilder {
         if (this.isSingleLine(parsedBody)
             && this.isNotEmpty(this.functionBody)
             && this.isReturnStatement(parsedBody)) {
-            const body = this.getSingleLineArrowSource(parsedBody)
-
-            return `(${this.functionParameters}) => ${body}`;
+                
+            return `(${this.functionParameters}) => ${this.getSingleLineArrowBody(parsedBody)}`;
         } else {
             return `(${this.functionParameters}) => {
                 ${this.functionBody}
