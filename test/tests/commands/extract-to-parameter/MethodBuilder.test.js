@@ -77,6 +77,18 @@ describe('Method Builder', function () {
         this.verify(methodText);
     });
 
+    it('builds an arrow function with block body when type is arrow function expression, and body is a single non-return expression', function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: 'console.log(a);',
+            functionType: ARROW_FUNCTION_EXPRESSION
+        });
+
+        const methodText = methodBuilder.buildNewMethod();
+
+        this.verify(methodText);
+    });
+
     it('builds a multiline arrow function when type is arrow function expression and body is multi-expression',  function () {
         const methodBuilder = new MethodBuilder({
             functionParameters: 'a',

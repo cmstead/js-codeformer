@@ -16,6 +16,7 @@ module.exports = {
     OBJECT_EXPRESSION: 'ObjectExpression',
     PROGRAM: 'Program',
     PROPERTY: 'Property',
+    RETURN_STATEMENT: 'ReturnStatement',
     VARIABLE_DECLARATION: 'VariableDeclaration',
     VARIABLE_DECLARATOR: 'VariableDeclarator',
     WHILE_STATEMENT: 'WhileStatement'

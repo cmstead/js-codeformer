@@ -2,7 +2,8 @@ const {
     FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
-    ARROW_FUNCTION_EXPRESSION
+    ARROW_FUNCTION_EXPRESSION,
+    RETURN_STATEMENT
 } = require("../constants/ast-node-types");
 const { parse } = require("../parser/parser");
 
@@ -51,10 +52,27 @@ class MethodBuilder {
         }`;
     }
 
+    isReturnStatement(parsedBody) {
+        const bodyNode = parsedBody.body[0];
+
+        return typeof bodyNode !== 'undefined'
+            && bodyNode.type === RETURN_STATEMENT;
+    }
+
+    isNotEmpty(functionBody) {
+        return functionBody.trim() !== '';
+    }
+
+    isSingleLine(parsedBody) {
+        return parsedBody.body.length === 1;
+    }
+
     buildArrowFunction() {
         const parsedBody = parse(this.functionBody);
 
-        if (parsedBody.body.length === 1 && this.functionBody.trim() !== '') {
+        if (this.isSingleLine(parsedBody) 
+            && this.isNotEmpty(this.functionBody)
+            && this.isReturnStatement(parsedBody)) {
             return `(${this.functionParameters}) => ${this.functionBody}`;
         } else {
             return `(${this.functionParameters}) => {
