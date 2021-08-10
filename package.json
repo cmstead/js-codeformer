@@ -2,7 +2,7 @@
 	"name": "js-codeformer",
 	"displayName": "JS CodeFormer",
 	"description": "A Javascript/Typescript refactoring and code automation tool for building better source",
-	"version": "0.13.1",
+	"version": "0.13.2",
 	"publisher": "cmstead",
 	"repository": {
 		"type": "git",
@@ -50,7 +50,7 @@
 	"main": "./extension.js",
 	"icon": "icon/jscf-icon-vscode.png",
 	"galleryBanner": {
-	  "color": "#ffe518"
+		"color": "#ffe518"
 	},
 	"public": true,
 	"activationEvents": [
