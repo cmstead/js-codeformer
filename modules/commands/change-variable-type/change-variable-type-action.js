@@ -50,9 +50,6 @@ function changeVariableType() {
             .buildVariableDeclaration())
 
         .then((newVariableString) => {
-
-            console.log(variableDeclarationNode);
-
             const replacementRange = transformLocationToRange(variableDeclarationNode.loc);
 
             return getNewSourceEdit()
