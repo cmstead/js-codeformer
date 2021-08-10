@@ -69,20 +69,21 @@ class MethodBuilder {
         return parsedBody.body.length === 1;
     }
 
+    getSingleLineArrowSource(parsedBody) {
+        const argument = parsedBody.body[0].argument;
+        const argumentLocation = argument.loc;
+        const arrowSource = getSourceSelection(this.functionBody, argumentLocation);
+        return argument.type === OBJECT_EXPRESSION
+                ? `(${arrowSource})`
+                : arrowSource;
+    }
     buildArrowFunction() {
         const parsedBody = parse(this.functionBody);
 
-        if (this.isSingleLine(parsedBody) 
+        if (this.isSingleLine(parsedBody)
             && this.isNotEmpty(this.functionBody)
             && this.isReturnStatement(parsedBody)) {
-
-            const argument = parsedBody.body[0].argument;
-            const argumentLocation = argument.loc;
-            const arrowSource = getSourceSelection(this.functionBody, argumentLocation);
-
-            const body = argument.type === OBJECT_EXPRESSION
-                ? `(${arrowSource})`
-                : arrowSource;
+            const body = this.getSingleLineArrowSource(parsedBody)
 
             return `(${this.functionParameters}) => ${body}`;
         } else {
