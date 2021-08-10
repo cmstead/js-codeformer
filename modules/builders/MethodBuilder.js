@@ -3,9 +3,11 @@ const {
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
     ARROW_FUNCTION_EXPRESSION,
-    RETURN_STATEMENT
+    RETURN_STATEMENT,
+    OBJECT_EXPRESSION
 } = require("../constants/ast-node-types");
 const { parse } = require("../parser/parser");
+const { getSourceSelection } = require("../source-utilities");
 
 const methodTypes = {
     FUNCTION_DECLARATION: FUNCTION_DECLARATION,
@@ -73,7 +75,16 @@ class MethodBuilder {
         if (this.isSingleLine(parsedBody) 
             && this.isNotEmpty(this.functionBody)
             && this.isReturnStatement(parsedBody)) {
-            return `(${this.functionParameters}) => ${this.functionBody}`;
+
+            const argument = parsedBody.body[0].argument;
+            const argumentLocation = argument.loc;
+            const arrowSource = getSourceSelection(this.functionBody, argumentLocation);
+
+            const body = argument.type === OBJECT_EXPRESSION
+                ? `(${arrowSource})`
+                : arrowSource;
+
+            return `(${this.functionParameters}) => ${body}`;
         } else {
             return `(${this.functionParameters}) => {
                 ${this.functionBody}

@@ -89,6 +89,18 @@ describe('Method Builder', function () {
         this.verify(methodText);
     });
 
+    it('Arrow function adds paretheses when body is a returned object literal', function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: 'return { foo: a };',
+            functionType: ARROW_FUNCTION_EXPRESSION
+        });
+
+        const methodText = methodBuilder.buildNewMethod();
+
+        this.verify(methodText);
+    });
+
     it('builds a multiline arrow function when type is arrow function expression and body is multi-expression',  function () {
         const methodBuilder = new MethodBuilder({
             functionParameters: 'a',
