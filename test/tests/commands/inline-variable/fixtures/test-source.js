@@ -26,4 +26,6 @@ function testFunction() {
 
         return ((a) => a)(a)
     }
+
+    const z = a;
 }

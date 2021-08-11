@@ -44,17 +44,22 @@ function isAnArrowFunctionParameter(node, parentNode) {
         && parentNode.params.includes(node);
 }
 
+function isDeclaredVariableInDeclaration(node, parentNode) {
+    return getNodeType(parentNode) === VARIABLE_DECLARATOR
+        && parentNode.id === node;
+}
+
 function isAVariableDeclaration(node, parentNode) {
     const parentNodeType = getNodeType(parentNode);
 
-    const declarationParentTypes = [
+    const functionDeclarationParentTypes = [
         FUNCTION,
         FUNCTION_DECLARATION,
-        FUNCTION_EXPRESSION,
-        VARIABLE_DECLARATOR,
+        FUNCTION_EXPRESSION
     ];
 
-    return declarationParentTypes.includes(parentNodeType)
+    return functionDeclarationParentTypes.includes(parentNodeType)
+        || isDeclaredVariableInDeclaration(node, parentNode)
         || isAnArrowFunctionParameter(node, parentNode);
 }
 
@@ -101,7 +106,7 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
 
         return VisitorOption.Skip;
     }
-    
+
     traverse(searchScope, {
         enter: function (node, parent) {
             const nodeIsNotRoot = node !== searchScope;

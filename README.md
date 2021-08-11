@@ -107,7 +107,7 @@ Current outstanding behavior work:
 - Refactorings
     - [ ] Rename (primarily to support JS/TS embedded in HTML)
         - [x] Rename Variable
-        - [ ] Rename Function
+        - [x] Rename Function
         - [ ] Rename Method
     - [x] Extract to parameter
 - Conversions

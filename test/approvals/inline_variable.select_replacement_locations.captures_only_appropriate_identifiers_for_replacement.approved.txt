@@ -38,5 +38,15 @@
       "column": 26,
       "line": 27
     }
+  },
+  {
+    "end": {
+      "column": 15,
+      "line": 30
+    },
+    "start": {
+      "column": 14,
+      "line": 30
+    }
   }
 ]
