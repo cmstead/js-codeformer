@@ -111,7 +111,7 @@
 			{
 				"command": "cmstead.jscodeformer.rename",
 				"title": "Rename",
-				"description": "Rename variable"
+				"description": "Rename"
 			},
 			{
 				"command": "cmstead.jscodeformer.surroundWith",

@@ -13,6 +13,8 @@ test();
 
 console.log(test);
 
+const foo = test;
+
 function convert() {
     const actionList = getActionTitles();
 

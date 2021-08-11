@@ -33,7 +33,7 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.rename',
 		path: './modules/commands/rename/rename-action',
 		name: 'rename',
-		title: 'Rename Variable',
+		title: 'Rename',
 		group: groups.REFACTORINGS
 	},
 	{

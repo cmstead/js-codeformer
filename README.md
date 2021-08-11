@@ -36,6 +36,10 @@ Framework-specific formats:
 - TSX
 - Vue Single-file components
 
+Experimental framework support:
+
+- Svelte
+
 ## Refactoring ##
 
 JS CodeFormer automated refactorings are built upon years of experience to be stable and reliable. Though the project is new, and issues will inevitably arise, the tools in this project are used to support the project itself. In essence, JS CodeFormer is a self-dogfooding project.
@@ -53,7 +57,7 @@ Current refactorings:
 - Inline Variable
     - Windows: ctrl+shift+j, i
     - Mac: cmd+shift+j, i
-- Rename Variable (important for non js/ts files)
+- Rename (important for non js/ts files)
     - Windows: ctrl+shift+j, r
     - Mac: cmd+shift+j, r
 
@@ -120,3 +124,11 @@ Current outstanding behavior work:
     - [ ] Introduce variable
     - [ ] Introduce function
     - [ ] Lift and name anonymous function
+
+## Known/Expected Issues ##
+
+Rename:
+
+- Rename refactoring does not currently support methods (class and object literal)
+- Renaming variables do not propagate to template HTML in Vue and Svelte
+- Renaming MAY not propagate into JSX nodes within reactjavascript and reacttypescript (not tested)
