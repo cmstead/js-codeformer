@@ -58,6 +58,7 @@
 		"onCommand:cmstead.jscodeformer.extractToParameter",
 		"onCommand:cmstead.jscodeformer.extractVariable",
 		"onCommand:cmstead.jscodeformer.inlineVariable",
+		"onCommand:cmstead.jscodeformer.rename",
 		"onCommand:cmstead.jscodeformer.pickBehavior",
 		"onCommand:cmstead.jscodeformer.surroundWith",
 		"onCommand:cmstead.jscodeformer.convert",
@@ -95,6 +96,11 @@
 				"command": "cmstead.jscodeformer.inlineVariable",
 				"title": "Inline Variable",
 				"description": "Inline value of selected variable, and delete variable declaration"
+			},
+			{
+				"command": "cmstead.jscodeformer.rename",
+				"title": "Rename",
+				"description": "Rename variable"
 			},
 			{
 				"command": "cmstead.jscodeformer.surroundWith",
@@ -193,6 +199,9 @@
 				},
 				{
 					"command": "cmstead.jscodeformer.inlineVariable"
+				},
+				{
+					"command": "cmstead.jscodeformer.rename"
 				}
 			],
 			"cmstead.js-codeformer.conversions": [

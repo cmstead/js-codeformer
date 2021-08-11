@@ -30,6 +30,13 @@ const actions = [
 		group: groups.REFACTORINGS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.rename',
+		path: './modules/commands/rename/rename-action',
+		name: 'rename',
+		title: 'Rename Variable',
+		group: groups.REFACTORINGS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.surroundWith',
 		path: './modules/commands/surround-with/surround-with-action',
 		name: 'surroundWith',

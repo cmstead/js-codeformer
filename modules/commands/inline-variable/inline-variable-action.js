@@ -40,7 +40,7 @@ function inlineVariable() {
             validateUserInput({
                 value: newVariableDeclarator,
                 validator: (selectedScope) => selectedScope !== null,
-                message: 'No variable selected to inline'
+                message: 'No variable declaration selected to inline'
             }))
         .then((newVariableDeclarator) =>
                 variableDeclarator = newVariableDeclarator)
