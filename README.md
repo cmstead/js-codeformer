@@ -53,6 +53,9 @@ Current refactorings:
 - Inline Variable
     - Windows: ctrl+shift+j, i
     - Mac: cmd+shift+j, i
+- Rename Variable
+    - Windows: ctrl+shift+j, r
+    - Mac: cmd+shift+j, r
 
 ## Conversions ##
 
