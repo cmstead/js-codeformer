@@ -2,7 +2,18 @@
 
 JS CodeFormer is a JS refactoring and code automation extension for VS Code. Born from the ashes of JS Refactor, JS CodeFormer answers a new question. Instead of asking "can a JS refactoring tool be made for VS Code", this project aims to answer "how can better tools help to create better software?"
 
-JS CodeFormer is a suite of tools purpose built to simplify the process of creating software in a JavaScript environment.
+JS CodeFormer is a suite of tools purpose built to simplify the process of creating and editing software in a JavaScript environment.
+
+## Core Principles ##
+
+JS CodeFormer is not just a code refactoring and automation extension, it is an extension which is built upon these core principles:
+
+- **Robustness** -- JS CodeFormer must work reliably in a broad range of code environments and styles
+- **Communication** -- If JS CodeFormer fails, it should provide immediate feedback to the user; the feedback should be as clear as possible
+- **Usability** -- It should be easy to find your way around the tool, even at the start
+- **Accessibility** -- Clear, direct access to the tooling must be supported for all users regardless of disability 
+
+None of these principles can be treated as "set it and forget it". Every new behavior, and every improvement receives serious thought as to how it will serve, and impact the developer using this tool.
 
 ## Language Support ##
 
