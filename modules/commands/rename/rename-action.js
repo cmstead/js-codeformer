@@ -4,7 +4,7 @@ const { transformLocationToRange } = require("../../edit-utils/textEditTransform
 const { openInputBox } = require("../../ui-services/inputService");
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { getVariableDeclaractor, getSurroundingScope, selectReplacementLocations } = require("./rename");
+const { getSurroundingScope, selectReplacementLocations, findDeclaratorOrFunctionDeclaration } = require("./rename");
 
 function rename() {
     let actionSetup = null;
@@ -18,7 +18,7 @@ function rename() {
             actionSetup = newActionSetup)
 
         .then(() =>
-            getVariableDeclaractor(actionSetup.selectionPath))
+            findDeclaratorOrFunctionDeclaration(actionSetup.selectionPath))
         .then((variableDeclarator) => validateUserInput({
             value: variableDeclarator,
             validator: (variableDeclarator) => variableDeclarator !== null,

@@ -9,6 +9,10 @@ async function test() {
     return 'foo';
 }
 
+test();
+
+console.log(test);
+
 function convert() {
     const actionList = getActionTitles();
 
