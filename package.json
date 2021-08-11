@@ -157,6 +157,11 @@
 				"mac": "cmd+shift+j i"
 			},
 			{
+				"command": "cmstead.jscodeformer.rename",
+				"key": "ctrl+shift+j r",
+				"mac": "cmd+shift+j r"
+			},
+			{
 				"command": "cmstead.jscodeformer.surroundWith",
 				"key": "ctrl+shift+j w",
 				"mac": "cmd+shift+j w"

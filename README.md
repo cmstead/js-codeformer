@@ -102,7 +102,9 @@ This project is still in active development, so new refactorings and actions are
 Current outstanding behavior work:
 
 - Refactorings
-    - [ ] Rename (primarily for JS embedded in HTML support)
+    - [ ] Rename (primarily for JS/TS embedded in HTML support)
+        - [x] Rename Variable
+        - [ ] Rename Function/Method
     - [x] Extract to parameter
 - Conversions
     - [x] Convert to arrow function
