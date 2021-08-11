@@ -171,17 +171,17 @@
 				{
 					"submenu": "cmstead.js-codeformer.refactor",
 					"group": "js-codeformer@1",
-					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html"
 				},
 				{
 					"submenu": "cmstead.js-codeformer.conversions",
 					"group": "js-codeformer@2",
-					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html"
 				},
 				{
 					"submenu": "cmstead.js-codeformer.actions",
 					"group": "js-codeformer@3",
-					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx"
+					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html"
 				}
 			],
 			"cmstead.js-codeformer.refactor": [
