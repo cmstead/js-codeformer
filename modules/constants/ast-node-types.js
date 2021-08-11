@@ -2,6 +2,7 @@ module.exports = {
     ARROW_FUNCTION_EXPRESSION: 'ArrowFunctionExpression',
     BLOCK_STATEMENT: 'BlockStatement',
     BINARY_EXPRESSION: 'BinaryExpression',
+    CALL_EXPRESSION: 'CallExpression',
     CLASS_BODY: 'ClassBody',
     DO_WHILE_STATEMENT: 'DoWhileStatement',
     FOR_STATEMENT: 'ForStatement',

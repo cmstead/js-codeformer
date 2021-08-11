@@ -16,18 +16,13 @@ const {
     VARIABLE_DECLARATION,
     IF_STATEMENT
 } = require("../constants/ast-node-types");
+const { findNodeInPath } = require("../edit-utils/node-path-utils");
 
 function getSurroundingScope(selectionPath) {
     return reverse(selectionPath)
         .find(node =>
             node.type === BLOCK_STATEMENT
             || node.type === PROGRAM);
-}
-
-function findNodeInPath(selectionPath, nodeType) {
-    return reverse(selectionPath)
-        .find(node =>
-            node.type === nodeType);
 }
 
 function getVariableDeclaractor(selectionPath) {
@@ -63,9 +58,13 @@ function isAVariableDeclaration(node, parentNode) {
         || isAnArrowFunctionParameter(node, parentNode);
 }
 
-function isAcceptableVariableIdentifier(node, parentNode) {
+function isMemberExpression(parentNode) {
+    return getNodeType(parentNode) === MEMBER_EXPRESSION;
+}
 
-    if (getNodeType(parentNode) === MEMBER_EXPRESSION) {
+function isAcceptableIdentifier(node, parentNode) {
+
+    if (isMemberExpression(parentNode)) {
         return parentNode.object === node;
     } else {
         return !isAVariableDeclaration(node, parentNode);
@@ -89,7 +88,7 @@ function isDescendableNode(node) {
     return descentScopeTypes.includes(getNodeType(node));
 }
 
-function selectReplacementLocations(searchScope, variableDeclarator, isAcceptableIdentifier = isAcceptableVariableIdentifier) {
+function selectReplacementLocations(searchScope, variableDeclarator) {
     let declarationFound = false;
     let replacementLocations = [];
 
@@ -140,6 +139,7 @@ module.exports = {
     getSurroundingScope,
     getVariableDeclaractor,
     getVariableDeclaration,
-    isAcceptableIdentifier: isAcceptableVariableIdentifier,
+    isAcceptableVariableIdentifier: isAcceptableIdentifier,
+    isMemberExpression,
     selectReplacementLocations
 };
