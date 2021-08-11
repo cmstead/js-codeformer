@@ -63,7 +63,7 @@ function isAVariableDeclaration(node, parentNode) {
         || isAnArrowFunctionParameter(node, parentNode);
 }
 
-function isAcceptableIdentifier(node, parentNode) {
+function isAcceptableVariableIdentifier(node, parentNode) {
 
     if (getNodeType(parentNode) === MEMBER_EXPRESSION) {
         return parentNode.object === node;
@@ -89,7 +89,7 @@ function isDescendableNode(node) {
     return descentScopeTypes.includes(getNodeType(node));
 }
 
-function selectReplacementLocations(searchScope, variableDeclarator, nodeValidator = isAcceptableIdentifier) {
+function selectReplacementLocations(searchScope, variableDeclarator, isAcceptableIdentifier = isAcceptableVariableIdentifier) {
     let declarationFound = false;
     let replacementLocations = [];
 
@@ -125,7 +125,7 @@ function selectReplacementLocations(searchScope, variableDeclarator, nodeValidat
             if (isDescendableNode(node) && nodeIsNotRoot) {
                 return getReplacementLocations(node);
             } else if (isAMatchingIdentifier(node, variableName)
-                && nodeValidator(node, parent)
+                && isAcceptableIdentifier(node, parent)
             ) {
                 replacementLocations.push(node.loc);
             }
@@ -140,6 +140,6 @@ module.exports = {
     getSurroundingScope,
     getVariableDeclaractor,
     getVariableDeclaration,
-    isAcceptableIdentifier,
+    isAcceptableIdentifier: isAcceptableVariableIdentifier,
     selectReplacementLocations
 };
