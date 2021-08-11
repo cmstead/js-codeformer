@@ -53,7 +53,7 @@ Current refactorings:
 - Inline Variable
     - Windows: ctrl+shift+j, i
     - Mac: cmd+shift+j, i
-- Rename Variable
+- Rename Variable (important for non js/ts files)
     - Windows: ctrl+shift+j, r
     - Mac: cmd+shift+j, r
 
