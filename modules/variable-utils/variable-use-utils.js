@@ -95,6 +95,14 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
 
     const variableName = variableDeclarator.id.name;
 
+    function getReplacementLocations(node) {
+        const newReplacementLocations = selectReplacementLocations(node, variableDeclarator);
+
+        replacementLocations = replacementLocations.concat(newReplacementLocations);
+
+        return VisitorOption.Skip;
+    }
+    
     traverse(searchScope, {
         enter: function (node, parent) {
             const nodeIsNotRoot = node !== searchScope;
@@ -108,16 +116,14 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
                 nodeIsNotRootDeclarator
                 && isAMatchingIdentifier(node, variableName)
                 && isAVariableDeclaration(node, parent)) {
+
                 declarationFound = true;
+
                 return;
             }
 
             if (isDescendableNode(node) && nodeIsNotRoot) {
-                const newReplacementLocations = selectReplacementLocations(node, variableDeclarator);
-
-                replacementLocations = replacementLocations.concat(newReplacementLocations);
-
-                return VisitorOption.Skip;
+                return getReplacementLocations(node);
             } else if (isAMatchingIdentifier(node, variableName)
                 && isAcceptableIdentifier(node, parent)
             ) {
