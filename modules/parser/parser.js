@@ -34,7 +34,7 @@ function parseText(source, { useJsx }) {
         if(useJsx) {
             throw error;
         } else {
-            parseText(source, { useJsx: true });
+            return parseText(source, { useJsx: true });
         }
     }
 }
