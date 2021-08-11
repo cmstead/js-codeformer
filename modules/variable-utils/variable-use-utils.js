@@ -1,5 +1,6 @@
 const { traverse, VisitorOption } = require("estraverse");
 const { reverse, getNodeType } = require('../core-utils');
+const { getSourceSelection } = require("../source-utilities");
 
 const {
     BLOCK_STATEMENT,
@@ -15,7 +16,6 @@ const {
     VARIABLE_DECLARATION,
     IF_STATEMENT
 } = require("../constants/ast-node-types");
-const { getSourceSelection } = require("../source-utilities");
 
 function getSurroundingScope(selectionPath) {
     return reverse(selectionPath)
