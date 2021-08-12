@@ -1,7 +1,7 @@
 {
 	"name": "js-codeformer",
 	"displayName": "JS CodeFormer",
-	"description": "A Javascript/Typescript refactoring and code automation tool for building better source",
+	"description": "A JavaScript/TypeScript refactoring and code automation tool for building better source",
 	"version": "0.18.1",
 	"publisher": "cmstead",
 	"repository": {

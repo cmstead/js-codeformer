@@ -4,7 +4,7 @@
 
 https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer
 
-## The Setup ##
+## What and Why ##
 
 JS CodeFormer is a JS refactoring and code automation extension for VS Code. Born from the ashes of JS Refactor, JS CodeFormer answers a new question. Instead of asking "can a JS refactoring tool be made for VS Code", this project aims to answer "how can better tools help to create better software?"
 
@@ -44,7 +44,8 @@ Framework-specific formats:
 
 Experimental framework support:
 
-- Svelte
+- Svelte -- requires the Svelte extension to work
+    - https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode
 
 ## Refactoring ##
 
