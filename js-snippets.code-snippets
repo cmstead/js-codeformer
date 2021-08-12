@@ -1,6 +1,6 @@
 {
     "Variable": {
-        "scope": "javascript,html,javascriptreact,jsx",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "jscf-var-const-let",
         "body": [
             "${1|const,let,var|} ${2:variableName} = ${TM_SELECTED_TEXT};"
@@ -8,7 +8,7 @@
         "description": "Basic variable"
     },
     "Parameter": {
-        "scope": "javascript,html,javascriptreact,jsx",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "jscf-parameter-argument",
         "body": [
             "${1:name}${2: = ${TM_SELECTED_TEXT}}"
@@ -16,7 +16,7 @@
         "description": "Parameter with optional default value"
     },
     "Function": {
-        "scope": "javascript,html,javascriptreact,jsx",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "jscf-function",
         "body": [
             "${1|function,async function,function*|} ${2:functionName }(${3:parameters}) {",
@@ -26,7 +26,7 @@
         "description": "New function"
     },
     "Arrow Function": {
-        "scope": "javascript,html,javascriptreact,jsx",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "jscf-arrow-function-lambda",
         "body": [
             "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}\n\\}}"
@@ -34,7 +34,7 @@
         "description": "New Arrow Function"
     },
     "Promise then": {
-        "scope": "javascript,html,javascriptreact,jsx",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "jscf-promise-then",
         "body": [
             ".then((${1:result}) => ${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}})"
@@ -42,7 +42,7 @@
         "description": "Promise then function call"
     },
     "Promise catch": {
-        "scope": "javascript,html,javascriptreact,jsx",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "jscf-promise-catch",
         "body": [
             ".catch(function(${1:error})${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}});"
@@ -50,7 +50,7 @@
         "description": "Promise catch function call"
     },
     "Try/Catch": {
-        "scope": "javascript,html,javascriptreact,jsx",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "jscf-try-catch",
         "body": [
             "try {",
@@ -60,5 +60,15 @@
             "}"
         ],
         "description": "Standard try/catch block"
+    },
+    "Constructor": {
+		"scope": "javascript,html,javascriptreact,jsx,vue",
+        "prefix": "ctor-constructor",
+        "body": [
+            "constructor (${1:parameters}) {",
+            "\t${2:${TM_SELECTED_TEXT}}$0",
+            "}"
+        ],
+        "description": "New constructor method"
     }
 }

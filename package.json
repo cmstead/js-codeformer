@@ -12,7 +12,9 @@
 		"vscode": "^1.56.0"
 	},
 	"categories": [
-		"Other"
+		"Programming Languages",
+		"Snippets",
+		"Formatters"
 	],
 	"tags": [
 		"Javascript",
@@ -68,17 +70,6 @@
 		"onCommand:cmstead.jscodeformer.changeVariableType"
 	],
 	"contributes": {
-		"languages": [
-			{
-				"id": "svelte",
-				"aliases": [
-					"svelte"
-				],
-				"extensions": [
-					".svelte"
-				]
-			}
-		],
 		"snippets": [
 			{
 				"path": "./js-snippets.code-snippets"

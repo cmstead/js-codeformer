@@ -1,6 +1,6 @@
 {
     "Variable": {
-        "scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact,vue",
         "prefix": "jscf-var-const-let",
         "body": [
             "${1|const,let,var|} ${2:variableName}${3|:, =|} ${TM_SELECTED_TEXT}$0;"
@@ -8,7 +8,7 @@
         "description": "Basic variable"
     },
     "Parameter": {
-        "scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact,vue",
         "prefix": "jscf-parameter-argument",
         "body": [
             "${1:name}${2:${3|:, =|} ${TM_SELECTED_TEXT}}"
@@ -16,7 +16,7 @@
         "description": "Parameter with optional type or default value"
     },
     "Function": {
-        "scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact,vue",
         "prefix": "jscf-function",
         "body": [
             "${1|function,async function,function*|} ${2:functionName }(${3:parameters})${4:: ${5:typeAnnotation}} {",
@@ -26,7 +26,7 @@
         "description": "New function"
     },
     "Arrow Function": {
-        "scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact,vue",
         "prefix": "jscf-arrow-function-lambda",
         "body": [
             "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}\n}}"
@@ -42,7 +42,7 @@
         "description": "Promise then function call"
     },
     "Promise catch": {
-        "scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact,vue",
         "prefix": "jscf-promise-catch",
         "body": [
             ".catch((${1:error}${2:: ${3:typeAnnotation}}) => ${4:{\n\t${TM_SELECTED_TEXT}$0\n}});"
@@ -50,7 +50,7 @@
         "description": "Promise catch function call"
     },
     "Try/Catch": {
-        "scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact,vue",
         "prefix": "jscf-try-catch",
         "body": [
             "try {",
@@ -60,5 +60,15 @@
             "}"
         ],
         "description": "Standard try/catch block"
+    },
+    "Constructor": {
+		"scope": "typescript,typescriptreact,vue",
+        "prefix": "ctor-constructor",
+        "body": [
+            "constructor (${1:parameters}) {",
+            "\t${2:${TM_SELECTED_TEXT}}$0",
+            "}"
+        ],
+        "description": "New constructor method"
     }
 }
