@@ -1,5 +1,11 @@
 # JS CodeFormer #
 
+**Get this extension from the VS Marketplace**
+
+https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer
+
+## The Setup ##
+
 JS CodeFormer is a JS refactoring and code automation extension for VS Code. Born from the ashes of JS Refactor, JS CodeFormer answers a new question. Instead of asking "can a JS refactoring tool be made for VS Code", this project aims to answer "how can better tools help to create better software?"
 
 JS CodeFormer is a suite of tools purpose built to simplify the process of creating and editing software in a JavaScript environment.
