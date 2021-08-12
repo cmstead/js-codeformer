@@ -36,6 +36,16 @@ function convert() {
         });
 }
 
+class TestClass {
+    testMethod() {
+        return 'foo';
+    }
+
+    otherTestMethod() {
+        return this.testMethod();
+    }
+}
+
 module.exports = {
     convert
 };
