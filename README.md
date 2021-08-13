@@ -136,6 +136,5 @@ Current outstanding behavior work:
 
 Rename:
 
-- Rename refactoring does not rename implied object references e.g. object like this: { foo }
 - Renaming variables do not propagate to template HTML in Vue and Svelte
 - Renaming MAY not propagate into JSX nodes within reactjavascript and reacttypescript (not tested)
