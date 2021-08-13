@@ -1,4 +1,4 @@
-const { getNewVariableBuilder, variableTypeList } = require("../../../test/tests/builders/VariableBuilder");
+const { getNewVariableBuilder, variableTypeList } = require("../../builders/VariableBuilder");
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { VARIABLE_DECLARATION, VARIABLE_DECLARATOR } = require("../../constants/ast-node-types");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
