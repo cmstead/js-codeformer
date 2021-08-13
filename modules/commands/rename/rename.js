@@ -5,9 +5,8 @@ const {
     getVariableDeclaractor,
     selectReplacementLocations: selectVariableLocations
 } = require('../../variable-utils/variable-use-utils');
-const { selectReplacementLocations: selectMethodLocations } = require("./rename-method-replacement-locations");
 
-const renameableNodeTypes = [VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
+const { selectReplacementLocations: selectMethodLocations } = require("./rename-method-replacement-locations");
 
 function getSurroundingScope(selectionPath) {
     const scopeTypes = [BLOCK_STATEMENT, CLASS_BODY, PROGRAM];
@@ -15,14 +14,21 @@ function getSurroundingScope(selectionPath) {
         .find(node => scopeTypes.includes(getNodeType(node)));
 }
 
-const isRenameableNode = (node) => {
-    const nodeType = getNodeType(node);
-    const nodeIsADeclaration = renameableNodeTypes.includes(nodeType);
-    const nodeIsAFunctionProperty = nodeType === PROPERTY
-        && getNodeType(node.value) === FUNCTION_EXPRESSION;
+const renameableNodeTypes = [VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
+
+function isNodeAFunctionProperty(node) {
+    return getNodeType(node) === PROPERTY
+        && getNodeType(node.value) === FUNCTION_EXPRESSION
+}
+function isNodeADeclaration(node) {
+    return renameableNodeTypes.includes(getNodeType(node))
+}
+function isRenameableNode(node) {
+    const nodeIsADeclaration = isNodeADeclaration(node);
+    const nodeIsAFunctionProperty = isNodeAFunctionProperty(node);
 
     return nodeIsADeclaration || nodeIsAFunctionProperty;
-};
+}
 
 function findDeclaratorOrFunctionDeclaration(selectionPath) {
     return findNodeByCheckFunction(selectionPath, isRenameableNode);
