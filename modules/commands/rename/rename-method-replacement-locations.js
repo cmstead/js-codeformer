@@ -1,6 +1,6 @@
 const { VisitorOption } = require("estraverse");
 const { traverse } = require("../../astTraverse");
-const { MEMBER_EXPRESSION, THIS_EXPRESSION, IDENTIFIER, METHOD_DEFINITION } = require("../../constants/ast-node-types");
+const { MEMBER_EXPRESSION, THIS_EXPRESSION, IDENTIFIER, METHOD_DEFINITION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 
 function getVariableName(variableDeclarator) {
@@ -9,19 +9,33 @@ function getVariableName(variableDeclarator) {
         : variableDeclarator.key.name;
 }
 
+function doNotDescend(node, parent) {
+    const nodeType = getNodeType(node);
+
+    return [FUNCTION_DECLARATION, FUNCTION_EXPRESSION].includes(nodeType)
+        && getNodeType(parent) !== METHOD_DEFINITION;
+}
+
 function selectReplacementLocations(searchScope, variableDeclarator) {
     const variableName = getVariableName(variableDeclarator);
+    let selectedLocations = [];
 
     traverse(searchScope, {
         enter: function (node, parent) {
-            if(getNodeType(node) === IDENTIFIER
+            if(doNotDescend(node, parent)) {
+                return VisitorOption.Skip;
+            }
+
+            if (getNodeType(node) === IDENTIFIER
                 && node.name === variableName
                 && getNodeType(parent) === MEMBER_EXPRESSION
                 && getNodeType(parent.object) === THIS_EXPRESSION) {
-                console.log(node);
+                selectedLocations.push(node.loc);
             }
         }
     });
+
+    return selectedLocations;
 }
 
 module.exports = {

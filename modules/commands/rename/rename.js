@@ -21,7 +21,7 @@ const isRenameableNode = (node) => {
     const nodeIsAFunctionProperty = nodeType === PROPERTY
         && getNodeType(node.value) === FUNCTION_EXPRESSION;
 
-    return nodeIsADeclaration || nodeIsAFunctionProperty
+    return nodeIsADeclaration || nodeIsAFunctionProperty;
 };
 
 function findDeclaratorOrFunctionDeclaration(selectionPath) {
@@ -34,13 +34,12 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
     if (nodeType !== METHOD_DEFINITION && nodeType !== PROPERTY) {
         return selectVariableLocations(searchScope, variableDeclarator);
     } else {
-        selectMethodLocations(searchScope, variableDeclarator);
-
-        return [];
+        return selectMethodLocations(searchScope, variableDeclarator);
     }
 }
 
 module.exports = {
+    acceptableNodeTypes,
     findDeclaratorOrFunctionDeclaration,
     getSurroundingScope,
     getVariableDeclaractor,
