@@ -41,7 +41,6 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
 }
 
 module.exports = {
-    acceptableNodeTypes,
     findDeclaratorOrFunctionDeclaration,
     getSurroundingScope,
     getVariableDeclaractor,
