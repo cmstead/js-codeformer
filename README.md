@@ -104,6 +104,8 @@ Current Actions:
 - Change variable type
     - Change variable declaration type from current type to const, let, or var
     - No keybinding
+- Introduce variable
+    - Introduce variable declaration into the code from selected variable use
 
 - Select Action (Action Palette)
     - Windows: ctrl+shift+j, p
@@ -137,7 +139,7 @@ Current outstanding behavior work:
     - [ ] Convert string to template literal
 - Actions
     - [x] Change variable type
-    - [ ] Introduce variable
+    - [x] Introduce variable
     - [ ] Introduce function
     - [ ] Lift and name anonymous function
 
