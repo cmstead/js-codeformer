@@ -7,7 +7,7 @@ const {
 } = require('../../variable-utils/variable-use-utils');
 const { selectReplacementLocations: selectMethodLocations } = require("./rename-method-replacement-locations");
 
-const acceptableNodeTypes = [VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
+const renameableNodeTypes = [VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
 
 function getSurroundingScope(selectionPath) {
     const scopeTypes = [BLOCK_STATEMENT, CLASS_BODY, PROGRAM];
@@ -17,7 +17,7 @@ function getSurroundingScope(selectionPath) {
 
 const isRenameableNode = (node) => {
     const nodeType = getNodeType(node);
-    const nodeIsADeclaration = acceptableNodeTypes.includes(nodeType);
+    const nodeIsADeclaration = renameableNodeTypes.includes(nodeType);
     const nodeIsAFunctionProperty = nodeType === PROPERTY
         && getNodeType(node.value) === FUNCTION_EXPRESSION;
 
