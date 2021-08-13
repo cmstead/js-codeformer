@@ -1,0 +1,52 @@
+[
+  {
+    "end": {
+      "column": 65,
+      "line": 7
+    },
+    "start": {
+      "column": 48,
+      "line": 7
+    }
+  },
+  {
+    "end": {
+      "column": 41,
+      "line": 20
+    },
+    "start": {
+      "column": 24,
+      "line": 20
+    }
+  },
+  {
+    "end": {
+      "column": 55,
+      "line": 23
+    },
+    "start": {
+      "column": 38,
+      "line": 23
+    }
+  },
+  {
+    "end": {
+      "column": 34,
+      "line": 26
+    },
+    "start": {
+      "column": 17,
+      "line": 26
+    }
+  },
+  {
+    "end": {
+      "column": 37,
+      "line": 29
+    },
+    "start": {
+      "column": 20,
+      "line": 29
+    }
+  }
+]

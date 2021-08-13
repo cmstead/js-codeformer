@@ -1,6 +1,6 @@
 const { VisitorOption } = require("estraverse");
 const { traverse } = require("../../astTraverse");
-const { MEMBER_EXPRESSION, THIS_EXPRESSION, IDENTIFIER, METHOD_DEFINITION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, CALL_EXPRESSION } = require("../../constants/ast-node-types");
+const { MEMBER_EXPRESSION, THIS_EXPRESSION, IDENTIFIER, METHOD_DEFINITION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, CALL_EXPRESSION, PROPERTY } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 
 function getVariableName(variableDeclarator) {
@@ -13,7 +13,8 @@ function doNotDescend(node, parent) {
     const nodeType = getNodeType(node);
 
     return [FUNCTION_DECLARATION, FUNCTION_EXPRESSION].includes(nodeType)
-        && getNodeType(parent) !== METHOD_DEFINITION;
+        && getNodeType(parent) !== METHOD_DEFINITION
+        && getNodeType(parent) !== PROPERTY;
 }
 
 function isBoundFunction(node) {

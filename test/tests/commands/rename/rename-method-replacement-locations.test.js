@@ -31,4 +31,29 @@ describe('rename replacement location finder', function () {
         this.verifyAsJSON(renameLocations);
 
     });
+
+    it('find all references to a object literal method for renaming', function () {
+        const sourceCodeToSearch = readFileSource(__dirname, "fixtures/select-object-literal-method-locations.js");
+        const parsedSourceCode = parse(sourceCodeToSearch);
+        const selectedMethodLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({
+                line: 2,
+                column: 8
+            }),
+            end: buildEditorCoordinates({
+                line: 2,
+                column: 8
+            })
+        });
+        const selectionPath = buildNodePath(parsedSourceCode, selectedMethodLocation);
+
+        const nearestScope = getSurroundingScope(selectionPath);
+
+        const variableDeclaratorNode = findDeclaratorOrFunctionDeclaration(selectionPath);
+
+        const renameLocations = selectReplacementLocations(nearestScope, variableDeclaratorNode);
+
+        this.verifyAsJSON(renameLocations);
+
+    });
 });
