@@ -67,7 +67,8 @@
 		"onCommand:cmstead.jscodeformer.convertToArrowFunction",
 		"onCommand:cmstead.jscodeformer.convertToFunctionExpression",
 		"onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
-		"onCommand:cmstead.jscodeformer.changeVariableType"
+		"onCommand:cmstead.jscodeformer.changeVariableType",
+		"onCommand:cmstead.jscodeformer.introduceVariable"
 	],
 	"contributes": {
 		"snippets": [
@@ -113,6 +114,11 @@
 				"command": "cmstead.jscodeformer.changeVariableType",
 				"title": "Change Variable Type",
 				"description": "Change variable type from current type to const, let, or var"
+			},
+			{
+				"command": "cmstead.jscodeformer.introduceVariable",
+				"title": "Introduce Variable",
+				"description": "Introduce variable from existing variable use"
 			},
 			{
 				"command": "cmstead.jscodeformer.convertToArrowFunction",
@@ -225,6 +231,9 @@
 			"cmstead.js-codeformer.actions": [
 				{
 					"command": "cmstead.jscodeformer.changeVariableType"
+				},
+				{
+					"command": "cmstead.jscodeformer.introduceVariable"
 				},
 				{
 					"command": "cmstead.jscodeformer.surroundWith"
