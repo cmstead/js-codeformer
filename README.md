@@ -109,6 +109,15 @@ Current Actions:
     - Windows: ctrl+shift+j, p
     - Mac: cmd+shift+j, p
 
+## Contributors and Thank Yous #
+
+It's important to understand that not all contributions to a project are, or can be committed to the source repository. With that in mind, the following are people who have provided help and insights which might not have a name on a commit:
+
+[Jenn Zenk](https://github.com/jzenk) -- Accessibility feedback
+[Ashlee Boyer](https://twitter.com/AshleeMBoyer) -- Accessibility feedback
+
+Also, every person who submitted a bug or enhancement on JS Refactor, and those who offer them on this project!
+
 ## What's Next ##
 
 This project is still in active development, so new refactorings and actions are bound to be added regularly. With that in mind, not all code automation tools will make the cut. The goal is not to be an exhaustive tool, but a carefully designed tool, built to smooth and speed the software development experience.
