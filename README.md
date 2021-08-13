@@ -113,8 +113,8 @@ Current Actions:
 
 It's important to understand that not all contributions to a project are, or can be committed to the source repository. With that in mind, the following are people who have provided help and insights which might not have a name on a commit:
 
-[Jenn Zenk](https://github.com/jzenk) -- Accessibility feedback
-[Ashlee Boyer](https://twitter.com/AshleeMBoyer) -- Accessibility feedback
+- [Jenn Zenk](https://github.com/jzenk) -- Accessibility feedback
+- [Ashlee Boyer](https://twitter.com/AshleeMBoyer) -- Accessibility feedback
 
 Also, every person who submitted a bug or enhancement on JS Refactor, and those who offer them on this project!
 
