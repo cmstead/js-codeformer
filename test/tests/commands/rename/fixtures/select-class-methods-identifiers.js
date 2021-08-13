@@ -6,7 +6,7 @@ class SomeTestClass {
     someOtherTestMethod() {
         const aBadIdeaThatPeopleDoAnyway = this.thisOldTestMethod;
 
-        const thisOldTestMethod = function (){};
+        const thisOldTestMethod = function () { };
 
         function whatever() {
             this.thisOldTestMethod();
@@ -22,7 +22,7 @@ class SomeTestClass {
 
         const butThisTho = () => this.thisOldTestMethod()
 
-        const descendThisFool = (function foo () {
+        const descendThisFool = (function foo() {
             this.thisOldTestMethod();
         }).bind(this);
 

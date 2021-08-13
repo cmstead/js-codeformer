@@ -34,7 +34,13 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
     if (nodeType !== METHOD_DEFINITION && nodeType !== PROPERTY) {
         return selectVariableLocations(searchScope, variableDeclarator);
     } else {
-        return selectMethodLocations(searchScope, variableDeclarator);
+        console.log('start selection');
+        const selectedLocations = selectMethodLocations(searchScope, variableDeclarator);
+        console.log('end selection');
+
+        console.log(selectedLocations);
+
+        return selectedLocations;
     }
 }
 

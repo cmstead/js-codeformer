@@ -1,10 +1,23 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
+const { getNodeType } = require("../../core-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { openInputBox } = require("../../ui-services/inputService");
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getSurroundingScope, selectReplacementLocations, findDeclaratorOrFunctionDeclaration } = require("./rename");
+
+function getVariableDeclaratorLocation(variableDeclarator) {
+    if(typeof variableDeclarator.id === 'object') {
+        return variableDeclarator.id.loc;
+    } else if(typeof variableDeclarator.key === 'object') {
+        return variableDeclarator.key.loc;
+    } else if(typeof variableDeclarator.callee === 'object') {
+        return variableDeclarator.callee.loc;
+    }
+
+    throw new Error(`Variable delaration type unknown: ${getNodeType(variableDeclarator)}`)
+}
 
 function rename() {
     let actionSetup = null;
@@ -57,7 +70,7 @@ function rename() {
                     sourceEdit.addReplacementEdit(replacementRange, newName);
                 });
 
-            const variableNameLocation = variableDeclarator.id.loc;
+            const variableNameLocation = getVariableDeclaratorLocation(variableDeclarator);
 
             const replacementRange = transformLocationToRange(variableNameLocation);
             sourceEdit.addReplacementEdit(replacementRange, newName);

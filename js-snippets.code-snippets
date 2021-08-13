@@ -70,5 +70,13 @@
             "}"
         ],
         "description": "New constructor method"
+    },
+    "Function call": {
+		"scope": "javascript,html,javascriptreact,jsx,vue",
+        "prefix": "function-call",
+        "body": [
+            "${1:functionName}(${2:${TM_SELECTED_TEXT}})$0"
+        ],
+        "description": "Function call which supports surround"
     }
 }

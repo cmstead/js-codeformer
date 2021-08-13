@@ -116,10 +116,10 @@ This project is still in active development, so new refactorings and actions are
 Current outstanding behavior work:
 
 - Refactorings
-    - [ ] Rename (primarily to support JS/TS embedded in HTML)
+    - [x] Rename (primarily to support JS/TS embedded in HTML)
         - [x] Rename Variable
         - [x] Rename Function
-        - [ ] Rename Method
+        - [x] Rename Method
     - [x] Extract to parameter
 - Conversions
     - [x] Convert to arrow function
@@ -136,6 +136,6 @@ Current outstanding behavior work:
 
 Rename:
 
-- Rename refactoring does not currently support methods (class and object literal)
+- Rename refactoring does not rename implied object references e.g. object like this: { foo }
 - Renaming variables do not propagate to template HTML in Vue and Svelte
 - Renaming MAY not propagate into JSX nodes within reactjavascript and reacttypescript (not tested)
