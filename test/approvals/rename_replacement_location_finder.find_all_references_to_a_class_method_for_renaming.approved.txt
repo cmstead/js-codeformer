@@ -31,12 +31,22 @@
   },
   {
     "end": {
+      "column": 34,
+      "line": 26
+    },
+    "start": {
+      "column": 17,
+      "line": 26
+    }
+  },
+  {
+    "end": {
       "column": 37,
-      "line": 25
+      "line": 29
     },
     "start": {
       "column": 20,
-      "line": 25
+      "line": 29
     }
   }
 ]

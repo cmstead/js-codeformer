@@ -22,6 +22,10 @@ class SomeTestClass {
 
         const butThisTho = () => this.thisOldTestMethod()
 
+        const descendThisFool = (function foo () {
+            this.thisOldTestMethod();
+        }).bind(this);
+
         return this.thisOldTestMethod();
     }
 }
