@@ -68,7 +68,8 @@
 		"onCommand:cmstead.jscodeformer.convertToFunctionExpression",
 		"onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
 		"onCommand:cmstead.jscodeformer.changeVariableType",
-		"onCommand:cmstead.jscodeformer.introduceVariable"
+		"onCommand:cmstead.jscodeformer.introduceVariable",
+		"onCommand:cmstead.jscodeformer.introduceFunction"
 	],
 	"contributes": {
 		"snippets": [
@@ -119,6 +120,11 @@
 				"command": "cmstead.jscodeformer.introduceVariable",
 				"title": "Introduce Variable",
 				"description": "Introduce variable from existing variable use"
+			},
+			{
+				"command": "cmstead.jscodeformer.introduceFunction",
+				"title": "Introduce Function",
+				"description": "Introduce function from existing function name or use"
 			},
 			{
 				"command": "cmstead.jscodeformer.convertToArrowFunction",
@@ -234,6 +240,9 @@
 				},
 				{
 					"command": "cmstead.jscodeformer.introduceVariable"
+				},
+				{
+					"command": "cmstead.jscodeformer.introduceFunction"
 				},
 				{
 					"command": "cmstead.jscodeformer.surroundWith"
