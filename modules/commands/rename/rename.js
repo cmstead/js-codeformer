@@ -1,4 +1,4 @@
-const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, FUNCTION_EXPRESSION, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY } = require('../../constants/ast-node-types');
+const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, FUNCTION_EXPRESSION, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER } = require('../../constants/ast-node-types');
 const { getNodeType, reverse } = require('../../core-utils');
 const { findNodeByCheckFunction } = require('../../edit-utils/node-path-utils');
 
@@ -18,7 +18,7 @@ function getSurroundingScope(selectionPath) {
     return reverse(selectionPath).find(isNodeAScope);
 }
 
-const renameableNodeTypes = [VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
+const renameableNodeTypes = [IDENTIFIER, VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
 
 function isNodeAFunctionProperty(node) {
     return getNodeType(node) === PROPERTY
