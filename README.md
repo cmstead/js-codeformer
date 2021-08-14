@@ -140,7 +140,7 @@ Current outstanding behavior work:
 - Actions
     - [x] Change variable type
     - [x] Introduce variable
-    - [ ] Introduce function
+    - [x] Introduce function
     - [ ] Lift and name anonymous function
 
 ## Known/Expected Issues ##
