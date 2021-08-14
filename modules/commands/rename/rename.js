@@ -1,5 +1,5 @@
 const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, FUNCTION_EXPRESSION, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER } = require('../../constants/ast-node-types');
-const { getNodeType, reverse } = require('../../core-utils');
+const { getNodeType, reverse, last } = require('../../core-utils');
 const { findNodeByCheckFunction } = require('../../edit-utils/node-path-utils');
 
 const {
@@ -27,7 +27,7 @@ function isNodeAFunctionProperty(node) {
 function isNodeADeclaration(node) {
     return renameableNodeTypes.includes(getNodeType(node))
 }
-function isRenameableNode(node) {
+function isRenameableNode(selectionNode, node) {
     const nodeIsADeclaration = isNodeADeclaration(node);
     const nodeIsAFunctionProperty = isNodeAFunctionProperty(node);
 
@@ -35,7 +35,11 @@ function isRenameableNode(node) {
 }
 
 function findDeclaratorOrFunctionDeclaration(selectionPath) {
-    return findNodeByCheckFunction(selectionPath, isRenameableNode);
+    const selectionNode = last(selectionPath);
+
+    return findNodeByCheckFunction(
+        selectionPath,
+        (node) => isRenameableNode(selectionNode, node));
 }
 
 function isNodeAVariableOrFunctionDeclaration(nodeType) {
