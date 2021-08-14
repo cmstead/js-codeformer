@@ -162,7 +162,7 @@ function extractMethod() {
         .then(({ extractionPosition, replacementRange }) =>
             getNewSourceEdit()
                 .addReplacementEdit(replacementRange, methodCallText)
-                .addInsertEdit(extractionPosition, methodText + '\n')
+                .addInsertEdit(extractionPosition, methodText + '\n\n')
                 .applyEdit())
 
         .catch(function (error) {
