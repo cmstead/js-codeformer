@@ -106,12 +106,14 @@ Current Actions:
     - No keybinding
 - Introduce variable
     - Introduce variable declaration into the code from selected variable use
+- Introduce function
+    - Introduce function declaration into the code from selected function name or call
 
 - Select Action (Action Palette)
     - Windows: ctrl+shift+j, p
     - Mac: cmd+shift+j, p
 
-## Contributors and Thank Yous #
+## Contributors and Thanks #
 
 It's important to understand that not all contributions to a project are, or can be committed to the source repository. With that in mind, the following are people who have provided help and insights which might not have a name on a commit:
 
@@ -128,9 +130,6 @@ Current outstanding behavior work:
 
 - Refactorings
     - [x] Rename (primarily to support JS/TS embedded in HTML)
-        - [x] Rename Variable
-        - [x] Rename Function
-        - [x] Rename Method
     - [x] Extract to parameter
 - Conversions
     - [x] Convert to arrow function
