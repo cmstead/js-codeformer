@@ -122,6 +122,10 @@ It's important to understand that not all contributions to a project are, or can
 
 Also, every person who submitted a bug or enhancement on JS Refactor, and those who offer them on this project!
 
+## Find Me ##
+
+The best place to find me is on Twitter: [@cm_stead](https://twitter.com/cm_stead)
+
 ## What's Next ##
 
 This project is still in active development, so new refactorings and actions are bound to be added regularly. With that in mind, not all code automation tools will make the cut. The goal is not to be an exhaustive tool, but a carefully designed tool, built to smooth and speed the software development experience.

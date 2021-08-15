@@ -1,5 +1,5 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { getNewVariableBuilder, variableTypes } = require("../../builders/VariableBuilder");
+const { getNewVariableBuilder, variableTypes, variableTypeList } = require("../../builders/VariableBuilder");
 const astNodeTypes = require("../../constants/ast-node-types");
 const { last, getNodeType } = require("../../core-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
@@ -28,6 +28,7 @@ function introduceVariable() {
     let identifierNode = null;
     let selectedScopeNode = null;
     let introductionLocation = null;
+    let variableType = null;
 
     return asyncPrepareActionSetup()
         .then((newActionSetup) => actionSetup = newActionSetup)
@@ -60,13 +61,24 @@ function introduceVariable() {
             selectedScopeNode = retrieveExtractionLocation(extractionScopes);
         })
 
+        .then(() => openSelectList({
+            title: 'What kind of variable do you need?',
+            values: variableTypeList
+        }))
+        .then((variableType) => validateUserInput({
+            value: variableType,
+            validator: (variableType) => variableTypeList.includes(variableType),
+            message: 'No variable type selected; canceling introduce variable action'
+        }))
+        .then((newVariableType) => variableType = newVariableType)
+
         .then(() => {
             introductionLocation = selectExtractionLocation(actionSetup.selectionPath, selectedScopeNode);
         })
 
         .then(() =>
             getNewVariableBuilder({
-                type: variableTypes.CONST,
+                type: variableType,
                 name: identifierNode.name,
                 value: 'null'
             })

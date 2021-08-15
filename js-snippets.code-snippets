@@ -1,7 +1,7 @@
 {
     "Variable": {
         "scope": "javascript,html,javascriptreact,jsx,vue",
-        "prefix": "jscf-var-const-let",
+        "prefix": "var-const-let",
         "body": [
             "${1|const,let,var|} ${2:variableName} = ${TM_SELECTED_TEXT};"
         ],
@@ -9,7 +9,7 @@
     },
     "Parameter": {
         "scope": "javascript,html,javascriptreact,jsx,vue",
-        "prefix": "jscf-parameter-argument",
+        "prefix": "parameter-argument",
         "body": [
             "${1:name}${2: = ${TM_SELECTED_TEXT}}"
         ],
@@ -17,7 +17,7 @@
     },
     "Function": {
         "scope": "javascript,html,javascriptreact,jsx,vue",
-        "prefix": "jscf-function",
+        "prefix": "function",
         "body": [
             "${1|function,async function,function*|} ${2:functionName }(${3:parameters}) {",
             "\t${TM_SELECTED_TEXT}$0",
@@ -27,7 +27,7 @@
     },
     "Arrow Function": {
         "scope": "javascript,html,javascriptreact,jsx,vue",
-        "prefix": "jscf-arrow-function-lambda",
+        "prefix": "arrow-function-lambda",
         "body": [
             "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}\n\\}}"
         ],
@@ -35,7 +35,7 @@
     },
     "Promise then": {
         "scope": "javascript,html,javascriptreact,jsx,vue",
-        "prefix": "jscf-promise-then",
+        "prefix": "promise-then",
         "body": [
             ".then((${1:result}) => ${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}})"
         ],
@@ -43,7 +43,7 @@
     },
     "Promise catch": {
         "scope": "javascript,html,javascriptreact,jsx,vue",
-        "prefix": "jscf-promise-catch",
+        "prefix": "promise-catch",
         "body": [
             ".catch(function(${1:error})${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}});"
         ],
@@ -51,7 +51,7 @@
     },
     "Try/Catch": {
         "scope": "javascript,html,javascriptreact,jsx,vue",
-        "prefix": "jscf-try-catch",
+        "prefix": "try-catch",
         "body": [
             "try {",
             "\t${1:${TM_SELECTED_TEXT}}",
