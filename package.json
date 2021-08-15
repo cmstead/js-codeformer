@@ -69,7 +69,8 @@
 		"onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
 		"onCommand:cmstead.jscodeformer.changeVariableType",
 		"onCommand:cmstead.jscodeformer.introduceVariable",
-		"onCommand:cmstead.jscodeformer.introduceFunction"
+		"onCommand:cmstead.jscodeformer.introduceFunction",
+		"onCommand:cmstead.jscodeformer.liftAndNameFunctionExpression"
 	],
 	"contributes": {
 		"snippets": [
@@ -127,6 +128,11 @@
 				"description": "Introduce function from existing function name or use"
 			},
 			{
+				"command": "cmstead.jscodeformer.introduceFunction",
+				"title": "Introduce Function",
+				"description": "Introduce function from existing function name or use"
+			},
+			{
 				"command": "cmstead.jscodeformer.convertToArrowFunction",
 				"title": "Convert to Arrow Function",
 				"description": "Convert Function to Arrow Function"
@@ -139,7 +145,12 @@
 			{
 				"command": "cmstead.jscodeformer.convertToFunctionDeclaration",
 				"title": "Convert to Function Declaration",
-				"description": "Convert Variable Declaration to Function Expression"
+				"description": "Convert function expression to a function declaration"
+			},
+			{
+				"command": "cmstead.jscodeformer.liftAndNameFunctionExpression",
+				"title": "Lift and Name Anonymous Function",
+				"description": "Lift a function expression from its current location and convert it to a declaration"
 			},
 			{
 				"command": "cmstead.jscodeformer.convert",
@@ -243,6 +254,9 @@
 				},
 				{
 					"command": "cmstead.jscodeformer.introduceFunction"
+				},
+				{
+					"command": "cmstead.jscodeformer.liftAndNameFunctionExpression"
 				},
 				{
 					"command": "cmstead.jscodeformer.surroundWith"

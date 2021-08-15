@@ -108,6 +108,8 @@ Current Actions:
     - Introduce variable declaration into the code from selected variable use
 - Introduce function
     - Introduce function declaration into the code from selected function name or call
+- Lift and name function expression
+    - Lift selected function from its current position and name/rename it
 
 - Select Action (Action Palette)
     - Windows: ctrl+shift+j, p
@@ -144,7 +146,7 @@ Current outstanding behavior work:
     - [x] Change variable type
     - [x] Introduce variable
     - [x] Introduce function
-    - [ ] Lift and name anonymous function
+    - [x] Lift and name function expression
 
 ## Known/Expected Issues ##
 

@@ -65,6 +65,13 @@ const actions = [
 		group: groups.ACTIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.liftAndNameFunctionExpression',
+		path: './modules/commands/lift-and-name-function-expression/lift-and-name-function-expression-action',
+		name: 'liftAndNameFunctionExpression',
+		title: 'Lift and Name Function Expression',
+		group: groups.ACTIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.pickBehavior',
 		path: './modules/commands/pick-behavior/pick-behavior-action',
 		name: 'pickBehavior',
