@@ -12,6 +12,7 @@ module.exports = {
     FUNCTION_EXPRESSION: 'FunctionExpression',
     IDENTIFIER: 'Identifier',
     IF_STATEMENT: 'IfStatement',
+    LITERAL: 'Literal',
     METHOD_DEFINITION: 'MethodDefinition',
     MEMBER_EXPRESSION: 'MemberExpression',
     OBJECT_EXPRESSION: 'ObjectExpression',
