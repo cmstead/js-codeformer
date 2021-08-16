@@ -4,9 +4,9 @@ const fs = require('fs');
 
 const packageData = require('./package.json');
 
-const versionTokens = packageData.version.split('.').map(parseInt);
+const versionTokens = packageData.version.split('.').map(value => parseInt(value, 10));
 
-const [rawVersionType, ...args] = process.argv.slice(2);
+const [rawVersionType] = process.argv.slice(2);
 
 const versionType = rawVersionType.toLowerCase();
 
