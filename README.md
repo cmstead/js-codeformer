@@ -141,7 +141,7 @@ Current outstanding behavior work:
     - [x] Convert to arrow function
     - [x] Convert to function expression
     - [x] Convert to function declaration
-    - [ ] Convert string to template literal
+    - [x] Convert string to template literal
 - Actions
     - [x] Change variable type
     - [x] Introduce variable

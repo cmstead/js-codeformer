@@ -106,6 +106,13 @@ const actions = [
 		title: 'Convert Function to Function Expression',
 		group: groups.CONVERSIONS
 	},
+	{
+		commandId: 'cmstead.jscodeformer.convertToTemplateLiteral',
+		path: './modules/commands/convert-to-template-literal/convert-to-template-literal-action',
+		name: 'convertToTemplateLiteral',
+		title: 'Convert string, or concatenated string to a template literal',
+		group: groups.CONVERSIONS
+	},
 
 ];
 
