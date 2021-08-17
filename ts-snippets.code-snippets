@@ -78,5 +78,14 @@
             "${1:functionName}(${2:${TM_SELECTED_TEXT}})$0"
         ],
         "description": "Function call which supports surround"
-    }
+    },
+    "Template Literal": {
+		"scope": "typescript,typescriptreact",
+        "prefix": "template-literal",
+        "body": [
+            "`\\${${1:${TM_SELECTED_TEXT}}}`"
+        ],
+        "description": "Introduce template literal into source"
+    },
+
 }
