@@ -1,258 +1,290 @@
 {
-	"name": "js-codeformer",
-	"displayName": "JS CodeFormer",
-	"description": "A JavaScript/TypeScript refactoring and code automation tool for building better source",
-	"version": "0.21.0",
-	"publisher": "cmstead",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/cmstead/js-codeformer.git"
-	},
-	"engines": {
-		"vscode": "^1.56.0"
-	},
-	"categories": [
-		"Programming Languages",
-		"Snippets",
-		"Formatters"
-	],
-	"tags": [
-		"Javascript",
-		"Typescript",
-		"Refactoring",
-		"Automation",
-		"Snippets"
-	],
-	"scripts": {
-		"lint": "eslint .",
-		"test-only": "mocha ./test/**/*.test.js",
-		"test": "npm run test-only && gittey commit",
-		"build": "rm *.vsix & vsce package",
-		"push-patch": "npm run test-only && gittey push-patch",
-		"push-minor": "npm run test-only && gittey push-minor"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.2.2",
-		"@types/node": "14.x",
-		"@types/vscode": "^1.56.0",
-		"approvals": "^3.0.5",
-		"chai": "^4.3.4",
-		"eslint": "^7.27.0",
-		"glob": "^7.1.7",
-		"mocha": "^8.4.0",
-		"vsce": "^1.96.1",
-		"vscode-test": "^1.5.2"
-	},
-	"dependencies": {
-		"@typescript-eslint/typescript-estree": "^4.29.0",
-		"estraverse": "^5.2.0",
-		"typescript": "^4.3.5"
-	},
-	"main": "./extension.js",
-	"icon": "icon/jscf-icon-vscode.png",
-	"galleryBanner": {
-		"color": "#ffe518"
-	},
-	"public": true,
-	"activationEvents": [
-		"onCommand:cmstead.jscodeformer.extractMethod",
-		"onCommand:cmstead.jscodeformer.extractToParameter",
-		"onCommand:cmstead.jscodeformer.extractVariable",
-		"onCommand:cmstead.jscodeformer.inlineVariable",
-		"onCommand:cmstead.jscodeformer.rename",
-		"onCommand:cmstead.jscodeformer.pickBehavior",
-		"onCommand:cmstead.jscodeformer.surroundWith",
-		"onCommand:cmstead.jscodeformer.convert",
-		"onCommand:cmstead.jscodeformer.convertToArrowFunction",
-		"onCommand:cmstead.jscodeformer.convertToFunctionExpression",
-		"onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
-		"onCommand:cmstead.jscodeformer.changeVariableType",
-		"onCommand:cmstead.jscodeformer.introduceVariable"
-	],
-	"contributes": {
-		"snippets": [
-			{
-				"path": "./js-snippets.code-snippets"
-			},
-			{
-				"path": "./ts-snippets.code-snippets"
-			}
-		],
-		"commands": [
-			{
-				"command": "cmstead.jscodeformer.extractMethod",
-				"title": "Extract Method",
-				"description": "Extract selected source as a function/method to selected scope"
-			},
-			{
-				"command": "cmstead.jscodeformer.extractToParameter",
-				"title": "Extract To Parameter",
-				"description": "Extract selected variable to a function parameter"
-			},
-			{
-				"command": "cmstead.jscodeformer.extractVariable",
-				"title": "Extract Variable",
-				"description": "Extract selected source as a variable to selected scope"
-			},
-			{
-				"command": "cmstead.jscodeformer.inlineVariable",
-				"title": "Inline Variable",
-				"description": "Inline value of selected variable, and delete variable declaration"
-			},
-			{
-				"command": "cmstead.jscodeformer.rename",
-				"title": "Rename",
-				"description": "Rename"
-			},
-			{
-				"command": "cmstead.jscodeformer.surroundWith",
-				"title": "Surround With",
-				"description": "Surround selection with snippet text"
-			},
-			{
-				"command": "cmstead.jscodeformer.changeVariableType",
-				"title": "Change Variable Type",
-				"description": "Change variable type from current type to const, let, or var"
-			},
-			{
-				"command": "cmstead.jscodeformer.introduceVariable",
-				"title": "Introduce Variable",
-				"description": "Introduce variable from existing variable use"
-			},
-			{
-				"command": "cmstead.jscodeformer.convertToArrowFunction",
-				"title": "Convert to Arrow Function",
-				"description": "Convert Function to Arrow Function"
-			},
-			{
-				"command": "cmstead.jscodeformer.convertToFunctionExpression",
-				"title": "Convert to Function Expression",
-				"description": "Convert Function to Function Expression"
-			},
-			{
-				"command": "cmstead.jscodeformer.convertToFunctionDeclaration",
-				"title": "Convert to Function Declaration",
-				"description": "Convert Variable Declaration to Function Expression"
-			},
-			{
-				"command": "cmstead.jscodeformer.convert",
-				"title": "JS CodeFormer: Conversions",
-				"description": "Pick a conversion to run"
-			},
-			{
-				"command": "cmstead.jscodeformer.pickBehavior",
-				"title": "JS CodeFormer: Action Palette",
-				"description": "Open JS CodeFormer action palette to pick a behavior"
-			}
-		],
-		"keybindings": [
-			{
-				"command": "cmstead.jscodeformer.extractMethod",
-				"key": "ctrl+shift+j m",
-				"mac": "cmd+shift+j m",
-				"when": "editorHasSelection"
-			},
-			{
-				"command": "cmstead.jscodeformer.extractVariable",
-				"key": "ctrl+shift+j v",
-				"mac": "cmd+shift+j v",
-				"when": "editorHasSelection"
-			},
-			{
-				"command": "cmstead.jscodeformer.inlineVariable",
-				"key": "ctrl+shift+j i",
-				"mac": "cmd+shift+j i"
-			},
-			{
-				"command": "cmstead.jscodeformer.rename",
-				"key": "ctrl+shift+j r",
-				"mac": "cmd+shift+j r"
-			},
-			{
-				"command": "cmstead.jscodeformer.surroundWith",
-				"key": "ctrl+shift+j w",
-				"mac": "cmd+shift+j w"
-			},
-			{
-				"command": "cmstead.jscodeformer.pickBehavior",
-				"key": "ctrl+shift+j p",
-				"mac": "cmd+shift+j p"
-			},
-			{
-				"command": "cmstead.jscodeformer.convert",
-				"key": "ctrl+shift+j c",
-				"mac": "cmd+shift+j c"
-			}
-		],
-		"menus": {
-			"editor/context": [
-				{
-					"submenu": "cmstead.js-codeformer.refactor",
-					"group": "js-codeformer@1",
-					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
-				},
-				{
-					"submenu": "cmstead.js-codeformer.conversions",
-					"group": "js-codeformer@2",
-					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
-				},
-				{
-					"submenu": "cmstead.js-codeformer.actions",
-					"group": "js-codeformer@3",
-					"when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
-				}
-			],
-			"cmstead.js-codeformer.refactor": [
-				{
-					"command": "cmstead.jscodeformer.extractMethod"
-				},
-				{
-					"command": "cmstead.jscodeformer.extractVariable"
-				},
-				{
-					"command": "cmstead.jscodeformer.inlineVariable"
-				},
-				{
-					"command": "cmstead.jscodeformer.rename"
-				}
-			],
-			"cmstead.js-codeformer.conversions": [
-				{
-					"command": "cmstead.jscodeformer.convertToArrowFunction"
-				},
-				{
-					"command": "cmstead.jscodeformer.convertToFunctionDeclaration"
-				},
-				{
-					"command": "cmstead.jscodeformer.convertToFunctionExpression"
-				}
-			],
-			"cmstead.js-codeformer.actions": [
-				{
-					"command": "cmstead.jscodeformer.changeVariableType"
-				},
-				{
-					"command": "cmstead.jscodeformer.introduceVariable"
-				},
-				{
-					"command": "cmstead.jscodeformer.surroundWith"
-				}
-			]
-		},
-		"submenus": [
-			{
-				"id": "cmstead.js-codeformer.refactor",
-				"label": "JS CodeFormer: Refactor"
-			},
-			{
-				"id": "cmstead.js-codeformer.conversions",
-				"label": "JS CodeFormer: Conversions"
-			},
-			{
-				"id": "cmstead.js-codeformer.actions",
-				"label": "JS CodeFormer: Actions"
-			}
-		]
-	}
+    "name": "js-codeformer",
+    "displayName": "JS CodeFormer: Refactoring & Automation",
+    "description": "A JavaScript/TypeScript refactoring and code automation tool for building better source",
+    "version": "0.25.1",
+    "publisher": "cmstead",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cmstead/js-codeformer.git"
+    },
+    "engines": {
+        "vscode": "^1.56.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Snippets",
+        "Formatters"
+    ],
+    "tags": [
+        "JavaScript",
+        "TypeScript",
+        "Refactoring",
+        "Automation",
+        "Snippets"
+    ],
+    "scripts": {
+        "lint": "eslint .",
+        "test-only": "mocha ./test/**/*.test.js",
+        "test": "npm run test-only && gittey commit",
+        "build": "rm *.vsix & vsce package",
+        "push-patch": "npm run test-only && gittey push-patch",
+        "push-minor": "npm run test-only && gittey push-minor"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.3",
+        "@types/mocha": "^8.2.2",
+        "@types/node": "14.x",
+        "@types/vscode": "^1.56.0",
+        "approvals": "^3.0.5",
+        "chai": "^4.3.4",
+        "eslint": "^7.27.0",
+        "glob": "^7.1.7",
+        "mocha": "^8.4.0",
+        "vsce": "^1.96.1",
+        "vscode-test": "^1.5.2"
+    },
+    "dependencies": {
+        "@typescript-eslint/typescript-estree": "^4.29.1",
+        "estraverse": "^5.2.0",
+        "typescript": "^4.3.5"
+    },
+    "main": "./extension.js",
+    "icon": "icon/jscf-icon-vscode.png",
+    "galleryBanner": {
+        "color": "#ffe518"
+    },
+    "public": true,
+    "activationEvents": [
+        "onCommand:cmstead.jscodeformer.extractMethod",
+        "onCommand:cmstead.jscodeformer.extractToParameter",
+        "onCommand:cmstead.jscodeformer.extractVariable",
+        "onCommand:cmstead.jscodeformer.inlineVariable",
+        "onCommand:cmstead.jscodeformer.rename",
+        "onCommand:cmstead.jscodeformer.pickBehavior",
+        "onCommand:cmstead.jscodeformer.surroundWith",
+        "onCommand:cmstead.jscodeformer.convert",
+        "onCommand:cmstead.jscodeformer.convertToArrowFunction",
+        "onCommand:cmstead.jscodeformer.convertToFunctionExpression",
+        "onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
+        "onCommand:cmstead.jscodeformer.convertToTemplateLiteral",
+        "onCommand:cmstead.jscodeformer.changeVariableType",
+        "onCommand:cmstead.jscodeformer.introduceVariable",
+        "onCommand:cmstead.jscodeformer.introduceFunction",
+        "onCommand:cmstead.jscodeformer.liftAndNameFunctionExpression"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "path": "./js-snippets.code-snippets"
+            },
+            {
+                "path": "./ts-snippets.code-snippets"
+            }
+        ],
+        "commands": [
+            {
+                "command": "cmstead.jscodeformer.extractMethod",
+                "title": "Extract Method",
+                "description": "Extract selected source as a function/method to selected scope"
+            },
+            {
+                "command": "cmstead.jscodeformer.extractToParameter",
+                "title": "Extract To Parameter",
+                "description": "Extract selected variable to a function parameter"
+            },
+            {
+                "command": "cmstead.jscodeformer.extractVariable",
+                "title": "Extract Variable",
+                "description": "Extract selected source as a variable to selected scope"
+            },
+            {
+                "command": "cmstead.jscodeformer.inlineVariable",
+                "title": "Inline Variable",
+                "description": "Inline value of selected variable, and delete variable declaration"
+            },
+            {
+                "command": "cmstead.jscodeformer.rename",
+                "title": "Rename",
+                "description": "Rename"
+            },
+            {
+                "command": "cmstead.jscodeformer.surroundWith",
+                "title": "Surround With",
+                "description": "Surround selection with snippet text"
+            },
+            {
+                "command": "cmstead.jscodeformer.changeVariableType",
+                "title": "Change Variable Type",
+                "description": "Change variable type from current type to const, let, or var"
+            },
+            {
+                "command": "cmstead.jscodeformer.introduceVariable",
+                "title": "Introduce Variable",
+                "description": "Introduce variable from existing variable use"
+            },
+            {
+                "command": "cmstead.jscodeformer.introduceFunction",
+                "title": "Introduce Function",
+                "description": "Introduce function from existing function name or use"
+            },
+            {
+                "command": "cmstead.jscodeformer.introduceFunction",
+                "title": "Introduce Function",
+                "description": "Introduce function from existing function name or use"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertToArrowFunction",
+                "title": "Convert to Arrow Function",
+                "description": "Convert Function to Arrow Function"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertToFunctionExpression",
+                "title": "Convert to Function Expression",
+                "description": "Convert Function to Function Expression"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertToFunctionDeclaration",
+                "title": "Convert to Function Declaration",
+                "description": "Convert function expression to a function declaration"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertToTemplateLiteral",
+                "title": "Convert to Template Literal",
+                "description": "Convert string, or concatenated string to a template literal"
+            },
+            {
+                "command": "cmstead.jscodeformer.liftAndNameFunctionExpression",
+                "title": "Lift and Name Anonymous Function",
+                "description": "Lift a function expression from its current location and convert it to a declaration"
+            },
+            {
+                "command": "cmstead.jscodeformer.convert",
+                "title": "JS CodeFormer: Conversions",
+                "description": "Pick a conversion to run"
+            },
+            {
+                "command": "cmstead.jscodeformer.pickBehavior",
+                "title": "JS CodeFormer: Action Palette",
+                "description": "Open JS CodeFormer action palette to pick a behavior"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "cmstead.jscodeformer.extractMethod",
+                "key": "ctrl+shift+j m",
+                "mac": "cmd+shift+j m",
+                "when": "editorHasSelection"
+            },
+            {
+                "command": "cmstead.jscodeformer.extractVariable",
+                "key": "ctrl+shift+j v",
+                "mac": "cmd+shift+j v",
+                "when": "editorHasSelection"
+            },
+            {
+                "command": "cmstead.jscodeformer.inlineVariable",
+                "key": "ctrl+shift+j i",
+                "mac": "cmd+shift+j i"
+            },
+            {
+                "command": "cmstead.jscodeformer.rename",
+                "key": "ctrl+shift+j r",
+                "mac": "cmd+shift+j r"
+            },
+            {
+                "command": "cmstead.jscodeformer.surroundWith",
+                "key": "ctrl+shift+j w",
+                "mac": "cmd+shift+j w"
+            },
+            {
+                "command": "cmstead.jscodeformer.pickBehavior",
+                "key": "ctrl+shift+j p",
+                "mac": "cmd+shift+j p"
+            },
+            {
+                "command": "cmstead.jscodeformer.convert",
+                "key": "ctrl+shift+j c",
+                "mac": "cmd+shift+j c"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "submenu": "cmstead.js-codeformer.refactor",
+                    "group": "js-codeformer@1",
+                    "when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
+                },
+                {
+                    "submenu": "cmstead.js-codeformer.conversions",
+                    "group": "js-codeformer@2",
+                    "when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
+                },
+                {
+                    "submenu": "cmstead.js-codeformer.actions",
+                    "group": "js-codeformer@3",
+                    "when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
+                }
+            ],
+            "cmstead.js-codeformer.refactor": [
+                {
+                    "command": "cmstead.jscodeformer.extractMethod"
+                },
+                {
+                    "command": "cmstead.jscodeformer.extractVariable"
+                },
+                {
+                    "command": "cmstead.jscodeformer.inlineVariable"
+                },
+                {
+                    "command": "cmstead.jscodeformer.rename"
+                }
+            ],
+            "cmstead.js-codeformer.conversions": [
+                {
+                    "command": "cmstead.jscodeformer.convertToArrowFunction"
+                },
+                {
+                    "command": "cmstead.jscodeformer.convertToFunctionDeclaration"
+                },
+                {
+                    "command": "cmstead.jscodeformer.convertToFunctionExpression"
+                },
+                {
+                    "command": "cmstead.jscodeformer.convertToTemplateLiteral"
+                }
+            ],
+            "cmstead.js-codeformer.actions": [
+                {
+                    "command": "cmstead.jscodeformer.changeVariableType"
+                },
+                {
+                    "command": "cmstead.jscodeformer.introduceVariable"
+                },
+                {
+                    "command": "cmstead.jscodeformer.introduceFunction"
+                },
+                {
+                    "command": "cmstead.jscodeformer.liftAndNameFunctionExpression"
+                },
+                {
+                    "command": "cmstead.jscodeformer.surroundWith"
+                }
+            ]
+        },
+        "submenus": [
+            {
+                "id": "cmstead.js-codeformer.refactor",
+                "label": "JS CodeFormer: Refactor"
+            },
+            {
+                "id": "cmstead.js-codeformer.conversions",
+                "label": "JS CodeFormer: Conversions"
+            },
+            {
+                "id": "cmstead.js-codeformer.actions",
+                "label": "JS CodeFormer: Actions"
+            }
+        ]
+    }
 }

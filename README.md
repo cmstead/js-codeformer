@@ -81,6 +81,9 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert to Function Declaration
     - convert a function assigned to a variable declaration to a function declaration
     - no keybinding
+- Convert to Template Literal
+    - convert a string, or string concatenation to a template literal
+    - no keybinding
 
 - Select Conversion
     - Windows: ctrl+shift+j, c
@@ -104,12 +107,18 @@ Current Actions:
 - Change variable type
     - Change variable declaration type from current type to const, let, or var
     - No keybinding
+- Introduce variable
+    - Introduce variable declaration into the code from selected variable use
+- Introduce function
+    - Introduce function declaration into the code from selected function name or call
+- Lift and name function expression
+    - Lift selected function from its current position and name/rename it
 
 - Select Action (Action Palette)
     - Windows: ctrl+shift+j, p
     - Mac: cmd+shift+j, p
 
-## Contributors and Thank Yous #
+## Contributors and Thanks #
 
 It's important to understand that not all contributions to a project are, or can be committed to the source repository. With that in mind, the following are people who have provided help and insights which might not have a name on a commit:
 
@@ -117,6 +126,10 @@ It's important to understand that not all contributions to a project are, or can
 - [Ashlee Boyer](https://twitter.com/AshleeMBoyer) -- Accessibility feedback
 
 Also, every person who submitted a bug or enhancement on JS Refactor, and those who offer them on this project!
+
+## Find Me ##
+
+The best place to find me is on Twitter: [@cm_stead](https://twitter.com/cm_stead)
 
 ## What's Next ##
 
@@ -126,20 +139,17 @@ Current outstanding behavior work:
 
 - Refactorings
     - [x] Rename (primarily to support JS/TS embedded in HTML)
-        - [x] Rename Variable
-        - [x] Rename Function
-        - [x] Rename Method
     - [x] Extract to parameter
 - Conversions
     - [x] Convert to arrow function
     - [x] Convert to function expression
     - [x] Convert to function declaration
-    - [ ] Convert string to template literal
+    - [x] Convert string to template literal
 - Actions
     - [x] Change variable type
-    - [ ] Introduce variable
-    - [ ] Introduce function
-    - [ ] Lift and name anonymous function
+    - [x] Introduce variable
+    - [x] Introduce function
+    - [x] Lift and name function expression
 
 ## Known/Expected Issues ##
 

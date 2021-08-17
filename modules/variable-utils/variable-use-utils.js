@@ -97,7 +97,9 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
     let declarationFound = false;
     let replacementLocations = [];
 
-    const variableName = variableDeclarator.id.name;
+    const variableName = getNodeType(variableDeclarator) === IDENTIFIER
+        ? variableDeclarator.name
+        : variableDeclarator.id.name;
 
     function getReplacementLocations(node) {
         const newReplacementLocations = selectReplacementLocations(node, variableDeclarator);
@@ -110,7 +112,8 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
     traverse(searchScope, {
         enter: function (node, parent) {
             const nodeIsNotRoot = node !== searchScope;
-            const nodeIsNotRootDeclarator = parent !== variableDeclarator;
+            const nodeIsNotRootIdentifier = parent !== variableDeclarator;
+            const nodeIsNotRootDeclarator = node !== variableDeclarator;
             const nodeIsAPropertyName = isAMatchingIdentifier(node, variableName)
                 && getNodeType(parent) === PROPERTY
                 && parent.value !== node;
@@ -118,7 +121,8 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
             if (declarationFound || nodeIsAPropertyName) {
                 return;
             } else if (
-                nodeIsNotRootDeclarator
+                nodeIsNotRootIdentifier
+                && nodeIsNotRootDeclarator
                 && isAMatchingIdentifier(node, variableName)
                 && isAVariableDeclaration(node, parent)) {
 

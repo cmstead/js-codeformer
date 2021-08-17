@@ -58,6 +58,20 @@ const actions = [
 		group: groups.ACTIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.introduceFunction',
+		path: './modules/commands/introduce-function/introduce-function-action',
+		name: 'introduceFunction',
+		title: 'Introduce Function',
+		group: groups.ACTIONS
+	},
+	{
+		commandId: 'cmstead.jscodeformer.liftAndNameFunctionExpression',
+		path: './modules/commands/lift-and-name-function-expression/lift-and-name-function-expression-action',
+		name: 'liftAndNameFunctionExpression',
+		title: 'Lift and Name Function Expression',
+		group: groups.ACTIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.pickBehavior',
 		path: './modules/commands/pick-behavior/pick-behavior-action',
 		name: 'pickBehavior',
@@ -90,6 +104,13 @@ const actions = [
 		path: './modules/commands/convert-to-function-expression/convert-to-function-expression-action',
 		name: 'convertToFunctionExpression',
 		title: 'Convert Function to Function Expression',
+		group: groups.CONVERSIONS
+	},
+	{
+		commandId: 'cmstead.jscodeformer.convertToTemplateLiteral',
+		path: './modules/commands/convert-to-template-literal/convert-to-template-literal-action',
+		name: 'convertToTemplateLiteral',
+		title: 'Convert string, or concatenated string to a template literal',
 		group: groups.CONVERSIONS
 	},
 
