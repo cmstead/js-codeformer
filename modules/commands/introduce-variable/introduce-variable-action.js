@@ -87,7 +87,7 @@ function introduceVariable() {
         .then((variableDeclarationString) => {
             const editPosition = transformLocationPartToPosition(introductionLocation.start);
 
-            getNewSourceEdit()
+            return getNewSourceEdit()
                 .addInsertEdit(editPosition, `${variableDeclarationString}\n`)
                 .applyEdit();
         })
