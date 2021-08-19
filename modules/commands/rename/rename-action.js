@@ -33,7 +33,10 @@ function rename() {
             variableDeclarator = newVariableDeclarator)
 
         .then(() =>
-            openInputBox({ title: 'New variable name' }))
+            openInputBox({
+                title: 'New variable name',
+                value: variableDeclarator.id.name
+            }))
         .then((enteredName) => validateUserInput({
             value: enteredName,
             validator: (enteredName) => enteredName.trim() !== '',
