@@ -1,4 +1,6 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
+const { IDENTIFIER } = require("../../constants/ast-node-types");
+const { getNodeType } = require("../../core-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { openInputBox } = require("../../ui-services/inputService");
@@ -10,6 +12,14 @@ const {
     findDeclaratorOrFunctionDeclaration,
     getVariableDeclaratorLocation
 } = require("./rename");
+
+function getDeclaratorName(declarator) {
+    if(getNodeType(declarator) === IDENTIFIER) {
+        return declarator.name;
+    }
+
+    return declarator.id.name;
+}
 
 function rename() {
     let actionSetup = null;
@@ -35,7 +45,7 @@ function rename() {
         .then(() =>
             openInputBox({
                 title: 'New variable name',
-                value: variableDeclarator.id.name
+                value: getDeclaratorName(variableDeclarator)
             }))
         .then((enteredName) => validateUserInput({
             value: enteredName,
