@@ -5,7 +5,7 @@ class Nesting {
                 function testing() {
                     if (a === b) {
                         return []
-                    } else if(a < b) {
+                    } else if (a < b) {
                         return [
                             a,
                             () => { return b; }
@@ -13,7 +13,7 @@ class Nesting {
                     } else {
                         return null
                     }
-    
+
                 }
             }
         }
