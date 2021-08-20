@@ -13,6 +13,7 @@ function extractToParameter() {
     let functionNode = null;
     let functionString = null;
 
+    let variableDeletionLocation = null;
     return asyncPrepareActionSetup()
         .then((newActionSetup) =>
             actionSetup = newActionSetup)
@@ -45,27 +46,27 @@ function extractToParameter() {
         .then((newFunctionNode) =>
             functionNode = newFunctionNode)
 
+        .then(() => pickVariableDeletionLocation(
+            variableDeclarator,
+            variableDeclaration,
+            actionSetup.source))
+        .then((newVariableDeletionLocation) => 
+            variableDeletionLocation = newVariableDeletionLocation)
+
         .then(() => {
             const variableName = getVariableName(variableDeclarator);
 
-            return getFunctionString(functionNode, variableName, actionSetup.source);
+            return getFunctionString(functionNode, variableName, actionSetup.source, variableDeletionLocation);
         })
 
         .then((newFunctionString) => functionString = newFunctionString)
 
         .then(() => {
             const functionReplacementLocation = functionNode.loc;
-            const variableDeletionLocation = pickVariableDeletionLocation(
-                variableDeclarator,
-                variableDeclaration,
-                actionSetup.source)
-
             const functionReplacementRange = transformLocationToRange(functionReplacementLocation);
-            const variableDeletionRange = transformLocationToRange(variableDeletionLocation);
 
-            getNewSourceEdit()
+            return getNewSourceEdit()
                 .addReplacementEdit(functionReplacementRange, functionString)
-                .addReplacementEdit(variableDeletionRange, '')
                 .applyEdit();
         })
 

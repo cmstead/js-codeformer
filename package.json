@@ -231,6 +231,9 @@
                     "command": "cmstead.jscodeformer.extractMethod"
                 },
                 {
+                    "command": "cmstead.jscodeformer.extractToParameter"
+                },
+                {
                     "command": "cmstead.jscodeformer.extractVariable"
                 },
                 {

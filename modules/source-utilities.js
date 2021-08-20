@@ -17,7 +17,9 @@ function getSourceSelection(sourceCode, location) {
 
     const selectedLines = sourceCode.split('\n').slice(startLine, endLine + 1);
 
-    if (selectedLines.length === 1) {
+    if(selectedLines.length === 0) {
+        return '';
+    } else if (selectedLines.length === 1) {
         return selectedLines[0].slice(startColumn, endColumn)
     } else {
         const lastIndex = selectedLines.length - 1;

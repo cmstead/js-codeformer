@@ -4,6 +4,7 @@ const { getNodeType, last, first } = require("../../core-utils");
 const { findNodeInPath, findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 
 const { pickVariableDeletionLocation } = require('../../extraction-utils/variable-deletion-utils');
+const { getFunctionParametersString } = require("../../function-utils/function-source");
 const { getSourceSelection } = require("../../source-utilities");
 
 const functionNodeTypes = [
@@ -29,14 +30,6 @@ function getVariableName(variableDeclarator) {
 function findFunction(nodePath) {
     return findNodeByCheckFunction(nodePath, node =>
         functionNodeTypes.includes(node.type));
-}
-
-function getFunctionParametersString(functionNode, variableName) {
-    const parameters = typeof functionNode.value !== 'undefined'
-        ? functionNode.value.params
-        : functionNode.params;
-
-    return parameters.concat(variableName).join(', ');
 }
 
 function getFunctionName(functionNode) {
@@ -67,18 +60,41 @@ function getBodyNodeFromFunctionNode(functionNode) {
         : functionNode.body
 }
 
-function getFunctionBody(functionNode, sourceText) {
+function buildLocation(start, end) {
+    const reverseOrder = start.line > end.line
+        || (start.line === end.line && start.column > end.column)
+
+    return {
+        start: reverseOrder ? end : start,
+        end: reverseOrder ? start : end
+    }
+}
+
+function partitionOnLocation(sourceLocation, partitioningLocation) {
+    return [
+        buildLocation(sourceLocation.start, partitioningLocation.start),
+        buildLocation(partitioningLocation.end, sourceLocation.end)
+    ]
+}
+
+function getFunctionBody(functionNode, sourceText, deletionLocation) {
     const functionBody = getBodyNodeFromFunctionNode(functionNode);
     const bodyLocation = getBodyLocation(functionBody.body);
 
-    return getSourceSelection(sourceText, bodyLocation);
+    const locationPartitions = partitionOnLocation(bodyLocation, deletionLocation);
+
+    return locationPartitions
+        .map((location) => getSourceSelection(sourceText, location))
+        .join('');
 }
 
-function getFunctionString(functionNode, variableName, sourceText) {
+function getFunctionString(functionNode, variableName, sourceText, deletionLocation) {
     const functionName = getFunctionName(functionNode);
-    const functionParameters = getFunctionParametersString(functionNode, variableName);
-    const functionBody = getFunctionBody(functionNode, sourceText);
+    const functionBody = getFunctionBody(functionNode, sourceText, deletionLocation);
     const functionType = getNodeType(functionNode);
+
+    const functionParameterString = getFunctionParametersString(functionNode, sourceText);
+    const functionParameters = `${functionParameterString}, ${variableName}`;
 
     return new MethodBuilder({
         functionName,
