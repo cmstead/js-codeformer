@@ -1,6 +1,6 @@
 {
     "name": "js-codeformer",
-    "displayName": "JS CodeFormer: Refactoring & Automation",
+    "displayName": "JS CodeFormer: Refactor & Automate",
     "description": "A JavaScript/TypeScript refactoring and code automation tool for building better source",
     "version": "0.26.4",
     "publisher": "cmstead",
