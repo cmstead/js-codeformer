@@ -14,7 +14,7 @@ JS CodeFormer is a suite of tools purpose built to simplify the process of creat
 
 JS CodeFormer is not just a code refactoring and automation extension, it is an extension which is built upon these core principles:
 
-- **Robustness** -- JS CodeFormer must work reliably in a broad range of code environments and styles
+- **Robustness** -- JS CodeFormer must work reliably and predictably in a broad range of code environments and styles
 - **Communication** -- If JS CodeFormer fails, it should provide immediate feedback to the user; the feedback should be as clear as possible
 - **Usability** -- It should be easy to find your way around the tool, even at the start
 - **Accessibility** -- Clear, direct access to the tooling must be supported for all users regardless of disability 
@@ -29,6 +29,7 @@ Languages:
 
 - JavaScript
 - TypeScript
+- HTML (Embedded Javascript)
 
 Frameworks:
 
@@ -41,6 +42,7 @@ Framework-specific formats:
 - JSX
 - TSX
 - Vue Single-file components
+    - Full Vue support requires the Vetur extension: https://marketplace.visualstudio.com/items?itemName=octref.vetur
 
 Experimental framework support:
 
@@ -72,6 +74,9 @@ Current refactorings:
 
 Conversions may or may not introduce a different behavior. This means they are in a class of their own. The following conversions are currently available:
 
+- Select Conversion
+    - Windows: ctrl+shift+j, c
+    - Mac: cmd+shift+j, c
 - Convert to Arrow Function
     - convert a function expression or declaration to an arrow function
     - no keybinding
@@ -85,25 +90,20 @@ Conversions may or may not introduce a different behavior. This means they are i
     - convert a string, or string concatenation to a template literal
     - no keybinding
 
-- Select Conversion
-    - Windows: ctrl+shift+j, c
-    - Mac: cmd+shift+j, c
-
 ## Actions ##
 
 Not everything we want to do with our code is a refactoring. That doesn't mean we can't automate it. Actions aim to pair with the supported refactorings in order to provide a smooth development experience.
 
 Current Actions:
 
+- Select Action (Action Palette)
+    - Windows: ctrl+shift+j, p
+    - Mac: cmd+shift+j, p
 - Surround with
     - Keybindings (hot keys)
         - Windows: ctrl+shift+j, w
         - Mac: cmd+shift+j, w
-    - Available templates
-        - Arrow function
-        - Function
-        - Try/Catch
-        - Variable
+    - There are a significant number of available templates, and the list grows regularly
 - Change variable type
     - Change variable declaration type from current type to const, let, or var
     - No keybinding
@@ -113,10 +113,6 @@ Current Actions:
     - Introduce function declaration into the code from selected function name or call
 - Lift and name function expression
     - Lift selected function from its current position and name/rename it
-
-- Select Action (Action Palette)
-    - Windows: ctrl+shift+j, p
-    - Mac: cmd+shift+j, p
 
 ## Contributors and Thanks #
 
@@ -133,23 +129,7 @@ The best place to find me is on Twitter: [@cm_stead](https://twitter.com/cm_stea
 
 ## What's Next ##
 
-This project is still in active development, so new refactorings and actions are bound to be added regularly. With that in mind, not all code automation tools will make the cut. The goal is not to be an exhaustive tool, but a carefully designed tool, built to smooth and speed the software development experience.
-
-Current outstanding behavior work:
-
-- Refactorings
-    - [x] Rename (primarily to support JS/TS embedded in HTML)
-    - [x] Extract to parameter
-- Conversions
-    - [x] Convert to arrow function
-    - [x] Convert to function expression
-    - [x] Convert to function declaration
-    - [x] Convert string to template literal
-- Actions
-    - [x] Change variable type
-    - [x] Introduce variable
-    - [x] Introduce function
-    - [x] Lift and name function expression
+JS CodeFormer is currently in a "baking in" period where behaviors are being tested and any bugs/shortcomings can be identified and resolved. As it looks like bug discovery has slowed, this will shift to V1.0.0 and the next most valuable piece of work will be identified and introduced.
 
 ## Known/Expected Issues ##
 
