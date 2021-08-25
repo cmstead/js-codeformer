@@ -107,6 +107,13 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.convertToMethod',
+		path: './modules/commands/convert-to-method/convert-to-method-action',
+		name: 'convertToMethod',
+		title: 'Convert Function Property to Method Definition',
+		group: groups.CONVERSIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.convertToTemplateLiteral',
 		path: './modules/commands/convert-to-template-literal/convert-to-template-literal-action',
 		name: 'convertToTemplateLiteral',

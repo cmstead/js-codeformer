@@ -4,6 +4,7 @@ module.exports = {
     BINARY_EXPRESSION: 'BinaryExpression',
     CALL_EXPRESSION: 'CallExpression',
     CLASS_BODY: 'ClassBody',
+    CLASS_PROPERTY: 'ClassProperty',
     DO_WHILE_STATEMENT: 'DoWhileStatement',
     FOR_STATEMENT: 'ForStatement',
     FOR_IN_STATEMENT: 'ForInStatement',

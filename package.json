@@ -67,6 +67,7 @@
         "onCommand:cmstead.jscodeformer.convertToArrowFunction",
         "onCommand:cmstead.jscodeformer.convertToFunctionExpression",
         "onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
+        "onCommand:cmstead.jscodeformer.convertToMethod",
         "onCommand:cmstead.jscodeformer.convertToTemplateLiteral",
         "onCommand:cmstead.jscodeformer.changeVariableType",
         "onCommand:cmstead.jscodeformer.introduceVariable",
@@ -147,6 +148,11 @@
                 "command": "cmstead.jscodeformer.convertToFunctionDeclaration",
                 "title": "Convert to Function Declaration",
                 "description": "Convert function expression to a function declaration"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertToMethod",
+                "title": "Convert to Method",
+                "description": "Convert class function property to a method"
             },
             {
                 "command": "cmstead.jscodeformer.convertToTemplateLiteral",
