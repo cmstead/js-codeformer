@@ -86,6 +86,9 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert to Function Declaration
     - convert a function assigned to a variable declaration to a function declaration
     - no keybinding
+- Convert to Method
+    - convert a function property on a class to a method declaration
+    - no keybinding
 - Convert to Template Literal
     - convert a string, or string concatenation to a template literal
     - no keybinding

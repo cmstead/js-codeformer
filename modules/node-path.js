@@ -1,4 +1,6 @@
 const astTraverse = require('./astTraverse');
+const { CLASS_PROPERTY } = require('./constants/ast-node-types');
+const { getNodeType } = require('./core-utils');
 
 function nodeStartContainsSelectionStart(node, selectionLocation) {
     return (node.loc.start.line < selectionLocation.start.line
@@ -38,6 +40,12 @@ function buildNodePath(parsedSource, selectionLocation) {
         enter: function (node) {
             if (nodeContainsSelection(node, selectionLocation)) {
                 nodePath.push(node);
+            }
+
+            if (getNodeType(node) === CLASS_PROPERTY) {
+                nodePath = nodePath
+                    .concat(buildNodePath(node.key, selectionLocation))
+                    .concat(buildNodePath(node.value, selectionLocation));
             }
         }
     });

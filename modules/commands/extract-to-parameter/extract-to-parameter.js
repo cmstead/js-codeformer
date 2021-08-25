@@ -33,13 +33,17 @@ function findFunction(nodePath) {
 }
 
 function getFunctionName(functionNode) {
-    if (typeof functionNode.id !== 'undefined'
-        && typeof functionNode.id.name !== 'undefined') {
-        return functionNode.id.name;
-    } else if (typeof functionNode.key !== 'undefined'
-        && typeof functionNode.key.name !== 'undefined') {
-        return functionNode.key.name;
-    } else {
+    try {
+        if (typeof functionNode.id !== 'undefined'
+            && typeof functionNode.id.name !== 'undefined') {
+            return functionNode.id.name;
+        } else if (typeof functionNode.key !== 'undefined'
+            && typeof functionNode.key.name !== 'undefined') {
+            return functionNode.key.name;
+        } else {
+            return '';
+        }
+    } catch (_) {
         return '';
     }
 }
@@ -92,9 +96,11 @@ function getFunctionString(functionNode, variableName, sourceText, deletionLocat
     const functionName = getFunctionName(functionNode);
     const functionBody = getFunctionBody(functionNode, sourceText, deletionLocation);
     const functionType = getNodeType(functionNode);
-
+    
     const functionParameterString = getFunctionParametersString(functionNode, sourceText);
-    const functionParameters = `${functionParameterString}, ${variableName}`;
+    const separator = functionParameterString.trim() !== '' ? ', ' : '';
+
+    const functionParameters = `${functionParameterString}${separator}${variableName}`;
 
     return new MethodBuilder({
         functionName,
