@@ -86,6 +86,6 @@
             "`\\${${1:${TM_SELECTED_TEXT}}}`"
         ],
         "description": "Introduce template literal into source"
-    },
+    }
 
 }
