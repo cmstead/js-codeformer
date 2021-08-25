@@ -260,6 +260,9 @@
                     "command": "cmstead.jscodeformer.convertToFunctionExpression"
                 },
                 {
+                    "command": "cmstead.jscodeformer.convertToMethod"
+                },
+                {
                     "command": "cmstead.jscodeformer.convertToTemplateLiteral"
                 }
             ],
