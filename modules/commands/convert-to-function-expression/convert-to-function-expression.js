@@ -1,6 +1,6 @@
 const { getNewVariableBuilder, variableTypes } = require("../../builders/VariableBuilder");
 const { getMethodBuilder } = require("../../builders/MethodBuilder");
-const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, BLOCK_STATEMENT } = require("../../constants/ast-node-types");
+const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, BLOCK_STATEMENT, METHOD_DEFINITION } = require("../../constants/ast-node-types");
 
 const {
     getFunctionBody,
@@ -13,7 +13,7 @@ const functionNodeTypes = [
     ARROW_FUNCTION_EXPRESSION,
     FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
-    FUNCTION
+    METHOD_DEFINITION
 ];
 
 function isSingleLineArrowFunction(functionNode) {
@@ -44,9 +44,13 @@ function getNewFunctionString(functionNode, sourceText) {
         .buildNewMethod()
 
     if (functionName !== '') {
+        const variableType = getNodeType(functionNode) === METHOD_DEFINITION
+            ? variableTypes.PROPERTY
+            : variableTypes.CONST;
+
         return getNewVariableBuilder({
             name: functionName,
-            type: variableTypes.CONST,
+            type: variableType,
             value: functionString
         })
             .buildVariableDeclaration()

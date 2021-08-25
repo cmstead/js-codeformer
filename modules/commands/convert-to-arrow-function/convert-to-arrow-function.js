@@ -1,18 +1,19 @@
 const { getNewVariableBuilder, variableTypes } = require("../../builders/VariableBuilder");
 const { getMethodBuilder } = require("../../builders/MethodBuilder");
-const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION } = require("../../constants/ast-node-types");
+const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, METHOD_DEFINITION } = require("../../constants/ast-node-types");
 
 const {
     getFunctionBody,
     getFunctionName,
     getFunctionParametersString
 } = require('../../function-utils/function-source');
+const { getNodeType } = require("../../core-utils");
 
 const functionNodeTypes = [
     ARROW_FUNCTION_EXPRESSION,
     FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
-    FUNCTION
+    METHOD_DEFINITION
 ];
 
 function getNewFunctionString(functionNode, sourceText) {
@@ -29,9 +30,13 @@ function getNewFunctionString(functionNode, sourceText) {
         .buildNewMethod()
 
     if (functionName !== '') {
+        const variableType = getNodeType(functionNode) === METHOD_DEFINITION
+            ? variableTypes.PROPERTY
+            : variableTypes.CONST;
+
         return getNewVariableBuilder({
             name: functionName,
-            type: variableTypes.CONST,
+            type: variableType,
             value: functionString
         })
             .buildVariableDeclaration()
