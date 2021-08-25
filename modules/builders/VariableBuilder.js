@@ -1,13 +1,14 @@
 const variableTypes = {
     CONST: 'const',
     LET: 'let',
-    VAR: 'var'
+    VAR: 'var',
+    PROPERTY: 'property'
 };
 
 const variableTypeList = Object.keys(variableTypes).map(key => variableTypes[key]);
 
-class VariableBuilder{
-    constructor ({
+class VariableBuilder {
+    constructor({
         type = variableTypes.CONST,
         name = 'newVariable',
         value = 'null'
@@ -16,11 +17,18 @@ class VariableBuilder{
         this.name = name;
         this.value = value;
 
-        this.trailingSemicolon = /.*;$/.test(value.trim()) ? '' : ';'
+        this.trailingSemicolon = /.*;$/.test(value.trim())
+            || type === variableTypes.PROPERTY
+            ? ''
+            : ';'
     }
 
     buildVariableDeclaration() {
-        return `${this.type} ${this.name} = ${this.value}${this.trailingSemicolon}`;
+        const type = this.type === variableTypes.PROPERTY
+            ? ''
+            : `${this.type} `;
+
+        return `${type}${this.name} = ${this.value}${this.trailingSemicolon}`;
     }
 }
 
