@@ -24,4 +24,22 @@ describe('convert to method', function () {
 
         this.verify(methodString);
     });
+
+    it('converts function expression property to method', function () {
+        const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.ts');
+        const parsedSource = parse(fixtureText);
+
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 4, column: 43 }),
+            end: buildEditorCoordinates({ line: 4, column: 43 })
+        });
+
+        const selectionPath = buildNodePath(parsedSource, selectedLocation);
+
+        const propertyNode = findClassPropertyDeclaration(selectionPath);
+
+        const methodString = buildFunctionString(propertyNode, fixtureText);
+
+        this.verify(methodString);
+    });
 });
