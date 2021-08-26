@@ -3,7 +3,7 @@ const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { validateUserInput } = require("../../validatorService");
-const { isStringExpressionCandidate, checkExpressionTree, buildTemplateLiteral } = require("./convert-to-template-literal");
+const { checkExpressionTree, buildTemplateLiteral, findNearestExpressionToConvert } = require("./convert-to-template-literal");
 
 function convertToTemplateLiteral() {
     let actionSetup = null;
@@ -13,9 +13,7 @@ function convertToTemplateLiteral() {
         .then((newActionSetup) => actionSetup = newActionSetup)
 
         .then(() =>
-            findNodeByCheckFunction(
-                actionSetup.selectionPath,
-                isStringExpressionCandidate))
+            findNearestExpressionToConvert(actionSetup.selectionPath))
         .then((expression) => validateUserInput({
             value: expression,
             validator: (expression) => checkExpressionTree(expression),

@@ -1,5 +1,6 @@
 const { BINARY_EXPRESSION, LITERAL } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
+const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getSourceSelection } = require("../../source-utilities");
 
 function isStringLiteral(node) {
@@ -23,6 +24,12 @@ function checkExpressionTree(expression) {
     }
 }
 
+function findNearestExpressionToConvert(selectionPath) {
+    return findNodeByCheckFunction(
+        selectionPath,
+        isStringExpressionCandidate);
+}
+
 function buildTemplateLiteral(expressionToConvert, source) {
     if (isStringLiteral(expressionToConvert)) {
         return expressionToConvert.value;
@@ -35,7 +42,7 @@ function buildTemplateLiteral(expressionToConvert, source) {
 }
 
 module.exports = {
-    isStringExpressionCandidate,
+    findNearestExpressionToConvert,
     checkExpressionTree,
     buildTemplateLiteral
 };
