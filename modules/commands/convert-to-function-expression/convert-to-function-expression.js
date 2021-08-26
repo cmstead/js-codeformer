@@ -1,6 +1,6 @@
 const { getNewVariableBuilder, variableTypes } = require("../../builders/VariableBuilder");
 const { getMethodBuilder } = require("../../builders/MethodBuilder");
-const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, BLOCK_STATEMENT, METHOD_DEFINITION } = require("../../constants/ast-node-types");
+const { ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, BLOCK_STATEMENT, METHOD_DEFINITION } = require("../../constants/ast-node-types");
 
 const {
     getFunctionBody,

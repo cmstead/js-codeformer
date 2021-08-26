@@ -16,4 +16,4 @@ const namedFunctionExpression = function notTheSameAsTheVarName () {
 const declarator1 = 'foo',
 declarator2 = function notTheSameAsTheVarName () {
     console.log('boo');
-;}
+};
