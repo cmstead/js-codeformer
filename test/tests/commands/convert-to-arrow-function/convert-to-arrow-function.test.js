@@ -63,4 +63,22 @@ describe('convert to arrow function', function () {
 
         this.verify(convertedFunctionString);
     });
+
+    it('Does not add extra const on named function expression', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 16, column: 37 }),
+            end: buildEditorCoordinates({ line: 16, column: 37 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.js');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = nodePath.find(node => node.type === FUNCTION_EXPRESSION);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);
+    });
 });

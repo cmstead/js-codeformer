@@ -12,3 +12,7 @@ const somethingOrOther = function () {
 function someDeclaration() {
     console.log('yay');
 }
+
+const namedExpression = function namedExpression() {
+    console.log('Oh noes!!');
+}

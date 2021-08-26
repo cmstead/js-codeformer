@@ -17,6 +17,8 @@ const functionNodeTypes = [
 ];
 
 function getNewFunctionString(functionNode, sourceText) {
+    const nodeType = getNodeType(functionNode);
+
     const functionName = getFunctionName(functionNode);
     const functionParameters = getFunctionParametersString(functionNode, sourceText);
     const functionBody = getFunctionBody(functionNode, sourceText);
@@ -29,7 +31,7 @@ function getNewFunctionString(functionNode, sourceText) {
     })
         .buildNewMethod()
 
-    if (functionName !== '') {
+    if (nodeType === METHOD_DEFINITION || nodeType === FUNCTION_DECLARATION) {
         const variableType = getNodeType(functionNode) === METHOD_DEFINITION
             ? variableTypes.PROPERTY
             : variableTypes.CONST;
