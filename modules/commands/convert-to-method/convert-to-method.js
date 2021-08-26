@@ -56,6 +56,7 @@ function buildFunctionString(propertyDeclaration, source) {
 
 module.exports = {
     findVariableDeclaration: findClassPropertyDeclaration,
+    findClassPropertyDeclaration,
     isValidVariableDeclaration,
     buildFunctionString
 };

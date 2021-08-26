@@ -1,0 +1,3 @@
+class ConvertToMethodTestClass {
+    arrowFunctionProperty = () => 'testing'
+}
