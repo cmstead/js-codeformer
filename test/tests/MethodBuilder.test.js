@@ -1,12 +1,13 @@
-require('../../../utilities/approvals').configure();
+require('../utilities/approvals').configure();
 
-const { MethodBuilder } = require("../../../../modules/builders/MethodBuilder");
+const methodBuilderModule = require("../../modules/builders/MethodBuilder");
 const {
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
     OBJECT_METHOD,
     ARROW_FUNCTION_EXPRESSION
-} = require('../../../../modules/builders/MethodBuilder').methodTypes;
+} = methodBuilderModule.methodTypes;
+const { MethodBuilder } = methodBuilderModule;
 
 describe('Method Builder', function () {
     it('builds a function declaration by default', function () {

@@ -3,8 +3,7 @@ const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { pickVariableDeletionLocation } = require("../inline-variable/inline-variable");
-const { findVariableDeclarator, findVariableDeclaration, findFunction, getFunctionString, getVariableName } = require("./extract-to-parameter");
+const { findVariableDeclarator, findVariableDeclaration, findFunction, getFunctionString, getVariableName, pickVariableDeletionLocation } = require("./extract-to-parameter");
 
 function extractToParameter() {
     let actionSetup = null;
@@ -50,7 +49,7 @@ function extractToParameter() {
             variableDeclarator,
             variableDeclaration,
             actionSetup.source))
-        .then((newVariableDeletionLocation) => 
+        .then((newVariableDeletionLocation) =>
             variableDeletionLocation = newVariableDeletionLocation)
 
         .then(() => {
