@@ -43,5 +43,23 @@ describe('convert to template literal', function () {
 
             assert.isTrue(result);
         });
+
+        it('returns false if expression is not a concat operation', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 5, column: 4 }),
+                end: buildEditorCoordinates({ line: 5, column: 4 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectedLocation);
+
+            const expression = findNearestExpressionToConvert(selectionPath);
+
+            const result = checkExpressionTree(expression);
+
+            assert.isFalse(result);
+        });
     });
 });
