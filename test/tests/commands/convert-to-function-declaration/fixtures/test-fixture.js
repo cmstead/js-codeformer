@@ -4,7 +4,7 @@ const functionExpression = function () {
 
 const arrowFunctionExpression = () => 1 + 2;
 
-const multilineArrowFunctionExpression = function () {
+const multilineArrowFunctionExpression = () => {
     console.log('yay');
     console.log('something');
 }
