@@ -2,7 +2,7 @@ require('approvals').configure();
 
 const { assert } = require('chai');
 const { getNewFunctionString } = require('../../../../modules/commands/convert-to-arrow-function/convert-to-arrow-function');
-const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION } = require('../../../../modules/constants/ast-node-types');
+const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, METHOD_DEFINITION } = require('../../../../modules/constants/ast-node-types');
 
 const { buildNodePath } = require('../../../../modules/node-path');
 const { parse } = require('../../../../modules/parser/parser');
@@ -28,7 +28,7 @@ describe('convert to arrow function', function () {
         this.verify(convertedFunctionString);
     });
 
-    it('Converts fn expression to arrow function assigned to const', function () {
+    it('Converts fn expression to arrow function', function () {
         const selectedLocation = buildLocationFromEditorCoordinates({
             start: buildEditorCoordinates({ line: 7, column: 31 }),
             end: buildEditorCoordinates({ line: 7, column: 31 })
@@ -40,6 +40,24 @@ describe('convert to arrow function', function () {
         const nodePath = buildNodePath(parsedSource, selectedLocation);
 
         const functionNode = nodePath.find(node => node.type === FUNCTION_EXPRESSION);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);
+    });
+
+    it('Converts method to arrow function assigned to property', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 2, column: 12 }),
+            end: buildEditorCoordinates({ line: 2, column: 12 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.js');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = nodePath.find(node => node.type === METHOD_DEFINITION);
 
         const convertedFunctionString = getNewFunctionString(functionNode, testSource);
 
