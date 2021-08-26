@@ -1,0 +1,41 @@
+const { BINARY_EXPRESSION, LITERAL } = require("../../constants/ast-node-types");
+const { getNodeType } = require("../../core-utils");
+const { getSourceSelection } = require("../../source-utilities");
+
+function isStringLiteral(node) {
+    return getNodeType(node) === LITERAL && typeof node.value === 'string'
+}
+
+function isStringExpressionCandidate(node) {
+    return isStringLiteral(node) || getNodeType(node) === BINARY_EXPRESSION;
+}
+
+function checkExpressionTree(expression) {
+    const expressionIsNotBinary = getNodeType(expression) !== BINARY_EXPRESSION;
+    const operatorIsNotConcat = expression.operator !== '+';
+
+    if (expressionIsNotBinary) {
+        return true;
+    } else if (operatorIsNotConcat) {
+        return false;
+    } else {
+        return checkExpressionTree(expression.left) && checkExpressionTree(expression.right);
+    }
+}
+
+function buildTemplateLiteral(expressionToConvert, source) {
+    if (isStringLiteral(expressionToConvert)) {
+        return expressionToConvert.value;
+    } else if (getNodeType(expressionToConvert) !== BINARY_EXPRESSION) {
+        return `\${${getSourceSelection(source, expressionToConvert.loc)}}`
+    } else {
+        return buildTemplateLiteral(expressionToConvert.left, source)
+            + buildTemplateLiteral(expressionToConvert.right, source);
+    }
+}
+
+module.exports = {
+    isStringExpressionCandidate,
+    checkExpressionTree,
+    buildTemplateLiteral
+};
