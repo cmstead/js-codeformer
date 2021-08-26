@@ -25,4 +25,22 @@ describe('convert to function expression', function () {
 
         this.verify(functionString);
     });
+
+    it('converts a single-line arrow function to a function expression', function () {
+        const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+        const parsedSource = parse(fixtureText);
+
+        const selectionLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 5, column: 39 }),
+            end: buildEditorCoordinates({ line: 5, column: 39 })
+        });
+
+        const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+        const functionNode = findFunctionNode(selectionPath, functionNodeTypes);
+
+        const functionString = getNewFunctionString(functionNode, fixtureText);
+
+        this.verify(functionString);
+    });
 });
