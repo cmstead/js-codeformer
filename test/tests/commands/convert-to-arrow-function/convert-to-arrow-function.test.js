@@ -1,7 +1,8 @@
 require('approvals').configure();
 
-const { getNewFunctionString } = require('../../../../modules/commands/convert-to-arrow-function/convert-to-arrow-function');
+const { getNewFunctionString, functionNodeTypes } = require('../../../../modules/commands/convert-to-arrow-function/convert-to-arrow-function');
 const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, METHOD_DEFINITION } = require('../../../../modules/constants/ast-node-types');
+const { findFunctionNode } = require('../../../../modules/function-utils/function-node');
 
 const { buildNodePath } = require('../../../../modules/node-path');
 const { parse } = require('../../../../modules/parser/parser');
@@ -79,5 +80,23 @@ describe('convert to arrow function', function () {
         const convertedFunctionString = getNewFunctionString(functionNode, testSource);
 
         this.verify(convertedFunctionString);
+    });
+
+    it('converts method to property when cursor is elsewhere on function def', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 2, column: 18 }),
+            end: buildEditorCoordinates({ line: 2, column: 18 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.js');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = findFunctionNode(nodePath, functionNodeTypes);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);        
     });
 });

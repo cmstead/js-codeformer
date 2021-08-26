@@ -79,4 +79,22 @@ describe('convert to function expression', function () {
 
         this.verify(functionString);
     });
+
+    it('converts method to property when cursor is elsewhere on function def', function () {
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 13, column: 24 }),
+            end: buildEditorCoordinates({ line: 13, column: 24 })
+        });
+
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.js');
+
+        const parsedSource = parse(testSource);
+        const nodePath = buildNodePath(parsedSource, selectedLocation);
+
+        const functionNode = findFunctionNode(nodePath, functionNodeTypes);
+
+        const convertedFunctionString = getNewFunctionString(functionNode, testSource);
+
+        this.verify(convertedFunctionString);        
+    });
 });
