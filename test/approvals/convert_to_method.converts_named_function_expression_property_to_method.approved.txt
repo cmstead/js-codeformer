@@ -1,0 +1,3 @@
+namedFunctionExpressionProperty () {
+            console.log('something else in the body');
+        }
