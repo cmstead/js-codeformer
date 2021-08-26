@@ -25,7 +25,7 @@
     ],
     "scripts": {
         "lint": "eslint .",
-        "test-only": "nyc --reporter=none mocha ./test/**/*.test.js",
+        "test-only": "nyc --reporter=lcov mocha ./test/**/*.test.js",
         "test": "npm run test-only && gittey commit",
         "build": "rm *.vsix & vsce package",
         "push-patch": "npm run test-only && gittey push-patch",

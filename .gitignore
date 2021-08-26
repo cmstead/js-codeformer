@@ -4,3 +4,4 @@ node_modules
 
 *.received.txt
 .nyc_output/
+coverage/

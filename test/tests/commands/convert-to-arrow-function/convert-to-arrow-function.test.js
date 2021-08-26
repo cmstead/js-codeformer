@@ -1,6 +1,5 @@
 require('approvals').configure();
 
-const { assert } = require('chai');
 const { getNewFunctionString } = require('../../../../modules/commands/convert-to-arrow-function/convert-to-arrow-function');
 const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, METHOD_DEFINITION } = require('../../../../modules/constants/ast-node-types');
 
