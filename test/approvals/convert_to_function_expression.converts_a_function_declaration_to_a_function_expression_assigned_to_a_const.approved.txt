@@ -1,0 +1,3 @@
+const functionDeclaration = function () {
+            console.log('Just a function declaration');
+        };
