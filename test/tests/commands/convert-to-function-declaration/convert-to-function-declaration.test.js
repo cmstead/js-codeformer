@@ -99,6 +99,24 @@ describe('convert to function declaration', function () {
     
             assert.isTrue(variableIsValid);
         });
+
+        it('returns false when selected variable is contains multiple declarators', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedText = parse(fixtureText);
+    
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 12, column: 44 }),
+                end: buildEditorCoordinates({ line: 12, column: 44 })
+            });
+    
+            const selectionPath = buildNodePath(parsedText, selection);
+    
+            const variableNode = findVariableDeclaration(selectionPath);
+    
+            const variableIsValid = isValidVariableDeclaration(variableNode);
+    
+            assert.isTrue(variableIsValid);
+        });
         
     });
 
