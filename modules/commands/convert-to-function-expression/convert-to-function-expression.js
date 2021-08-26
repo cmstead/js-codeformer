@@ -43,8 +43,10 @@ function getNewFunctionString(functionNode, sourceText) {
     })
         .buildNewMethod()
 
-    if (functionName !== '') {
-        const variableType = getNodeType(functionNode) === METHOD_DEFINITION
+    const nodeType = getNodeType(functionNode);
+    
+    if (nodeType === METHOD_DEFINITION || nodeType === FUNCTION_DECLARATION) {
+        const variableType = nodeType === METHOD_DEFINITION
             ? variableTypes.PROPERTY
             : variableTypes.CONST;
 

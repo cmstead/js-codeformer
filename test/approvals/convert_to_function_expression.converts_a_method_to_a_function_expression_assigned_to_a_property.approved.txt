@@ -1,0 +1,3 @@
+methodSomething = function () {
+            return 1234;
+        }

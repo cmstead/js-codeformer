@@ -61,4 +61,24 @@ describe('convert to function expression', function () {
 
         this.verify(functionString);
     });
+
+    it('converts a method to a function expression assigned to a property', function () {
+        const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+        const parsedSource = parse(fixtureText);
+
+        const selectionLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 13, column: 13 }),
+            end: buildEditorCoordinates({ line: 13, column: 13 })
+        });
+
+        const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+        const functionNode = findFunctionNode(selectionPath, functionNodeTypes);
+
+        console.log(functionNode);
+
+        const functionString = getNewFunctionString(functionNode, fixtureText);
+
+        this.verify(functionString);
+    });
 });
