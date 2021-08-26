@@ -75,8 +75,6 @@ describe('convert to function expression', function () {
 
         const functionNode = findFunctionNode(selectionPath, functionNodeTypes);
 
-        console.log(functionNode);
-
         const functionString = getNewFunctionString(functionNode, fixtureText);
 
         this.verify(functionString);
