@@ -24,4 +24,22 @@ describe('convert to function declaration', function () {
 
         this.verify(functionString);
     });
+
+    it('converts an arrow function expression assigned to a variable to a named declaration', function () {
+        const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+        const parsedText = parse(fixtureText);
+
+        const selection = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 5, column: 38 }),
+            end: buildEditorCoordinates({ line: 5, column: 38 })
+        });
+
+        const selectionPath = buildNodePath(parsedText, selection);
+
+        const variableNode = findVariableDeclaration(selectionPath);
+
+        const functionString = buildFunctionString(variableNode, fixtureText);
+
+        this.verify(functionString);
+    });
 });
