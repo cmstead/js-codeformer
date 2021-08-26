@@ -25,5 +25,23 @@ describe('convert to template literal', function () {
 
             assert.isTrue(result);
         });
+
+        it('returns true if expression is a binary expression', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 3, column: 5 }),
+                end: buildEditorCoordinates({ line: 3, column: 5 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectedLocation);
+
+            const expression = findNearestExpressionToConvert(selectionPath);
+
+            const result = checkExpressionTree(expression);
+
+            assert.isTrue(result);
+        });
     });
 });
