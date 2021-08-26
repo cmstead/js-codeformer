@@ -25,7 +25,7 @@
     ],
     "scripts": {
         "lint": "eslint .",
-        "test-only": "mocha ./test/**/*.test.js",
+        "test-only": "nyc --reporter=none mocha ./test/**/*.test.js",
         "test": "npm run test-only && gittey commit",
         "build": "rm *.vsix & vsce package",
         "push-patch": "npm run test-only && gittey push-patch",
@@ -41,6 +41,7 @@
         "eslint": "^7.27.0",
         "glob": "^7.1.7",
         "mocha": "^8.4.0",
+        "nyc": "^15.1.0",
         "vsce": "^1.96.1",
         "vscode-test": "^1.5.2"
     },
