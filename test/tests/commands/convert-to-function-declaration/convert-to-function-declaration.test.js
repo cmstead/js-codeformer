@@ -1,4 +1,6 @@
-const { findVariableDeclaration, buildFunctionString } = require('../../../../modules/commands/convert-to-function-declaration/convert-to-function-declaration');
+const { assert } = require('chai');
+
+const { findVariableDeclaration, buildFunctionString, isValidVariableDeclaration } = require('../../../../modules/commands/convert-to-function-declaration/convert-to-function-declaration');
 const { buildNodePath } = require('../../../../modules/node-path');
 const { parse } = require('../../../../modules/parser/parser');
 const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require('../../../utilities/editor-to-location-selection-builder');
@@ -78,4 +80,26 @@ describe('convert to function declaration', function () {
 
         this.verify(functionString);
     });
+
+    describe('is valid variable declaration check', function () {
+        it('returns true when selected variable is acceptable', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedText = parse(fixtureText);
+    
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 12, column: 44 }),
+                end: buildEditorCoordinates({ line: 12, column: 44 })
+            });
+    
+            const selectionPath = buildNodePath(parsedText, selection);
+    
+            const variableNode = findVariableDeclaration(selectionPath);
+    
+            const variableIsValid = isValidVariableDeclaration(variableNode);
+    
+            assert.isTrue(variableIsValid);
+        });
+        
+    });
+
 });
