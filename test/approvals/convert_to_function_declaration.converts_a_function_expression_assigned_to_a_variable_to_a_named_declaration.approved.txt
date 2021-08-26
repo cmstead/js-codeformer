@@ -1,0 +1,3 @@
+function functionExpression () {
+            console.log('boo');
+        }
