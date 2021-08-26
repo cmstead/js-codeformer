@@ -8,3 +8,7 @@ const multilineArrowFunctionExpression = () => {
     console.log('yay');
     console.log('something');
 }
+
+const namedFunctionExpression = function notTheSameAsTheVarName () {
+    console.log('boo');
+}
