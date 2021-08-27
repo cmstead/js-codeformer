@@ -1,0 +1,4 @@
+function someOtherFunctionWithDeclarators (a, b, c) {
+            const  d = 8;
+    console.log(a + b + c + d);
+        }

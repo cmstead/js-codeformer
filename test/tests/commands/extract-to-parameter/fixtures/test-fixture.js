@@ -7,3 +7,8 @@ function someOtherFunction(a, b) {
     console.log(a + b + c);
 }
 
+function someOtherFunctionWithDeclarators(a, b) {
+    const c = 12, d = 8;
+    console.log(a + b + c + d);
+}
+
