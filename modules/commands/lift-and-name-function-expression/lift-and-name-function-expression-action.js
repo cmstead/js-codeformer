@@ -63,7 +63,7 @@ function liftAndNameFunctionExpression() {
             selectedScopeNode = retrieveExtractionLocation(extractionScopes)
         })
 
-        .then(() => getNewFunctionString(functionNode, functionName, actionSetup))
+        .then(() => getNewFunctionString(functionNode, functionName, actionSetup.source))
         .then((functionString) => {
             const replacementRange = transformLocationToRange(functionNode.loc);
             const editPosition = transformLocationPartToPosition(selectedScopeNode.loc.start);

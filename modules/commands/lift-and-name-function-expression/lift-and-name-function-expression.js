@@ -24,11 +24,11 @@ function getNewFunctionType(functionNodeType) {
         : ARROW_FUNCTION_EXPRESSION
 }
 
-function buildFunctionString(functionNode, functionName, actionSetup) {
+function buildFunctionString(functionNode, functionName, source) {
     const functionNodeType = getNodeType(functionNode);
     const functionType = getNewFunctionType(functionNodeType)
-    const functionParameters = getFunctionParametersString(functionNode, actionSetup.source);
-    const functionBody = getFunctionBody(functionNode, actionSetup.source);
+    const functionParameters = getFunctionParametersString(functionNode, source);
+    const functionBody = getFunctionBody(functionNode, source);
 
     return getMethodBuilder({
         functionType,
@@ -44,11 +44,11 @@ function buildArrowFunctionDelcarationString(functionName, functionString) {
         type: variableTypes.CONST,
         name: functionName,
         value: functionString
-    }).buildVariableDeclaration()
+    }).buildVariableDeclaration();
 }
 
-function getNewFunctionString(functionNode, functionName, actionSetup) {
-    const functionString = buildFunctionString(functionNode, functionName, actionSetup);
+function getNewFunctionString(functionNode, functionName, source) {
+    const functionString = buildFunctionString(functionNode, functionName, source);
 
     if (getNodeType(functionNode) === ARROW_FUNCTION_EXPRESSION) {
         return buildArrowFunctionDelcarationString(functionName, functionString);
