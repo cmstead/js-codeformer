@@ -1,7 +1,8 @@
 const { promisify } = require('util');
 const path = require('path');
-
 const fs = require('fs');
+
+const jsonc = require('jsonc-parser');
 
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { openSelectList } = require('../../ui-services/inputService');
@@ -42,7 +43,7 @@ function surroundWith() {
         })
 
         .then(function (snippetJsonText) {
-            snippetJson = JSON.parse(snippetJsonText);
+            snippetJson = jsonc.parse(snippetJsonText);
 
             return getTemplateList(snippetJson);
         })

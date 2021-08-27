@@ -39,16 +39,6 @@ function liftAndNameFunctionExpression() {
         .then((newExtractionPath) =>
             extractionPath = newExtractionPath)
 
-        .then(() => openInputBox({
-            title: 'What is the name of your function?'
-        }))
-        .then((functionName) => validateUserInput({
-            value: functionName,
-            validator: (functionName) => functionName.trim() !== '',
-            message: 'No function name provided; canceling lift and name action'
-        }))
-        .then((newFunctionName) => functionName = newFunctionName)
-
         .then(() => openSelectList({
             values: buildExtractionScopeList(extractionPath),
             title: 'Where do you want to lift your function to?'
@@ -62,6 +52,16 @@ function liftAndNameFunctionExpression() {
             const extractionScopes = selectExtractionScopes(extractionPath, selectedScopeString);
             selectedScopeNode = retrieveExtractionLocation(extractionScopes)
         })
+
+        .then(() => openInputBox({
+            title: 'What is the name of your function?'
+        }))
+        .then((functionName) => validateUserInput({
+            value: functionName,
+            validator: (functionName) => functionName.trim() !== '',
+            message: 'No function name provided; canceling lift and name action'
+        }))
+        .then((newFunctionName) => functionName = newFunctionName)
 
         .then(() => getNewFunctionString(functionNode, functionName, actionSetup.source))
         .then((functionString) => {

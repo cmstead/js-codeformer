@@ -1,4 +1,4 @@
-const { getNewVariableBuilder, variableTypeList } = require("../../builders/VariableBuilder");
+const { variableTypeList } = require("../../builders/VariableBuilder");
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { VARIABLE_DECLARATION, VARIABLE_DECLARATOR } = require("../../constants/ast-node-types");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
@@ -7,7 +7,7 @@ const { transformLocationToRange } = require("../../edit-utils/textEditTransform
 const { openSelectList } = require("../../ui-services/inputService");
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { getVariableValueString } = require("./change-variable-type");
+const { getNewVariableString } = require("./change-variable-type");
 
 function changeVariableType() {
     let actionSetup = null;
@@ -42,12 +42,10 @@ function changeVariableType() {
             message: 'Invalid or no variable type selected; canceling declaration type change'
         }))
 
-        .then((variableType) => getNewVariableBuilder({
-            type: variableType,
-            name: variableDeclaratorNode.id.name,
-            value: getVariableValueString(variableDeclaratorNode, actionSetup.source)
-        })
-            .buildVariableDeclaration())
+        .then((variableType) => getNewVariableString(
+            variableType, 
+            variableDeclaratorNode, 
+            actionSetup.source))
 
         .then((newVariableString) => {
             const replacementRange = transformLocationToRange(variableDeclarationNode.loc);

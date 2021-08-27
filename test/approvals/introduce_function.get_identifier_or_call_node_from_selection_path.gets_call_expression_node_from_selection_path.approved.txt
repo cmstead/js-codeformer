@@ -1,0 +1,29 @@
+{
+    "type": "CallExpression",
+    "callee": {
+        "type": "Identifier",
+        "name": "someCallExpression",
+        "loc": {
+            "start": {
+                "line": 1,
+                "column": 0
+            },
+            "end": {
+                "line": 1,
+                "column": 18
+            }
+        }
+    },
+    "arguments": [],
+    "optional": false,
+    "loc": {
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 20
+        }
+    }
+}

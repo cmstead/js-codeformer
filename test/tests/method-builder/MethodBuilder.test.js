@@ -1,6 +1,6 @@
-require('../utilities/approvals').configure();
+require('../../utilities/approvals').configure();
 
-const methodBuilderModule = require("../../modules/builders/MethodBuilder");
+const methodBuilderModule = require("../../../modules/builders/MethodBuilder");
 const {
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
