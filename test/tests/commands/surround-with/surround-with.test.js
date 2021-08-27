@@ -1,6 +1,6 @@
 const jsonc = require('jsonc-parser');
 
-const { getTemplateList, getLanguageSnippetName } = require("../../../../modules/commands/surround-with/surround-with");
+const { getTemplateList, getLanguageSnippetName, getSnippetText } = require("../../../../modules/commands/surround-with/surround-with");
 const { readFileSource } = require("../../../utilities/file-reader");
 
 require('../../../utilities/approvals').configure();
@@ -51,6 +51,17 @@ describe('surround with behavior support functions', function () {
             snippetNames.push(getLanguageSnippetName(document));
             
             this.verifyAsJSON(snippetNames);
+        });
+    });
+
+    describe('get snippet body text', function () {
+        it('returns a single-string snippet body', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.json');
+            const testSnippets = jsonc.parse(fixtureText);
+
+            const snippetBodyText = getSnippetText('Function', testSnippets);
+
+            this.verify(snippetBodyText);
         });
     });
 });

@@ -1,0 +1,3 @@
+${1|function,async function,function*|} ${2:functionName }(${3:parameters}) {
+	${TM_SELECTED_TEXT}$0
+}
