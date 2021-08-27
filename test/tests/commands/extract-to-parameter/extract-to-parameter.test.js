@@ -28,4 +28,26 @@ describe('extract to parameter', function () {
 
         this.verify(functionString);
     });
+
+    it('extracts a variable into the parameter list of a function with existing parameters', function () {
+        const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+        const parsedSource = parse(fixtureText);
+
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 6, column: 14 }),
+            end: buildEditorCoordinates({ line: 6, column: 14 })
+        });
+
+        const selectionPath = buildNodePath(parsedSource, selectedLocation);
+
+        const variableDeclarator = findVariableDeclarator(selectionPath);
+        const variableDeclaration = findVariableDeclaration(selectionPath);
+        const functionNode = findFunction(selectionPath);
+        const variableDeletionLocation = pickVariableDeletionLocation(variableDeclarator, variableDeclaration, fixtureText);
+        const variableName = getVariableName(variableDeclarator);
+
+        const functionString = getFunctionString(functionNode, variableName, fixtureText, variableDeletionLocation);
+
+        this.verify(functionString);
+    });
 });
