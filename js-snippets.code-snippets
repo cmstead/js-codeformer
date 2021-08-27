@@ -62,7 +62,7 @@
         "description": "Standard try/catch block"
     },
     "Constructor": {
-		"scope": "javascript,html,javascriptreact,jsx,vue",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "ctor-constructor",
         "body": [
             "constructor (${1:parameters}) {",
@@ -72,7 +72,7 @@
         "description": "New constructor method"
     },
     "Function call": {
-		"scope": "javascript,html,javascriptreact,jsx,vue",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "function-call",
         "body": [
             "${1:functionName}(${2:${TM_SELECTED_TEXT}})$0"
@@ -80,11 +80,22 @@
         "description": "Function call which supports surround"
     },
     "Template Literal": {
-		"scope": "javascript,html,javascriptreact,jsx,vue",
+        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "template-literal",
         "body": [
             "`\\${${1:${TM_SELECTED_TEXT}}}`"
         ],
         "description": "Introduce template literal into source"
-    }
+    },
+    "Immediately Invoked Function Expression (IIFE)": {
+        "scope": "javascript,html,javascriptreact,jsx,vue",
+        "prefix": "iife-immediately-invoked-function-expression",
+        "body": [
+            "(function() {",
+            "\t${TM_SELECTED_TEXT}$0",
+            "})();",
+            ""
+        ],
+        "description": "Insert an immediately invoked function expression"
+    },
 }

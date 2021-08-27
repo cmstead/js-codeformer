@@ -86,6 +86,17 @@
             "`\\${${1:${TM_SELECTED_TEXT}}}`"
         ],
         "description": "Introduce template literal into source"
-    }
+    },
+    "Immediately Invoked Function Expression (IIFE)": {
+        "scope": "typescript,typescriptreact",
+        "prefix": "iife-immediately-invoked-function-expression",
+        "body": [
+            "(function() {",
+            "\t${TM_SELECTED_TEXT}$0",
+            "})();",
+            ""
+        ],
+        "description": "Insert an immediately invoked function expression"
+    },
 
 }
