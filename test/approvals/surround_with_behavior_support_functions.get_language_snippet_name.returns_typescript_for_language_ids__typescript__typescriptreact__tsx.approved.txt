@@ -1,0 +1,5 @@
+[
+  "ts-snippets",
+  "ts-snippets",
+  "ts-snippets"
+]

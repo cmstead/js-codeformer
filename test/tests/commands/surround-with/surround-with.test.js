@@ -34,5 +34,23 @@ describe('surround with behavior support functions', function () {
             
             this.verifyAsJSON(snippetNames);
         });
+
+        it('returns typescript for language ids: typescript, typescriptreact, tsx', function () {
+            let document  = {
+                languageId: 'typescript'
+            };
+
+            let snippetNames = [];
+
+            snippetNames.push(getLanguageSnippetName(document));
+            
+            document.languageId = 'typescriptreact';
+            snippetNames.push(getLanguageSnippetName(document));
+            
+            document.languageId = 'tsx';
+            snippetNames.push(getLanguageSnippetName(document));
+            
+            this.verifyAsJSON(snippetNames);
+        });
     });
 });
