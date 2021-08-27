@@ -2,11 +2,18 @@ const { CALL_EXPRESSION, IDENTIFIER } = require("../../constants/ast-node-types"
 const { last, getNodeType } = require("../../core-utils");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 
-function getNameOrCall(selectionPath) {
-    const identifier = last(selectionPath);
-    const callNode = findNodeInPath(selectionPath, CALL_EXPRESSION);
+function getCallExpressionNode(selectionPath) {
+    return findNodeInPath(selectionPath, CALL_EXPRESSION)
+}
 
-    return callNode !== null ? callNode : identifier;
+function getIdentifierNode(selectionPath) {
+    return last(selectionPath)
+}
+
+function getNameOrCall(selectionPath) {
+    const callNode = getCallExpressionNode(selectionPath);
+
+    return callNode !== null ? callNode : getIdentifierNode(selectionPath);
 }
 
 function getNodeName(selectedNode) {

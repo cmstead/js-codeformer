@@ -1,0 +1,3 @@
+someCallExpression();
+
+someIdentifier;
