@@ -7,7 +7,7 @@ const { readFileSource } = require("../../../utilities/file-reader");
 require('../../../utilities/approvals').configure();
 
 describe('extract to parameter', function () {
-    it('extracts a variable into the paramter list of a function', function () {
+    it('extracts a variable into the parameter list of a function', function () {
         const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
         const parsedSource = parse(fixtureText);
 
