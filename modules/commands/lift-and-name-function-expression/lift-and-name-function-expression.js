@@ -15,7 +15,7 @@ const acceptableNodeTypes = [
 ];
 
 const isAnonymousFunction = (node) =>
-    [FUNCTION_EXPRESSION]
+    [FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION]
         .includes(getNodeType(node));
 
 function getNewFunctionType(functionNodeType) {

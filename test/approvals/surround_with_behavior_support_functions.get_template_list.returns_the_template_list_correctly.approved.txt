@@ -1,0 +1,9 @@
+[
+  "Variable",
+  "Function",
+  "Arrow Function",
+  "Try/Catch",
+  "Constructor",
+  "Function call",
+  "Template Literal"
+]
