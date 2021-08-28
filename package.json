@@ -14,14 +14,17 @@
     "categories": [
         "Programming Languages",
         "Snippets",
-        "Formatters"
+        "Formatters",
+        "Other"
     ],
-    "tags": [
-        "JavaScript",
-        "TypeScript",
-        "Refactoring",
-        "Automation",
-        "Snippets"
+    "keywords": [
+        "refactoring",
+        "javascript",
+        "react",
+        "vue",
+        "typescript",
+        "automation",
+        "snippets"
     ],
     "scripts": {
         "lint": "eslint .",
