@@ -41,19 +41,19 @@ class MethodBuilder {
     }
 
     buildFunctionExpression() {
-        return `${this.asyncPrefix}function (${this.functionParameters}) {
+        return `${this.asyncPrefix}function${this.generatorInfix} (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }
 
     buildClassMethod() {
-        return `${this.asyncPrefix}${this.functionName} (${this.functionParameters}) {
+        return `${this.asyncPrefix}${this.functionName}${this.generatorInfix} (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }
 
     buildObjectMethod() {
-        return `${this.asyncPrefix}${this.functionName}: function (${this.functionParameters}) {
+        return `${this.asyncPrefix}${this.functionName}: function${this.generatorInfix} (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }
