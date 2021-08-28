@@ -20,7 +20,8 @@ function getNewFunctionExpressionString({
         functionParameters: functionParameters,
         functionBody: functionBody,
         functionType: functionType,
-        async: functionNode.async
+        async: functionNode.async,
+        generator: functionNode.generator
     })
         .buildNewMethod()
 

@@ -34,7 +34,9 @@ function buildFunctionString(functionNode, functionName, source) {
         functionType,
         functionParameters,
         functionBody,
-        functionName
+        functionName,
+        async: functionNode.async,
+        generator: functionNode.generator
     }).buildNewMethod();
 
 }

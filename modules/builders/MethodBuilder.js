@@ -116,9 +116,17 @@ function getMethodBuilder({
     functionName,
     functionParameters,
     functionBody,
-    async
+    async,
+    generator
 }) {
-    return new MethodBuilder({ functionType, functionName, functionParameters, functionBody, async });
+    return new MethodBuilder({ 
+        functionType, 
+        functionName, 
+        functionParameters, 
+        functionBody,
+        async,
+        generator
+    });
 }
 
 module.exports = {

@@ -51,7 +51,8 @@ function buildFunctionString(variableDeclaration, source) {
         functionType,
         functionBody,
         functionParameters,
-        async: functionNode.async
+        async: functionNode.async,
+        generator: functionNode.generator
     })
     .buildNewMethod();
 }
