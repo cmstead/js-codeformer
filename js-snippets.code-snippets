@@ -1,6 +1,5 @@
 {
     "Variable": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "var-const-let",
         "body": [
             "${1|const,let,var|} ${2:variableName} = ${TM_SELECTED_TEXT};"
@@ -8,7 +7,6 @@
         "description": "Basic variable"
     },
     "Parameter": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "parameter-argument",
         "body": [
             "${1:name}${2: = ${TM_SELECTED_TEXT}}"
@@ -16,7 +14,6 @@
         "description": "Parameter with optional default value"
     },
     "Function": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "function",
         "body": [
             "${1|function,async function,function*|} ${2:functionName }(${3:parameters}) {",
@@ -26,7 +23,6 @@
         "description": "New function"
     },
     "Arrow Function": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "arrow-function-lambda",
         "body": [
             "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}\n\\}}"
@@ -34,7 +30,6 @@
         "description": "New Arrow Function"
     },
     "Promise then": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "promise-then",
         "body": [
             ".then((${1:result}) => ${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}})"
@@ -42,7 +37,6 @@
         "description": "Promise then function call"
     },
     "Promise catch": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "promise-catch",
         "body": [
             ".catch(function(${1:error})${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}});"
@@ -50,7 +44,6 @@
         "description": "Promise catch function call"
     },
     "Try/Catch": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "try-catch",
         "body": [
             "try {",
@@ -62,7 +55,6 @@
         "description": "Standard try/catch block"
     },
     "Constructor": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "ctor-constructor",
         "body": [
             "constructor (${1:parameters}) {",
@@ -72,7 +64,6 @@
         "description": "New constructor method"
     },
     "Function call": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "function-call",
         "body": [
             "${1:functionName}(${2:${TM_SELECTED_TEXT}})$0"
@@ -80,7 +71,6 @@
         "description": "Function call which supports surround"
     },
     "Template Literal": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "template-literal",
         "body": [
             "`\\${${1:${TM_SELECTED_TEXT}}}`"
@@ -88,7 +78,6 @@
         "description": "Introduce template literal into source"
     },
     "Immediately Invoked Function Expression (IIFE)": {
-        "scope": "javascript,html,javascriptreact,jsx,vue",
         "prefix": "iife-immediately-invoked-function-expression",
         "body": [
             "(function() {",

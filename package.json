@@ -82,9 +82,27 @@
     "contributes": {
         "snippets": [
             {
+                "language": "javascript",
                 "path": "./js-snippets.code-snippets"
             },
             {
+                "language": "javascriptreact",
+                "path": "./js-snippets.code-snippets"
+            },
+            {
+                "language": "vue",
+                "path": "./js-snippets.code-snippets"
+            },
+            {
+                "language": "html",
+                "path": "./js-snippets.code-snippets"
+            },
+            {
+                "language": "typescript",
+                "path": "./ts-snippets.code-snippets"
+            },
+            {
+                "language": "typescriptreact",
                 "path": "./ts-snippets.code-snippets"
             }
         ],
@@ -303,5 +321,13 @@
                 "label": "JS CodeFormer: Actions"
             }
         ]
+    },
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com/cmstead/js-codeformer#readme"
+        },
+        "support": {
+            "uri": "https://github.com/cmstead/js-codeformer/issues"
+        }
     }
 }
