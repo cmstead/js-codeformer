@@ -23,17 +23,19 @@ class MethodBuilder {
         functionName = 'newMethod',
         functionParameters = '',
         functionType = FUNCTION_DECLARATION,
-        async = false
+        async = false,
+        generator = false
     }) {
         this.functionType = functionType;
         this.functionName = functionName;
         this.functionParameters = functionParameters;
         this.functionBody = functionBody;
         this.asyncPrefix = async ? 'async ' : '';
+        this.generatorInfix = generator ? '*' : '';
     }
 
     buildFunctionDeclaration() {
-        return `${this.asyncPrefix}function ${this.functionName} (${this.functionParameters}) {
+        return `${this.asyncPrefix}function${this.generatorInfix} ${this.functionName} (${this.functionParameters}) {
             ${this.functionBody}
         }`;
     }

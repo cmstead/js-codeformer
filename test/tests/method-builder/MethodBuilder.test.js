@@ -1,6 +1,7 @@
 require('../../utilities/approvals').configure();
 
 const methodBuilderModule = require("../../../modules/builders/MethodBuilder");
+const { FUNCTION_DECLARATION } = require('../../../modules/constants/ast-node-types');
 const {
     FUNCTION_EXPRESSION,
     METHOD_DEFINITION,
@@ -107,6 +108,19 @@ describe('Method Builder', function () {
             functionParameters: 'a',
             functionBody: 'const b = a * 3; return b;',
             functionType: ARROW_FUNCTION_EXPRESSION
+        });
+
+        const methodText = methodBuilder.buildNewMethod();
+
+        this.verify(methodText);
+    });
+
+    it('builds a generator function when generator is set to true',  function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: 'const b = a * 3; return b;',
+            functionType: FUNCTION_DECLARATION,
+            generator: true
         });
 
         const methodText = methodBuilder.buildNewMethod();
