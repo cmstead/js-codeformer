@@ -18,13 +18,13 @@
         "Other"
     ],
     "keywords": [
+        "refactor",
         "refactoring",
         "javascript",
         "react",
         "vue",
         "typescript",
-        "automation",
-        "snippets"
+        "automation"
     ],
     "scripts": {
         "lint": "eslint .",
