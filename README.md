@@ -80,6 +80,11 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert to Arrow Function
     - convert a function expression or declaration to an arrow function
     - no keybinding
+- Change variable type
+    - Change variable declaration type from current type to const, let, or var
+    - Keybindings
+        - Windows: ctrl+shift+j, t
+        - Mac: cmd+shift+j, t
 - Convert to Function Expression
     - convert a function declaration or arrow function to a function expression
     - no keybinding
@@ -107,9 +112,6 @@ Current Actions:
         - Windows: ctrl+shift+j, w
         - Mac: cmd+shift+j, w
     - There are a significant number of available templates, and the list grows regularly
-- Change variable type
-    - Change variable declaration type from current type to const, let, or var
-    - No keybinding
 - Introduce variable
     - Introduce variable declaration into the code from selected variable use
 - Introduce function
