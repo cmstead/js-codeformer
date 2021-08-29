@@ -55,7 +55,7 @@
         "description": "Standard try/catch block"
     },
     "Constructor": {
-		"scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact",
         "prefix": "ctor-constructor",
         "body": [
             "constructor (${1:parameters}) {",
@@ -65,15 +65,15 @@
         "description": "New constructor method"
     },
     "Function call": {
-		"scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact",
         "prefix": "function-call",
         "body": [
-            "${1:functionName}(${2:${TM_SELECTED_TEXT}})$0"
+            "${1:await }${2:functionName}(${3:${TM_SELECTED_TEXT}})$0"
         ],
         "description": "Function call which supports surround"
     },
     "Template Literal": {
-		"scope": "typescript,typescriptreact",
+        "scope": "typescript,typescriptreact",
         "prefix": "template-literal",
         "body": [
             "`\\${${1:${TM_SELECTED_TEXT}}}`"
@@ -90,5 +90,4 @@
         ],
         "description": "Insert an immediately invoked function expression"
     },
-
 }
