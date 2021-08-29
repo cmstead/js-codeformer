@@ -44,6 +44,23 @@ function surroundWith() {
 
         .then(function (snippetJsonText) {
             snippetJson = jsonc.parse(snippetJsonText);
+        })
+
+        .then(() => {
+            const snippetPath = path.join(__dirname, 'snippets.json');
+
+            return promisify(fs.readFile)(snippetPath, { encoding: 'utf8' });
+        })
+
+        .then((sharedSnippetJsonText) => {
+            return jsonc.parse(sharedSnippetJsonText);
+        })
+
+        .then((sharedSnippets) => {
+            snippetJson = {
+                ...sharedSnippets,
+                ...snippetJson
+            };
 
             return getTemplateList(snippetJson);
         })

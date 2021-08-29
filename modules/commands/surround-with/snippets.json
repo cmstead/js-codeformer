@@ -1,0 +1,29 @@
+{
+    "If": {
+        "prefix": "",
+        "body": [
+            "if (${1:condition}) {",
+            "\t${TM_SELECTED_TEXT}$0",
+            "}"
+        ],
+        "description": ""
+    },
+    "Else If": {
+        "prefix": "",
+        "body": [
+            "else if (${1:condition}) {",
+            "\t${TM_SELECTED_TEXT}$0",
+            "}"
+        ],
+        "description": ""
+    },
+    "Else": {
+        "prefix": "",
+        "body": [
+            "else {",
+            "\t${TM_SELECTED_TEXT}$0",
+            "}"
+        ],
+        "description": ""
+    },
+}

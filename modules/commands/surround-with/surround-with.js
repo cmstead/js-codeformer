@@ -1,9 +1,13 @@
 const excludePattern = /^(parameter|promise)/i;
 
 function getTemplateList(snippetJson) {
-    return Object
+    const templateList = Object
         .keys(snippetJson)
         .filter(key => !excludePattern.test(key));
+
+    templateList.sort();
+
+    return templateList;
 }
 
 function getLanguageSnippetName(document) {
