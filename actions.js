@@ -48,7 +48,7 @@ const actions = [
 		path: './modules/commands/change-variable-type/change-variable-type-action',
 		name: 'changeVariableType',
 		title: 'Change Variable Type',
-		group: groups.ACTIONS
+		group: groups.CONVERSIONS
 	},
 	{
 		commandId: 'cmstead.jscodeformer.introduceVariable',

@@ -258,6 +258,11 @@
                 "command": "cmstead.jscodeformer.convert",
                 "key": "ctrl+shift+j c",
                 "mac": "cmd+shift+j c"
+            },
+            {
+                "command": "cmstead.jscodeformer.changeVariableType",
+                "key": "ctrl+shift+j t",
+                "mac": "cmd+shift+j t"
             }
         ],
         "menus": {
@@ -300,6 +305,9 @@
                     "command": "cmstead.jscodeformer.convertToArrowFunction"
                 },
                 {
+                    "command": "cmstead.jscodeformer.changeVariableType"
+                },
+                {
                     "command": "cmstead.jscodeformer.convertToFunctionDeclaration"
                 },
                 {
@@ -313,9 +321,6 @@
                 }
             ],
             "cmstead.js-codeformer.actions": [
-                {
-                    "command": "cmstead.jscodeformer.changeVariableType"
-                },
                 {
                     "command": "cmstead.jscodeformer.introduceVariable"
                 },
