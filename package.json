@@ -2,7 +2,7 @@
     "name": "js-codeformer",
     "displayName": "JS CodeFormer: Refactoring & Automation",
     "description": "A JavaScript/TypeScript refactoring and code automation tool for building better source",
-    "version": "0.33.0",
+    "version": "0.34.0",
     "publisher": "cmstead",
     "repository": {
         "type": "git",
