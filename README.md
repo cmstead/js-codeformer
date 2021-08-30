@@ -117,6 +117,10 @@ Current Actions:
 
 ## Contributors and Thanks #
 
+Code contributions help introduce new behaviors and improve existing behaviors materially. I'd like to thank these contributors for their code contributions:
+
+- [Jason Kerney](https://github.com/jason-kerney)
+
 It's important to understand that not all contributions to a project are, or can be committed to the source repository. With that in mind, the following are people who have provided help and insights which might not have a name on a commit:
 
 - [Jenn Zenk](https://github.com/jzenk) -- Accessibility feedback
