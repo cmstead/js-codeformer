@@ -247,6 +247,11 @@
                 "when": "editorHasSelection"
             },
             {
+                "command": "cmstead.jscodeformer.extractToParameter",
+                "key": "ctrl+shift+j p",
+                "mac": "cmd+shift+j p"
+            },
+            {
                 "command": "cmstead.jscodeformer.inlineVariable",
                 "key": "ctrl+shift+j i",
                 "mac": "cmd+shift+j i"
