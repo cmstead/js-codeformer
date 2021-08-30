@@ -28,5 +28,24 @@ describe('Toggle property declaration type', function () {
 
             assert.equal(declarationString, expectedString);
         });
+
+        it('returns shorthand property declaration string when property is standard', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource  = parse(fixtureText);
+
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 6, column: 7 }),
+                end: buildEditorCoordinates({ line: 6, column: 7 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectedLocation);
+
+            const propertyNode = findNodeInPath(selectionPath, PROPERTY);
+
+            const declarationString = getPropertyDeclarationString(propertyNode);
+            const expectedString = 'somethingElse';
+
+            assert.equal(declarationString, expectedString);
+        });
     });
 });
