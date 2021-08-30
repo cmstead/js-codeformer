@@ -58,6 +58,13 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.action',
+		path: './modules/commands/action/action-action',
+		name: 'action',
+		title: 'Pick an Action',
+		group: groups.NONE
+	},
+	{
 		commandId: 'cmstead.jscodeformer.introduceVariable',
 		path: './modules/commands/introduce-variable/introduce-variable-action',
 		name: 'introduceVariable',

@@ -49,63 +49,71 @@ Experimental framework support:
 - Svelte -- requires the Svelte extension to work
     - https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode
 
-## Refactoring ##
+## Refactorings, Conversions, and Actions ##
+
+JS CodeFormer has a number of automated code actions you can take. They are separated into the following categories:
+
+- Refactorings: actions which meet Martin Fowler's definition of a refactoring
+- Conversions: Conversion of common structures from one common form to another
+- Actions: A variety of other automated behaviors useful for making common changes
+
+For a top-level menu of all options, you can open the JS CodeFormer actions palette. This is available by the following key combinations:
+
+- Windows: `ctrl+shift+j, ctrl+shift+j`
+- Mac: `cmd+shift+j, cmd+shift+j`
+
+### Refactorings ###
 
 JS CodeFormer automated refactorings are built upon years of experience to be stable and reliable. Though the project is new, and issues will inevitably arise, the tools in this project are used to support the project itself. In essence, JS CodeFormer is a self-dogfooding project.
 
 Current refactorings:
 
 - Extract Method/Function
-    - Windows: ctrl+shift+j, m
-    - Mac: cmd+shift+j, m
+    - Windows: `ctrl+shift+j, m`
+    - Mac: `cmd+shift+j, m`
 - Extract to Parameter
-    - no keybinding
+    - Windows: `ctrl+shift+j, p`
+    - Mac: `cmd+shift+j, p`
 - Extract Variable
-    - Windows: ctrl+shift+j, v
-    - Mac: cmd+shift+j, v
+    - Windows: `ctrl+shift+j, v`
+    - Mac: `cmd+shift+j, v`
 - Inline Variable
-    - Windows: ctrl+shift+j, i
-    - Mac: cmd+shift+j, i
+    - Windows: `ctrl+shift+j, i`
+    - Mac: `cmd+shift+j, i`
 - Rename (important for non js/ts files)
-    - Windows: ctrl+shift+j, r
-    - Mac: cmd+shift+j, r
+    - Windows: `ctrl+shift+j, r`
+    - Mac: `cmd+shift+j, r`
 
-## Conversions ##
+### Conversions ###
 
 Conversions may or may not introduce a different behavior. This means they are in a class of their own. The following conversions are currently available:
 
 - Select Conversion
-    - Windows: ctrl+shift+j, c
-    - Mac: cmd+shift+j, c
+    - Windows: `ctrl+shift+j, c`
+    - Mac: `cmd+shift+j, c`
 - Change Variable Type
 - Convert Expression to Template Literal
 - Convert Function to Arrow Function
 - Convert Function to Function Expression
 - Convert Function Property to Method
 - Convert Function Variable to Function Declaration
-- Convert Property to Shorthand Declaration
-- Convert Property to Standard Declaration
+- Toggle Property Declaration Type
 
-## Actions ##
+### Actions ###
 
 Not everything we want to do with our code is a refactoring. That doesn't mean we can't automate it. Actions aim to pair with the supported refactorings in order to provide a smooth development experience.
 
 Current Actions:
 
-- Select Action (Action Palette)
-    - Windows: ctrl+shift+j, p
-    - Mac: cmd+shift+j, p
-- Surround with
-    - Keybindings (hot keys)
-        - Windows: ctrl+shift+j, w
-        - Mac: cmd+shift+j, w
-    - There are a significant number of available templates, and the list grows regularly
+- Select Action
+    - Windows: `ctrl+shift+j, a`
+    - Mac: `cmd+shift+j, a`
+- Surround with (open options list)
+    - Windows: `ctrl+shift+j, w`
+    - Mac: `cmd+shift+j, w`
 - Introduce variable
-    - Introduce variable declaration into the code from selected variable use
 - Introduce function
-    - Introduce function declaration into the code from selected function name or call
 - Lift and name function expression
-    - Lift selected function from its current position and name/rename it
 
 ## Contributors and Thanks #
 

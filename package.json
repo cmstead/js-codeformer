@@ -71,13 +71,13 @@
         "onCommand:cmstead.jscodeformer.rename",
         "onCommand:cmstead.jscodeformer.pickBehavior",
         "onCommand:cmstead.jscodeformer.surroundWith",
+        "onCommand:cmstead.jscodeformer.action",
         "onCommand:cmstead.jscodeformer.convert",
         "onCommand:cmstead.jscodeformer.convertToArrowFunction",
         "onCommand:cmstead.jscodeformer.convertToFunctionExpression",
         "onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
         "onCommand:cmstead.jscodeformer.convertToMethod",
-        "onCommand:cmstead.jscodeformer.convertToShorthandProperty",
-        "onCommand:cmstead.jscodeformer.convertToStandardProperty",
+        "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
         "onCommand:cmstead.jscodeformer.convertToTemplateLiteral",
         "onCommand:cmstead.jscodeformer.changeVariableType",
         "onCommand:cmstead.jscodeformer.introduceVariable",
@@ -223,6 +223,11 @@
                 "description": "Pick a conversion to run"
             },
             {
+                "command": "cmstead.jscodeformer.action",
+                "title": "JS CodeFormer: Actions",
+                "description": "Pick an action to run"
+            },
+            {
                 "command": "cmstead.jscodeformer.pickBehavior",
                 "title": "JS CodeFormer: Action Palette",
                 "description": "Open JS CodeFormer action palette to pick a behavior"
@@ -258,13 +263,18 @@
             },
             {
                 "command": "cmstead.jscodeformer.pickBehavior",
-                "key": "ctrl+shift+j p",
-                "mac": "cmd+shift+j p"
+                "key": "ctrl+shift+j ctrl+shift+j",
+                "mac": "cmd+shift+j cmd+shift+j"
             },
             {
                 "command": "cmstead.jscodeformer.convert",
                 "key": "ctrl+shift+j c",
                 "mac": "cmd+shift+j c"
+            },
+            {
+                "command": "cmstead.jscodeformer.action",
+                "key": "ctrl+shift+j a",
+                "mac": "cmd+shift+j a"
             }
         ],
         "menus": {

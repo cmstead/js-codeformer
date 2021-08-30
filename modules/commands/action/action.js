@@ -1,9 +1,9 @@
 const actions = require('../../../actions');
-const { groups: { CONVERSIONS } } = require('../../../groups');
+const { groups: { ACTIONS } } = require('../../../groups');
 
 function getActionTitles() {
     const actionTitles = actions
-        .filter(action => action.group === CONVERSIONS)
+        .filter(action => action.group === ACTIONS)
         .map(action => action.title);
 
     actionTitles.sort();
