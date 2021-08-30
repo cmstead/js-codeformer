@@ -93,6 +93,13 @@ function isDescendableNode(node) {
     return descentScopeTypes.includes(getNodeType(node));
 }
 
+function shallowCloneNodeLocation(astLocation) {
+    return {
+        start: astLocation.start,
+        end: astLocation.end
+    }
+}
+
 function selectReplacementLocations(searchScope, variableDeclarator) {
     let declarationFound = false;
     let replacementLocations = [];
@@ -136,7 +143,13 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
             } else if (isAMatchingIdentifier(node, variableName)
                 && isAcceptableIdentifier(node, parent)
             ) {
-                replacementLocations.push(node.loc);
+                let nodeLocation = shallowCloneNodeLocation(node.loc);
+
+                if (getNodeType(parent) === PROPERTY && parent.shorthand === true) {
+                    nodeLocation.shorthand = true;
+                }
+
+                replacementLocations.push(nodeLocation);
             }
         }
     });

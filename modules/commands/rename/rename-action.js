@@ -14,7 +14,7 @@ const {
 } = require("./rename");
 
 function getDeclaratorName(declarator) {
-    if(getNodeType(declarator) === IDENTIFIER) {
+    if (getNodeType(declarator) === IDENTIFIER) {
         return declarator.name;
     }
 
@@ -27,6 +27,8 @@ function rename() {
     let surroundingScope = null;
     let replacementLocations = null;
     let newName = '';
+
+    let originalName = null;
 
     return asyncPrepareActionSetup()
         .then((newActionSetup) =>
@@ -42,10 +44,12 @@ function rename() {
         .then((newVariableDeclarator) =>
             variableDeclarator = newVariableDeclarator)
 
+        .then(() => originalName = getDeclaratorName(variableDeclarator))
+
         .then(() =>
             openInputBox({
                 title: 'New variable name',
-                value: getDeclaratorName(variableDeclarator)
+                value: originalName
             }))
         .then((enteredName) => validateUserInput({
             value: enteredName,
@@ -72,7 +76,11 @@ function rename() {
             replacementLocations
                 .forEach((replacementLocation) => {
                     const replacementRange = transformLocationToRange(replacementLocation);
-                    sourceEdit.addReplacementEdit(replacementRange, newName);
+                    const replacementString = replacementLocation.shorthand
+                        ? `${originalName}: ${newName}`
+                        : newName;
+
+                    sourceEdit.addReplacementEdit(replacementRange, replacementString);
                 });
 
             const variableNameLocation = getVariableDeclaratorLocation(variableDeclarator);

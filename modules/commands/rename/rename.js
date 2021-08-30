@@ -8,7 +8,7 @@ const {
 } = require('../../variable-utils/variable-use-utils');
 
 const {
-    selectReplacementLocations: selectMethodLocations
+    selectReplacementLocations: selectBoundMethodLocations
 } = require("./rename-method-replacement-locations");
 
 function getSurroundingScope(selectionPath) {
@@ -73,7 +73,7 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
 
     return isNodeAVariableOrFunctionDeclaration(declaratorNodeType)
         ? selectVariableLocations(searchScope, variableDeclarator)
-        : selectMethodLocations(searchScope, variableDeclarator)
+        : selectBoundMethodLocations(searchScope, variableDeclarator)
 }
 
 function getVariableDeclaratorLocation(variableDeclarator) {
