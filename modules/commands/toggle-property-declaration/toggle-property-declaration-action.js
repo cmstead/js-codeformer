@@ -1,44 +1,23 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { PROPERTY, IDENTIFIER } = require("../../constants/ast-node-types");
-const { getNodeType } = require("../../core-utils");
+const { PROPERTY } = require("../../constants/ast-node-types");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-
-function getPropertyKey(propertyNode) {
-    return getNodeType(propertyNode.key) === IDENTIFIER
-        ? propertyNode.key.name
-        : propertyNode.key;
-}
-
-function getPropertyDeclarationString(propertyNode) {
-    if(propertyNode.shorthand) {
-        const propertyKey = getPropertyKey(propertyNode);
-
-        return `${propertyKey}: ${propertyKey}`
-    } else {
-        return propertyNode.value.name;
-    }
-}
+const { getPropertyDeclarationString, isConvertablePropertyNode } = require("./toggle-property-declaration");
 
 function togglePropertyDeclaration() {
-    let actionSetup = null;
-    let propertyNode = null;
     return asyncPrepareActionSetup()
-        .then((newActionSetup) => actionSetup = newActionSetup)
 
-        .then(() => findNodeInPath(actionSetup.selectionPath, PROPERTY))
+        .then((actionSetup) => findNodeInPath(actionSetup.selectionPath, PROPERTY))
         .then((node) => validateUserInput({
             value: node,
-            validator: (node) => node !== null
-                && (node.shorthand || getNodeType(node.value) === IDENTIFIER),
+            validator: (node) => node !== null && isConvertablePropertyNode(node),
             message: 'Unable to find acceptable property node; canceling toggle declaration'
         }))
-        .then((newPropertyNode) => propertyNode = newPropertyNode)
 
-        .then(() => {
+        .then((propertyNode) => {
             const replacementRange = transformLocationToRange(propertyNode.loc);
             const replacementString = getPropertyDeclarationString(propertyNode);
 
