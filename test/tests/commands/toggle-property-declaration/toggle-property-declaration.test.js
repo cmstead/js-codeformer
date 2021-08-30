@@ -1,4 +1,4 @@
-const { getPropertyDeclarationString } = require("../../../../modules/commands/toggle-property-declaration/toggle-property-declaration");
+const { getPropertyDeclarationString, isConvertablePropertyNode } = require("../../../../modules/commands/toggle-property-declaration/toggle-property-declaration");
 const { PROPERTY } = require("../../../../modules/constants/ast-node-types");
 const { findNodeInPath } = require("../../../../modules/edit-utils/node-path-utils");
 const { buildNodePath } = require("../../../../modules/node-path");
@@ -46,6 +46,26 @@ describe('Toggle property declaration type', function () {
             const expectedString = 'somethingElse';
 
             assert.equal(declarationString, expectedString);
+        });
+    });
+
+    describe('convertable property validation', function () {
+        it('returns true on shorthand property', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource  = parse(fixtureText);
+
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 5, column: 7 }),
+                end: buildEditorCoordinates({ line: 5, column: 7 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectedLocation);
+
+            const propertyNode = findNodeInPath(selectionPath, PROPERTY);
+
+            const validationResult = isConvertablePropertyNode(propertyNode);
+
+            assert.isTrue(validationResult);
         });
     });
 });
