@@ -131,6 +131,7 @@ Also, every person who submitted a bug or enhancement on JS Refactor, and those 
 ## Find Me ##
 
 The best place to find me is on Twitter: [@cm_stead](https://twitter.com/cm_stead)
+You can also find me on the web: [ChrisStead.net](http://chrisstead.net/)
 
 ## What's Next ##
 
