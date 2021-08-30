@@ -4,7 +4,6 @@ const { findNodeByCheckFunction } = require('../../edit-utils/node-path-utils');
 const { nodeContainsSelection } = require('../../node-path');
 
 const {
-    getVariableDeclaractor,
     selectReplacementLocations: selectVariableLocations
 } = require('../../variable-utils/variable-use-utils');
 
@@ -94,7 +93,6 @@ function getVariableDeclaratorLocation(variableDeclarator) {
 module.exports = {
     findDeclaratorOrFunctionDeclaration,
     getSurroundingScope,
-    getVariableDeclaractor,
     getVariableDeclaratorLocation,
     selectReplacementLocations
 };
