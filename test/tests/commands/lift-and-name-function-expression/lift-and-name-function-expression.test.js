@@ -114,5 +114,22 @@ describe('lift and name function expression', function () {
 
             assert.isTrue(result);
         });
+
+        it('returns false on a function declaration', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 13, column: 19 }),
+                end: buildEditorCoordinates({ line: 13, column: 19 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectedLocation);
+            const functionNode = findNodeInPath(selectionPath, ARROW_FUNCTION_EXPRESSION);
+
+            const result = isAnonymousFunction(functionNode);
+
+            assert.isFalse(result);
+        });
     });
 });
