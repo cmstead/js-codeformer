@@ -26,5 +26,22 @@ describe('lift and name function expression', function () {
 
             this.verify(newFunctionString);
         });
+
+        it('builds a function declaration for a named function expression', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 5, column: 39 }),
+                end: buildEditorCoordinates({ line: 5, column: 39 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectedLocation);
+            const functionNode = findNodeInPath(selectionPath, FUNCTION_EXPRESSION);
+
+            const newFunctionString = getNewFunctionString(functionNode, 'notTheSameName', fixtureText);
+
+            this.verify(newFunctionString);
+        });
     });
 });
