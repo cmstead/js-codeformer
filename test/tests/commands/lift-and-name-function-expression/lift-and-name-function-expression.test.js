@@ -1,5 +1,5 @@
 const { getNewFunctionString } = require("../../../../modules/commands/lift-and-name-function-expression/lift-and-name-function-expression");
-const { FUNCTION_EXPRESSION } = require("../../../../modules/constants/ast-node-types");
+const { FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require("../../../../modules/constants/ast-node-types");
 const { findNodeInPath } = require("../../../../modules/edit-utils/node-path-utils");
 const { buildNodePath } = require("../../../../modules/node-path");
 const { parse } = require("../../../../modules/parser/parser");
@@ -40,6 +40,23 @@ describe('lift and name function expression', function () {
             const functionNode = findNodeInPath(selectionPath, FUNCTION_EXPRESSION);
 
             const newFunctionString = getNewFunctionString(functionNode, 'notTheSameName', fixtureText);
+
+            this.verify(newFunctionString);
+        });
+
+        it('builds a function declaration assigned to a variable for an arrow function expression', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 9, column: 32 }),
+                end: buildEditorCoordinates({ line: 9, column: 32 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectedLocation);
+            const functionNode = findNodeInPath(selectionPath, ARROW_FUNCTION_EXPRESSION);
+
+            const newFunctionString = getNewFunctionString(functionNode, 'anArrowFunctionName', fixtureText);
 
             this.verify(newFunctionString);
         });
