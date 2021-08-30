@@ -12,7 +12,10 @@ function getActions(groupTitle) {
 }
 
 function getActionTitles(actions) {
-    return actions.map(action => action.title);
+    const actionTitles = actions.map(action => action.title);
+    actionTitles.sort();
+
+    return actionTitles;
 }
 
 function getActionCommandId(actionTitle) {

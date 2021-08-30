@@ -77,26 +77,14 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Select Conversion
     - Windows: ctrl+shift+j, c
     - Mac: cmd+shift+j, c
-- Convert to Arrow Function
-    - convert a function expression or declaration to an arrow function
-    - no keybinding
-- Change variable type
-    - Change variable declaration type from current type to const, let, or var
-    - Keybindings
-        - Windows: ctrl+shift+j, t
-        - Mac: cmd+shift+j, t
-- Convert to Function Expression
-    - convert a function declaration or arrow function to a function expression
-    - no keybinding
-- Convert to Function Declaration
-    - convert a function assigned to a variable declaration to a function declaration
-    - no keybinding
-- Convert to Method
-    - convert a function property on a class to a method declaration
-    - no keybinding
-- Convert to Template Literal
-    - convert a string, or string concatenation to a template literal
-    - no keybinding
+- Change Variable Type
+- Convert Expression to Template Literal
+- Convert Function to Arrow Function
+- Convert Function to Function Expression
+- Convert Function Property to Method
+- Convert Function Variable to Function Declaration
+- Convert Property to Shorthand Declaration
+- Convert Property to Standard Declaration
 
 ## Actions ##
 

@@ -7,7 +7,7 @@ const { transformLocationToRange } = require("../../edit-utils/textEditTransform
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 
-function convertToShorthandProperty() {
+function convertToStandardProperty() {
     let actionSetup = null;
     let propertyNode = null;
     return asyncPrepareActionSetup()
@@ -16,15 +16,18 @@ function convertToShorthandProperty() {
         .then(() => findNodeInPath(actionSetup.selectionPath, PROPERTY))
         .then((node) => validateUserInput({
             value: node,
-            validator: (node) => node !== null
-                && getNodeType(node.value) === IDENTIFIER,
-            message: 'Unable to find standard property node; canceling convert to shorthand'
+            validator: (node) => node !== null && node.shorthand,
+            message: 'Unable to find shorthand property node; canceling convert to standard property'
         }))
         .then((newPropertyNode) => propertyNode = newPropertyNode)
 
         .then(() => {
             const replacementRange = transformLocationToRange(propertyNode.loc);
-            const replacementString = propertyNode.value.name;
+            const propertyName = getNodeType(propertyNode.key) === IDENTIFIER
+                ? propertyNode.key.name
+                : propertyNode.key;
+
+            const replacementString = `${propertyName}: ${propertyName}`;
 
             return getNewSourceEdit()
                 .addReplacementEdit(replacementRange, replacementString)
@@ -37,5 +40,5 @@ function convertToShorthandProperty() {
 }
 
 module.exports = {
-    convertToShorthandProperty
+    convertToStandardProperty
 };

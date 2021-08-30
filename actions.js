@@ -54,7 +54,14 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.convertToShorthandProperty',
 		path: './modules/commands/convert-to-shorthand-property/convert-to-shorthand-property-action',
 		name: 'convertToShorthandProperty',
-		title: 'Convert to Shorthand Property',
+		title: 'Convert Property to Shorthand Declaration',
+		group: groups.CONVERSIONS
+	},
+	{
+		commandId: 'cmstead.jscodeformer.convertToStandardProperty',
+		path: './modules/commands/convert-to-standard-property/convert-to-standard-property-action',
+		name: 'convertToStandardProperty',
+		title: 'Convert Property to Standard Declaration',
 		group: groups.CONVERSIONS
 	},
 	{
@@ -103,7 +110,7 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.convertToFunctionDeclaration',
 		path: './modules/commands/convert-to-function-declaration/convert-to-function-declaration-action',
 		name: 'convertToFunctionDeclaration',
-		title: 'Convert Variable Declaration to Function Declaration',
+		title: 'Convert Function Variable Declaration to Function Declaration',
 		group: groups.CONVERSIONS
 	},
 	{
@@ -124,7 +131,7 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.convertToTemplateLiteral',
 		path: './modules/commands/convert-to-template-literal/convert-to-template-literal-action',
 		name: 'convertToTemplateLiteral',
-		title: 'Convert string, or concatenated string to a template literal',
+		title: 'Convert Expression to Template Literal (Interpolated String)',
 		group: groups.CONVERSIONS
 	},
 
