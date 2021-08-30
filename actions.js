@@ -51,17 +51,10 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
-		commandId: 'cmstead.jscodeformer.convertToShorthandProperty',
-		path: './modules/commands/convert-to-shorthand-property/convert-to-shorthand-property-action',
-		name: 'convertToShorthandProperty',
-		title: 'Convert Property to Shorthand Declaration',
-		group: groups.CONVERSIONS
-	},
-	{
-		commandId: 'cmstead.jscodeformer.convertToStandardProperty',
-		path: './modules/commands/convert-to-standard-property/convert-to-standard-property-action',
-		name: 'convertToStandardProperty',
-		title: 'Convert Property to Standard Declaration',
+		commandId: 'cmstead.jscodeformer.togglePropertyDeclaration',
+		path: './modules/commands/toggle-property-declaration/toggle-property-declaration-action',
+		name: 'togglePropertyDeclaration',
+		title: 'Toggle Between Shorthand and Standard Property Declarations',
 		group: groups.CONVERSIONS
 	},
 	{

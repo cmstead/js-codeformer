@@ -7,7 +7,23 @@ const { transformLocationToRange } = require("../../edit-utils/textEditTransform
 const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 
-function convertToStandardProperty() {
+function getPropertyKey(propertyNode) {
+    return getNodeType(propertyNode.key) === IDENTIFIER
+        ? propertyNode.key.name
+        : propertyNode.key;
+}
+
+function getPropertyDeclarationString(propertyNode) {
+    if(propertyNode.shorthand) {
+        const propertyKey = getPropertyKey(propertyNode);
+
+        return `${propertyKey}: ${propertyKey}`
+    } else {
+        return propertyNode.value.name;
+    }
+}
+
+function togglePropertyDeclaration() {
     let actionSetup = null;
     let propertyNode = null;
     return asyncPrepareActionSetup()
@@ -16,18 +32,15 @@ function convertToStandardProperty() {
         .then(() => findNodeInPath(actionSetup.selectionPath, PROPERTY))
         .then((node) => validateUserInput({
             value: node,
-            validator: (node) => node !== null && node.shorthand,
-            message: 'Unable to find shorthand property node; canceling convert to standard property'
+            validator: (node) => node !== null
+                && (node.shorthand || getNodeType(node.value) === IDENTIFIER),
+            message: 'Unable to find acceptable property node; canceling toggle declaration'
         }))
         .then((newPropertyNode) => propertyNode = newPropertyNode)
 
         .then(() => {
             const replacementRange = transformLocationToRange(propertyNode.loc);
-            const propertyName = getNodeType(propertyNode.key) === IDENTIFIER
-                ? propertyNode.key.name
-                : propertyNode.key;
-
-            const replacementString = `${propertyName}: ${propertyName}`;
+            const replacementString = getPropertyDeclarationString(propertyNode);
 
             return getNewSourceEdit()
                 .addReplacementEdit(replacementRange, replacementString)
@@ -40,5 +53,5 @@ function convertToStandardProperty() {
 }
 
 module.exports = {
-    convertToStandardProperty
+    togglePropertyDeclaration
 };

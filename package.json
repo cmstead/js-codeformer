@@ -208,14 +208,9 @@
                 "description": "Convert string, or concatenated string to a template literal"
             },
             {
-                "command": "cmstead.jscodeformer.convertToShorthandProperty",
-                "title": "Convert to Shorthand Property",
-                "description": "Convert standard property declaration to shorthand"
-            },
-            {
-                "command": "cmstead.jscodeformer.convertToStandardProperty",
-                "title": "Convert to Standard Property",
-                "description": "Convert shorthand property declaration to standard"
+                "command": "cmstead.jscodeformer.togglePropertyDeclaration",
+                "title": "Toggle Property Declaration Type",
+                "description": "Toggle Between Shorthand and Standard Property Declaration"
             },
             {
                 "command": "cmstead.jscodeformer.liftAndNameFunctionExpression",
@@ -324,10 +319,7 @@
                     "command": "cmstead.jscodeformer.convertToMethod"
                 },
                 {
-                    "command": "cmstead.jscodeformer.convertToShorthandProperty"
-                },
-                {
-                    "command": "cmstead.jscodeformer.convertToStandardProperty"
+                    "command": "cmstead.jscodeformer.togglePropertyDeclaration"
                 },
                 {
                     "command": "cmstead.jscodeformer.convertToTemplateLiteral"
