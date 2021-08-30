@@ -51,6 +51,13 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.convertToShorthandProperty',
+		path: './modules/commands/convert-to-shorthand-property/convert-to-shorthand-property-action',
+		name: 'convertToShorthandProperty',
+		title: 'Convert to Shorthand Property',
+		group: groups.CONVERSIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.introduceVariable',
 		path: './modules/commands/introduce-variable/introduce-variable-action',
 		name: 'introduceVariable',
