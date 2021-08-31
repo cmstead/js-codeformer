@@ -6,6 +6,7 @@ const { findAppropriateParameters } = require('./parameter-search');
 
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
+const { getNodeType } = require('../../core-utils');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -75,14 +76,29 @@ function isObjectMethodCall(destinationType) {
         && destinationType !== astNodeTypes.PROGRAM
 }
 
+
+function isJsxElement(node) {
+    return getNodeType(node) === 'JSXElement';
+}
+
 function buildMethodCallText({
     destinationType,
     methodName,
-    parameters
+    parameters,
+    selectedNode = null
 }) {
     const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
+    const baseMethodCall = `${prefix}${methodName}(${parameters})`;
 
-    return `${prefix}${methodName}(${parameters})`;
+    return isJsxElement(selectedNode)
+        ? `{${baseMethodCall}}`
+        : baseMethodCall;
+}
+
+function wrapMethodBodyForJSX(selectedNode, sourceSelection) {
+    return isJsxElement(selectedNode)
+        ? `(${sourceSelection})`
+        : sourceSelection
 }
 
 module.exports = {
@@ -92,5 +108,6 @@ module.exports = {
     terminalNodes,
     findAppropriateParameters,
     parseSelectedText,
-    selectExtractionLocation
+    selectExtractionLocation,
+    wrapMethodBodyForJSX
 };

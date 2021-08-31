@@ -23,14 +23,10 @@ const {
     buildMethodCallText,
     terminalNodes,
     findAppropriateParameters,
-    parseSelectedText
+    parseSelectedText,
+    wrapMethodBodyForJSX
 } = require('./extract-method');
-const { last, getNodeType } = require('../../core-utils');
-
-
-function isJsxElement(node) {
-    return getNodeType(node) === 'JSXElement';
-}
+const { last } = require('../../core-utils');
 
 function selectExtractionPoint(
     extractionScopeList,
@@ -102,11 +98,13 @@ function extractMethod() {
             selectedNode = last(actionSetup.selectionPath);
 
             nodePath = actionSetup.selectionPath;
+
             extractionPath = buildExtractionPath(
                 actionSetup.selectionPath,
                 acceptableNodeTypes,
                 terminalNodes
             );
+
             extractionScopeList = buildExtractionScopeList(extractionPath);
         })
 
@@ -135,12 +133,11 @@ function extractMethod() {
         .then((newParameterText) =>
             parameterText = newParameterText)
 
-        .then(() => buildMethodText({
+        .then(() =>
+            buildMethodText({
                 destinationType: extractionLocation.type,
                 methodName: newMethodName,
-                methodBody: isJsxElement(selectedNode)
-                    ? `(${sourceSelection})`
-                    : sourceSelection,
+                methodBody: wrapMethodBodyForJSX(selectedNode, sourceSelection),
                 parameters: parameterText.split(',').map(parameter => parameter.trim())
             }))
         .then((newMethodText) =>
@@ -150,16 +147,11 @@ function extractMethod() {
             buildMethodCallText({
                 destinationType: extractionLocation.type,
                 methodName: newMethodName,
-                parameters: parameterText
+                parameters: parameterText,
+                selectedNode
             }))
         .then((newMethodCallText) =>
             methodCallText = newMethodCallText)
-
-        .then(() => {
-            if (isJsxElement(selectedNode)) {
-                methodCallText = `{${methodCallText}}`;
-            }
-        })
 
         .then(() => {
             const extractionPoint = selectExtractionLocation(
