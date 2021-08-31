@@ -25,7 +25,12 @@ const {
     findAppropriateParameters,
     parseSelectedText
 } = require('./extract-method');
+const { last, getNodeType } = require('../../core-utils');
 
+
+function isJsxElement(node) {
+    return getNodeType(node) === 'JSXElement';
+}
 
 function selectExtractionPoint(
     extractionScopeList,
@@ -88,11 +93,13 @@ function extractMethod() {
 
     let methodText = null;
     let methodCallText = null;
+    let selectedNode = null;
 
     return asyncPrepareActionSetup()
         .then(function (newActionSetup) {
             actionSetup = newActionSetup;
             sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location);
+            selectedNode = last(actionSetup.selectionPath);
 
             nodePath = actionSetup.selectionPath;
             extractionPath = buildExtractionPath(
@@ -128,11 +135,12 @@ function extractMethod() {
         .then((newParameterText) =>
             parameterText = newParameterText)
 
-        .then(() =>
-            buildMethodText({
+        .then(() => buildMethodText({
                 destinationType: extractionLocation.type,
                 methodName: newMethodName,
-                methodBody: sourceSelection,
+                methodBody: isJsxElement(selectedNode)
+                    ? `(${sourceSelection})`
+                    : sourceSelection,
                 parameters: parameterText.split(',').map(parameter => parameter.trim())
             }))
         .then((newMethodText) =>
@@ -146,6 +154,12 @@ function extractMethod() {
             }))
         .then((newMethodCallText) =>
             methodCallText = newMethodCallText)
+
+        .then(() => {
+            if (isJsxElement(selectedNode)) {
+                methodCallText = `{${methodCallText}}`;
+            }
+        })
 
         .then(() => {
             const extractionPoint = selectExtractionLocation(
