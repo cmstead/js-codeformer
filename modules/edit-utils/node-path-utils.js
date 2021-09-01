@@ -1,11 +1,11 @@
 const { BLOCK_STATEMENT, PROGRAM } = require("../constants/ast-node-types");
-const { reverse } = require("../core-utils");
+const { reverse, getNodeType } = require("../core-utils");
 
 function getSurroundingScope(selectionPath) {
     return reverse(selectionPath)
         .find(node =>
-            node.type === BLOCK_STATEMENT
-            || node.type === PROGRAM);
+            getNodeType(node) === BLOCK_STATEMENT
+            || getNodeType(node) === PROGRAM);
 }
 
 function findNodeByCheckFunction(selectionPath, isMatchingNode) {
@@ -26,7 +26,7 @@ function findNodeByCheckFunction(selectionPath, isMatchingNode) {
 }
 
 function findNodeInPath(selectionPath, nodeType) {
-    return findNodeByCheckFunction(selectionPath, node => node.type === nodeType)
+    return findNodeByCheckFunction(selectionPath, node => getNodeType(node) === nodeType)
 }
 
 module.exports = {

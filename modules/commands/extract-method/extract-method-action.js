@@ -26,7 +26,7 @@ const {
     parseSelectedText,
     wrapMethodBodyForJSX
 } = require('./extract-method');
-const { last } = require('../../core-utils');
+const { last, getNodeType } = require('../../core-utils');
 
 function selectExtractionPoint(
     extractionScopeList,
@@ -135,7 +135,7 @@ function extractMethod() {
 
         .then(() =>
             buildMethodText({
-                destinationType: extractionLocation.type,
+                destinationType: getNodeType(extractionLocation),
                 methodName: newMethodName,
                 methodBody: wrapMethodBodyForJSX(selectedNode, sourceSelection),
                 parameters: parameterText.split(',').map(parameter => parameter.trim())
@@ -145,7 +145,7 @@ function extractMethod() {
 
         .then(() =>
             buildMethodCallText({
-                destinationType: extractionLocation.type,
+                destinationType: getNodeType(extractionLocation),
                 methodName: newMethodName,
                 parameters: parameterText,
                 selectedNode

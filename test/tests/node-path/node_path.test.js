@@ -1,5 +1,6 @@
 require('../../utilities/approvals').configure();
 
+const { getNodeType } = require('../../../modules/core-utils');
 const {
     buildEditorCoordinates,
     buildLocationFromEditorCoordinates
@@ -24,6 +25,6 @@ describe('node path builder', function () {
 
         const nodePath = buildNodePath(parsedSource, selection);
 
-        this.verifyAsJSON(nodePath.map(node => node.type));
+        this.verifyAsJSON(nodePath.map(node => getNodeType(node)));
     });
 });

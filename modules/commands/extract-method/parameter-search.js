@@ -26,7 +26,7 @@ const declarationTypes = [
 function isVariableBeingDeclared(parentNode, node) {
     const parentNodeType = getNodeType(parentNode);
 
-    return node.type === IDENTIFIER &&
+    return getNodeType(node) === IDENTIFIER &&
         (
             declarationTypes.includes(parentNodeType)
             || (parentNodeType === MEMBER_EXPRESSION

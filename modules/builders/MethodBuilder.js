@@ -6,6 +6,7 @@ const {
     RETURN_STATEMENT,
     OBJECT_EXPRESSION
 } = require("../constants/ast-node-types");
+const { getNodeType } = require("../core-utils");
 const { parse } = require("../parser/parser");
 const { getSourceSelection } = require("../source-utilities");
 
@@ -62,7 +63,7 @@ class MethodBuilder {
         const bodyNode = parsedBody.body[0];
 
         return typeof bodyNode !== 'undefined'
-            && bodyNode.type === RETURN_STATEMENT;
+            && getNodeType(bodyNode) === RETURN_STATEMENT;
     }
 
     isNotEmpty(functionBody) {
@@ -77,7 +78,7 @@ class MethodBuilder {
         const argument = parsedBody.body[0].argument;
         const argumentLocation = argument.loc;
         const arrowSource = getSourceSelection(this.functionBody, argumentLocation);
-        return argument.type === OBJECT_EXPRESSION
+        return getNodeType(argument) === OBJECT_EXPRESSION
                 ? `(${arrowSource})`
                 : arrowSource;
     }

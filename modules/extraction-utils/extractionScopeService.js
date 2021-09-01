@@ -1,5 +1,5 @@
 const astNodeTypes = require('../constants/ast-node-types');
-const { last } = require('../core-utils');
+const { last, getNodeType } = require('../core-utils');
 
 const typeTransforms = {
     [astNodeTypes.ARROW_FUNCTION_EXPRESSION]: () => 'arrow function',
@@ -19,15 +19,15 @@ const typeTransforms = {
 
 function getScopeMessage(displayNode, index) {
     try {
-        if (displayNode.type === astNodeTypes.PROGRAM) {
+        if (getNodeType(displayNode) === astNodeTypes.PROGRAM) {
             return 'Extract to top of file';
         } else if (index === 0) {
-            return `Extract to local scope in ${typeTransforms[displayNode.type](displayNode)}`;
+            return `Extract to local scope in ${typeTransforms[getNodeType(displayNode)](displayNode)}`;
         } else {
-            return `Extract to scope in ${typeTransforms[displayNode.type](displayNode)}`
+            return `Extract to scope in ${typeTransforms[getNodeType(displayNode)](displayNode)}`
         }
     } catch (_) {
-        throw new Error(`JS CodeFormer error: Cannot process node type "${displayNode.type}"`);
+        throw new Error(`JS CodeFormer error: Cannot process node type "${getNodeType(displayNode)}"`);
     }
 }
 

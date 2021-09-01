@@ -2,6 +2,7 @@ require('approvals').configure();
 
 const { getNewFunctionString, functionNodeTypes } = require('../../../../modules/commands/convert-to-arrow-function/convert-to-arrow-function');
 const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, METHOD_DEFINITION } = require('../../../../modules/constants/ast-node-types');
+const { getNodeType } = require('../../../../modules/core-utils');
 const { findFunctionNode } = require('../../../../modules/function-utils/function-node');
 
 const { buildNodePath } = require('../../../../modules/node-path');
@@ -21,7 +22,7 @@ describe('convert to arrow function', function () {
         const parsedSource = parse(testSource);
         const nodePath = buildNodePath(parsedSource, selectedLocation);
 
-        const functionNode = nodePath.find(node => node.type === FUNCTION_DECLARATION);
+        const functionNode = nodePath.find(node => getNodeType(node) === FUNCTION_DECLARATION);
 
         const convertedFunctionString = getNewFunctionString(functionNode, testSource);
 
@@ -39,7 +40,7 @@ describe('convert to arrow function', function () {
         const parsedSource = parse(testSource);
         const nodePath = buildNodePath(parsedSource, selectedLocation);
 
-        const functionNode = nodePath.find(node => node.type === FUNCTION_EXPRESSION);
+        const functionNode = nodePath.find(node => getNodeType(node) === FUNCTION_EXPRESSION);
 
         const convertedFunctionString = getNewFunctionString(functionNode, testSource);
 
@@ -57,7 +58,7 @@ describe('convert to arrow function', function () {
         const parsedSource = parse(testSource);
         const nodePath = buildNodePath(parsedSource, selectedLocation);
 
-        const functionNode = nodePath.find(node => node.type === METHOD_DEFINITION);
+        const functionNode = nodePath.find(node => getNodeType(node) === METHOD_DEFINITION);
 
         const convertedFunctionString = getNewFunctionString(functionNode, testSource);
 
@@ -75,7 +76,7 @@ describe('convert to arrow function', function () {
         const parsedSource = parse(testSource);
         const nodePath = buildNodePath(parsedSource, selectedLocation);
 
-        const functionNode = nodePath.find(node => node.type === FUNCTION_EXPRESSION);
+        const functionNode = nodePath.find(node => getNodeType(node) === FUNCTION_EXPRESSION);
 
         const convertedFunctionString = getNewFunctionString(functionNode, testSource);
 

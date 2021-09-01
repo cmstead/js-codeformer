@@ -29,7 +29,7 @@ function getVariableName(variableDeclarator) {
 
 function findFunction(nodePath) {
     return findNodeByCheckFunction(nodePath, node =>
-        functionNodeTypes.includes(node.type));
+        functionNodeTypes.includes(getNodeType(node)));
 }
 
 function getFunctionName(functionNode) {

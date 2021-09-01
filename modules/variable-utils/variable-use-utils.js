@@ -1,4 +1,4 @@
-const { traverse, VisitorOption } = require("estraverse");
+const { traverse, VisitorOption } = require('../astTraverse');
 const { reverse, getNodeType } = require('../core-utils');
 const { getSourceSelection } = require("../source-utilities");
 
@@ -21,8 +21,8 @@ const { findNodeInPath } = require("../edit-utils/node-path-utils");
 function getSurroundingScope(selectionPath) {
     return reverse(selectionPath)
         .find(node =>
-            node.type === BLOCK_STATEMENT
-            || node.type === PROGRAM);
+            getNodeType(node) === BLOCK_STATEMENT
+            || getNodeType(node) === PROGRAM);
 }
 
 function getVariableDeclaractor(selectionPath) {
@@ -40,7 +40,7 @@ function getDeclarationBody(declaratorNode, sourceCode) {
 }
 
 function isAnArrowFunctionParameter(node, parentNode) {
-    return parentNode.type === ARROW_FUNCTION_EXPRESSION
+    return getNodeType(parentNode) === ARROW_FUNCTION_EXPRESSION
         && parentNode.params.includes(node);
 }
 
@@ -77,7 +77,7 @@ function isAcceptableIdentifier(node, parentNode) {
 }
 
 function isAMatchingIdentifier(node, variableName) {
-    return node.type === IDENTIFIER
+    return getNodeType(node) === IDENTIFIER
         && node.name === variableName;
 }
 

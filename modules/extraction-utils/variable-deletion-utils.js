@@ -1,4 +1,5 @@
 const { VARIABLE_DECLARATION, VARIABLE_DECLARATOR } = require("../constants/ast-node-types");
+const { getNodeType } = require("../core-utils");
 const { getSourceSelection } = require("../source-utilities");
 
 function getSourceLines(source, selectedLocation) {
@@ -37,8 +38,8 @@ function buildDeletionLocation(
         end: { line: endLine, column: endColumn}
     } = selectedLocation;
 
-    const selectionIsADeclaration = selectedNode.type === VARIABLE_DECLARATION;
-    const selectionIsADeclarator = selectedNode.type === VARIABLE_DECLARATOR;
+    const selectionIsADeclaration = getNodeType(selectedNode) === VARIABLE_DECLARATION;
+    const selectionIsADeclarator = getNodeType(selectedNode) === VARIABLE_DECLARATOR;
     const onlyDeleteSelection = sourceIsDifferentThanLocation && selectionIsADeclaration;
 
     if (onlyDeleteSelection) {

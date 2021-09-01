@@ -1,6 +1,7 @@
 const { assert } = require('chai');
 
 const { FUNCTION_DECLARATION, METHOD_DEFINITION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require("../../../modules/constants/ast-node-types");
+const { getNodeType } = require('../../../modules/core-utils');
 const { getFunctionName, getFunctionParametersString, getFunctionBody } = require("../../../modules/function-utils/function-source");
 const { buildNodePath } = require("../../../modules/node-path");
 const { parse } = require("../../../modules/parser/parser");
@@ -14,7 +15,7 @@ function getSelectedFunction(selection, nodeType) {
     const selectionPath = buildNodePath(ast, selection);
     selectionPath.reverse();
 
-    const functionNode = selectionPath.find(node => node.type === nodeType);
+    const functionNode = selectionPath.find(node => getNodeType(node) === nodeType);
 
     return {
         functionNode,
@@ -42,7 +43,7 @@ describe('function source utils', function () {
             const selectionPath = buildNodePath(ast, selection);
             selectionPath.reverse();
 
-            const functionNode = selectionPath.find(node => node.type === FUNCTION_DECLARATION);
+            const functionNode = selectionPath.find(node => getNodeType(node) === FUNCTION_DECLARATION);
 
             const functionName = getFunctionName(functionNode);
 
@@ -67,7 +68,7 @@ describe('function source utils', function () {
             const selectionPath = buildNodePath(ast, selection);
             selectionPath.reverse();
 
-            const functionNode = selectionPath.find(node => node.type === METHOD_DEFINITION);
+            const functionNode = selectionPath.find(node => getNodeType(node) === METHOD_DEFINITION);
 
             const functionName = getFunctionName(functionNode);
 
@@ -92,7 +93,7 @@ describe('function source utils', function () {
             const selectionPath = buildNodePath(ast, selection);
             selectionPath.reverse();
 
-            const functionNode = selectionPath.find(node => node.type === FUNCTION_EXPRESSION);
+            const functionNode = selectionPath.find(node => getNodeType(node) === FUNCTION_EXPRESSION);
 
             const functionName = getFunctionName(functionNode);
 
@@ -117,7 +118,7 @@ describe('function source utils', function () {
             const selectionPath = buildNodePath(ast, selection);
             selectionPath.reverse();
 
-            const functionNode = selectionPath.find(node => node.type === ARROW_FUNCTION_EXPRESSION);
+            const functionNode = selectionPath.find(node => getNodeType(node) === ARROW_FUNCTION_EXPRESSION);
 
             const functionName = getFunctionName(functionNode);
 

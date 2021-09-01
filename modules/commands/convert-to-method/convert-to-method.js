@@ -14,12 +14,12 @@ function findClassPropertyDeclaration(nodePath) {
 }
 
 function isValidVariableDeclaration(propertyDeclaration) {
-    const valueType = propertyDeclaration.value !== null 
-        ? propertyDeclaration.value.type 
+    const valueType = propertyDeclaration.value !== null
+        ? getNodeType(propertyDeclaration.value)
         : null;
 
     return getNodeType(propertyDeclaration) === CLASS_PROPERTY
-        && functionNodeTypes.includes(valueType) 
+        && functionNodeTypes.includes(valueType)
 }
 
 function isSingleLineArrowFunction(functionNode) {
@@ -52,7 +52,7 @@ function buildFunctionString(propertyDeclaration, source) {
         async: functionNode.async,
         generator: functionNode.generator
     })
-    .buildNewMethod();
+        .buildNewMethod();
 }
 
 module.exports = {

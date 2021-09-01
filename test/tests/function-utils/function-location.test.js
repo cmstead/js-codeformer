@@ -1,6 +1,7 @@
 require('../../utilities/approvals').configure()
 
 const { FUNCTION_DECLARATION } = require("../../../modules/constants/ast-node-types");
+const { getNodeType } = require('../../../modules/core-utils');
 const { getBodyCoordinates } = require("../../../modules/function-utils/function-location");
 const { buildNodePath } = require("../../../modules/node-path");
 const { parse } = require("../../../modules/parser/parser");
@@ -29,7 +30,7 @@ describe('function location utilities', function () {
 
             selectionPath.reverse();
 
-            const functionNode = selectionPath.find(node => node.type === FUNCTION_DECLARATION);
+            const functionNode = selectionPath.find(node => getNodeType(node) === FUNCTION_DECLARATION);
 
             const bodyCoordinates = getBodyCoordinates(functionNode.body);
 
@@ -57,7 +58,7 @@ describe('function location utilities', function () {
 
         selectionPath.reverse();
 
-        const functionNode = selectionPath.find(node => node.type === FUNCTION_DECLARATION);
+        const functionNode = selectionPath.find(node => getNodeType(node) === FUNCTION_DECLARATION);
 
         const bodyCoordinates = getBodyCoordinates(functionNode.body);
 

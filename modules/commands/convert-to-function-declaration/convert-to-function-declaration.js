@@ -17,7 +17,7 @@ function findVariableDeclaration(nodePath) {
 function isValidVariableDeclaration(variableDeclaration) {
     const declarationsLength = variableDeclaration.declarations.length;
     const declaration = first(variableDeclaration.declarations);
-    const initType = declaration.init !== null ? declaration.init.type : null;
+    const initType = declaration.init !== null ? getNodeType(declaration.init) : null;
 
     return declarationsLength === 1
         && functionNodeTypes.includes(initType) 

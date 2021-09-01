@@ -1,5 +1,5 @@
 const astNodeTypes = require('../constants/ast-node-types');
-const { last, reverse } = require('../core-utils');
+const { last, reverse, getNodeType } = require('../core-utils');
 
 const {
     BLOCK_STATEMENT,
@@ -66,7 +66,7 @@ class ExtractionPathBuilder {
     buildExtractionPath(customTerminalNodeTypes = []) {
         this.reversedNodePath.forEach(node => {
             const seekingParentNode = this.currentNodeSet !== null;
-            const nodeTypeIsAcceptable = this.acceptableNodeTypes.includes(node.type);
+            const nodeTypeIsAcceptable = this.acceptableNodeTypes.includes(getNodeType(node));
             const nodeTypeNotAcceptable = !nodeTypeIsAcceptable;
 
             if (nodeTypeNotAcceptable) {
@@ -74,11 +74,11 @@ class ExtractionPathBuilder {
             }
 
             if (
-                node.type === PROGRAM
-                || customTerminalNodeTypes.includes(node.type)
+                getNodeType(node) === PROGRAM
+                || customTerminalNodeTypes.includes(getNodeType(node))
             ) {
                 this.updateExtractionPath(this.createNodeSet(node));
-            } else if (node.type === BLOCK_STATEMENT) {
+            } else if (getNodeType(node) === BLOCK_STATEMENT) {
                 this.currentNodeSet = this.createNodeSet(node);
             } else if (seekingParentNode && nodeTypeIsAcceptable) {
                 this.currentNodeSet.addNode(node);
@@ -98,7 +98,7 @@ function buildExtractionPath(
         .buildExtractionPath(customTerminalNodeTypes)
         .toArray()
         .filter(extractionNode => 
-            last(extractionNode).type !== astNodeTypes.BLOCK_STATEMENT);
+            getNodeType(last(extractionNode)) !== astNodeTypes.BLOCK_STATEMENT);
 }
 
 module.exports = {
