@@ -56,7 +56,7 @@ class MethodBuilder {
     buildObjectMethod() {
         return `${this.asyncPrefix}${this.functionName}: function${this.generatorInfix} (${this.functionParameters}) {
             ${this.functionBody}
-        }`;
+        },`;
     }
 
     isReturnStatement(parsedBody) {

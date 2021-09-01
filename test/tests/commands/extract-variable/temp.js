@@ -46,7 +46,7 @@ class TestClass {
     }
 }
 
-
+const something = () => null
 
 module.exports = {
     convert

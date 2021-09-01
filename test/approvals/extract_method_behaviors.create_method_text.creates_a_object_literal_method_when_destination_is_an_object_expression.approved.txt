@@ -10,4 +10,4 @@ testMethod: function (a, b, c) {
                         foo.bar.baz('test');
 
                         return addSomething(a) * d;
-        }
+        },

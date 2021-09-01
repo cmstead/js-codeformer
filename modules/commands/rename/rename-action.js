@@ -21,6 +21,13 @@ function getDeclaratorName(declarator) {
     return declarator.id.name;
 }
 
+function locationsMatch(sourceLocation, testLocation) {
+    return sourceLocation.start.line === testLocation.start.line
+        && sourceLocation.start.column === testLocation.start.column
+        && sourceLocation.end.line === testLocation.end.line
+        && sourceLocation.end.column === testLocation.end.column;
+}
+
 function rename() {
     let actionSetup = null;
     let variableDeclarator = null;
@@ -85,8 +92,11 @@ function rename() {
 
             const variableNameLocation = getVariableDeclaratorLocation(variableDeclarator);
 
-            const replacementRange = transformLocationToRange(variableNameLocation);
-            sourceEdit.addReplacementEdit(replacementRange, newName);
+            if (!replacementLocations.find((location) => locationsMatch(location, variableNameLocation))) {
+                const replacementRange = transformLocationToRange(variableNameLocation);
+
+                sourceEdit.addReplacementEdit(replacementRange, newName);
+            }
 
             sourceEdit.applyEdit();
         })
