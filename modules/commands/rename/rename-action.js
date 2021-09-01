@@ -102,7 +102,6 @@ function rename() {
         })
 
         .catch(function (error) {
-            console.log(error);
             showErrorMessage(error.message);
         });
 }
