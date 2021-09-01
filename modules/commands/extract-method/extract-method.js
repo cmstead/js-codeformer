@@ -6,6 +6,8 @@ const { findAppropriateParameters } = require('./parameter-search');
 
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
+const { BINARY_EXPRESSION, LITERAL, CONDITIONAL_EXPRESSION, FOR_IN_STATEMENT, FOR_STATEMENT, FOR_OF_STATEMENT, WHILE_STATEMENT } = require('../../constants/ast-node-types');
+const { getNodeType, first } = require('../../core-utils');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -31,10 +33,19 @@ function parseSelectedText(sourceCodeText, selectionLocation) {
     }
 }
 
+function bodyIsReturnable(parsedBody) {
+    const firstChild = first(parsedBody.body);
+    const childType = getNodeType(firstChild);
+
+    return parsedBody.body.length === 1
+        && !childType.toLowerCase().includes('statement');
+}
+
 function insertReturnIfExpression(methodBody) {
     const parsedBody = parse(methodBody);
 
-    return parsedBody.body.length === 1
+
+    return bodyIsReturnable(parsedBody)
         ? `return ${methodBody}`
         : methodBody;
 }

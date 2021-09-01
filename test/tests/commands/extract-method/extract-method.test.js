@@ -158,5 +158,25 @@ describe('extract method behaviors', function () {
 
             this.verify(methodText);
         });
+
+        it('does not add return to for loop expression', function () {
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 1, column: 1 }),
+                end: buildEditorCoordinates({ line: 3, column: 2 })
+            });
+
+            const testSource = readFileSource(__dirname, 'fixtures/for-loop-source.js');
+
+            const selectedSource = getSourceSelection(testSource, selectedLocation);
+
+            const methodText = buildMethodText({
+                destinationType: OBJECT_EXPRESSION,
+                methodBody: selectedSource,
+                methodName: 'testMethod',
+                parameters: ['a', 'b', 'c']
+            });
+
+            this.verify(methodText);
+        });
     });
 });
