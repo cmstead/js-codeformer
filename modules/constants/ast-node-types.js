@@ -15,6 +15,7 @@ module.exports = {
     FUNCTION_EXPRESSION: 'FunctionExpression',
     IDENTIFIER: 'Identifier',
     IF_STATEMENT: 'IfStatement',
+    JSX_ELEMENT: 'JSXElement',
     LITERAL: 'Literal',
     METHOD_DEFINITION: 'MethodDefinition',
     MEMBER_EXPRESSION: 'MemberExpression',

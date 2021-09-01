@@ -1,11 +1,6 @@
 const estraverse = require('estraverse');
+const { JSX_ELEMENT } = require('./constants/ast-node-types');
 const { getNodeType } = require('./core-utils');
-
-function skipTypeScriptSpecificNodes(node) {
-    return node.type.startsWith('TS')
-        ? estraverse.VisitorOption.Skip
-        : node;
-}
 
 function traverse(ast, behaviors) {
     return estraverse.traverse(ast, {
@@ -15,7 +10,7 @@ function traverse(ast, behaviors) {
 
             if (nodeType.startsWith('TS')) {
                 return estraverse.VisitorOption.Skip;
-            } else if(nodeType === 'JSXElement') {
+            } else if(nodeType === JSX_ELEMENT) {
                 node.children.forEach(node => {
                     traverse(node, behaviors);
                 });

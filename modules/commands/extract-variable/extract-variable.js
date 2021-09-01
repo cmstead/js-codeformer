@@ -9,6 +9,7 @@ const {
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getNewVariableBuilder, variableTypes } = require('../../builders/VariableBuilder');
 const { getNodeType } = require('../../core-utils');
+const { JSX_ELEMENT } = require('../../constants/ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.FUNCTION_DECLARATION,
@@ -46,7 +47,7 @@ function buildMethodCallText({
 }
 */
 function isJsxElement(node) {
-    return getNodeType(node) === 'JSXElement';
+    return getNodeType(node) === JSX_ELEMENT;
 }
 
 function prepareVariableNameString(variableName, selectedNode) {

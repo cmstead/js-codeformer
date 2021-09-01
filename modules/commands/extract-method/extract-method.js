@@ -7,6 +7,7 @@ const { findAppropriateParameters } = require('./parameter-search');
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
 const { getNodeType, first } = require('../../core-utils');
+const { JSX_ELEMENT } = require('../../constants/ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -85,7 +86,7 @@ function isObjectMethodCall(destinationType) {
 
 
 function isJsxElement(node) {
-    return getNodeType(node) === 'JSXElement';
+    return getNodeType(node) === JSX_ELEMENT;
 }
 
 function buildMethodCallText({
