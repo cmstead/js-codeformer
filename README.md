@@ -115,6 +115,36 @@ Current Actions:
 - Introduce function
 - Lift and name function expression
 
+## Refactorings In Action ##
+
+**Extract Method**
+
+Using extract method in old jQuery, embedded in HTML:
+![Extract Method in HTML](./images/extract-method-html.gif)
+
+Using extract method in a JSX block:
+![Extract Method inside JSX](./images/extract-method-jsx.gif)
+
+**Extract Variable**
+
+Extract variable in a Vue single-file component:
+![Extract Variable in Vue](./images/extract-variable-vue.gif)
+
+**Extract to Parameter**
+
+Extract to parameter in old jQuery, embedded in HTML:
+![Extract to Parameter in HTML](./images/extract-to-parameter-html.gif)
+
+**Inline Variable**
+
+Inline variable in old jQuery, embedded in HTML:
+![Inline Variable in HTML](./images/inline-variable-html.gif)
+
+**Rename**
+
+Rename in a Vue single-file component:
+![Rename in Vue](./images/rename-vue.gif)
+
 ## Contributors and Thanks #
 
 Code contributions help introduce new behaviors and improve existing behaviors materially. I'd like to thank these contributors for their code contributions:
