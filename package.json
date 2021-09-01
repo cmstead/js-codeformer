@@ -34,7 +34,8 @@
         "test": "npm run test-and-cover && gittey commit",
         "build": "rm *.vsix & vsce package",
         "push-patch": "npm run test-only && gittey push-patch",
-        "push-minor": "npm run test-only && gittey push-minor"
+        "push-minor": "npm run test-only && gittey push-minor",
+        "publish": "npm test-only && vsce publish"
     },
     "devDependencies": {
         "@types/glob": "^7.1.3",
