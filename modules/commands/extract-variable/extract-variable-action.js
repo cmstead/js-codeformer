@@ -4,7 +4,7 @@ const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
 const { showErrorMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../ui-services/inputService');
-const {buildEditLocations} = require('../../edit-utils/textEditTransforms');
+const { buildEditLocations } = require('../../edit-utils/textEditTransforms');
 
 const {
     selectExtractionLocation,
@@ -17,8 +17,10 @@ const {
     acceptableNodeTypes,
     variableTypeList,
     buildVariableDeclaration,
-    getSourceSelection
+    getSourceSelection,
+    prepareVariableNameString
 } = require('./extract-variable');
+const { last } = require('../../core-utils');
 
 
 function selectExtractionPoint(
@@ -87,10 +89,10 @@ function extractVariable() {
         .then(function (newActionSetup) {
             actionSetup = newActionSetup;
             sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location);
-        
+
             nodePath = actionSetup.selectionPath;
             extractionPath = buildExtractionPath(actionSetup.selectionPath, acceptableNodeTypes);
-            extractionScopeList = buildExtractionScopeList(extractionPath);        
+            extractionScopeList = buildExtractionScopeList(extractionPath);
         })
 
         .then(() => selectExtractionPoint(
@@ -116,7 +118,7 @@ function extractVariable() {
         .then((newVariableDeclaration) =>
             variableDeclaration = newVariableDeclaration)
 
-        .then(() =>{
+        .then(() => {
             const extractionPoint = selectExtractionLocation(
                 nodePath,
                 extractionLocation
@@ -128,11 +130,15 @@ function extractVariable() {
             })
         })
 
-        .then(({ extractionPosition, replacementRange }) =>
-            getNewSourceEdit()
-                .addReplacementEdit(replacementRange, newVariableName)
+        .then(({ extractionPosition, replacementRange }) => {
+            const selectedNode = last(actionSetup.selectionPath)
+            const variableNameString = prepareVariableNameString(newVariableName, selectedNode);
+            
+            return getNewSourceEdit()
+                .addReplacementEdit(replacementRange, variableNameString)
                 .addInsertEdit(extractionPosition, variableDeclaration + '\n')
-                .applyEdit())
+                .applyEdit();
+        })
 
         .catch(function (error) {
             showErrorMessage(error.message);

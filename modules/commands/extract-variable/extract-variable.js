@@ -8,6 +8,7 @@ const {
 
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getNewVariableBuilder, variableTypes } = require('../../builders/VariableBuilder');
+const { getNodeType } = require('../../core-utils');
 
 const acceptableNodeTypes = [
     astNodeTypes.FUNCTION_DECLARATION,
@@ -29,7 +30,34 @@ const variableTypeList = Object
     .map(key => acceptableVariableTypes[key]);
 
 
-function buildVariableDeclaration({ variableType, variableName, source }) {
+/*
+function buildMethodCallText({
+    destinationType,
+    methodName,
+    parameters,
+    selectedNode = null
+}) {
+    const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
+    const baseMethodCall = `${prefix}${methodName}(${parameters})`;
+
+    return isJsxElement(selectedNode)
+        ? `{${baseMethodCall}}`
+        : baseMethodCall;
+}
+*/
+function isJsxElement(node) {
+    return getNodeType(node) === 'JSXElement';
+}
+
+function prepareVariableNameString(variableName, selectedNode) {
+    return isJsxElement(selectedNode) ? `{${variableName}}` : variableName;
+}
+
+function buildVariableDeclaration({
+    variableType,
+    variableName,
+    source
+}) {
     return getNewVariableBuilder({
         type: variableType,
         name: variableName,
@@ -45,5 +73,6 @@ module.exports = {
     selectExtractionScopes,
     selectExtractionLocation,
     getSourceSelection,
-    variableTypeList
+    variableTypeList,
+    prepareVariableNameString
 };
