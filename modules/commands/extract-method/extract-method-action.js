@@ -23,9 +23,10 @@ const {
     buildMethodCallText,
     terminalNodes,
     findAppropriateParameters,
-    parseSelectedText
+    parseSelectedText,
+    wrapMethodBodyForJSX
 } = require('./extract-method');
-
+const { last } = require('../../core-utils');
 
 function selectExtractionPoint(
     extractionScopeList,
@@ -88,18 +89,22 @@ function extractMethod() {
 
     let methodText = null;
     let methodCallText = null;
+    let selectedNode = null;
 
     return asyncPrepareActionSetup()
         .then(function (newActionSetup) {
             actionSetup = newActionSetup;
             sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location);
+            selectedNode = last(actionSetup.selectionPath);
 
             nodePath = actionSetup.selectionPath;
+
             extractionPath = buildExtractionPath(
                 actionSetup.selectionPath,
                 acceptableNodeTypes,
                 terminalNodes
             );
+
             extractionScopeList = buildExtractionScopeList(extractionPath);
         })
 
@@ -132,7 +137,7 @@ function extractMethod() {
             buildMethodText({
                 destinationType: extractionLocation.type,
                 methodName: newMethodName,
-                methodBody: sourceSelection,
+                methodBody: wrapMethodBodyForJSX(selectedNode, sourceSelection),
                 parameters: parameterText.split(',').map(parameter => parameter.trim())
             }))
         .then((newMethodText) =>
@@ -142,7 +147,8 @@ function extractMethod() {
             buildMethodCallText({
                 destinationType: extractionLocation.type,
                 methodName: newMethodName,
-                parameters: parameterText
+                parameters: parameterText,
+                selectedNode
             }))
         .then((newMethodCallText) =>
             methodCallText = newMethodCallText)

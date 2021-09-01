@@ -29,6 +29,10 @@
             "command": "gittey pull; git push"
         },
         {
+            "name": "push-major",
+            "command": "gittey pull; node ./version-bump major; git push origin main --tags"
+        },
+        {
             "name": "push-minor",
             "command": "gittey pull; node ./version-bump minor; git push origin main --tags"
         },
