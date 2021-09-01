@@ -42,10 +42,12 @@ function bodyIsReturnable(methodBody) {
         && !childType.toLowerCase().includes('statement');
 }
 
-function insertReturnIfExpression(methodBody) {
-    return bodyIsReturnable(methodBody)
-        ? `return ${methodBody}`
-        : methodBody;
+function insertReturnStatement(methodBody) {
+    if(bodyIsReturnable(methodBody)) {
+        return `return ${methodBody}`;
+    } else {
+        return methodBody;
+    }
 }
 
 const functionTypeMap = {
@@ -67,7 +69,7 @@ function buildMethodText({
     parameters
 }) {
     const functionParameters = parameters.join(', ');
-    const functionBody = insertReturnIfExpression(methodBody);
+    const functionBody = insertReturnStatement(methodBody);
     const functionType = getFunctionType(destinationType);
 
     return getMethodBuilder({
