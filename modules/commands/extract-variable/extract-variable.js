@@ -30,22 +30,6 @@ const variableTypeList = Object
     .keys(acceptableVariableTypes)
     .map(key => acceptableVariableTypes[key]);
 
-
-/*
-function buildMethodCallText({
-    destinationType,
-    methodName,
-    parameters,
-    selectedNode = null
-}) {
-    const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
-    const baseMethodCall = `${prefix}${methodName}(${parameters})`;
-
-    return isJsxElement(selectedNode)
-        ? `{${baseMethodCall}}`
-        : baseMethodCall;
-}
-*/
 function isJsxElement(node) {
     return getNodeType(node) === JSX_ELEMENT;
 }
