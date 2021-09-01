@@ -1,5 +1,5 @@
 const estraverse = require('estraverse');
-const { JSX_ELEMENT } = require('./constants/ast-node-types');
+const { JSX_ELEMENT, JSX_EXPRESSION_CONTAINER } = require('./constants/ast-node-types');
 const { getNodeType } = require('./core-utils');
 
 function traverse(ast, behaviors) {
@@ -14,7 +14,7 @@ function traverse(ast, behaviors) {
                 node.children.forEach(node => {
                     traverse(node, behaviors);
                 });
-            } else if(nodeType === 'JSXExpressionContainer') {
+            } else if(nodeType === JSX_EXPRESSION_CONTAINER) {
                 traverse(node.expression, behaviors);
             }
 
