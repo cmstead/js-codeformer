@@ -80,6 +80,9 @@ Current refactorings:
 - Inline Variable
     - Windows: `ctrl+shift+j, i`
     - Mac: `cmd+shift+j, i`
+- Invert If Statement
+    - Windows: `ctrl+shift+j, n`
+    - Mac: `cmd+shift+j, n`
 - Rename (important for non js/ts files)
     - Windows: `ctrl+shift+j, r`
     - Mac: `cmd+shift+j, r`
