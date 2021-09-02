@@ -166,6 +166,5 @@ module.exports = {
     terminalNodes,
     findAppropriateParameters,
     parseSelectedText,
-    selectExtractionLocation,
-    wrapMethodBodyForJSX: wrapJsxElement
+    selectExtractionLocation
 };
