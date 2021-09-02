@@ -7,7 +7,9 @@ const { findAppropriateParameters } = require('./parameter-search');
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
 const { getNodeType, first, last } = require('../../core-utils');
-const { JSX_ELEMENT, VARIABLE_DECLARATION, IDENTIFIER } = require('../../constants/ast-node-types');
+const { VARIABLE_DECLARATION, IDENTIFIER } = require('../../constants/ast-node-types');
+const { isJsxElement } = require('typescript');
+const { wrapJsxExpression, wrapJsxElement } = require('../../react-service');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -131,10 +133,6 @@ function isObjectMethodCall(destinationType) {
 }
 
 
-function isJsxElement(node) {
-    return getNodeType(node) === JSX_ELEMENT;
-}
-
 function attachAssignment(simpleMethodCall, parsedBody) {
     if (isFinalLineADeclaration(parsedBody)) {
         const finalDeclaration = last(parsedBody.body);
@@ -158,15 +156,7 @@ function buildMethodCallText({
     const simpleMethodCall = `${prefix}${methodName}(${parameters})`;
     const baseMethodCall = attachAssignment(simpleMethodCall, parsedBody);
 
-    return isJsxElement(selectedNode)
-        ? `{${baseMethodCall}}`
-        : baseMethodCall;
-}
-
-function wrapMethodBodyForJSX(selectedNode, sourceSelection) {
-    return isJsxElement(selectedNode)
-        ? `(${sourceSelection})`
-        : sourceSelection
+    return wrapJsxExpression(selectedNode, baseMethodCall);
 }
 
 module.exports = {
@@ -177,5 +167,5 @@ module.exports = {
     findAppropriateParameters,
     parseSelectedText,
     selectExtractionLocation,
-    wrapMethodBodyForJSX
+    wrapMethodBodyForJSX: wrapJsxElement
 };
