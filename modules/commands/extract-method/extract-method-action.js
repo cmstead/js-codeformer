@@ -148,7 +148,8 @@ function extractMethod() {
                 destinationType: getNodeType(extractionLocation),
                 methodName: newMethodName,
                 parameters: parameterText,
-                selectedNode
+                selectedNode,
+                methodBody: sourceSelection
             }))
         .then((newMethodCallText) =>
             methodCallText = newMethodCallText)
@@ -172,6 +173,8 @@ function extractMethod() {
                 .applyEdit())
 
         .catch(function (error) {
+            console.log(error);
+            
             showErrorMessage(error.message);
         });
 }

@@ -48,13 +48,13 @@ class TestClass {
 
 const something = () => null
 
-function test() {
+function test1234() {
     const something = 'foo';
     const somethingElse = `${something} else`;
 }
 
 function doStuff() {
-    test()
+    test1234()
 }
 
 module.exports = {

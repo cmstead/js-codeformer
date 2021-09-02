@@ -7,7 +7,7 @@ const { findAppropriateParameters } = require('./parameter-search');
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
 const { getNodeType, first, last } = require('../../core-utils');
-const { JSX_ELEMENT, VARIABLE_DECLARATION } = require('../../constants/ast-node-types');
+const { JSX_ELEMENT, VARIABLE_DECLARATION, IDENTIFIER } = require('../../constants/ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -44,10 +44,16 @@ function isBodyReturnable(parsedBody) {
 
 function isFinalLineADeclaration(parsedBody) {
     const finalLine = last(parsedBody.body);
+    const finalLineIsADeclaration = getNodeType(finalLine) === VARIABLE_DECLARATION;
+    const firstDeclaration = finalLineIsADeclaration
+        ? first(finalLine.declarations)
+        : {};
 
-    return getNodeType(finalLine) === VARIABLE_DECLARATION
+
+    return finalLineIsADeclaration
         && finalLine.declarations.length === 1
-        && first(finalLine.declarations).init !== null;
+        && getNodeType(firstDeclaration.id) === IDENTIFIER
+        && firstDeclaration.init !== null;
 }
 
 function getAssignedValue(methodBody, parsedBody) {
@@ -58,7 +64,7 @@ function getAssignedValue(methodBody, parsedBody) {
 }
 
 function getMethodBodyRemainder(methodBody, parsedBody) {
-    if(parsedBody.body.length === 1) {
+    if (parsedBody.body.length === 1) {
         return '';
     }
 
@@ -129,16 +135,28 @@ function isJsxElement(node) {
     return getNodeType(node) === JSX_ELEMENT;
 }
 
+function attachAssignment(simpleMethodCall, parsedBody) {
+    if (isFinalLineADeclaration(parsedBody)) {
+        const finalDeclaration = last(parsedBody.body);
+        const finalDeclarator = last(finalDeclaration.declarations);
+        return `${finalDeclaration.kind} ${finalDeclarator.id.name} = ${simpleMethodCall}`;
+    }
+
+    return simpleMethodCall;
+}
+
 function buildMethodCallText({
     destinationType,
     methodName,
     parameters,
     selectedNode = null,
-    // methodBody = ''
+    methodBody = ''
 }) {
-    // const parsedBody = parse(methodBody);
+    const parsedBody = parse(methodBody);
     const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
-    const baseMethodCall = `${prefix}${methodName}(${parameters})`;
+
+    const simpleMethodCall = `${prefix}${methodName}(${parameters})`;
+    const baseMethodCall = attachAssignment(simpleMethodCall, parsedBody);
 
     return isJsxElement(selectedNode)
         ? `{${baseMethodCall}}`
