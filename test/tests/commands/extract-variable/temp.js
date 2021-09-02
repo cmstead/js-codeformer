@@ -48,6 +48,15 @@ class TestClass {
 
 const something = () => null
 
+function test() {
+    const something = 'foo';
+    const somethingElse = `${something} else`;
+}
+
+function doStuff() {
+    test()
+}
+
 module.exports = {
     convert
 };

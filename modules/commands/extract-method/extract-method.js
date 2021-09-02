@@ -6,8 +6,8 @@ const { findAppropriateParameters } = require('./parameter-search');
 
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
-const { getNodeType, first } = require('../../core-utils');
-const { JSX_ELEMENT } = require('../../constants/ast-node-types');
+const { getNodeType, first, last } = require('../../core-utils');
+const { JSX_ELEMENT, VARIABLE_DECLARATION } = require('../../constants/ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -33,8 +33,7 @@ function parseSelectedText(sourceCodeText, selectionLocation) {
     }
 }
 
-function bodyIsReturnable(methodBody) {
-    const parsedBody = parse(methodBody);
+function isBodyReturnable(parsedBody) {
     const firstChild = first(parsedBody.body);
     const childType = getNodeType(firstChild);
 
@@ -42,10 +41,47 @@ function bodyIsReturnable(methodBody) {
         && !childType.toLowerCase().includes('statement');
 }
 
+function isFinalLineADeclaration(parsedBody) {
+    const finalLine = last(parsedBody.body);
+    
+    return getNodeType(finalLine) === VARIABLE_DECLARATION
+        && finalLine.declarations.length === 1
+        && first(finalLine.declarations).init !== null;
+}
+
+function getAssignedValue(methodBody, parsedBody) {
+    const finalLine = last(parsedBody.body);
+    const assignedExpression = finalLine.declarations[0].init;
+
+    return getSourceSelection(methodBody, assignedExpression.loc);
+}
+
+function getMethodBodyRemainder(methodBody, parsedBody) {
+    const firstLine = first(parsedBody.body);
+    const nextToLastLine = parsedBody.body[parsedBody.body.length - 2];
+
+    console.log(firstLine);
+    console.log(nextToLastLine);
+
+    const selection = {
+        start: firstLine.loc.start,
+        end: nextToLastLine.loc.end
+    }
+
+    return getSourceSelection(methodBody, selection);
+}
+
 function insertReturnStatement(methodBody) {
-    if(bodyIsReturnable(methodBody)) {
+    const parsedBody = parse(methodBody);
+
+    if (isBodyReturnable(parsedBody)) {
         return `return ${methodBody}`;
-    } else {
+    } else if (isFinalLineADeclaration(parsedBody)) {
+        const assignedValue = getAssignedValue(methodBody, parsedBody);
+        const bodyRemainder = getMethodBodyRemainder(methodBody, parsedBody);
+
+        return `${bodyRemainder}\nreturn ${assignedValue};`;
+    }else {
         return methodBody;
     }
 }

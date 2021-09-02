@@ -1,0 +1,4 @@
+testMethod: function (a, b, c) {
+            const something = 'foo';
+return `${something} else`;
+        },
