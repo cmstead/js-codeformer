@@ -69,6 +69,7 @@
         "onCommand:cmstead.jscodeformer.extractVariable",
         "onCommand:cmstead.jscodeformer.inlineVariable",
         "onCommand:cmstead.jscodeformer.rename",
+        "onCommand:cmstead.jscodeformer.invertIf",
         "onCommand:cmstead.jscodeformer.pickBehavior",
         "onCommand:cmstead.jscodeformer.surroundWith",
         "onCommand:cmstead.jscodeformer.action",
@@ -156,6 +157,11 @@
                 "command": "cmstead.jscodeformer.rename",
                 "title": "Rename",
                 "description": "Rename"
+            },
+            {
+                "command": "cmstead.jscodeformer.invertIf",
+                "title": "Invert If",
+                "description": "Invert if/else statement"
             },
             {
                 "command": "cmstead.jscodeformer.surroundWith",
@@ -262,6 +268,11 @@
                 "mac": "cmd+shift+j r"
             },
             {
+                "command": "cmstead.jscodeformer.invertIf",
+                "key": "ctrl+shift+j n",
+                "mac": "cmd+shift+j n"
+            },
+            {
                 "command": "cmstead.jscodeformer.surroundWith",
                 "key": "ctrl+shift+j w",
                 "mac": "cmd+shift+j w"
@@ -315,6 +326,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.rename"
+                },
+                {
+                    "command": "cmstead.jscodeformer.invertIf"
                 }
             ],
             "cmstead.js-codeformer.conversions": [

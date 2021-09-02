@@ -57,6 +57,12 @@ function doStuff() {
     test1234()
 }
 
+if (true === true) {
+    console.log('okay');
+} else {
+    console.log('okay, but else');
+}
+
 module.exports = {
     convert
 };

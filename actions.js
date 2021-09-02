@@ -37,6 +37,13 @@ const actions = [
 		group: groups.REFACTORINGS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.invertIf',
+		path: './modules/commands/invert-if/invert-if-action',
+		name: 'invertIf',
+		title: 'Invert If',
+		group: groups.REFACTORINGS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.surroundWith',
 		path: './modules/commands/surround-with/surround-with-action',
 		name: 'surroundWith',
