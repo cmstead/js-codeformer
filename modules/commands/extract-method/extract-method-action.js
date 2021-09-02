@@ -23,10 +23,10 @@ const {
     buildMethodCallText,
     terminalNodes,
     findAppropriateParameters,
-    parseSelectedText,
-    wrapMethodBodyForJSX
+    parseSelectedText
 } = require('./extract-method');
 const { last, getNodeType } = require('../../core-utils');
+const { wrapJsxElement } = require('../../react-service');
 
 function selectExtractionPoint(
     extractionScopeList,
@@ -137,7 +137,7 @@ function extractMethod() {
             buildMethodText({
                 destinationType: getNodeType(extractionLocation),
                 methodName: newMethodName,
-                methodBody: wrapMethodBodyForJSX(selectedNode, sourceSelection),
+                methodBody: wrapJsxElement(selectedNode, sourceSelection),
                 parameters: parameterText.split(',').map(parameter => parameter.trim())
             }))
         .then((newMethodText) =>
