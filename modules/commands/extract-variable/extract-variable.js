@@ -8,8 +8,6 @@ const {
 
 const astNodeTypes = require('../../constants/ast-node-types');
 const { getNewVariableBuilder, variableTypes } = require('../../builders/VariableBuilder');
-const { getNodeType } = require('../../core-utils');
-const { JSX_ELEMENT } = require('../../constants/ast-node-types');
 
 const acceptableNodeTypes = [
     astNodeTypes.FUNCTION_DECLARATION,
@@ -29,14 +27,6 @@ const acceptableVariableTypes = variableTypes;
 const variableTypeList = Object
     .keys(acceptableVariableTypes)
     .map(key => acceptableVariableTypes[key]);
-
-function isJsxElement(node) {
-    return getNodeType(node) === JSX_ELEMENT;
-}
-
-function prepareVariableNameString(variableName, selectedNode) {
-    return isJsxElement(selectedNode) ? `{${variableName}}` : variableName;
-}
 
 function buildVariableDeclaration({
     variableType,
@@ -58,6 +48,5 @@ module.exports = {
     selectExtractionScopes,
     selectExtractionLocation,
     getSourceSelection,
-    variableTypeList,
-    prepareVariableNameString
+    variableTypeList
 };

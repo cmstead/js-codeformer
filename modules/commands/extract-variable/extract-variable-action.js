@@ -17,10 +17,10 @@ const {
     acceptableNodeTypes,
     variableTypeList,
     buildVariableDeclaration,
-    getSourceSelection,
-    prepareVariableNameString
+    getSourceSelection
 } = require('./extract-variable');
 const { last } = require('../../core-utils');
+const { wrapJsxExpression } = require('../../react-service');
 
 
 function selectExtractionPoint(
@@ -132,7 +132,7 @@ function extractVariable() {
 
         .then(({ extractionPosition, replacementRange }) => {
             const selectedNode = last(actionSetup.selectionPath)
-            const variableNameString = prepareVariableNameString(newVariableName, selectedNode);
+            const variableNameString = wrapJsxExpression(selectedNode, newVariableName);
             
             return getNewSourceEdit()
                 .addReplacementEdit(replacementRange, variableNameString)

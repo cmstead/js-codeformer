@@ -8,8 +8,7 @@ const astNodeTypes = require('../../constants/ast-node-types');
 const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder');
 const { getNodeType, first, last } = require('../../core-utils');
 const { VARIABLE_DECLARATION, IDENTIFIER } = require('../../constants/ast-node-types');
-const { isJsxElement } = require('typescript');
-const { wrapJsxExpression, wrapJsxElement } = require('../../react-service');
+const { wrapJsxExpression } = require('../../react-service');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
