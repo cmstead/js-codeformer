@@ -26,5 +26,22 @@ describe('invert if', function () {
 
             this.verify(result);
         });
+
+        it('inverts a negated expression', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+            const selection = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 8, column: 13 }),
+                end: buildEditorCoordinates({ line: 8, column: 13 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selection);
+
+            const ifNode = findNodeInPath(selectionPath, IF_STATEMENT);
+
+            const result = invertTestExpression(fixtureText, ifNode.test);
+
+            this.verify(result);
+        });
     });
 });
