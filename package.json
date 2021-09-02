@@ -160,7 +160,7 @@
             },
             {
                 "command": "cmstead.jscodeformer.invertIf",
-                "title": "Invert If",
+                "title": "Invert If Statement",
                 "description": "Invert if/else statement"
             },
             {

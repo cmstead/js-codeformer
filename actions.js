@@ -40,7 +40,7 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.invertIf',
 		path: './modules/commands/invert-if/invert-if-action',
 		name: 'invertIf',
-		title: 'Invert If',
+		title: 'Invert If Statement',
 		group: groups.REFACTORINGS
 	},
 	{
