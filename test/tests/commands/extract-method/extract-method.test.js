@@ -198,5 +198,25 @@ describe('extract method behaviors', function () {
 
             this.verify(methodText);
         });
+        
+        it('returns final value even when declaration is the only statement', function () {
+            const selectedLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 2, column: 5 }),
+                end: buildEditorCoordinates({ line: 2, column: 29 })
+            });
+
+            const testSource = readFileSource(__dirname, 'fixtures/extract-with-variable-declaration.js');
+
+            const selectedSource = getSourceSelection(testSource, selectedLocation);
+
+            const methodText = buildMethodText({
+                destinationType: OBJECT_EXPRESSION,
+                methodBody: selectedSource,
+                methodName: 'testMethod',
+                parameters: ['a', 'b', 'c']
+            });
+
+            this.verify(methodText);
+        });
     });
 });

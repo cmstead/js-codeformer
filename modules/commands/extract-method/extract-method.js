@@ -38,12 +38,13 @@ function isBodyReturnable(parsedBody) {
     const childType = getNodeType(firstChild);
 
     return parsedBody.body.length === 1
-        && !childType.toLowerCase().includes('statement');
+        && !childType.toLowerCase().includes('statement')
+        && childType !== VARIABLE_DECLARATION;
 }
 
 function isFinalLineADeclaration(parsedBody) {
     const finalLine = last(parsedBody.body);
-    
+
     return getNodeType(finalLine) === VARIABLE_DECLARATION
         && finalLine.declarations.length === 1
         && first(finalLine.declarations).init !== null;
@@ -57,18 +58,19 @@ function getAssignedValue(methodBody, parsedBody) {
 }
 
 function getMethodBodyRemainder(methodBody, parsedBody) {
+    if(parsedBody.body.length === 1) {
+        return '';
+    }
+
     const firstLine = first(parsedBody.body);
     const nextToLastLine = parsedBody.body[parsedBody.body.length - 2];
-
-    console.log(firstLine);
-    console.log(nextToLastLine);
 
     const selection = {
         start: firstLine.loc.start,
         end: nextToLastLine.loc.end
     }
 
-    return getSourceSelection(methodBody, selection);
+    return getSourceSelection(methodBody, selection) + '\n';
 }
 
 function insertReturnStatement(methodBody) {
@@ -80,8 +82,8 @@ function insertReturnStatement(methodBody) {
         const assignedValue = getAssignedValue(methodBody, parsedBody);
         const bodyRemainder = getMethodBodyRemainder(methodBody, parsedBody);
 
-        return `${bodyRemainder}\nreturn ${assignedValue};`;
-    }else {
+        return `${bodyRemainder}return ${assignedValue};`;
+    } else {
         return methodBody;
     }
 }
@@ -131,8 +133,10 @@ function buildMethodCallText({
     destinationType,
     methodName,
     parameters,
-    selectedNode = null
+    selectedNode = null,
+    // methodBody = ''
 }) {
+    // const parsedBody = parse(methodBody);
     const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
     const baseMethodCall = `${prefix}${methodName}(${parameters})`;
 

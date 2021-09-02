@@ -1,0 +1,3 @@
+testMethod: function (a, b, c) {
+            return 'foo';
+        },
