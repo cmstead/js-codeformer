@@ -4,7 +4,7 @@ const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require("
 const { buildNodePath } = require("../../../../modules/node-path");
 const { findNodeInPath } = require("../../../../modules/edit-utils/node-path-utils");
 const { IF_STATEMENT } = require("../../../../modules/constants/ast-node-types");
-const { invertTestExpression } = require("../../../../modules/commands/invert-if/invert-if");
+const { invertTestExpression, buildIfStatement } = require("../../../../modules/commands/invert-if/invert-if");
 
 require('../../../utilities/approvals').configure();
 
@@ -40,6 +40,18 @@ describe('invert if', function () {
             const ifNode = findNodeInPath(selectionPath, IF_STATEMENT);
 
             const result = invertTestExpression(fixtureText, ifNode.test);
+
+            this.verify(result);
+        });
+    });
+
+    describe('build if statement', function () {
+        it('properly creates if statement text', function () {
+            const consequent = "console.log('This is the consequent');";
+            const alternate = "console.log('This is the alternate');";
+            const test = "A !== B";
+
+            const result = buildIfStatement(consequent, alternate, test);
 
             this.verify(result);
         });

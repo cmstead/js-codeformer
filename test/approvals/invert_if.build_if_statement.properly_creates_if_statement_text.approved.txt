@@ -1,0 +1,5 @@
+if (A !== B) {
+	console.log('This is the consequent');
+} else {
+	console.log('This is the alternate');
+}
