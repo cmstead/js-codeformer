@@ -3,7 +3,6 @@ require('../../../utilities/approvals').configure();
 const { assert } = require('chai');
 
 const {
-    diffVariableSets,
     getLocallyScopedDeclarations,
     getSubordinateScopeParameters
 } = require('../../../../modules/commands/extract-method/parameter-search');
@@ -18,7 +17,8 @@ const { readFileSource } = require('../../../utilities/file-reader');
 const { parse } = require('../../../../modules/parser/parser');
 const { buildNodePath } = require('../../../../modules/node-path');
 const { buildExtractionPath } = require('../../../../modules/extraction-utils/ExtractionPathBuilder');
-const { acceptableNodeTypes } = require('../../../../modules/commands/extract-method/extract-method');
+const { acceptableNodeTypes, buildMethodCallText } = require('../../../../modules/commands/extract-method/extract-method');
+const { JSX_ELEMENT } = require('../../../../modules/constants/ast-node-types');
 
 const { getSourceSelection } = loadModule('source-utilities');
 const {
@@ -198,7 +198,7 @@ describe('extract method behaviors', function () {
 
             this.verify(methodText);
         });
-        
+
         it('returns final value even when declaration is the only statement', function () {
             const selectedLocation = buildLocationFromEditorCoordinates({
                 start: buildEditorCoordinates({ line: 2, column: 5 }),
@@ -218,5 +218,69 @@ describe('extract method behaviors', function () {
 
             this.verify(methodText);
         });
+    });
+
+    describe('build method call text', function () {
+
+        it('returns a simple function call when extraction is to a block scope', function () {
+            const destinationType = BLOCK_STATEMENT;
+            const methodName = 'testFunction';
+            const parameters = 'a, b, c';
+
+            const functionString = buildMethodCallText({
+                destinationType,
+                methodName,
+                parameters
+            });
+
+            this.verify(functionString);
+        });
+
+        it('returns a method-stype function call when extracted to an object scope', function () {
+            const destinationType = CLASS_BODY;
+            const methodName = 'testFunction';
+            const parameters = 'a, b, c';
+
+            const functionString = buildMethodCallText({
+                destinationType,
+                methodName,
+                parameters
+            });
+
+            this.verify(functionString);
+        });
+
+        it('returns a JSX expression when replacement node is a JSX element', function () {
+            const destinationType = CLASS_BODY;
+            const methodName = 'testFunction';
+            const parameters = 'a, b, c';
+            const selectedReplacementNode = { type: JSX_ELEMENT }
+
+            const functionString = buildMethodCallText({
+                destinationType,
+                methodName,
+                parameters,
+                selectedNode: selectedReplacementNode
+            });
+
+            this.verify(functionString);
+        });
+
+        it('assigns returned value to a variable when the body has a variable declaration at the end', function () {
+            const destinationType = CLASS_BODY;
+            const methodName = 'testFunction';
+            const parameters = 'a, b, c';
+            const methodBody = 'const testVar = "this is a test"';
+
+            const functionString = buildMethodCallText({
+                destinationType,
+                methodName,
+                parameters,
+                methodBody
+            });
+
+            this.verify(functionString);
+        });
+
     });
 });
