@@ -1,5 +1,7 @@
 module.exports = {
+    ARRAY_PATTERN: 'ArrayPattern',
     ARROW_FUNCTION_EXPRESSION: 'ArrowFunctionExpression',
+    ASSIGNMENT_PATTERN: 'AssignmentPattern',
     BLOCK_STATEMENT: 'BlockStatement',
     BINARY_EXPRESSION: 'BinaryExpression',
     CALL_EXPRESSION: 'CallExpression',
@@ -21,6 +23,7 @@ module.exports = {
     METHOD_DEFINITION: 'MethodDefinition',
     MEMBER_EXPRESSION: 'MemberExpression',
     OBJECT_EXPRESSION: 'ObjectExpression',
+    OBJECT_PATTERN: 'ObjectPattern',
     PROGRAM: 'Program',
     PROPERTY: 'Property',
     RETURN_STATEMENT: 'ReturnStatement',
