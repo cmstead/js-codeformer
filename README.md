@@ -167,13 +167,8 @@ Also, every person who submitted a bug or enhancement on JS Refactor, and those 
 The best place to find me is on Twitter: [@cm_stead](https://twitter.com/cm_stead)
 You can also find me on the web: [ChrisStead.net](http://chrisstead.net/)
 
-## What's Next ##
-
-JS CodeFormer is currently in a "baking in" period where behaviors are being tested and any bugs/shortcomings can be identified and resolved. As it looks like bug discovery has slowed, this will shift to V1.0.0 and the next most valuable piece of work will be identified and introduced.
-
 ## Known/Expected Issues ##
 
 Rename:
 
 - Renaming variables do not propagate to template HTML in Vue and Svelte
-- Renaming MAY not propagate into JSX nodes within reactjavascript and reacttypescript (not tested)
