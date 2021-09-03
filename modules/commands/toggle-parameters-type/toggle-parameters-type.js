@@ -2,24 +2,25 @@ const { OBJECT_PATTERN, ARRAY_PATTERN, ASSIGNMENT_PATTERN, IDENTIFIER } = requir
 const { getNodeType, first } = require("../../core-utils");
 const { getSourceSelection } = require("../../source-utilities");
 
+function buildParameterTabStop(source, parameterNode, tabStopNumber) {
+    const objectString = getSourceSelection(source, parameterNode.loc);
+    return `\${${tabStopNumber}:parameterName}: ${objectString}`;
+}
+
 function buildParameterObjectSnippet(source, parameters) {
-    let tabStopNumber = 1;
+    let tabStopNumber = 0;
 
     const parameterStrings = parameters.map(parameterNode => {
         const parameterNodeType = getNodeType(parameterNode);
-        console.log(parameterNodeType);
 
         if (parameterNodeType === ASSIGNMENT_PATTERN) {
             const assignmentString = getSourceSelection(source, parameterNode.loc);
 
             return assignmentString;
         } else if ([OBJECT_PATTERN, ARRAY_PATTERN].includes(parameterNodeType)) {
-            const objectString = getSourceSelection(source, parameterNode.loc);
-            const tabStopString = `\${${tabStopNumber}:parameterName}: ${objectString}`;
-
             tabStopNumber++;
 
-            return tabStopString;
+            return buildParameterTabStop(source, parameterNode, tabStopNumber);
         } else {
             return parameterNode.name;
         }
@@ -31,7 +32,7 @@ function buildParameterObjectSnippet(source, parameters) {
 function buildPositionalParameterString(source, parameters) {
     const parameterStrings = first(parameters).properties
         .map(property => {
-            if(getNodeType(property.value) !== IDENTIFIER) {
+            if (getNodeType(property.value) !== IDENTIFIER) {
                 return getSourceSelection(source, property.value.loc);
             } else {
                 return property.value.name;
