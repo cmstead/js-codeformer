@@ -5,7 +5,7 @@ const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { openInputBox } = require("../../ui-services/inputService");
-const { showErrorMessage, buildInfoMessage } = require("../../ui-services/messageService");
+const { showErrorMessage, buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { isValidVariableDeclaration, findVariableDeclaration, buildFunctionString } = require("./convert-to-function-declaration");
 
@@ -47,8 +47,12 @@ function convertToFunctionDeclaration() {
                     title: 'Enter a name for your function'
                 });
             } else {
-                functionNode = first(nodeToReplace.declarations).init;
-                return nodeToReplace.id.name;
+                const declarator = first(nodeToReplace.declarations);
+                functionNode = declarator.init;
+
+                console.log(nodeToReplace);
+
+                return declarator.id.name;
             }
         })
 
@@ -69,7 +73,7 @@ function convertToFunctionDeclaration() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 
