@@ -2,7 +2,7 @@ const { asyncPrepareActionSetup } = require("../../action-setup");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { findFunctionNode } = require("../../function-utils/function-node");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { functionNodeTypes, getNewFunctionString } = require("./convert-to-arrow-function");
 
@@ -23,7 +23,7 @@ function convertToArrowFunction() {
         .then(() => validateUserInput({
             value: functionNode,
             validator: (functionNode) => functionNode !== null,
-            message: 'No function selected; cannot convert to arrow function'
+            message: buildInfoMessage(`It looks like your cursor isn't on function that can be converted; canceling action`)
         }))
 
         .then(() =>
@@ -39,7 +39,7 @@ function convertToArrowFunction() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

@@ -5,7 +5,7 @@ const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { openSelectList } = require("../../ui-services/inputService");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getNewVariableString } = require("./change-variable-type");
 
@@ -24,7 +24,7 @@ function changeVariableType() {
             value: variableDeclarationNode,
             validator: (variableDeclarationNode) =>
                 variableDeclarationNode !== null && variableDeclarationNode.declarations.length === 1,
-            message: "No variable standalone declaration selected; cannot change declaration type"
+            message: buildInfoMessage("It looks like you're not on a variable declaration; canceling action")
         }))
         .then((newVariableDeclarationNode) =>
             variableDeclarationNode = newVariableDeclarationNode)
@@ -39,12 +39,12 @@ function changeVariableType() {
         .then((variableType) => validateUserInput({
             value: variableType,
             validator: (variableType) => variableTypeList.includes(variableType),
-            message: 'Invalid or no variable type selected; canceling declaration type change'
+            message: buildInfoMessage(`Whoops! You didn't choose a variable type; canceling action`)
         }))
 
         .then((variableType) => getNewVariableString(
-            variableType, 
-            variableDeclaratorNode, 
+            variableType,
+            variableDeclaratorNode,
             actionSetup.source))
 
         .then((newVariableString) => {
@@ -56,7 +56,7 @@ function changeVariableType() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

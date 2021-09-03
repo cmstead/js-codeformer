@@ -21,8 +21,10 @@ describe('convert to function declaration', function () {
         const selectionPath = buildNodePath(parsedText, selection);
 
         const variableNode = findVariableDeclaration(selectionPath);
+        const functionNode = variableNode.declarations[0].init;
+        const functionName = variableNode.declarations[0].id.name;
 
-        const functionString = buildFunctionString(variableNode, fixtureText);
+        const functionString = buildFunctionString(fixtureText, functionNode, functionName);
 
         this.verify(functionString);
     });
@@ -39,8 +41,10 @@ describe('convert to function declaration', function () {
         const selectionPath = buildNodePath(parsedText, selection);
 
         const variableNode = findVariableDeclaration(selectionPath);
+        const functionNode = variableNode.declarations[0].init;
+        const functionName = variableNode.declarations[0].id.name;
 
-        const functionString = buildFunctionString(variableNode, fixtureText);
+        const functionString = buildFunctionString(fixtureText, functionNode, functionName);
 
         this.verify(functionString);
     });
@@ -57,8 +61,10 @@ describe('convert to function declaration', function () {
         const selectionPath = buildNodePath(parsedText, selection);
 
         const variableNode = findVariableDeclaration(selectionPath);
+        const functionNode = variableNode.declarations[0].init;
+        const functionName = variableNode.declarations[0].id.name;
 
-        const functionString = buildFunctionString(variableNode, fixtureText);
+        const functionString = buildFunctionString(fixtureText, functionNode, functionName);
 
         this.verify(functionString);
     });
@@ -75,8 +81,10 @@ describe('convert to function declaration', function () {
         const selectionPath = buildNodePath(parsedText, selection);
 
         const variableNode = findVariableDeclaration(selectionPath);
+        const functionNode = variableNode.declarations[0].init;
+        const functionName = variableNode.declarations[0].id.name;
 
-        const functionString = buildFunctionString(variableNode, fixtureText);
+        const functionString = buildFunctionString(fixtureText, functionNode, functionName);
 
         this.verify(functionString);
     });

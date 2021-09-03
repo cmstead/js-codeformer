@@ -1,39 +1,76 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
+const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require("../../constants/ast-node-types");
+const { getNodeType, first } = require("../../core-utils");
+const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { openInputBox } = require("../../ui-services/inputService");
+const { showErrorMessage, buildInfoMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { isValidVariableDeclaration, findVariableDeclaration, buildFunctionString } = require("./convert-to-function-declaration");
 
+const replaceableFunctionTypes = [FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION];
 function convertToFunctionDeclaration() {
     let actionSetup = null;
-    let variableDeclaration = null;
+    let nodeToReplace = null;
 
+    let functionNode = null;
     return asyncPrepareActionSetup()
         .then((newActionSetup) => actionSetup = newActionSetup)
 
-    .then(() => findVariableDeclaration(actionSetup.selectionPath))
-    .then((newVariableDeclaration) => variableDeclaration = newVariableDeclaration)
+        .then(() => findVariableDeclaration(actionSetup.selectionPath))
 
-    .then(() => validateUserInput({
-        value: variableDeclaration,
-        validator: isValidVariableDeclaration,
-        message: 'Selection must be a variable declaration, and must be assigned a function; cannot convert to function declaration'
-    }))
+        .then((nodeToReplace) => {
+            if (nodeToReplace === null || !isValidVariableDeclaration(nodeToReplace)) {
+                return findNodeByCheckFunction(
+                    actionSetup.selectionPath,
+                    (node) => replaceableFunctionTypes.includes(getNodeType(node)))
+            } else {
+                return nodeToReplace
+            }
+        })
 
-    .then(() => buildFunctionString(variableDeclaration, actionSetup.source))
+        .then((newNodeToReplace) => nodeToReplace = newNodeToReplace)
+        .then((nodeToReplace) => validateUserInput({
+            value: nodeToReplace,
+            validator: (nodeToReplace) => nodeToReplace !== null,
+            message: buildInfoMessage('Be sure you have selected a function to convert; canceling action')
+        }))
 
-    .then((functionString) => {
-        const replacementRange = transformLocationToRange(variableDeclaration.loc);
+        .then(() => {
+            const nodeType = getNodeType(nodeToReplace);
 
-        return getNewSourceEdit()
-            .addReplacementEdit(replacementRange, functionString)
-            .applyEdit();
-    })
+            if (replaceableFunctionTypes.includes(nodeType)) {
+                functionNode = nodeToReplace;
 
-    .catch(function(error){
-        showErrorMessage(error.message);
-    });
+                return openInputBox({
+                    title: 'Enter a name for your function'
+                });
+            } else {
+                functionNode = first(nodeToReplace.declarations).init;
+                return nodeToReplace.id.name;
+            }
+        })
+
+        .then((functionName) => validateUserInput({
+            value: functionName,
+            validator: (functionName) => typeof functionName === 'string' && functionName.trim() !== '',
+            message: buildInfoMessage(`It looks like you didn't choose a name for your function; canceling action`)
+        }))
+
+        .then((functionName) => buildFunctionString(actionSetup.source, functionNode, functionName))
+
+        .then((functionString) => {
+            const replacementRange = transformLocationToRange(nodeToReplace.loc);
+
+            return getNewSourceEdit()
+                .addReplacementEdit(replacementRange, functionString)
+                .applyEdit();
+        })
+
+        .catch(function (error) {
+            showErrorMessage(error.message);
+        });
 }
 
 module.exports = {

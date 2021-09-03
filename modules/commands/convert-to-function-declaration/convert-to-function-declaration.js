@@ -20,7 +20,7 @@ function isValidVariableDeclaration(variableDeclaration) {
     const initType = declaration.init !== null ? getNodeType(declaration.init) : null;
 
     return declarationsLength === 1
-        && functionNodeTypes.includes(initType) 
+        && functionNodeTypes.includes(initType)
 }
 
 function isSingleLineArrowFunction(functionNode) {
@@ -37,11 +37,7 @@ function buildFunctionBody(functionNode, sourceText) {
 
 }
 
-function buildFunctionString(variableDeclaration, source) {
-    const variableDeclarator = first(variableDeclaration.declarations);
-    const functionNode = variableDeclarator.init;
-
-    const functionName = variableDeclarator.id.name
+function buildFunctionString(source, functionNode, functionName) {
     const functionType = FUNCTION_DECLARATION;
     const functionBody = buildFunctionBody(functionNode, source);
     const functionParameters = getFunctionParametersString(functionNode, source);
@@ -54,7 +50,7 @@ function buildFunctionString(variableDeclaration, source) {
         async: functionNode.async,
         generator: functionNode.generator
     })
-    .buildNewMethod();
+        .buildNewMethod();
 }
 
 module.exports = {
