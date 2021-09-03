@@ -8,6 +8,7 @@ function buildParameterTabStop(source, parameterNode, tabStopNumber) {
 }
 
 function buildParameterObjectSnippet(source, parameters) {
+    const destructuringPatterns = [OBJECT_PATTERN, ARRAY_PATTERN];
     let tabStopNumber = 0;
 
     const parameterStrings = parameters.map(parameterNode => {
@@ -17,7 +18,7 @@ function buildParameterObjectSnippet(source, parameters) {
             const assignmentString = getSourceSelection(source, parameterNode.loc);
 
             return assignmentString;
-        } else if ([OBJECT_PATTERN, ARRAY_PATTERN].includes(parameterNodeType)) {
+        } else if (destructuringPatterns.includes(parameterNodeType)) {
             tabStopNumber++;
 
             return buildParameterTabStop(source, parameterNode, tabStopNumber);
