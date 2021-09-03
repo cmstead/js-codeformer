@@ -119,6 +119,24 @@ Current Actions:
 - Introduce function
 - Lift and name function expression
 
+### Snippets ###
+
+VS Code comes with a number of basic snippets for generating common code. JS CodeFormer adds a few while trying to limit snippet overlap. This means the snippet selection will be enhanced rather than repeated.
+
+Current Snippets:
+
+- Variable
+- Parameter
+- Function (enhanced to support async and generators)
+- Arrow Function
+- Promise then
+- Promise catch
+- Try/Catch
+- Constructor
+- Function call
+- Template Literal
+- Immediately Invoked Function Expression (IIFE)
+
 ## Refactorings In Action ##
 
 **Extract Method**

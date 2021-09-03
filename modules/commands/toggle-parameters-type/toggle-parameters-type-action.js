@@ -14,8 +14,6 @@ function buildSnippetString(snippetText) {
 }
 
 function toggleParametersType() {
-    console.log('Attempting to toggle!!');
-
     let actionSetup = null;
     let functionTypes = [FUNCTION_DECLARATION, FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION];
     let functionNode = null;

@@ -173,8 +173,6 @@ function extractMethod() {
                 .applyEdit())
 
         .catch(function (error) {
-            console.log(error);
-            
             showErrorMessage(error.message);
         });
 }
