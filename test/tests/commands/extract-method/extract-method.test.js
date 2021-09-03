@@ -193,7 +193,7 @@ describe('extract method behaviors', function () {
                 destinationType: OBJECT_EXPRESSION,
                 methodBody: selectedSource,
                 methodName: 'testMethod',
-                parameters: ['a', 'b', 'c']
+                parameters: ['a', 'b', 'c', 'd']
             });
 
             this.verify(methodText);
