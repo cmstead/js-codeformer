@@ -1,5 +1,5 @@
-const { IDENTIFIER, OBJECT_PATTERN, ARRAY_PATTERN, ASSIGNMENT_PATTERN } = require("../../constants/ast-node-types");
-const { getNodeType } = require("../../core-utils");
+const { OBJECT_PATTERN, ARRAY_PATTERN, ASSIGNMENT_PATTERN, IDENTIFIER } = require("../../constants/ast-node-types");
+const { getNodeType, first } = require("../../core-utils");
 const { getSourceSelection } = require("../../source-utilities");
 
 function buildParameterObjectSnippet(source, parameters) {
@@ -28,6 +28,20 @@ function buildParameterObjectSnippet(source, parameters) {
     return `{ ${parameterStrings.join(', ')} }`;
 }
 
+function buildPositionalParameterString(source, parameters) {
+    const parameterStrings = first(parameters).properties
+        .map(property => {
+            if(getNodeType(property.value) !== IDENTIFIER) {
+                return getSourceSelection(source, property.value.loc);
+            } else {
+                return property.value.name;
+            }
+        });
+
+    return parameterStrings.join(', ');
+}
+
 module.exports = {
-    buildParameterObjectSnippet
+    buildParameterObjectSnippet,
+    buildPositionalParameterString
 };

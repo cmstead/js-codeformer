@@ -1,1 +1,1 @@
-{ a, b = 5, ${1:parameterName}: { c, d }, ${2:parameterName}: [ e ] }
+{ a, b = 5, ${1:parameterName}: { c, d }, ${2:parameterName}: [e] }

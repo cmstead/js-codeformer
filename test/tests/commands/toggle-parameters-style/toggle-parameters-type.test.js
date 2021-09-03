@@ -1,4 +1,4 @@
-const { buildParameterObjectSnippet } = require("../../../../modules/commands/toggle-parameters-type/toggle-parameters-type");
+const { buildParameterObjectSnippet, buildPositionalParameterString } = require("../../../../modules/commands/toggle-parameters-type/toggle-parameters-type");
 const { FUNCTION_DECLARATION } = require("../../../../modules/constants/ast-node-types");
 const { findNodeInPath } = require("../../../../modules/edit-utils/node-path-utils");
 const { buildNodePath } = require("../../../../modules/node-path");
@@ -25,6 +25,27 @@ describe('toggle parameters type', function () {
             const parameters = functionNode.params;
 
             const snippetText = buildParameterObjectSnippet(fixtureText, parameters);
+
+            this.verify(snippetText);
+        });
+    });
+
+    describe('build positional parameter string', function () {
+        it('creates positional parameters from destructured object parameters', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+            const selectionLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 5, column: 34 }),
+                end: buildEditorCoordinates({ line: 5, column: 34 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+            const functionNode = findNodeInPath(selectionPath, FUNCTION_DECLARATION);
+
+            const parameters = functionNode.params;
+
+            const snippetText = buildPositionalParameterString(fixtureText, parameters);
 
             this.verify(snippetText);
         });
