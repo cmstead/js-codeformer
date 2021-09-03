@@ -1,5 +1,5 @@
 const { OBJECT_PATTERN, ARRAY_PATTERN, ASSIGNMENT_PATTERN, IDENTIFIER } = require("../../constants/ast-node-types");
-const { getNodeType, first } = require("../../core-utils");
+const { getNodeType, first, last } = require("../../core-utils");
 const { getSourceSelection } = require("../../source-utilities");
 
 function buildParameterTabStop(source, parameterNode, tabStopNumber) {
@@ -43,7 +43,18 @@ function buildPositionalParameterString(source, parameters) {
     return parameterStrings.join(', ');
 }
 
+function getParameterListLocation(parameterList) {
+    const firstParameter = first(parameterList);
+    const lastParameter = last(parameterList);
+
+    return {
+        start: firstParameter.loc.start,
+        end: lastParameter.loc.end
+    };
+}
+
 module.exports = {
     buildParameterObjectSnippet,
-    buildPositionalParameterString
+    buildPositionalParameterString,
+    getParameterListLocation
 };

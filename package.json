@@ -79,6 +79,7 @@
         "onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
         "onCommand:cmstead.jscodeformer.convertToMethod",
         "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
+        "onCommand:cmstead.jscodeformer.toggleParametersType",
         "onCommand:cmstead.jscodeformer.convertToTemplateLiteral",
         "onCommand:cmstead.jscodeformer.changeVariableType",
         "onCommand:cmstead.jscodeformer.introduceVariable",
@@ -219,6 +220,11 @@
                 "description": "Toggle Between Shorthand and Standard Property Declaration"
             },
             {
+                "command": "cmstead.jscodeformer.toggleParametersType",
+                "title": "Toggle Function Parameters Declaration Type",
+                "description": "Toggle Between Positional and Destructured Parameters"
+            },
+            {
                 "command": "cmstead.jscodeformer.liftAndNameFunctionExpression",
                 "title": "Lift and Name Anonymous Function",
                 "description": "Lift a function expression from its current location and convert it to a declaration"
@@ -349,6 +355,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.togglePropertyDeclaration"
+                },
+                {
+                    "command": "cmstead.jscodeformer.toggleParametersType"
                 },
                 {
                     "command": "cmstead.jscodeformer.convertToTemplateLiteral"
