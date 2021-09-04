@@ -13,12 +13,10 @@ function buildSnippetString(snippetText) {
     return new vscode.SnippetString(snippetText);
 }
 
-const functionTypes = [FUNCTION_DECLARATION, FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION];
-
 function toggleParametersType() {
     let actionSetup = null;
+    let functionTypes = [FUNCTION_DECLARATION, FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION];
     let functionNode = null;
-    
     return asyncPrepareActionSetup()
         .then((newActionSetup) => actionSetup = newActionSetup)
 

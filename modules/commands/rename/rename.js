@@ -25,11 +25,13 @@ function getSelectionPathSegment(selectionPath, startFrom) {
     return selectionPathSegment;
 }
 
-function getSurroundingScope(selectionPath) {
+function getSurroundingScope(selectionPath, startFrom = selectionPath[selectionPath.length - 1]) {
     const scopeTypes = [BLOCK_STATEMENT, CLASS_BODY, PROGRAM];
     const isNodeAScope = node => scopeTypes.includes(getNodeType(node));
 
-    return reverse(selectionPath).find(isNodeAScope);
+    const selectionPathSegment = getSelectionPathSegment(selectionPath, startFrom)
+
+    return reverse(selectionPathSegment).find(isNodeAScope);
 }
 
 const renameableNodeTypes = [
