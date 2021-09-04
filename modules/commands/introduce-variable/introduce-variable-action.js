@@ -8,10 +8,13 @@ const { retrieveExtractionLocation, selectExtractionLocation } = require("../../
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
 const { buildExtractionScopeList, selectExtractionScopes } = require("../../extraction-utils/extractionScopeService");
 const { openSelectList } = require("../../ui-services/inputService");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { showErrorMessage, buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
+const { getSnippetText } = require("../surround-with/surround-with");
 
 const { IDENTIFIER } = astNodeTypes;
+
+const vscode = require('../../vscodeService').getVscode()
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -21,6 +24,10 @@ const acceptableNodeTypes = [
     astNodeTypes.METHOD_DEFINITION,
     astNodeTypes.WHILE_STATEMENT
 ];
+
+function buildSnippetString(snippetText) {
+    return new vscode.SnippetString(snippetText);
+}
 
 function introduceVariable() {
     let actionSetup = null;
@@ -42,7 +49,7 @@ function introduceVariable() {
             value: selectedNode,
             validator: (selectedNode) =>
                 getNodeType(selectedNode) === IDENTIFIER,
-            message: 'No variable use selected; canceling introduce variable action'
+            message: buildInfoMessage('No variable use selected; canceling introduce variable action')
         }))
         .then((newIdentifierNode) =>
             identifierNode = newIdentifierNode)
@@ -54,7 +61,7 @@ function introduceVariable() {
         .then((selectedScope) => validateUserInput({
             value: selectedScope,
             validator: (selectedScope) => selectedScope.trim() !== '',
-            message: 'No scope selected for variable introduction; canceling introduce variable action'
+            message: buildInfoMessage('No scope selected for variable introduction; canceling introduce variable action')
         }))
         .then((selectedScope) => {
             const extractionScopes = selectExtractionScopes(extractionPath, selectedScope);
@@ -68,7 +75,7 @@ function introduceVariable() {
         .then((variableType) => validateUserInput({
             value: variableType,
             validator: (variableType) => variableTypeList.includes(variableType),
-            message: 'No variable type selected; canceling introduce variable action'
+            message: buildInfoMessage('No variable type selected; canceling introduce variable action')
         }))
         .then((newVariableType) => variableType = newVariableType)
 
@@ -80,20 +87,20 @@ function introduceVariable() {
             getNewVariableBuilder({
                 type: variableType,
                 name: identifierNode.name,
-                value: 'null'
+                value: '\${1:null}'
             })
                 .buildVariableDeclaration())
 
         .then((variableDeclarationString) => {
             const editPosition = transformLocationPartToPosition(introductionLocation.start);
+            const snippetString = buildSnippetString(`${variableDeclarationString}\$0\n`);
 
-            return getNewSourceEdit()
-                .addInsertEdit(editPosition, `${variableDeclarationString}\n`)
-                .applyEdit();
+            return actionSetup.activeTextEditor
+                .insertSnippet(snippetString, editPosition);
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

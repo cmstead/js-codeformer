@@ -6,7 +6,7 @@ const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { getBodyCoordinates } = require("../../function-utils/function-location");
 const { getSourceSelection } = require("../../source-utilities");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { invertTestExpression, buildIfStatement } = require("./invert-if");
 
@@ -29,7 +29,7 @@ function invertIf() {
             validator: ifNode => ifNode !== null
                 && ifNode.alternate !== null
                 && getNodeType(ifNode.alternate) === BLOCK_STATEMENT,
-            message: 'Cannot locate acceptable conditional to invert; canceling invert if'
+            message: buildInfoMessage('Cannot locate acceptable conditional to invert; canceling invert if')
         }))
 
         .then((newIfNode) => ifNode = newIfNode)
@@ -49,7 +49,7 @@ function invertIf() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

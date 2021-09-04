@@ -3,7 +3,7 @@ const { PROPERTY } = require("../../constants/ast-node-types");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getPropertyDeclarationString, isConvertablePropertyNode } = require("./toggle-property-declaration");
 
@@ -14,7 +14,7 @@ function togglePropertyDeclaration() {
         .then((node) => validateUserInput({
             value: node,
             validator: (node) => node !== null && isConvertablePropertyNode(node),
-            message: 'Unable to find acceptable property node; canceling toggle declaration'
+            message: buildInfoMessage('Unable to find acceptable property node; canceling toggle declaration')
         }))
 
         .then((propertyNode) => {
@@ -27,7 +27,7 @@ function togglePropertyDeclaration() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

@@ -1,10 +1,10 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { IDENTIFIER } = require("../../constants/ast-node-types");
+const { IDENTIFIER, METHOD_DEFINITION } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { openInputBox } = require("../../ui-services/inputService");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const {
     getSurroundingScope,
@@ -14,8 +14,12 @@ const {
 } = require("./rename");
 
 function getDeclaratorName(declarator) {
-    if (getNodeType(declarator) === IDENTIFIER) {
+    const nodeType = getNodeType(declarator);
+
+    if (nodeType === IDENTIFIER) {
         return declarator.name;
+    } else if (nodeType === METHOD_DEFINITION) {
+        return declarator.key.name;
     }
 
     return declarator.id.name;
@@ -46,10 +50,11 @@ function rename() {
         .then((variableDeclarator) => validateUserInput({
             value: variableDeclarator,
             validator: (variableDeclarator) => variableDeclarator !== null,
-            message: 'No variable declaration selected, cannot rename'
+            message: buildInfoMessage('No variable declaration selected, cannot rename')
         }))
-        .then((newVariableDeclarator) =>
-            variableDeclarator = newVariableDeclarator)
+        .then((newVariableDeclarator) => {
+            variableDeclarator = newVariableDeclarator
+        })
 
         .then(() => originalName = getDeclaratorName(variableDeclarator))
 
@@ -61,12 +66,12 @@ function rename() {
         .then((enteredName) => validateUserInput({
             value: enteredName,
             validator: (enteredName) => enteredName.trim() !== '',
-            message: 'No variable name provided; canceling rename'
+            message: buildInfoMessage('No variable name provided; canceling rename')
         }))
         .then((enteredName) => newName = enteredName)
 
         .then(() =>
-            getSurroundingScope(actionSetup.selectionPath))
+            getSurroundingScope(actionSetup.selectionPath, variableDeclarator))
         .then((newSurroundingScope) =>
             surroundingScope = newSurroundingScope)
 
@@ -102,7 +107,7 @@ function rename() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

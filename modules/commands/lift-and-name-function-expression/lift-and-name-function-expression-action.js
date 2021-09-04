@@ -6,7 +6,7 @@ const { retrieveExtractionLocation } = require("../../extraction-utils/extractio
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
 const { buildExtractionScopeList, selectExtractionScopes } = require("../../extraction-utils/extractionScopeService");
 const { openSelectList, openInputBox } = require("../../ui-services/inputService");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { showErrorMessage, buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { isAnonymousFunction, acceptableNodeTypes, getNewFunctionString } = require("./lift-and-name-function-expression");
 
@@ -29,7 +29,7 @@ function liftAndNameFunctionExpression() {
             validateUserInput({
                 value: functionNode,
                 validator: (functionNode) => functionNode !== null,
-                message: 'No anonymous function found; canceling lift and name action'
+                message: buildInfoMessage('No anonymous function found; canceling lift and name action')
             }))
         .then((newFunctionNode) =>
             functionNode = newFunctionNode)
@@ -46,7 +46,7 @@ function liftAndNameFunctionExpression() {
         .then((selectedScopeString) => validateUserInput({
             value: selectedScopeString,
             validator: (selectedScopeString) => selectedScopeString.trim() !== '',
-            message: 'No scope selected; canceling lift and name action'
+            message: buildInfoMessage('No scope selected; canceling lift and name action')
         }))
         .then((selectedScopeString) => {
             const extractionScopes = selectExtractionScopes(extractionPath, selectedScopeString);
@@ -59,7 +59,7 @@ function liftAndNameFunctionExpression() {
         .then((functionName) => validateUserInput({
             value: functionName,
             validator: (functionName) => functionName.trim() !== '',
-            message: 'No function name provided; canceling lift and name action'
+            message: buildInfoMessage('No function name provided; canceling lift and name action')
         }))
         .then((newFunctionName) => functionName = newFunctionName)
 
@@ -75,7 +75,7 @@ function liftAndNameFunctionExpression() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

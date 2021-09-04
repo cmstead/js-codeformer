@@ -5,7 +5,7 @@ const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { openInputBox } = require("../../ui-services/inputService");
-const { showErrorMessage, buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { isValidVariableDeclaration, findVariableDeclaration, buildFunctionString } = require("./convert-to-function-declaration");
 
@@ -49,8 +49,6 @@ function convertToFunctionDeclaration() {
             } else {
                 const declarator = first(nodeToReplace.declarations);
                 functionNode = declarator.init;
-
-                console.log(nodeToReplace);
 
                 return declarator.id.name;
             }

@@ -1,7 +1,7 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { checkExpressionTree, buildTemplateLiteral, findNearestExpressionToConvert } = require("./convert-to-template-literal");
 
@@ -17,7 +17,7 @@ function convertToTemplateLiteral() {
         .then((expression) => validateUserInput({
             value: expression,
             validator: (expression) => checkExpressionTree(expression),
-            message: 'Invalid string or expression selected; canceling convert to template literal'
+            message: buildInfoMessage(`It looks like you either didn't select a string, or string concatenation; canceling action`)
         }))
         .then((selectedExpression) => expressionToConvert = selectedExpression)
 
@@ -30,6 +30,10 @@ function convertToTemplateLiteral() {
                 .addReplacementEdit(replacementRange, '`' + convertedString + '`')
                 .applyEdit();
         })
+
+        .catch(function(error){
+            parseAndShowMessage(error);
+        });
 }
 
 module.exports = {

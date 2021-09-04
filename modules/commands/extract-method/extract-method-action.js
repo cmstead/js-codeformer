@@ -1,7 +1,7 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
 const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
-const { showErrorMessage } = require('../../ui-services/messageService');
+const { buildInfoMessage, parseAndShowMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../ui-services/inputService');
 const { getSourceSelection } = require('../../source-utilities');
@@ -41,7 +41,7 @@ function selectExtractionPoint(
             validateUserInput({
                 value: selectedScope,
                 validator: (selectedScope) => selectedScope !== null,
-                message: 'Scope not selected; cannot extract method'
+                message: buildInfoMessage('Scope not selected; cannot extract method')
             });
 
             return selectExtractionScopes(extractionPath, selectedScope);
@@ -55,7 +55,7 @@ function getMethodName() {
             validateUserInput({
                 value: methodName,
                 validator: (methodName) => methodName !== '',
-                message: 'No method name entered; cannot extract method'
+                message: buildInfoMessage('No method name entered; cannot extract method')
             })
         );
 }
@@ -70,7 +70,7 @@ function getEditedParameters(suggestedParameters) {
             validateUserInput({
                 value: parameterText,
                 validator: () => true,
-                message: 'Parameter edit canceled; cannot extract method'
+                message: buildInfoMessage('Parameter edit canceled; cannot extract method')
             })
         );
 }
@@ -173,7 +173,7 @@ function extractMethod() {
                 .applyEdit())
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

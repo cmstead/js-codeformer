@@ -2,15 +2,17 @@ const { asyncPrepareActionSetup } = require("../../action-setup");
 const { getMethodBuilder, methodTypes } = require("../../builders/MethodBuilder");
 const astNodeTypes = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
-const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationPartToPosition } = require("../../edit-utils/textEditTransforms");
 const { retrieveExtractionLocation, selectExtractionLocation } = require("../../extraction-utils/extraction-location-service");
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
 const { buildExtractionScopeList, selectExtractionScopes } = require("../../extraction-utils/extractionScopeService");
 const { openSelectList, openInputBox } = require("../../ui-services/inputService");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
+const { getSnippetText } = require("../surround-with/surround-with");
 const { getNameOrCall, getNodeName, getParameterString } = require("./introduce-function");
+
+const vscode = require('../../vscodeService').getVscode()
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -20,6 +22,10 @@ const acceptableNodeTypes = [
     astNodeTypes.METHOD_DEFINITION,
     astNodeTypes.WHILE_STATEMENT
 ];
+
+function buildSnippetString(snippetText) {
+    return new vscode.SnippetString(snippetText);
+}
 
 function introduceFunction() {
     let actionSetup = null;
@@ -40,7 +46,7 @@ function introduceFunction() {
             value: selectedNode,
             validator: (selectedNode) =>
                 getNodeType(selectedNode) !== null,
-            message: 'No function name or use selected; canceling introduce function action'
+            message: buildInfoMessage('No function name or call selected; canceling introduce function action')
         }))
         .then((newIdentifierNode) =>
             identifierNode = newIdentifierNode)
@@ -52,7 +58,7 @@ function introduceFunction() {
         .then((selectedScope) => validateUserInput({
             value: selectedScope,
             validator: (selectedScope) => selectedScope.trim() !== '',
-            message: 'No scope selected for function introduction; canceling introduce function action'
+            message: buildInfoMessage('No scope selected for function introduction; canceling introduce function action')
         }))
         .then((selectedScope) => {
             const extractionScopes = selectExtractionScopes(extractionPath, selectedScope);
@@ -74,20 +80,19 @@ function introduceFunction() {
                 functionType: methodTypes.FUNCTION_DECLARATION,
                 functionName: getNodeName(identifierNode),
                 functionParameters: parameterString,
-                functionBody: 'throw new Error(`Function not implemented`);'
+                functionBody: `\${1:throw new Error('Function not implemented');}`
             })
                 .buildNewMethod())
 
         .then((functionDeclarationString) => {
             const editPosition = transformLocationPartToPosition(introductionLocation.start);
+            const snippetString = buildSnippetString(`${functionDeclarationString}\$0\n`);
 
-            return getNewSourceEdit()
-                .addInsertEdit(editPosition, `${functionDeclarationString}\n`)
-                .applyEdit();
+            return actionSetup.activeTextEditor.insertSnippet(snippetString, editPosition);
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

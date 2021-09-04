@@ -2,7 +2,7 @@ const { asyncPrepareActionSetup } = require("../../action-setup");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { findFunctionNode } = require("../../function-utils/function-node");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { functionNodeTypes, getNewFunctionString } = require("./convert-to-function-expression");
 
@@ -23,7 +23,7 @@ function convertToFunctionExpression() {
         .then(() => validateUserInput({
             value: functionNode,
             validator: (functionNode) => functionNode !== null,
-            message: 'No function selected; cannot convert to function expression'
+            message: buildInfoMessage(`It looks like you haven't selected a function to convert; canceling action`)
         }))
 
         .then(() =>
@@ -39,7 +39,7 @@ function convertToFunctionExpression() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

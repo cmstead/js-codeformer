@@ -7,7 +7,7 @@ const jsonc = require('jsonc-parser');
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { openSelectList } = require('../../ui-services/inputService');
 const { getLanguageSnippetName, getTemplateList, getSnippetText } = require('./surround-with');
-const { showErrorMessage } = require('../../ui-services/messageService');
+const { buildInfoMessage, parseAndShowMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
 const { transformLocationToRange } = require('../../edit-utils/textEditTransforms');
 
@@ -74,7 +74,7 @@ function surroundWith() {
         .then((selectedOption) => validateUserInput({
             value: selectedOption,
             validator: (selectedOption) => selectedOption !== '',
-            message: 'No surround option selected; cannot surround selection'
+            message: buildInfoMessage('No surround option selected; cannot surround selection')
         }))
 
         .then(function (selectedOption) {
@@ -86,7 +86,7 @@ function surroundWith() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

@@ -11,14 +11,32 @@ const {
     selectReplacementLocations: selectBoundMethodLocations
 } = require("./rename-method-replacement-locations");
 
-function getSurroundingScope(selectionPath) {
+function getSelectionPathSegment(selectionPath, startFrom) {
+    let selectionPathSegment = [];
+
+    for (let i = 0; i < selectionPath.length; i++) {
+        const node = selectionPath[i];
+
+        selectionPathSegment.push(node);
+
+        if (node === startFrom) {
+            break;
+        }
+    }
+
+    return selectionPathSegment;
+}
+
+function getSurroundingScope(selectionPath, startFrom = selectionPath[selectionPath.length - 1]) {
     const scopeTypes = [BLOCK_STATEMENT, CLASS_BODY, PROGRAM];
     const isNodeAScope = node => scopeTypes.includes(getNodeType(node));
 
-    return reverse(selectionPath).find(isNodeAScope);
+    const selectionPathSegment = getSelectionPathSegment(selectionPath, startFrom)
+
+    return reverse(selectionPathSegment).find(isNodeAScope);
 }
 
-const renameableNodeTypes = [IDENTIFIER, VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
+const renameableNodeTypes = [VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
 const functionNodeTypes = [
     FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
@@ -51,7 +69,7 @@ function isRenameableNode(selectionNode, node) {
     const nodeType = getNodeType(node);
     const selectionNotInParameters = !functionNodeTypes.includes(nodeType)
         || node.params.length === 0
-        || !isSelectionInParameters(node, selectionNode.loc) ;
+        || !isSelectionInParameters(node, selectionNode.loc);
 
     return selectionNotInParameters && (nodeIsADeclaration || nodeIsAFunctionProperty);
 }
@@ -77,13 +95,13 @@ function selectReplacementLocations(searchScope, variableDeclarator) {
 }
 
 function getVariableDeclaratorLocation(variableDeclarator) {
-    if(typeof variableDeclarator.id === 'object') {
+    if (typeof variableDeclarator.id === 'object') {
         return variableDeclarator.id.loc;
-    } else if(typeof variableDeclarator.key === 'object') {
+    } else if (typeof variableDeclarator.key === 'object') {
         return variableDeclarator.key.loc;
-    } else if(typeof variableDeclarator.callee === 'object') {
+    } else if (typeof variableDeclarator.callee === 'object') {
         return variableDeclarator.callee.loc;
-    } else if(getNodeType(variableDeclarator) === IDENTIFIER) {
+    } else if (getNodeType(variableDeclarator) === IDENTIFIER) {
         return variableDeclarator.loc;
     }
 

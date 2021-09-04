@@ -3,7 +3,7 @@ const { FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION, OBJECT_PATTERN } = requ
 const { getNodeType } = require("../../core-utils");
 const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getParameterListLocation, buildParameterObjectSnippet, buildPositionalParameterString } = require("./toggle-parameters-type");
 
@@ -30,7 +30,7 @@ function toggleParametersType() {
                 value: functionNode,
                 validator: functionNode => functionNode !== null
                     && functionNode.params.length > 0,
-                message: 'Unable to find function, or parameter list is empty; canceling convert action'
+                message: buildInfoMessage('Unable to find function, or parameter list is empty; canceling convert action')
             }))
         .then((newFunctionNode) =>
             functionNode = newFunctionNode)
@@ -53,7 +53,7 @@ function toggleParametersType() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

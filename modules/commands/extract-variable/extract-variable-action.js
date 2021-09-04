@@ -1,7 +1,7 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
 const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
-const { showErrorMessage } = require('../../ui-services/messageService');
+const { buildInfoMessage, parseAndShowMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../ui-services/inputService');
 const { buildEditLocations } = require('../../edit-utils/textEditTransforms');
@@ -36,7 +36,7 @@ function selectExtractionPoint(
             validateUserInput({
                 value: selectedScope,
                 validator: (selectedScope) => selectedScope !== null,
-                message: 'Scope not selected; cannot extract variable'
+                message: buildInfoMessage('Scope not selected; cannot extract variable')
             });
 
             return selectExtractionScopes(extractionPath, selectedScope);
@@ -53,7 +53,7 @@ function selectVariableType() {
             validateUserInput({
                 value: variableType,
                 validator: (variableType) => variableTypeList.includes(variableType),
-                message: 'Invalid variable type, or no variable type selected; cannot extract variable'
+                message: buildInfoMessage('Invalid variable type, or no variable type selected; cannot extract variable')
             })
         )
 }
@@ -65,7 +65,7 @@ function getVariableName() {
             validateUserInput({
                 value: variableName,
                 validator: (variableName) => variableName !== '',
-                message: 'No variable name entered; cannot extract variable'
+                message: buildInfoMessage('No variable name entered; cannot extract variable')
             })
         );
 }
@@ -141,7 +141,7 @@ function extractVariable() {
         })
 
         .catch(function (error) {
-            showErrorMessage(error.message);
+            parseAndShowMessage(error);
         });
 }
 

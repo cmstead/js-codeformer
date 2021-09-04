@@ -36,6 +36,8 @@ function convert() {
         });
 }
 
+woo();
+
 class TestClass {
     testMethod() {
         return 'foo';

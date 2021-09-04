@@ -1,5 +1,5 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { showErrorMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { validateUserInput } = require("../../validatorService");
@@ -40,10 +40,10 @@ function inlineVariable() {
             validateUserInput({
                 value: newVariableDeclarator,
                 validator: (selectedScope) => selectedScope !== null,
-                message: 'No variable declaration selected to inline'
+                message: buildInfoMessage('No variable declaration selected to inline')
             }))
         .then((newVariableDeclarator) =>
-                variableDeclarator = newVariableDeclarator)
+            variableDeclarator = newVariableDeclarator)
 
         .then(() =>
             getVariableDeclaration(nodePath))
@@ -65,7 +65,7 @@ function inlineVariable() {
         .then((newReplacementLocations) => validateUserInput({
             value: newReplacementLocations,
             validator: (replacementLocations) => replacementLocations.length > 0,
-            message: 'No variable usage found; cannot inline variable'
+            message: buildInfoMessage('No variable usage found; cannot inline variable')
         }))
         .then((newReplacementLocations) => {
             replacementLocations = newReplacementLocations
@@ -90,11 +90,12 @@ function inlineVariable() {
             const replacementRange = prepareEditLocation(deletionLocation);
             sourceEdit.addReplacementEdit(replacementRange, '');
 
-            sourceEdit.applyEdit();
+            return sourceEdit.applyEdit();
         })
 
-        .catch((error) =>
-            showErrorMessage(error.message));
+        .catch((error) => {
+            parseAndShowMessage(error);
+        }
 }
 
 module.exports = {
