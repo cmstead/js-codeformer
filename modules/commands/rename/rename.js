@@ -83,7 +83,7 @@ function pickDeclaratorNode(parent, node) {
     }
 }
 
-function findDeclaratorOrFunctionDeclaration(selectionPath) {
+function findSymbolToRename(selectionPath) {
     const selectionNode = last(selectionPath);
     const selectionParent = selectionPath[selectionPath.length - 2];
 
@@ -123,7 +123,7 @@ function getVariableDeclaratorLocation(variableDeclarator) {
 }
 
 module.exports = {
-    findDeclaratorOrFunctionDeclaration,
+    findSymbolToRename,
     getSurroundingScope,
     getVariableDeclaratorLocation,
     selectReplacementLocations

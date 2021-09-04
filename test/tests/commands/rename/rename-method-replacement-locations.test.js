@@ -4,7 +4,7 @@ const { buildNodePath } = require("../../../../modules/node-path");
 const { parse } = require("../../../../modules/parser/parser");
 const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require("../../../utilities/editor-to-location-selection-builder");
 const { readFileSource } = require("../../../utilities/file-reader");
-const { selectReplacementLocations, getSurroundingScope, findDeclaratorOrFunctionDeclaration } = require("../../../../modules/commands/rename/rename");
+const { selectReplacementLocations, getSurroundingScope, findSymbolToRename } = require("../../../../modules/commands/rename/rename");
 
 describe('rename replacement location finder', function () {
     it('find all references to a class method for renaming', function () {
@@ -24,7 +24,7 @@ describe('rename replacement location finder', function () {
 
         const nearestScope = getSurroundingScope(selectionPath);
 
-        const variableDeclaratorNode = findDeclaratorOrFunctionDeclaration(selectionPath);
+        const variableDeclaratorNode = findSymbolToRename(selectionPath);
 
         const renameLocations = selectReplacementLocations(nearestScope, variableDeclaratorNode);
 
@@ -49,7 +49,7 @@ describe('rename replacement location finder', function () {
 
         const nearestScope = getSurroundingScope(selectionPath);
 
-        const variableDeclaratorNode = findDeclaratorOrFunctionDeclaration(selectionPath);
+        const variableDeclaratorNode = findSymbolToRename(selectionPath);
 
         const renameLocations = selectReplacementLocations(nearestScope, variableDeclaratorNode);
 

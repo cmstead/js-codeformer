@@ -1,5 +1,5 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { IDENTIFIER, METHOD_DEFINITION, ASSIGNMENT_PATTERN, ARRAY_PATTERN } = require("../../constants/ast-node-types");
+const { IDENTIFIER, METHOD_DEFINITION, ASSIGNMENT_PATTERN } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
@@ -9,7 +9,7 @@ const { validateUserInput } = require("../../validatorService");
 const {
     getSurroundingScope,
     selectReplacementLocations,
-    findDeclaratorOrFunctionDeclaration,
+    findSymbolToRename,
     getVariableDeclaratorLocation
 } = require("./rename");
 
@@ -56,7 +56,7 @@ function rename() {
             actionSetup = newActionSetup)
 
         .then(() =>
-            findDeclaratorOrFunctionDeclaration(actionSetup.selectionPath))
+            findSymbolToRename(actionSetup.selectionPath))
         .then((variableDeclarator) => validateUserInput({
             value: variableDeclarator,
             validator: (variableDeclarator) => variableDeclarator !== null,
