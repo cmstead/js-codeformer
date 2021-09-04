@@ -1,5 +1,5 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { IDENTIFIER, METHOD_DEFINITION } = require("../../constants/ast-node-types");
+const { IDENTIFIER, METHOD_DEFINITION, ASSIGNMENT_PATTERN, ARRAY_PATTERN } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
@@ -20,6 +20,8 @@ function getDeclaratorName(declarator) {
         return declarator.name;
     } else if (nodeType === METHOD_DEFINITION) {
         return declarator.key.name;
+    } else if (nodeType === ASSIGNMENT_PATTERN) {
+        return declarator.left.name;
     }
 
     return declarator.id.name;
@@ -30,6 +32,14 @@ function locationsMatch(sourceLocation, testLocation) {
         && sourceLocation.start.column === testLocation.start.column
         && sourceLocation.end.line === testLocation.end.line
         && sourceLocation.end.column === testLocation.end.column;
+}
+
+function getDeclaratorElement(declaratorNode) {
+    if (getNodeType(declaratorNode) === ASSIGNMENT_PATTERN) {
+        return declaratorNode.left;
+    }
+
+    return declaratorNode;
 }
 
 function rename() {
@@ -76,7 +86,7 @@ function rename() {
             surroundingScope = newSurroundingScope)
 
         .then(() =>
-            selectReplacementLocations(surroundingScope, variableDeclarator))
+            selectReplacementLocations(surroundingScope, getDeclaratorElement(variableDeclarator)))
         .then((newReplacementLocations) => {
             replacementLocations = newReplacementLocations
             replacementLocations.reverse();

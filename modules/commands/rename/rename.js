@@ -1,4 +1,4 @@
-const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ASSIGNMENT_PATTERN, ARRAY_PATTERN } = require('../../constants/ast-node-types');
+const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ASSIGNMENT_PATTERN, ARRAY_PATTERN, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require('../../constants/ast-node-types');
 const { getNodeType, reverse, last } = require('../../core-utils');
 
 const {
@@ -40,6 +40,12 @@ const renameableNodeTypes = [
     METHOD_DEFINITION
 ];
 
+const functionNodes = [
+    FUNCTION_EXPRESSION,
+    FUNCTION_DECLARATION,
+    ARROW_FUNCTION_EXPRESSION
+];
+
 function isRenameable(node, parent) {
     const parentNodeType = getNodeType(parent);
 
@@ -48,23 +54,41 @@ function isRenameable(node, parent) {
     const nodeIsAnAssignmentPatternDeclaration = parentNodeType === ASSIGNMENT_PATTERN
         && parent.left === node;
     const nodeIsAPropertyKey = parentNodeType === PROPERTY;
+    const nodeIsAnArrowFunctionParam = parentNodeType === ARROW_FUNCTION_EXPRESSION;
 
-    return renameableNodeTypes.includes(parentNodeType)
-        || nodeIsAnAssignmentPatternDeclaration
-        || nodeIsDestructuredObjectProperty
-        || nodeIsADestructuredArrayValue
-        || nodeIsAPropertyKey;
+    return getNodeType(node) === IDENTIFIER
+        && (
+            renameableNodeTypes.includes(parentNodeType)
+            || nodeIsAnAssignmentPatternDeclaration
+            || nodeIsDestructuredObjectProperty
+            || nodeIsADestructuredArrayValue
+            || nodeIsAPropertyKey
+            || nodeIsAnArrowFunctionParam
+        );
 
+}
+
+function isParameterNode(node, parentNodeType) {
+    return functionNodes.includes(parentNodeType) && parentNodeType.id !== node
+}
+
+function pickDeclaratorNode(parent, node) {
+    const parentNodeType = getNodeType(parent);
+
+    if (parentNodeType === ARRAY_PATTERN
+        || isParameterNode(node, parentNodeType)) {
+        return node;
+    } else {
+        return parent;
+    }
 }
 
 function findDeclaratorOrFunctionDeclaration(selectionPath) {
     const selectionNode = last(selectionPath);
     const selectionParent = selectionPath[selectionPath.length - 2];
 
-    const nodeType = getNodeType(selectionNode);
-
-    if (nodeType === IDENTIFIER && isRenameable(selectionNode, selectionParent)) {
-        return selectionParent;
+    if (isRenameable(selectionNode, selectionParent)) {
+        return pickDeclaratorNode(selectionParent, selectionNode);
     }
 
     return null;
@@ -91,6 +115,8 @@ function getVariableDeclaratorLocation(variableDeclarator) {
         return variableDeclarator.callee.loc;
     } else if (getNodeType(variableDeclarator) === IDENTIFIER) {
         return variableDeclarator.loc;
+    } else if (getNodeType(variableDeclarator) === ASSIGNMENT_PATTERN) {
+        return variableDeclarator.left.loc;
     }
 
     throw new Error(`Variable delaration type unknown: ${getNodeType(variableDeclarator)}`)
