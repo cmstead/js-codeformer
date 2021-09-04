@@ -1,11 +1,11 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION, OBJECT_PATTERN } = require("../../constants/ast-node-types");
+const { OBJECT_PATTERN, CALL_EXPRESSION } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
-const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
+const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { getParameterListLocation, buildParameterObjectSnippet, buildPositionalParameterString } = require("./toggle-parameters-type");
+const { getParameterListLocation, buildParameterObjectSnippet, buildPositionalParameterString } = require("./toggle-arguments-type");
 
 const vscode = require('../../vscodeService').getVscode();
 
@@ -13,9 +13,7 @@ function buildSnippetString(snippetText) {
     return new vscode.SnippetString(snippetText);
 }
 
-const functionTypes = [FUNCTION_DECLARATION, FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION];
-
-function toggleParametersType() {
+function toggleArgumentsType() {
     let actionSetup = null;
     let functionNode = null;
     
@@ -23,15 +21,12 @@ function toggleParametersType() {
         .then((newActionSetup) => actionSetup = newActionSetup)
 
         .then(() =>
-            findNodeByCheckFunction(
-                actionSetup.selectionPath,
-                node => functionTypes.includes(getNodeType(node))
-            ))
-        .then((functionNode) =>
+            findNodeInPath(actionSetup.selectionPath, CALL_EXPRESSION))
+        .then((functionCallNode) =>
             validateUserInput({
-                value: functionNode,
-                validator: functionNode => functionNode !== null
-                    && functionNode.params.length > 0,
+                value: functionCallNode,
+                validator: functionCallNode => functionCallNode !== null
+                    && functionCallNode.params.length > 0,
                 message: buildInfoMessage('Unable to find function, or parameter list is empty; canceling convert action')
             }))
         .then((newFunctionNode) =>
@@ -60,5 +55,5 @@ function toggleParametersType() {
 }
 
 module.exports = {
-    toggleParametersType
+    toggleParametersType: toggleArgumentsType
 };
