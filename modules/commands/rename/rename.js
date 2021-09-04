@@ -55,6 +55,7 @@ function isRenameable(node, parent) {
         && parent.left === node;
     const nodeIsAPropertyKey = parentNodeType === PROPERTY;
     const nodeIsAnArrowFunctionParam = parentNodeType === ARROW_FUNCTION_EXPRESSION;
+    const nodeIsAMethodParam = parentNodeType === FUNCTION_EXPRESSION;
 
     return getNodeType(node) === IDENTIFIER
         && (
@@ -64,6 +65,7 @@ function isRenameable(node, parent) {
             || nodeIsADestructuredArrayValue
             || nodeIsAPropertyKey
             || nodeIsAnArrowFunctionParam
+            || nodeIsAMethodParam
         );
 
 }
