@@ -71,7 +71,7 @@ Current refactorings:
 - Extract Method/Function
     - Windows: `ctrl+shift+j, m`
     - Mac: `cmd+shift+j, m`
-- Extract to Parameter
+- Extract Variable to Parameter
     - Windows: `ctrl+shift+j, p`
     - Mac: `cmd+shift+j, p`
 - Extract Variable

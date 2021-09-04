@@ -141,7 +141,7 @@
             },
             {
                 "command": "cmstead.jscodeformer.extractToParameter",
-                "title": "Extract To Parameter",
+                "title": "Extract Variable To Parameter",
                 "description": "Extract selected variable to a function parameter"
             },
             {

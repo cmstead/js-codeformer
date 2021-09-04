@@ -12,7 +12,7 @@ const actions = [
 		commandId: 'cmstead.jscodeformer.extractToParameter',
 		path: './modules/commands/extract-to-parameter/extract-to-parameter-action',
 		name: 'extractToParameter',
-		title: 'Extract To Parameter',
+		title: 'Extract Variable To Parameter',
 		group: groups.REFACTORINGS
 	},
 	{
