@@ -1,7 +1,5 @@
-const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, FUNCTION_EXPRESSION, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ARROW_FUNCTION_EXPRESSION } = require('../../constants/ast-node-types');
+const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ASSIGNMENT_PATTERN, ARRAY_PATTERN } = require('../../constants/ast-node-types');
 const { getNodeType, reverse, last } = require('../../core-utils');
-const { findNodeByCheckFunction } = require('../../edit-utils/node-path-utils');
-const { nodeContainsSelection } = require('../../node-path');
 
 const {
     selectReplacementLocations: selectVariableLocations
@@ -36,50 +34,40 @@ function getSurroundingScope(selectionPath, startFrom = selectionPath[selectionP
     return reverse(selectionPathSegment).find(isNodeAScope);
 }
 
-const renameableNodeTypes = [VARIABLE_DECLARATOR, FUNCTION_DECLARATION, METHOD_DEFINITION];
-const functionNodeTypes = [
+const renameableNodeTypes = [
+    VARIABLE_DECLARATOR,
     FUNCTION_DECLARATION,
-    FUNCTION_EXPRESSION,
-    ARROW_FUNCTION_EXPRESSION
+    METHOD_DEFINITION
 ];
 
-function isNodeAFunctionProperty(node) {
-    return getNodeType(node) === PROPERTY
-        && getNodeType(node.value) === FUNCTION_EXPRESSION
-}
+function isRenameable(node, parent) {
+    const parentNodeType = getNodeType(parent);
 
-function isNodeADeclaration(node) {
-    return renameableNodeTypes.includes(getNodeType(node))
-}
+    const nodeIsDestructuredObjectProperty = parentNodeType === IDENTIFIER;
+    const nodeIsADestructuredArrayValue = parentNodeType === ARRAY_PATTERN;
+    const nodeIsAnAssignmentPatternDeclaration = parentNodeType === ASSIGNMENT_PATTERN
+        && parent.left === node;
+    const nodeIsAPropertyKey = parentNodeType === PROPERTY;
 
-function isSelectionInParameters(node, location) {
-    let selectionFound = false;
+    return renameableNodeTypes.includes(parentNodeType)
+        || nodeIsAnAssignmentPatternDeclaration
+        || nodeIsDestructuredObjectProperty
+        || nodeIsADestructuredArrayValue
+        || nodeIsAPropertyKey;
 
-    node.params.forEach(function (parameter) {
-        selectionFound = selectionFound || nodeContainsSelection(parameter, location);
-    });
-
-    return selectionFound;
-}
-
-function isRenameableNode(selectionNode, node) {
-    const nodeIsADeclaration = isNodeADeclaration(node);
-    const nodeIsAFunctionProperty = isNodeAFunctionProperty(node);
-
-    const nodeType = getNodeType(node);
-    const selectionNotInParameters = !functionNodeTypes.includes(nodeType)
-        || node.params.length === 0
-        || !isSelectionInParameters(node, selectionNode.loc);
-
-    return selectionNotInParameters && (nodeIsADeclaration || nodeIsAFunctionProperty);
 }
 
 function findDeclaratorOrFunctionDeclaration(selectionPath) {
     const selectionNode = last(selectionPath);
+    const selectionParent = selectionPath[selectionPath.length - 2];
 
-    return findNodeByCheckFunction(
-        selectionPath,
-        (node) => isRenameableNode(selectionNode, node));
+    const nodeType = getNodeType(selectionNode);
+
+    if (nodeType === IDENTIFIER && isRenameable(selectionNode, selectionParent)) {
+        return selectionParent;
+    }
+
+    return null;
 }
 
 function isNodeAVariableOrFunctionDeclaration(nodeType) {
