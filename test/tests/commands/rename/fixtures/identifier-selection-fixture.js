@@ -1,6 +1,6 @@
 class TestClass {
-    yay(a, b = 5, {c, d}, [e]) {
-        function aTest() {
+    yay(aa, b = 5, {c, d}, [e]) {
+        function aTest(a) {
             const f = something
         }
 
