@@ -1,0 +1,42 @@
+{
+  "left": {
+    "loc": {
+      "end": {
+        "column": 13,
+        "line": 2
+      },
+      "start": {
+        "column": 12,
+        "line": 2
+      }
+    },
+    "name": "b",
+    "type": "Identifier"
+  },
+  "loc": {
+    "end": {
+      "column": 17,
+      "line": 2
+    },
+    "start": {
+      "column": 12,
+      "line": 2
+    }
+  },
+  "right": {
+    "loc": {
+      "end": {
+        "column": 17,
+        "line": 2
+      },
+      "start": {
+        "column": 16,
+        "line": 2
+      }
+    },
+    "raw": "5",
+    "type": "Literal",
+    "value": 5
+  },
+  "type": "AssignmentPattern"
+}
