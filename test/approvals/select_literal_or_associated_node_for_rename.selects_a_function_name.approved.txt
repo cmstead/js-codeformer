@@ -1,0 +1,14 @@
+{
+  "loc": {
+    "end": {
+      "column": 22,
+      "line": 3
+    },
+    "start": {
+      "column": 17,
+      "line": 3
+    }
+  },
+  "name": "aTest",
+  "type": "Identifier"
+}

@@ -1,0 +1,41 @@
+{
+  "id": {
+    "loc": {
+      "end": {
+        "column": 19,
+        "line": 4
+      },
+      "start": {
+        "column": 18,
+        "line": 4
+      }
+    },
+    "name": "f",
+    "type": "Identifier"
+  },
+  "init": {
+    "loc": {
+      "end": {
+        "column": 31,
+        "line": 4
+      },
+      "start": {
+        "column": 22,
+        "line": 4
+      }
+    },
+    "name": "something",
+    "type": "Identifier"
+  },
+  "loc": {
+    "end": {
+      "column": 31,
+      "line": 4
+    },
+    "start": {
+      "column": 18,
+      "line": 4
+    }
+  },
+  "type": "VariableDeclarator"
+}
