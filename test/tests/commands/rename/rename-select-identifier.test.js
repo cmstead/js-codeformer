@@ -36,4 +36,19 @@ describe('select literal or associated node for rename', function () {
 
         this.verifyAsJSON(symbolToRename);
     });
+
+    it('selects a method name', function () {
+        const selection = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 2, column: 7 }),
+            end: buildEditorCoordinates({ line: 2, column: 7 })
+        });
+
+        const fixtureText = readFileSource(__dirname, 'fixtures/identifier-selection-fixture.js');
+        const parsedSource = parse(fixtureText)
+        const selectionPath = buildNodePath(parsedSource, selection);
+
+        const symbolToRename = findSymbolToRename(selectionPath);
+
+        this.verifyAsJSON(symbolToRename);
+    });
 });
