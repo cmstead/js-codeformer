@@ -1,0 +1,14 @@
+{
+  "loc": {
+    "end": {
+      "column": 29,
+      "line": 2
+    },
+    "start": {
+      "column": 28,
+      "line": 2
+    }
+  },
+  "name": "e",
+  "type": "Identifier"
+}
