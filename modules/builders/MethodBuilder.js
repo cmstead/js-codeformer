@@ -4,9 +4,10 @@ const {
     METHOD_DEFINITION,
     ARROW_FUNCTION_EXPRESSION,
     RETURN_STATEMENT,
-    OBJECT_EXPRESSION
+    OBJECT_EXPRESSION,
+    EMPTY_STATEMENT
 } = require("../constants/ast-node-types");
-const { getNodeType } = require("../core-utils");
+const { getNodeType, first } = require("../core-utils");
 const { parse } = require("../parser/parser");
 const { getSourceSelection } = require("../source-utilities");
 
@@ -17,6 +18,11 @@ const methodTypes = {
     OBJECT_METHOD: 'ObjectMethod',
     ARROW_FUNCTION_EXPRESSION: ARROW_FUNCTION_EXPRESSION
 };
+
+const arrowFunctionBuildTypes = {
+    AS_MULTILINE: 'multiline',
+    AS_STANDARD: 'standard'
+}
 
 class MethodBuilder {
     constructor({
@@ -71,28 +77,46 @@ class MethodBuilder {
     }
 
     isSingleLine(parsedBody) {
-        return parsedBody.body.length === 1;
+        return parsedBody.body.length === 1
+            || (
+                parsedBody.body.length === 2
+                && getNodeType(parsedBody.body[1]) === EMPTY_STATEMENT
+            );
     }
 
     getSingleLineArrowBody(parsedBody) {
-        const argument = parsedBody.body[0].argument;
+        const argument = first(parsedBody.body).argument;
         const argumentLocation = argument.loc;
         const arrowSource = getSourceSelection(this.functionBody, argumentLocation);
         return getNodeType(argument) === OBJECT_EXPRESSION
-                ? `(${arrowSource})`
-                : arrowSource;
+            ? `(${arrowSource})`
+            : arrowSource;
     }
-    buildArrowFunction() {
+
+    getMultilineArrowBody(parsedBody, buildAsMultiline) {
+        console.log(parsedBody);
+        console.log(this.isSingleLine(parsedBody));
+        console.log(this.isReturnStatement(parsedBody));
+        return this.isSingleLine(parsedBody)
+            && !this.isReturnStatement(parsedBody)
+            && buildAsMultiline
+            ? `return ${this.functionBody}`
+            : this.functionBody;
+    }
+
+    buildArrowFunction(arrowFunctionType = arrowFunctionBuildTypes.AS_STANDARD) {
         const parsedBody = parse(this.functionBody);
+        const buildAsMultiline = arrowFunctionType === arrowFunctionBuildTypes.AS_MULTILINE;
 
         if (this.isSingleLine(parsedBody)
             && this.isNotEmpty(this.functionBody)
-            && this.isReturnStatement(parsedBody)) {
+            && this.isReturnStatement(parsedBody)
+            && !buildAsMultiline) {
 
             return `${this.asyncPrefix}(${this.functionParameters}) => ${this.getSingleLineArrowBody(parsedBody)}`;
         } else {
             return `${this.asyncPrefix}(${this.functionParameters}) => {
-                ${this.functionBody}
+                ${this.getMultilineArrowBody(parsedBody, buildAsMultiline)}
             }`;
         }
     }
@@ -120,10 +144,10 @@ function getMethodBuilder({
     async,
     generator
 }) {
-    return new MethodBuilder({ 
-        functionType, 
-        functionName, 
-        functionParameters, 
+    return new MethodBuilder({
+        functionType,
+        functionName,
+        functionParameters,
         functionBody,
         async,
         generator
@@ -133,5 +157,6 @@ function getMethodBuilder({
 module.exports = {
     getMethodBuilder,
     MethodBuilder,
-    methodTypes
+    methodTypes,
+    arrowFunctionBuildTypes
 }

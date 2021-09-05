@@ -9,6 +9,7 @@ module.exports = {
     CLASS_PROPERTY: 'ClassProperty',
     CONDITIONAL_EXPRESSION: 'ConditionalExpression',
     DO_WHILE_STATEMENT: 'DoWhileStatement',
+    EMPTY_STATEMENT: 'EmptyStatement',
     FOR_STATEMENT: 'ForStatement',
     FOR_IN_STATEMENT: 'ForInStatement',
     FOR_OF_STATEMENT: 'ForOfStatement',

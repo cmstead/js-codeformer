@@ -8,7 +8,7 @@ const {
     OBJECT_METHOD,
     ARROW_FUNCTION_EXPRESSION
 } = methodBuilderModule.methodTypes;
-const { MethodBuilder } = methodBuilderModule;
+const { MethodBuilder, arrowFunctionBuildTypes: { AS_MULTILINE } } = methodBuilderModule;
 
 describe('Method Builder', function () {
     it('builds a function declaration by default', function () {
@@ -99,6 +99,30 @@ describe('Method Builder', function () {
         });
 
         const methodText = methodBuilder.buildNewMethod();
+
+        this.verify(methodText);
+    });
+
+    it('Arrow function builds single-line arrow function as multiline when specified', function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: 'return { foo: a };',
+            functionType: ARROW_FUNCTION_EXPRESSION
+        });
+
+        const methodText = methodBuilder.buildArrowFunction(AS_MULTILINE);
+
+        this.verify(methodText);
+    });
+
+    it('Adds return for explicit mulitiline build', function () {
+        const methodBuilder = new MethodBuilder({
+            functionParameters: 'a',
+            functionBody: '{ foo: a };',
+            functionType: ARROW_FUNCTION_EXPRESSION
+        });
+
+        const methodText = methodBuilder.buildArrowFunction(AS_MULTILINE);
 
         this.verify(methodText);
     });
