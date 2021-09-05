@@ -72,6 +72,13 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.toggleArgumentsType',
+		path: './modules/commands/toggle-arguments-type/toggle-arguments-type-action',
+		name: 'toggleArgumentsType',
+		title: 'Toggle Function Call Argument Passing Type',
+		group: groups.CONVERSIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.action',
 		path: './modules/commands/action/action-action',
 		name: 'action',

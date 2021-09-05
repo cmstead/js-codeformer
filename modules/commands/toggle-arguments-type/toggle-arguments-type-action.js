@@ -1,11 +1,14 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION, OBJECT_PATTERN, FUNCTION_EXPRESSION } = require("../../constants/ast-node-types");
+const { CALL_EXPRESSION, OBJECT_EXPRESSION } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { getParameterListLocation, buildParameterObjectSnippet, buildPositionalParameterString } = require("./toggle-parameters-type");
+const {
+    getArgumentListLocation,
+    buildArgumentObjectSnippet,
+    buildPositionalArgumentString } = require("./toggle-arguments-type");
 
 const vscode = require('../../vscodeService').getVscode();
 
@@ -13,9 +16,9 @@ function buildSnippetString(snippetText) {
     return new vscode.SnippetString(snippetText);
 }
 
-function toggleParametersType() {
+function toggleArgumentsType() {
     let actionSetup = null;
-    let functionTypes = [FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION];
+    let functionTypes = [CALL_EXPRESSION];
     let functionNode = null;
     return asyncPrepareActionSetup()
         .then((newActionSetup) => actionSetup = newActionSetup)
@@ -29,22 +32,22 @@ function toggleParametersType() {
             validateUserInput({
                 value: functionNode,
                 validator: functionNode => functionNode !== null
-                    && functionNode.params.length > 0,
-                message: buildInfoMessage('Unable to find function, or parameter list is empty; canceling convert action')
+                    && functionNode.arguments.length > 0,
+                message: buildInfoMessage('Unable to find function call, or argument list is empty; canceling convert action')
             }))
         .then((newFunctionNode) =>
             functionNode = newFunctionNode)
 
         .then(() =>
-            getParameterListLocation(functionNode.params))
-        .then((newParameterListLocation) => {
-            const replacementRange = transformLocationToRange(newParameterListLocation);
-            const isPositional = functionNode.params.length > 1
-                || getNodeType(functionNode.params[0]) !== OBJECT_PATTERN
+            getArgumentListLocation(functionNode.arguments))
+        .then((newArgumentListLocation) => {
+            const replacementRange = transformLocationToRange(newArgumentListLocation);
+            const isPositional = functionNode.arguments.length > 1
+                || getNodeType(functionNode.arguments[0]) !== OBJECT_EXPRESSION
 
             const snippetText = isPositional
-                ? buildParameterObjectSnippet(actionSetup.source, functionNode.params)
-                : buildPositionalParameterString(actionSetup.source, functionNode.params);
+                ? buildArgumentObjectSnippet(actionSetup.source, functionNode.arguments)
+                : buildPositionalArgumentString(actionSetup.source, functionNode.arguments);
 
             const snippetString = buildSnippetString(snippetText);
 
@@ -58,5 +61,5 @@ function toggleParametersType() {
 }
 
 module.exports = {
-    toggleParametersType
+    toggleArgumentsType
 };

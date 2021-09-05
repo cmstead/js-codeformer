@@ -80,6 +80,7 @@
         "onCommand:cmstead.jscodeformer.convertToMethod",
         "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
         "onCommand:cmstead.jscodeformer.toggleParametersType",
+        "onCommand:cmstead.jscodeformer.toggleArgumentsType",
         "onCommand:cmstead.jscodeformer.convertToTemplateLiteral",
         "onCommand:cmstead.jscodeformer.changeVariableType",
         "onCommand:cmstead.jscodeformer.introduceVariable",
@@ -225,6 +226,11 @@
                 "description": "Toggle Between Positional and Destructured Parameters"
             },
             {
+                "command": "cmstead.jscodeformer.toggleArgumentsType",
+                "title": "Toggle Function Call Argument Passing Type",
+                "description": "Toggle Between Positional and Object Arguments"
+            },
+            {
                 "command": "cmstead.jscodeformer.liftAndNameFunctionExpression",
                 "title": "Lift and Name Anonymous Function",
                 "description": "Lift a function expression from its current location and convert it to a declaration"
@@ -358,6 +364,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.toggleParametersType"
+                },
+                {
+                    "command": "cmstead.jscodeformer.toggleArgumentsType"
                 },
                 {
                     "command": "cmstead.jscodeformer.convertToTemplateLiteral"
