@@ -65,8 +65,8 @@ class MethodBuilder {
         },`;
     }
 
-    isReturnStatement(parsedBody) {
-        const bodyNode = parsedBody.body[0];
+    isReturnStatement(bodyLines) {
+        const bodyNode = first(bodyLines);
 
         return typeof bodyNode !== 'undefined'
             && getNodeType(bodyNode) === RETURN_STATEMENT;
@@ -76,16 +76,12 @@ class MethodBuilder {
         return functionBody.trim() !== '';
     }
 
-    isSingleLine(parsedBody) {
-        return parsedBody.body.length === 1
-            || (
-                parsedBody.body.length === 2
-                && getNodeType(parsedBody.body[1]) === EMPTY_STATEMENT
-            );
+    isSingleLine(bodyLines) {
+        return bodyLines.length === 1;
     }
 
-    getSingleLineArrowBody(parsedBody) {
-        const argument = first(parsedBody.body).argument;
+    getSingleLineArrowBody(bodyLines) {
+        const argument = first(bodyLines).argument;
         const argumentLocation = argument.loc;
         const arrowSource = getSourceSelection(this.functionBody, argumentLocation);
         return getNodeType(argument) === OBJECT_EXPRESSION
@@ -93,30 +89,28 @@ class MethodBuilder {
             : arrowSource;
     }
 
-    getMultilineArrowBody(parsedBody, buildAsMultiline) {
-        console.log(parsedBody);
-        console.log(this.isSingleLine(parsedBody));
-        console.log(this.isReturnStatement(parsedBody));
-        return this.isSingleLine(parsedBody)
-            && !this.isReturnStatement(parsedBody)
+    getMultilineArrowBody(bodyLines, buildAsMultiline) {
+        return this.isSingleLine(bodyLines)
+            && !this.isReturnStatement(bodyLines)
             && buildAsMultiline
             ? `return ${this.functionBody}`
             : this.functionBody;
     }
 
     buildArrowFunction(arrowFunctionType = arrowFunctionBuildTypes.AS_STANDARD) {
-        const parsedBody = parse(this.functionBody);
+        const sanitizedBodyLines = parse(this.functionBody).body
+            .filter(node => getNodeType(node) !== EMPTY_STATEMENT);
         const buildAsMultiline = arrowFunctionType === arrowFunctionBuildTypes.AS_MULTILINE;
 
-        if (this.isSingleLine(parsedBody)
+        if (this.isSingleLine(sanitizedBodyLines)
             && this.isNotEmpty(this.functionBody)
-            && this.isReturnStatement(parsedBody)
+            && this.isReturnStatement(sanitizedBodyLines)
             && !buildAsMultiline) {
 
-            return `${this.asyncPrefix}(${this.functionParameters}) => ${this.getSingleLineArrowBody(parsedBody)}`;
+            return `${this.asyncPrefix}(${this.functionParameters}) => ${this.getSingleLineArrowBody(sanitizedBodyLines)}`;
         } else {
             return `${this.asyncPrefix}(${this.functionParameters}) => {
-                ${this.getMultilineArrowBody(parsedBody, buildAsMultiline)}
+                ${this.getMultilineArrowBody(sanitizedBodyLines, buildAsMultiline)}
             }`;
         }
     }

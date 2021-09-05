@@ -79,6 +79,13 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.toggleArrowFunctionBraces',
+		path: './modules/commands/toggle-arrow-function-braces/toggle-arrow-function-braces-action',
+		name: 'toggleArrowFunctionBraces',
+		title: 'Toggle braces on an arrow function',
+		group: groups.CONVERSIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.action',
 		path: './modules/commands/action/action-action',
 		name: 'action',

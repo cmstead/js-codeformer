@@ -2,7 +2,7 @@
     "name": "js-codeformer",
     "displayName": "JS CodeFormer: Refactoring & Automation",
     "description": "A JavaScript/TypeScript refactoring and code automation tool for building better source",
-    "version": "1.6.1",
+    "version": "1.7.0",
     "publisher": "cmstead",
     "repository": {
         "type": "git",
@@ -81,6 +81,7 @@
         "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
         "onCommand:cmstead.jscodeformer.toggleParametersType",
         "onCommand:cmstead.jscodeformer.toggleArgumentsType",
+        "onCommand:cmstead.jscodeformer.toggleArrowFunctionBraces",
         "onCommand:cmstead.jscodeformer.convertToTemplateLiteral",
         "onCommand:cmstead.jscodeformer.changeVariableType",
         "onCommand:cmstead.jscodeformer.introduceVariable",
@@ -231,6 +232,11 @@
                 "description": "Toggle Between Positional and Object Arguments"
             },
             {
+                "command": "cmstead.jscodeformer.toggleArrowFunctionBraces",
+                "title": "Toggle Arrow Function Braces",
+                "description": "Toggle braces on a single-line arrow function"
+            },
+            {
                 "command": "cmstead.jscodeformer.liftAndNameFunctionExpression",
                 "title": "Lift and Name Anonymous Function",
                 "description": "Lift a function expression from its current location and convert it to a declaration"
@@ -367,6 +373,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.toggleArgumentsType"
+                },
+                {
+                    "command": "cmstead.jscodeformer.toggleArrowFunctionBraces"
                 },
                 {
                     "command": "cmstead.jscodeformer.convertToTemplateLiteral"
