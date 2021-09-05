@@ -102,7 +102,7 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert Function Variable to Function Declaration
 - Toggle Function Call Arguments Between Positional and Object Style
 - Toggle Function Parameters between Positional and Object Destructuring Style
-- Toggle Property Declaration Type
+- Toggle Property Declaration Between Standard and Shorthand
 
 ### Actions ###
 
