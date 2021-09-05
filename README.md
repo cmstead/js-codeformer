@@ -100,7 +100,8 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert Function to Function Expression
 - Convert Function Property to Method
 - Convert Function Variable to Function Declaration
-- Toggle Function Parameters Declaration Type
+- Toggle Function Call Arguments Between Positional and Object Style
+- Toggle Function Parameters between Positional and Object Destructuring Style
 - Toggle Property Declaration Type
 
 ### Actions ###
