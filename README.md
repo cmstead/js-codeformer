@@ -1,4 +1,4 @@
-# JS CodeFormer #
+# JS CodeFormer: Javascript Refactoring & Code Automation #
 
 **Get this extension from the VS Marketplace**
 
