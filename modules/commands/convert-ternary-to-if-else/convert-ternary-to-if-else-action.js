@@ -1,5 +1,5 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { CONDITIONAL_EXPRESSION, RETURN_STATEMENT, VARIABLE_DECLARATION } = require("../../constants/ast-node-types");
+const { CONDITIONAL_EXPRESSION, RETURN_STATEMENT, VARIABLE_DECLARATION, BLOCK_STATEMENT, PROGRAM } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 const { findNodeInPath, findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
@@ -30,17 +30,20 @@ function convertTernaryToIfElse() {
         .then(() => findNodeInPath(actionSetup.selectionPath, RETURN_STATEMENT))
         .then((returnStatement) => parentNodes.push(returnStatement))
 
-        .then(() => findNodeByCheckFunction(actionSetup.selectionPath, (node) => {
-            return getNodeType(node) === VARIABLE_DECLARATION && node.declarations.length === 1;
-        }))
+        .then(() => findNodeByCheckFunction(actionSetup.selectionPath, (node) =>
+            getNodeType(node) === VARIABLE_DECLARATION && node.declarations.length === 1))
         .then((assignmentExpression) => parentNodes.push(assignmentExpression))
+
+        .then(() => findNodeByCheckFunction(actionSetup.selectionPath, (node) =>
+            [BLOCK_STATEMENT, PROGRAM].includes(getNodeType(node))))
+        .then((surroundingExpression) => parentNodes.push(surroundingExpression))
 
         .then(() => parentNode = pickParentNode(parentNodes, ternaryExpression))
 
         .then(() => validateUserInput({
             value: parentNode,
             validator: (parentNode) => parentNode !== null,
-            message: buildInfoMessage('Parent must be a return statement or variable declaration. None found; canceling action')
+            message: buildInfoMessage('Parent must be a return, declaration, program, or block. None found; canceling action')
         }))
 
         .then(() => buildNewIfStatement(actionSetup.source, parentNode, ternaryExpression))

@@ -11,6 +11,7 @@ module.exports = {
     CONDITIONAL_EXPRESSION: 'ConditionalExpression',
     DO_WHILE_STATEMENT: 'DoWhileStatement',
     EMPTY_STATEMENT: 'EmptyStatement',
+    EXPRESSION_STATEMENT: 'ExpressionStatement',
     FOR_STATEMENT: 'ForStatement',
     FOR_IN_STATEMENT: 'ForInStatement',
     FOR_OF_STATEMENT: 'ForOfStatement',

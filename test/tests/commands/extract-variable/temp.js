@@ -65,6 +65,8 @@ if (true === true) {
     console.log('okay, but else');
 }
 
+a ? b() : c();
+
 module.exports = {
     convert
 };
