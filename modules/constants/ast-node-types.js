@@ -2,6 +2,7 @@ module.exports = {
     ARRAY_PATTERN: 'ArrayPattern',
     ARROW_FUNCTION_EXPRESSION: 'ArrowFunctionExpression',
     ASSIGNMENT_PATTERN: 'AssignmentPattern',
+    ASSIGNMENT_EXPRESSION:'AssignmentExpression',
     BLOCK_STATEMENT: 'BlockStatement',
     BINARY_EXPRESSION: 'BinaryExpression',
     CALL_EXPRESSION: 'CallExpression',

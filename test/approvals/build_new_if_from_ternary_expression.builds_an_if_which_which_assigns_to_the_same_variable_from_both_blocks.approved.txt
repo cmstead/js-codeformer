@@ -1,0 +1,7 @@
+let testVar;
+
+if (a) {
+	testVar = b;
+} else {
+	testVar = c;
+}

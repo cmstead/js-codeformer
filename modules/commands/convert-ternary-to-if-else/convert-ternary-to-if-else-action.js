@@ -1,17 +1,18 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { getNewIfBuilder } = require("../../builders/IfBuilder");
-const { CONDITIONAL_EXPRESSION, RETURN_STATEMENT } = require("../../constants/ast-node-types");
-const { findNodeInPath } = require("../../edit-utils/node-path-utils");
+const { CONDITIONAL_EXPRESSION, RETURN_STATEMENT, VARIABLE_DECLARATION } = require("../../constants/ast-node-types");
+const { getNodeType } = require("../../core-utils");
+const { findNodeInPath, findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { getSourceSelection } = require("../../source-utilities");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
+const { pickParentNode, buildNewIfStatement } = require("./convert-ternary-to-if-else");
 
 function convertTernaryToIfElse() {
     let actionSetup = null;
     let ternaryExpression = null;
-    let returnStatement = null;
+    let parentNodes = [];
+    let parentNode = null;
 
     return asyncPrepareActionSetup()
         .then((newActionSetup) =>
@@ -20,25 +21,32 @@ function convertTernaryToIfElse() {
         .then(() => findNodeInPath(actionSetup.selectionPath, CONDITIONAL_EXPRESSION))
         .then((newTernaryExpression) => ternaryExpression = newTernaryExpression)
 
-        .then(() => findNodeInPath(actionSetup.selectionPath, RETURN_STATEMENT))
-        .then((newReturnStatement) => returnStatement = newReturnStatement)
-
-        .then(() => validateUserInput({
+        .then((ternaryExpression) => validateUserInput({
             value: ternaryExpression,
-            validator: (ternaryExpression) => ternaryExpression !== null
-                && returnStatement !== null
-                && returnStatement.argument === ternaryExpression,
-            message: buildInfoMessage('Unable to find an acceptable ternary expression to convert; canceling action')
+            validator: (ternaryExpression) => ternaryExpression !== null,
+            message: buildInfoMessage('It looks like you might not have selected a ternary expression; canceling action')
         }))
 
-        .then(() => getNewIfBuilder({
-            test: `return ${getSourceSelection(actionSetup.source, ternaryExpression.consequent.loc)};`,
-            consequent: `return ${getSourceSelection(actionSetup.source, ternaryExpression.alternate.loc)};`,
-            alternate: getSourceSelection(actionSetup.source, ternaryExpression.test.loc)
-        }).buildIf())
+        .then(() => findNodeInPath(actionSetup.selectionPath, RETURN_STATEMENT))
+        .then((returnStatement) => parentNodes.push(returnStatement))
+
+        .then(() => findNodeByCheckFunction(actionSetup.selectionPath, (node) => {
+            return getNodeType(node) === VARIABLE_DECLARATION && node.declarations.length === 1;
+        }))
+        .then((assignmentExpression) => parentNodes.push(assignmentExpression))
+
+        .then(() => parentNode = pickParentNode(parentNodes, ternaryExpression))
+
+        .then(() => validateUserInput({
+            value: parentNode,
+            validator: (parentNode) => parentNode !== null,
+            message: buildInfoMessage('Parent must be a return statement or variable declaration. None found; canceling action')
+        }))
+
+        .then(() => buildNewIfStatement(actionSetup.source, parentNode, ternaryExpression))
 
         .then((newIfStatement) => {
-            const replacementRange = transformLocationToRange(returnStatement.loc);
+            const replacementRange = transformLocationToRange(parentNode.loc);
 
             return getNewSourceEdit()
                 .addReplacementEdit(replacementRange, newIfStatement)

@@ -83,7 +83,7 @@ Current refactorings:
 - Invert If Statement
     - Windows: `ctrl+shift+j, n`
     - Mac: `cmd+shift+j, n`
-- Rename (important for non js/ts files)
+- Rename (important for non js/ts files) [See known issues]
     - Windows: `ctrl+shift+j, r`
     - Mac: `cmd+shift+j, r`
 
@@ -100,8 +100,7 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert Function to Function Expression
 - Convert Function Property to Method
 - Convert Function Variable to Function Declaration
-- Convert Ternary to If/Else
-    - currently only supports return statements
+- Convert Ternary to If/Else [See known issues]
 - Toggle Arrow Function Braces
 - Toggle Function Call Arguments Between Positional and Object Style
 - Toggle Function Parameters between Positional and Object Destructuring Style
@@ -194,3 +193,7 @@ You can also find me on the web: [ChrisStead.net](http://chrisstead.net/)
 Rename:
 
 - Renaming variables do not propagate to template HTML in Vue and Svelte
+
+Convert Ternary to If/Else Statement:
+
+- Currently only supports return statements and variable assignments
