@@ -8,16 +8,6 @@ const { getSourceSelection } = require("../../source-utilities");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 
-function buildIfStatement(consequent, alternate, testExpression) {
-    return [
-        `if (${testExpression}) {`,
-        `\t${consequent}`,
-        '} else {',
-        `\t${alternate}`,
-        '}'
-    ].join('\n');
-}
-
 function convertTernaryToIfElse() {
     let actionSetup = null;
     let ternaryExpression = null;
