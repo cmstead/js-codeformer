@@ -385,6 +385,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.convertToTemplateLiteral"
+                },
+                {
+                    "command": "cmstead.jscodeformer.convertTernaryToIfElse"
                 }
             ],
             "cmstead.js-codeformer.actions": [
