@@ -28,6 +28,7 @@ const linePrefixAdderMap = {
     [RETURN_STATEMENT]: addReturnPrefix,
     [VARIABLE_DECLARATION]: addVariableDeclarationPrefix,
     [PROGRAM]: expressionIdentity,
+    [BLOCK_STATEMENT]: expressionIdentity,
 }
 
 function getDeclarationSetup(declarationNode) {
