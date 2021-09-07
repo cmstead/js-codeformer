@@ -1,5 +1,5 @@
 const { getNewIfBuilder } = require("../../builders/IfBuilder");
-const { RETURN_STATEMENT, VARIABLE_DECLARATION } = require("../../constants/ast-node-types");
+const { RETURN_STATEMENT, VARIABLE_DECLARATION, PROGRAM, BLOCK_STATEMENT } = require("../../constants/ast-node-types");
 const { getNodeType, first } = require("../../core-utils");
 const { getSourceSelection } = require("../../source-utilities");
 
@@ -21,9 +21,13 @@ function addVariableDeclarationPrefix(declarationNode, expressionString) {
     return `${declaratorName} = ${expressionString}`;
 }
 
+function expressionIdentity(_, expressionString) {
+    return expressionString;
+}
 const linePrefixAdderMap = {
     [RETURN_STATEMENT]: addReturnPrefix,
-    [VARIABLE_DECLARATION]: addVariableDeclarationPrefix
+    [VARIABLE_DECLARATION]: addVariableDeclarationPrefix,
+    [PROGRAM]: expressionIdentity,
 }
 
 function getDeclarationSetup(declarationNode) {
@@ -60,9 +64,14 @@ function isVariableDeclaration(declarationNode, ternaryExpression) {
     return getDeclarator(declarationNode).init === ternaryExpression;
 }
 
+function isProgramOrBlock(surroundingNode, ternaryExpression) {
+    return surroundingNode.body.find(node => node === ternaryExpression);
+}
 const parentNodeValidatorMap = {
     [RETURN_STATEMENT]: isReturnArgument,
-    [VARIABLE_DECLARATION]: isVariableDeclaration
+    [VARIABLE_DECLARATION]: isVariableDeclaration,
+    [PROGRAM]: isProgramOrBlock,
+    [BLOCK_STATEMENT]: isProgramOrBlock,
 }
 
 function testParentNode(node, ternaryExpression) {

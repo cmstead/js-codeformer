@@ -47,23 +47,23 @@ describe('build new if from ternary expression', function () {
         this.verify(newIfStatement);
     });
 
-    // it('builds an if which executes an expression when ternary is executed alone', function () {
-    //     const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
-    //     const parsedSource = parse(fixtureText);
+    it('builds an if which executes an expression when ternary is executed alone', function () {
+        const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+        const parsedSource = parse(fixtureText);
 
-    //     const selectedLocation = buildLocationFromEditorCoordinates({
-    //         start: buildEditorCoordinates({ line: 7, column: 10 }),
-    //         end: buildEditorCoordinates({ line: 7, column: 10 })
-    //     });
+        const selectedLocation = buildLocationFromEditorCoordinates({
+            start: buildEditorCoordinates({ line: 7, column: 10 }),
+            end: buildEditorCoordinates({ line: 7, column: 10 })
+        });
 
-    //     const selectionPath = buildNodePath(parsedSource, selectedLocation);
+        const selectionPath = buildNodePath(parsedSource, selectedLocation);
 
-    //     const ternary = findNodeInPath(selectionPath, CONDITIONAL_EXPRESSION);
-    //     const programNode = findNodeInPath(selectionPath, PROGRAM);
+        const ternary = findNodeInPath(selectionPath, CONDITIONAL_EXPRESSION);
+        const programNode = findNodeInPath(selectionPath, PROGRAM);
 
-    //     const newIfStatement = buildNewIfStatement(fixtureText, programNode, ternary);
+        const newIfStatement = buildNewIfStatement(fixtureText, programNode, ternary);
 
-    //     this.verify(newIfStatement);
-    // });
+        this.verify(newIfStatement);
+    });
 
 });
