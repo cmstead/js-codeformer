@@ -1,9 +1,5 @@
 # JS CodeFormer: Javascript Refactoring & Code Automation #
 
-**Get this extension from the VS Marketplace**
-
-https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer
-
 ## What and Why ##
 
 JS CodeFormer is a JS refactoring and code automation extension for VS Code. Born from the ashes of JS Refactor, JS CodeFormer answers a new question. Instead of asking "can a JS refactoring tool be made for VS Code", this project aims to answer "how can better tools help to create better software?"
@@ -20,6 +16,24 @@ JS CodeFormer is not just a code refactoring and automation extension, it is an 
 - **Accessibility** -- Clear, direct access to the tooling must be supported for all users regardless of disability 
 
 None of these principles can be treated as "set it and forget it". Every new behavior, and every improvement receives serious thought as to how it will serve, and impact the developer using this tool.
+
+## Goals ##
+
+A goal in this project is to have it "just work". In other words, in any situation where it seems it should work, it does work. Since nobody is able to see the future, this is something which will need to be addressed as new situations arise.
+
+### What it Looks Like ###
+
+Currently, JS CodeFormer quietly works in files which reach beyond what is generally considered "standard JavaScript/TypeScript environments". Many extensions do not work in a LiveShare session, but JS CodeFormer is built to support a rich editing experience in an environment where many extensions are disabled.
+
+### In Brief ###
+
+JS CodeFormer does the following so support "it just works":
+
+- Full functionality in HTML files
+- Support for HTML-like environments like:
+    - Vue single-file components
+    - Svelte files
+- Support for working in a Live Share session
 
 ## Language Support ##
 
