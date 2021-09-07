@@ -3,3 +3,5 @@ function testing () {
 }
 
 const testVar = a ? b : c;
+
+a ? b() : c();
