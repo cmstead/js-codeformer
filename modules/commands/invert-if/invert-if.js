@@ -1,8 +1,9 @@
+const { getNewIfBuilder } = require("../../builders/IfBuilder");
 const { getNodeType } = require("../../core-utils");
 const { getSourceSelection } = require("../../source-utilities");
 
 function invertTestExpression(source, testNode) {
-    if(getNodeType(testNode) === 'UnaryExpression' && testNode.operator === '!') {
+    if (getNodeType(testNode) === 'UnaryExpression' && testNode.operator === '!') {
         return getSourceSelection(source, testNode.argument.loc);
     } else {
         const originalExpression = getSourceSelection(source, testNode.loc);
@@ -12,13 +13,11 @@ function invertTestExpression(source, testNode) {
 }
 
 function buildIfStatement(consequent, alternate, testExpression) {
-    return [
-        `if (${testExpression}) {`,
-        `\t${consequent}`,
-        '} else {',
-        `\t${alternate}`,
-        '}'
-    ].join('\n');
+    return getNewIfBuilder({
+        test: testExpression,
+        consequent,
+        alternate
+    }).buildIf();
 }
 
 module.exports = {

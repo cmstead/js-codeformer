@@ -48,7 +48,7 @@
         "mocha": "^8.4.0",
         "nyc": "^15.1.0",
         "rimrafx": "^1.0.0",
-        "vsce": "^1.96.3",
+        "vsce": "^1.97.0",
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
@@ -78,6 +78,7 @@
         "onCommand:cmstead.jscodeformer.convertToFunctionExpression",
         "onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
         "onCommand:cmstead.jscodeformer.convertToMethod",
+        "onCommand:cmstead.jscodeformer.convertTernaryToIfElse",
         "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
         "onCommand:cmstead.jscodeformer.toggleParametersType",
         "onCommand:cmstead.jscodeformer.toggleArgumentsType",
@@ -215,6 +216,11 @@
                 "command": "cmstead.jscodeformer.convertToTemplateLiteral",
                 "title": "Convert to Template Literal",
                 "description": "Convert string, or concatenated string to a template literal"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertTernaryToIfElse",
+                "title": "Convert Ternary to If/Else",
+                "description": "Convert Ternary to if/else statement"
             },
             {
                 "command": "cmstead.jscodeformer.togglePropertyDeclaration",

@@ -58,6 +58,13 @@ const actions = [
 		group: groups.CONVERSIONS
 	},
 	{
+		commandId: 'cmstead.jscodeformer.convertTernaryToIfElse',
+		path: './modules/commands/convert-ternary-to-if-else/convert-ternary-to-if-else-action',
+		name: 'convertTernaryToIfElse',
+		title: 'Convert Ternary to If/Else',
+		group: groups.CONVERSIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.togglePropertyDeclaration',
 		path: './modules/commands/toggle-property-declaration/toggle-property-declaration-action',
 		name: 'togglePropertyDeclaration',
