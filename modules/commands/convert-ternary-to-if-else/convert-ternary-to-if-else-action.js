@@ -40,6 +40,12 @@ function convertTernaryToIfElse() {
 
         .then(() => parentNode = pickParentNode(parentNodes, ternaryExpression))
 
+        .then(() => {
+            parentNode = [BLOCK_STATEMENT, PROGRAM].includes(getNodeType(parentNode))
+                ? ternaryExpression
+                : parentNode
+        })
+
         .then(() => validateUserInput({
             value: parentNode,
             validator: (parentNode) => parentNode !== null,
