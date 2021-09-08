@@ -84,7 +84,11 @@ const actions = [
 		group: groups.CONVERSIONS,
 		analyzer: ({ selectionPath }) => {
 			const declarationNode = findNodeInPath(selectionPath, VARIABLE_DECLARATION);
-			return declarationNode !== null && declarationNode.declarations.length === 1
+			const currentNode = last(selectionPath);
+
+			return getNodeType(currentNode) === IDENTIFIER
+				&& declarationNode !== null
+				&& declarationNode.declarations.length === 1
 		}
 	},
 	{
@@ -204,7 +208,7 @@ const actions = [
 			let declarationsLength = 0;
 			let initType = null;
 
-			if(declarationNode !== null) {
+			if (declarationNode !== null) {
 				declarationsLength = declarationNode.declarations.length;
 				const declaration = first(declarationNode.declarations);
 				initType = declaration.init !== null ? getNodeType(declaration.init) : null;
