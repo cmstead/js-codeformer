@@ -6,7 +6,7 @@ const { retrieveExtractionLocation } = require("../../extraction-utils/extractio
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
 const { buildExtractionScopeList, selectExtractionScopes } = require("../../extraction-utils/extractionScopeService");
 const { openSelectList, openInputBox } = require("../../ui-services/inputService");
-const { showErrorMessage, buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { isAnonymousFunction, acceptableNodeTypes, getNewFunctionString } = require("./lift-and-name-function-expression");
 

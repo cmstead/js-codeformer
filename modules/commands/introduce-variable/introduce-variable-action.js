@@ -1,16 +1,14 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { getNewVariableBuilder, variableTypes, variableTypeList } = require("../../builders/VariableBuilder");
+const { getNewVariableBuilder, variableTypeList } = require("../../builders/VariableBuilder");
 const astNodeTypes = require("../../constants/ast-node-types");
 const { last, getNodeType } = require("../../core-utils");
-const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationPartToPosition } = require("../../edit-utils/textEditTransforms");
 const { retrieveExtractionLocation, selectExtractionLocation } = require("../../extraction-utils/extraction-location-service");
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
-const { buildExtractionScopeList, selectExtractionScopes } = require("../../extraction-utils/extractionScopeService");
+const { selectExtractionScopes, buildIntroductionScopeList } = require("../../extraction-utils/extractionScopeService");
 const { openSelectList } = require("../../ui-services/inputService");
-const { showErrorMessage, buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { getSnippetText } = require("../surround-with/surround-with");
 
 const { IDENTIFIER } = astNodeTypes;
 
@@ -56,7 +54,7 @@ function introduceVariable() {
 
         .then(() => openSelectList({
             title: 'Where should your new variable be introduced?',
-            values: buildExtractionScopeList(extractionPath)
+            values: buildIntroductionScopeList(extractionPath)
         }))
         .then((selectedScope) => validateUserInput({
             value: selectedScope,

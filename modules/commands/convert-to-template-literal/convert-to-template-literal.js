@@ -12,6 +12,10 @@ function isStringExpressionCandidate(node) {
 }
 
 function checkExpressionTree(expression) {
+    if(expression === null) {
+        return false;
+    }
+
     const expressionIsNotBinary = getNodeType(expression) !== BINARY_EXPRESSION;
     const operatorIsNotConcat = expression === null ||  expression.operator !== '+';
 

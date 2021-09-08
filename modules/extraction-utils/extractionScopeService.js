@@ -40,6 +40,29 @@ function buildExtractionScopeList(extractionPath) {
         });
 }
 
+function getIntroductionScopeMessage(displayNode, index) {
+    try {
+        if (getNodeType(displayNode) === astNodeTypes.PROGRAM) {
+            return 'Introduce at top of file';
+        } else if (index === 0) {
+            return `Introduce at local scope in ${typeTransforms[getNodeType(displayNode)](displayNode)}`;
+        } else {
+            return `Introduce at scope in ${typeTransforms[getNodeType(displayNode)](displayNode)}`
+        }
+    } catch (_) {
+        throw new Error(`JS CodeFormer error: Cannot process node type "${getNodeType(displayNode)}"`);
+    }
+}
+
+function buildIntroductionScopeList(introductionPath) {
+    return introductionPath
+        .map((nodeSet, index) => {
+            const displayNode = last(nodeSet);
+
+            return `${index + 1} - ${getIntroductionScopeMessage(displayNode, index)}`;
+        });
+}
+
 function getUserSelectionIndex(userSelection) {
     const userSelectionPosition = userSelection.split(/\s+[-]\s+/ig)[0];
 
@@ -56,5 +79,6 @@ function selectExtractionScopes(extractionPath, userSelection) {
 
 module.exports = {
     selectExtractionScopes,
-    buildExtractionScopeList
+    buildExtractionScopeList,
+    buildIntroductionScopeList
 };

@@ -5,11 +5,10 @@ const { getNodeType } = require("../../core-utils");
 const { transformLocationPartToPosition } = require("../../edit-utils/textEditTransforms");
 const { retrieveExtractionLocation, selectExtractionLocation } = require("../../extraction-utils/extraction-location-service");
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
-const { buildExtractionScopeList, selectExtractionScopes } = require("../../extraction-utils/extractionScopeService");
+const { selectExtractionScopes, buildIntroductionScopeList } = require("../../extraction-utils/extractionScopeService");
 const { openSelectList, openInputBox } = require("../../ui-services/inputService");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { getSnippetText } = require("../surround-with/surround-with");
 const { getNameOrCall, getNodeName, getParameterString } = require("./introduce-function");
 
 const vscode = require('../../vscodeService').getVscode()
@@ -53,7 +52,7 @@ function introduceFunction() {
 
         .then(() => openSelectList({
             title: 'Where should your new variable be introduced?',
-            values: buildExtractionScopeList(extractionPath)
+            values: buildIntroductionScopeList(extractionPath)
         }))
         .then((selectedScope) => validateUserInput({
             value: selectedScope,
