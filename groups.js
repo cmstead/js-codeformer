@@ -11,7 +11,14 @@ const groupTitles = {
     'Other Actions': groups.ACTIONS
 };
 
+const groupOrder = {
+    [groups.REFACTORINGS]: 1,
+    [groups.CONVERSIONS]: 2,
+    [groups.ACTIONS]: 3,
+}
+
 module.exports = {
     groups,
+    groupOrder,
     groupTitles
 };

@@ -87,7 +87,8 @@
         "onCommand:cmstead.jscodeformer.changeVariableType",
         "onCommand:cmstead.jscodeformer.introduceVariable",
         "onCommand:cmstead.jscodeformer.introduceFunction",
-        "onCommand:cmstead.jscodeformer.liftAndNameFunctionExpression"
+        "onCommand:cmstead.jscodeformer.liftAndNameFunctionExpression",
+        "onCommand:cmstead.jscodeformer.suggestAction"
     ],
     "contributes": {
         "languages": [
@@ -261,6 +262,11 @@
                 "command": "cmstead.jscodeformer.pickBehavior",
                 "title": "JS CodeFormer: Action Palette",
                 "description": "Open JS CodeFormer action palette to pick a behavior"
+            },
+            {
+                "command": "cmstead.jscodeformer.suggestAction",
+                "title": "JS CodeFormer: Suggest an Action",
+                "description": "Analyze document and list suggested actions"
             }
         ],
         "keybindings": [
@@ -315,6 +321,11 @@
                 "command": "cmstead.jscodeformer.action",
                 "key": "ctrl+shift+j a",
                 "mac": "cmd+shift+j a"
+            },
+            {
+                "command": "cmstead.jscodeformer.suggestAction",
+                "key": "ctrl+alt+.",
+                "mac": "cmd+alt+."
             }
         ],
         "menus": {
@@ -332,6 +343,11 @@
                 {
                     "submenu": "cmstead.js-codeformer.actions",
                     "group": "js-codeformer@3",
+                    "when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
+                },
+                {
+                    "command": "cmstead.jscodeformer.suggestAction",
+                    "group": "js-codeformer@4",
                     "when": "editorLangId == javascript || editorLangId == typescript || editorLangId == html || editorLangId == javascriptreact || editorLangId == typescriptreact || editorLangId == jsx || editorLangId == vue || editorLangId == vue-html || editorLangId == svelte"
                 }
             ],

@@ -114,6 +114,7 @@ module.exports = {
     findVariableDeclarator,
     findVariableDeclaration,
     findFunction,
+    functionNodeTypes,
     getFunctionString,
     getVariableName,
     pickVariableDeletionLocation

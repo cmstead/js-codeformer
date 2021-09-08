@@ -1,4 +1,9 @@
 const { groups } = require('./groups');
+const { findSymbolToRename } = require('./modules/commands/rename/rename');
+const { VARIABLE_DECLARATOR, BLOCK_STATEMENT, IF_STATEMENT, VARIABLE_DECLARATION } = require('./modules/constants/ast-node-types');
+const { getNodeType, last } = require('./modules/core-utils');
+const { findNodeInPath, findNodeByCheckFunction } = require('./modules/edit-utils/node-path-utils');
+const { functionNodeTypes } = require('./modules/commands/extract-to-parameter/extract-to-parameter');
 
 const actions = [
 	{
@@ -6,49 +11,66 @@ const actions = [
 		path: './modules/commands/extract-variable/extract-variable-action',
 		name: 'extractVariable',
 		title: 'Extract Variable',
-		group: groups.REFACTORINGS
+		group: groups.REFACTORINGS,
+		analyzer: ({ location }) => {
+			return location.start.line !== location.end.line
+				|| location.start.column !== location.end.column;
+		}
 	},
 	{
 		commandId: 'cmstead.jscodeformer.extractToParameter',
 		path: './modules/commands/extract-to-parameter/extract-to-parameter-action',
 		name: 'extractToParameter',
 		title: 'Extract Variable To Parameter',
-		group: groups.REFACTORINGS
+		group: groups.REFACTORINGS,
+		analyzer: ({ selectionPath }) =>
+			findNodeInPath(selectionPath, VARIABLE_DECLARATOR) !== null
+			&& findNodeInPath(selectionPath, VARIABLE_DECLARATION) !== null
+			&& findNodeByCheckFunction(selectionPath, node =>
+				functionNodeTypes.includes(getNodeType(node))) !== null
 	},
 	{
 		commandId: 'cmstead.jscodeformer.extractMethod',
 		path: './modules/commands/extract-method/extract-method-action',
 		name: 'extractMethod',
 		title: 'Extract Method',
-		group: groups.REFACTORINGS
+		group: groups.REFACTORINGS,
+		analyzer: ({ location }) =>
+			location.start.line !== location.end.line
+			|| location.start.column !== location.end.column
 	},
 	{
 		commandId: 'cmstead.jscodeformer.inlineVariable',
 		path: './modules/commands/inline-variable/inline-variable-action',
 		name: 'inlineVariable',
 		title: 'Inline Variable',
-		group: groups.REFACTORINGS
+		group: groups.REFACTORINGS,
+		analyzer: ({ selectionPath }) =>
+			getNodeType(last(selectionPath)) === VARIABLE_DECLARATOR
+
 	},
 	{
 		commandId: 'cmstead.jscodeformer.rename',
 		path: './modules/commands/rename/rename-action',
 		name: 'rename',
 		title: 'Rename',
-		group: groups.REFACTORINGS
+		group: groups.REFACTORINGS,
+		analyzer: ({ selectionPath }) =>
+			findSymbolToRename(selectionPath) !== null
 	},
 	{
 		commandId: 'cmstead.jscodeformer.invertIf',
 		path: './modules/commands/invert-if/invert-if-action',
 		name: 'invertIf',
 		title: 'Invert If Statement',
-		group: groups.REFACTORINGS
-	},
-	{
-		commandId: 'cmstead.jscodeformer.surroundWith',
-		path: './modules/commands/surround-with/surround-with-action',
-		name: 'surroundWith',
-		title: 'Surround With',
-		group: groups.ACTIONS
+		group: groups.REFACTORINGS,
+		analyzer: ({ selectionPath }) => {
+			const ifNode = findNodeInPath(selectionPath, IF_STATEMENT);
+
+			return ifNode !== null
+				&& ifNode.alternate !== null
+				&& getNodeType(ifNode.alternate) === BLOCK_STATEMENT
+		}
 	},
 	{
 		commandId: 'cmstead.jscodeformer.changeVariableType',
@@ -100,6 +122,13 @@ const actions = [
 		group: groups.NONE
 	},
 	{
+		commandId: 'cmstead.jscodeformer.surroundWith',
+		path: './modules/commands/surround-with/surround-with-action',
+		name: 'surroundWith',
+		title: 'Surround With',
+		group: groups.ACTIONS
+	},
+	{
 		commandId: 'cmstead.jscodeformer.introduceVariable',
 		path: './modules/commands/introduce-variable/introduce-variable-action',
 		name: 'introduceVariable',
@@ -119,6 +148,13 @@ const actions = [
 		name: 'liftAndNameFunctionExpression',
 		title: 'Lift and Name Function Expression',
 		group: groups.ACTIONS
+	},
+	{
+		commandId: 'cmstead.jscodeformer.suggestAction',
+		path: './modules/commands/action-suggestions/action-suggestions-action',
+		name: 'actionSuggestions',
+		title: 'Suggest an Action',
+		group: groups.NONE
 	},
 	{
 		commandId: 'cmstead.jscodeformer.pickBehavior',
