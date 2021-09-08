@@ -76,6 +76,21 @@ For a top-level menu of all options, you can open the JS CodeFormer actions pale
 - Windows: `ctrl+shift+j, ctrl+shift+j`
 - Mac: `cmd+shift+j, cmd+shift+j`
 
+### Suggested Actions ###
+
+JS CodeFormer can suggest actions you can take given the current state of the document. By analyzing the document, cursor position, and selection state, you can get a list of actions possible right now.
+
+To get suggestions, use the following key combination:
+
+- Windows: `ctrl+alt+.`
+- Mac: `cmd+alt+.`
+
+Currently only refactorings are suggested, but conversions and general actions will be added soon.
+
+Here's what it looks like in action:
+
+![JS CodeFormer Suggested Actions](./images/suggested-actions.gif)
+
 ### Refactorings ###
 
 JS CodeFormer automated refactorings are built upon years of experience to be stable and reliable. Though the project is new, and issues will inevitably arise, the tools in this project are used to support the project itself. In essence, JS CodeFormer is a self-dogfooding project.
