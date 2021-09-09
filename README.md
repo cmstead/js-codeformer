@@ -85,8 +85,6 @@ To get suggestions, use the following key combination:
 - Windows: `ctrl+alt+.`
 - Mac: `cmd+alt+.`
 
-Currently only refactorings are suggested, but conversions and general actions will be added soon.
-
 Here's what it looks like in action:
 
 ![JS CodeFormer Suggested Actions](./images/suggested-actions.gif)
