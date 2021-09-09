@@ -1,8 +1,8 @@
 const { groups } = require('./groups');
 const { findSymbolToRename } = require('./modules/commands/rename/rename');
-const { VARIABLE_DECLARATOR, BLOCK_STATEMENT, IF_STATEMENT, VARIABLE_DECLARATION, CONDITIONAL_EXPRESSION, RETURN_STATEMENT, PROGRAM, PROPERTY, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, CALL_EXPRESSION, EMPTY_STATEMENT, METHOD_DEFINITION, CLASS_PROPERTY, LITERAL, BINARY_EXPRESSION, IDENTIFIER } = require('./modules/constants/ast-node-types');
+const { VARIABLE_DECLARATOR, BLOCK_STATEMENT, IF_STATEMENT, VARIABLE_DECLARATION, CONDITIONAL_EXPRESSION, RETURN_STATEMENT, PROGRAM, PROPERTY, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, CALL_EXPRESSION, EMPTY_STATEMENT, METHOD_DEFINITION, CLASS_PROPERTY, LITERAL, BINARY_EXPRESSION, IDENTIFIER, ASSIGNMENT_EXPRESSION } = require('./modules/constants/ast-node-types');
 const { getNodeType, last, first } = require('./modules/core-utils');
-const { findNodeInPath, findNodeByCheckFunction } = require('./modules/edit-utils/node-path-utils');
+const { findNodeInPath, findNodeByCheckFunction, findAncestorNodeInPath } = require('./modules/edit-utils/node-path-utils');
 const { functionNodeTypes } = require('./modules/commands/extract-to-parameter/extract-to-parameter');
 const { pickParentNode } = require('./modules/commands/convert-ternary-to-if-else/convert-ternary-to-if-else');
 const { isConvertablePropertyNode } = require('./modules/commands/toggle-property-declaration/toggle-property-declaration');
@@ -289,8 +289,19 @@ const actions = [
 		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			const selectedNode = last(selectionPath);
+			const acceptableAncestors = [
+				PROGRAM,
+				BLOCK_STATEMENT,
+				ASSIGNMENT_EXPRESSION,
+				CALL_EXPRESSION,
+				PROPERTY
+			];
 
-			return getNodeType(selectedNode) === IDENTIFIER;
+			return getNodeType(selectedNode) === IDENTIFIER
+				&& findAncestorNodeInPath(
+					selectionPath,
+					selectedNode,
+					(node) => acceptableAncestors.includes(getNodeType(node)));
 		}
 	},
 	{
@@ -300,10 +311,21 @@ const actions = [
 		title: 'Introduce Function',
 		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
-			const callNode = findNodeInPath(selectionPath, CALL_EXPRESSION);
-			const identifierNode = last(selectionPath);
+			const selectedNode = last(selectionPath);
+			const acceptableAncestors = [
+				PROGRAM,
+				BLOCK_STATEMENT,
+				ASSIGNMENT_EXPRESSION,
+				CALL_EXPRESSION,
+				PROPERTY
+			];
 
-			return callNode !== null || getNodeType(identifierNode) === IDENTIFIER;
+
+			return getNodeType(selectedNode) === IDENTIFIER
+				&& findAncestorNodeInPath(
+					selectionPath,
+					selectedNode,
+					(node) => acceptableAncestors.includes(getNodeType(node)));
 		}
 	},
 	{

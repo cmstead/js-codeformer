@@ -29,8 +29,17 @@ function findNodeInPath(selectionPath, nodeType) {
     return findNodeByCheckFunction(selectionPath, node => getNodeType(node) === nodeType)
 }
 
+function findAncestorNodeInPath(selectionPath, childNode, checkFunction) {
+    const selectionPathCopy = selectionPath.slice(0);
+
+    while (selectionPathCopy.pop() !== childNode) { /* do keep looking */}
+
+    return findNodeByCheckFunction(selectionPathCopy, checkFunction);
+}
+
 module.exports = {
     getSurroundingScope,
+    findAncestorNodeInPath,
     findNodeInPath,
     findNodeByCheckFunction
 };
