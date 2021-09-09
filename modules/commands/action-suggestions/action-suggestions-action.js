@@ -1,7 +1,7 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const actions = require('../../../actions');
 const { groups, groupOrder } = require('../../../groups');
-const { parseAndShowMessage } = require('../../ui-services/messageService');
+const { parseAndShowMessage, buildInfoMessage } = require('../../ui-services/messageService');
 const { openSelectList } = require('../../ui-services/inputService');
 const { validateUserInput } = require('../../validatorService');
 
@@ -44,6 +44,12 @@ function actionSuggestions() {
             return map;
         }, {}))
 
+        .then(() => validateUserInput({
+            value: Object.keys(actionCommandMap),
+            validator: (keys) => keys.length > 0,
+            message: buildInfoMessage('No actions can be suggested for this selection.')
+        }))
+
         .then(() => openSelectList({
             values: Object.keys(actionCommandMap),
             title: 'What would you like to do?'
@@ -51,7 +57,7 @@ function actionSuggestions() {
         .then((selectedAction) => validateUserInput({
             value: selectedAction,
             validator: selectedAction => selectedAction.trim() !== '',
-            message: 'No action selected'
+            message: buildInfoMessage('No action selected')
         }))
         .then((selectedAction) => {
             const selectedCommandId = actionCommandMap[selectedAction];

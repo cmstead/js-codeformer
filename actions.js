@@ -289,6 +289,14 @@ const actions = [
 		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			const selectedNode = last(selectionPath);
+
+			let checkCount = 0;
+
+			const parentNode = findAncestorNodeInPath(
+				selectionPath,
+				selectedNode,
+				() => (++checkCount === 1));
+
 			const acceptableAncestors = [
 				PROGRAM,
 				BLOCK_STATEMENT,
@@ -298,10 +306,11 @@ const actions = [
 			];
 
 			return getNodeType(selectedNode) === IDENTIFIER
-				&& findAncestorNodeInPath(
-					selectionPath,
-					selectedNode,
-					(node) => acceptableAncestors.includes(getNodeType(node)));
+				&& acceptableAncestors.includes(getNodeType(parentNode))
+				&& (
+					getNodeType(parentNode) !== CALL_EXPRESSION
+					|| parentNode.arguments.includes(selectedNode)
+					);
 		}
 	},
 	{
@@ -312,6 +321,14 @@ const actions = [
 		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			const selectedNode = last(selectionPath);
+			
+			let checkCount = 0;
+
+			const parentNode = findAncestorNodeInPath(
+				selectionPath,
+				selectedNode,
+				() => (++checkCount === 1));
+
 			const acceptableAncestors = [
 				PROGRAM,
 				BLOCK_STATEMENT,
@@ -320,12 +337,8 @@ const actions = [
 				PROPERTY
 			];
 
-
 			return getNodeType(selectedNode) === IDENTIFIER
-				&& findAncestorNodeInPath(
-					selectionPath,
-					selectedNode,
-					(node) => acceptableAncestors.includes(getNodeType(node)));
+				&& acceptableAncestors.includes(getNodeType(parentNode));
 		}
 	},
 	{
