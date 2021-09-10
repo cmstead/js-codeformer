@@ -2,6 +2,7 @@ const variableTypes = {
     CONST: 'const',
     LET: 'let',
     VAR: 'var',
+    SELECT: '${1|const,let,var|}',
     PROPERTY: 'property'
 };
 

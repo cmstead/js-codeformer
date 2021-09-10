@@ -1,10 +1,8 @@
-const { variableTypeList } = require("../../builders/VariableBuilder");
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { VARIABLE_DECLARATION, VARIABLE_DECLARATOR } = require("../../constants/ast-node-types");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
-const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
+const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { openSelectList } = require("../../ui-services/inputService");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getNewVariableString } = require("./change-variable-type");
@@ -32,27 +30,14 @@ function changeVariableType() {
         .then(() => findNodeInPath(actionSetup.selectionPath, VARIABLE_DECLARATOR))
         .then((newVariableDeclaratorNode) => variableDeclaratorNode = newVariableDeclaratorNode)
 
-        .then(() => openSelectList({
-            values: variableTypeList,
-            title: 'Which variable type do you want to use?'
-        }))
-        .then((variableType) => validateUserInput({
-            value: variableType,
-            validator: (variableType) => variableTypeList.includes(variableType),
-            message: buildInfoMessage(`Whoops! You didn't choose a variable type; canceling action`)
-        }))
-
-        .then((variableType) => getNewVariableString(
-            variableType,
+        .then(() => getNewVariableString(
             variableDeclaratorNode,
             actionSetup.source))
 
         .then((newVariableString) => {
             const replacementRange = transformLocationToRange(variableDeclarationNode.loc);
 
-            return getNewSourceEdit()
-                .addReplacementEdit(replacementRange, newVariableString)
-                .applyEdit();
+            return insertSnippet(newVariableString, replacementRange)
         })
 
         .catch(function (error) {

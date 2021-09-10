@@ -2,6 +2,7 @@ const { asyncPrepareActionSetup } = require("../../action-setup");
 const { getMethodBuilder, methodTypes } = require("../../builders/MethodBuilder");
 const astNodeTypes = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
+const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationPartToPosition } = require("../../edit-utils/textEditTransforms");
 const { retrieveExtractionLocation, selectExtractionLocation } = require("../../extraction-utils/extraction-location-service");
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
@@ -85,9 +86,9 @@ function introduceFunction() {
 
         .then((functionDeclarationString) => {
             const editPosition = transformLocationPartToPosition(introductionLocation.start);
-            const snippetString = buildSnippetString(`${functionDeclarationString}\$0\n`);
+            const snippetText = `${functionDeclarationString}\$0\n`;
 
-            return actionSetup.activeTextEditor.insertSnippet(snippetString, editPosition);
+            return insertSnippet(snippetText, editPosition);
         })
 
         .catch(function (error) {

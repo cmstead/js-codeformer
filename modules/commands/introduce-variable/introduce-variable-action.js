@@ -1,7 +1,8 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
-const { getNewVariableBuilder, variableTypeList } = require("../../builders/VariableBuilder");
+const { getNewVariableBuilder, variableTypes } = require("../../builders/VariableBuilder");
 const astNodeTypes = require("../../constants/ast-node-types");
 const { last, getNodeType } = require("../../core-utils");
+const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationPartToPosition } = require("../../edit-utils/textEditTransforms");
 const { retrieveExtractionLocation, selectExtractionLocation } = require("../../extraction-utils/extraction-location-service");
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
@@ -12,8 +13,6 @@ const { validateUserInput } = require("../../validatorService");
 
 const { IDENTIFIER } = astNodeTypes;
 
-const vscode = require('../../vscodeService').getVscode()
-
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
     astNodeTypes.FUNCTION_DECLARATION,
@@ -23,17 +22,12 @@ const acceptableNodeTypes = [
     astNodeTypes.WHILE_STATEMENT
 ];
 
-function buildSnippetString(snippetText) {
-    return new vscode.SnippetString(snippetText);
-}
-
 function introduceVariable() {
     let actionSetup = null;
     let extractionPath = null;
     let identifierNode = null;
     let selectedScopeNode = null;
     let introductionLocation = null;
-    let variableType = null;
 
     return asyncPrepareActionSetup()
         .then((newActionSetup) => actionSetup = newActionSetup)
@@ -66,35 +60,23 @@ function introduceVariable() {
             selectedScopeNode = retrieveExtractionLocation(extractionScopes);
         })
 
-        .then(() => openSelectList({
-            title: 'What kind of variable do you need?',
-            values: variableTypeList
-        }))
-        .then((variableType) => validateUserInput({
-            value: variableType,
-            validator: (variableType) => variableTypeList.includes(variableType),
-            message: buildInfoMessage('No variable type selected; canceling introduce variable action')
-        }))
-        .then((newVariableType) => variableType = newVariableType)
-
         .then(() => {
             introductionLocation = selectExtractionLocation(actionSetup.selectionPath, selectedScopeNode);
         })
 
         .then(() =>
             getNewVariableBuilder({
-                type: variableType,
+                type: variableTypes.SELECT,
                 name: identifierNode.name,
-                value: '\${1:null}'
+                value: '\${2:null}'
             })
                 .buildVariableDeclaration())
 
         .then((variableDeclarationString) => {
             const editPosition = transformLocationPartToPosition(introductionLocation.start);
-            const snippetString = buildSnippetString(`${variableDeclarationString}\$0\n`);
+            const snippetText = `${variableDeclarationString}\$0\n`;
 
-            return actionSetup.activeTextEditor
-                .insertSnippet(snippetString, editPosition);
+            insertSnippet(snippetText, editPosition);
         })
 
         .catch(function (error) {

@@ -23,7 +23,6 @@ describe('change variable type', function () {
         const variableDeclarator = findNodeInPath(selectionPath, VARIABLE_DECLARATOR);
 
         const variableString = getNewVariableString(
-            variableTypes.CONST,
             variableDeclarator,
             fixtureText);
 

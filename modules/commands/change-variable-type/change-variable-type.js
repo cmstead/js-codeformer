@@ -1,4 +1,4 @@
-const { getNewVariableBuilder } = require("../../builders/VariableBuilder");
+const { getNewVariableBuilder, variableTypes } = require("../../builders/VariableBuilder");
 const { getSourceSelection } = require("../../source-utilities");
 
 function getVariableValueString(declaratorNode, source) {
@@ -7,9 +7,9 @@ function getVariableValueString(declaratorNode, source) {
     return getSourceSelection(source, initLocation);
 }
 
-function getNewVariableString(variableType, variableDeclaratorNode, source) {
+function getNewVariableString(variableDeclaratorNode, source) {
     return getNewVariableBuilder({
-        type: variableType,
+        type: variableTypes.SELECT,
         name: variableDeclaratorNode.id.name,
         value: getVariableValueString(variableDeclaratorNode, source)
     })

@@ -2,6 +2,7 @@ const { asyncPrepareActionSetup } = require("../../action-setup");
 const { CALL_EXPRESSION, OBJECT_EXPRESSION } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
+const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
@@ -9,12 +10,6 @@ const {
     getArgumentListLocation,
     buildArgumentObjectSnippet,
     buildPositionalArgumentString } = require("./toggle-arguments-type");
-
-const vscode = require('../../vscodeService').getVscode();
-
-function buildSnippetString(snippetText) {
-    return new vscode.SnippetString(snippetText);
-}
 
 function toggleArgumentsType() {
     let actionSetup = null;
@@ -49,10 +44,7 @@ function toggleArgumentsType() {
                 ? buildArgumentObjectSnippet(actionSetup.source, functionNode.arguments)
                 : buildPositionalArgumentString(actionSetup.source, functionNode.arguments);
 
-            const snippetString = buildSnippetString(snippetText);
-
-            return actionSetup.activeTextEditor
-                .insertSnippet(snippetString, replacementRange);
+            return insertSnippet(snippetText, replacementRange);
         })
 
         .catch(function (error) {

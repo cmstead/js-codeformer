@@ -2,16 +2,11 @@ const { asyncPrepareActionSetup } = require("../../action-setup");
 const { FUNCTION_DECLARATION, ARROW_FUNCTION_EXPRESSION, OBJECT_PATTERN, FUNCTION_EXPRESSION } = require("../../constants/ast-node-types");
 const { getNodeType } = require("../../core-utils");
 const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
+const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getParameterListLocation, buildParameterObjectSnippet, buildPositionalParameterString } = require("./toggle-parameters-type");
-
-const vscode = require('../../vscodeService').getVscode();
-
-function buildSnippetString(snippetText) {
-    return new vscode.SnippetString(snippetText);
-}
 
 function toggleParametersType() {
     let actionSetup = null;
@@ -46,10 +41,7 @@ function toggleParametersType() {
                 ? buildParameterObjectSnippet(actionSetup.source, functionNode.params)
                 : buildPositionalParameterString(actionSetup.source, functionNode.params);
 
-            const snippetString = buildSnippetString(snippetText);
-
-            return actionSetup.activeTextEditor
-                .insertSnippet(snippetString, replacementRange);
+            return insertSnippet(snippetText, replacementRange);
         })
 
         .catch(function (error) {

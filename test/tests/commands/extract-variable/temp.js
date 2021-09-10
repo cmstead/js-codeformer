@@ -3,7 +3,7 @@ const { showErrorMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getActionTitles, findCommandIdByTitle } = require("./convert");
 
-const vscode = require('../../vscodeService').getVscode()
+const vscode = require('../../vscodeService').getVscode();
 
 async function test() {
     return 'foo';

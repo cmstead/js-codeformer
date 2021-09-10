@@ -10,8 +10,7 @@ const { getLanguageSnippetName, getTemplateList, getSnippetText } = require('./s
 const { buildInfoMessage, parseAndShowMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
 const { transformLocationToRange } = require('../../edit-utils/textEditTransforms');
-
-const vscode = require('../../vscodeService').getVscode();
+const { insertSnippet } = require('../../edit-utils/snippet-service');
 
 const snippetBasePath = '../../../';
 
@@ -20,11 +19,6 @@ function getSnippetFilePath(actionSetup) {
     const snippetFileName = `${snippetName}.code-snippets`;
     return path.join(__dirname, snippetBasePath, snippetFileName);
 
-}
-
-function buildSnippetString(selectedOption, snippetJson) {
-    const snippetText = getSnippetText(selectedOption, snippetJson);
-    return new vscode.SnippetString(snippetText);
 }
 
 function surroundWith() {
@@ -78,11 +72,10 @@ function surroundWith() {
         }))
 
         .then(function (selectedOption) {
-            const snippetString = buildSnippetString(selectedOption, snippetJson)
+            const snippetText = getSnippetText(selectedOption, snippetJson)
             const selectionRange = transformLocationToRange(actionSetup.location);
 
-            return actionSetup.activeTextEditor
-                .insertSnippet(snippetString, selectionRange);
+            return insertSnippet(snippetText, selectionRange);
         })
 
         .catch(function (error) {

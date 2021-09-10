@@ -1,1 +1,1 @@
-const something = 'foo';
+${1|const,let,var|} something = 'foo';
