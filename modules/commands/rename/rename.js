@@ -38,7 +38,7 @@ function getSurroundingScope(selectionPath, startFrom = selectionPath[selectionP
 
     const nodeParentType = getNodeType(nodeParent);
 
-    return functionTypes.includes(nodeParentType)
+    return functionTypes.includes(nodeParentType) && nodeParent.id !== startFrom
         ? nodeParent.body
         : reverse(selectionPathSegment).find(isNodeAScope);
 }
