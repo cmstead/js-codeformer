@@ -21,8 +21,8 @@ function partitionOnLocation(sourceLocation, partitioningLocation) {
 
 function splitOnAllLocations(sourceLocation, sortedPartitioningLocations) {
     const positionsAreReversed = arePositionsReversed(
-        partitioningLocations[0].start,
-        partitioningLocations[0].end);
+        sortedPartitioningLocations[0].start,
+        sortedPartitioningLocations[0].end);
 
     let partitioningLocations = positionsAreReversed
         ? sortedPartitioningLocations
