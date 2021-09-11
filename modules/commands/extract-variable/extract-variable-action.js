@@ -7,7 +7,9 @@ const { transformLocationToRange } = require('../../edit-utils/textEditTransform
 
 const {
     selectExtractionLocation,
-    retrieveExtractionLocation
+    retrieveExtractionLocation,
+    buildCopyLocation,
+    buildInsertionLocation
 } = require('../../extraction-utils/extraction-location-service');
 
 const {
@@ -42,7 +44,6 @@ function selectExtractionPoint(
             return selectExtractionScopes(extractionPath, selectedScope);
         });
 }
-
 
 function extractVariable() {
     let actionSetup = null;
@@ -80,26 +81,17 @@ function extractVariable() {
             variableDeclaration = newVariableDeclaration)
 
         .then(() => {
-            const extractionPoint = selectExtractionLocation(actionSetup.selectionPath, extractionLocation);
-
             const selectedNode = last(actionSetup.selectionPath)
             const variableNameString = wrapJsxExpression(selectedNode, '$1');
 
-            const copyLocation = buildLocation(
-                extractionPoint.start,
-                actionSetup.location.start
-            );
-
-            const insertionLocation = buildLocation(
-                extractionPoint.start,
-                actionSetup.location.end
-            );
-
-            const insertionRange = transformLocationToRange(insertionLocation);
+            const extractionPoint = selectExtractionLocation(actionSetup.selectionPath, extractionLocation);
+            const copyLocation = buildCopyLocation(extractionPoint, actionSetup.location);
+            const insertionLocation = buildInsertionLocation(extractionPoint, actionSetup.location);
 
             const copiedSource = getSourceSelection(actionSetup.source, copyLocation);
-
+            
             const snippetText = `${variableDeclaration}\n${copiedSource}${variableNameString}`;
+            const insertionRange = transformLocationToRange(insertionLocation);
 
             return insertSnippet(snippetText, insertionRange);
         })
