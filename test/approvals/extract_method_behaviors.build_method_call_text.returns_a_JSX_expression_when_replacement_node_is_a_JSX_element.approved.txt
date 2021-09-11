@@ -1,1 +1,1 @@
-{this.testFunction(a, b, c)}
+{this.$1(a, b, c)}

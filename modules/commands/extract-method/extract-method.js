@@ -144,7 +144,6 @@ function attachAssignment(simpleMethodCall, parsedBody) {
 
 function buildMethodCallText({
     destinationType,
-    methodName,
     parameters,
     selectedNode = null,
     methodBody = ''
@@ -152,7 +151,7 @@ function buildMethodCallText({
     const parsedBody = parse(methodBody);
     const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
 
-    const simpleMethodCall = `${prefix}${methodName}(${parameters})`;
+    const simpleMethodCall = `${prefix}$1(${parameters})`;
     const baseMethodCall = attachAssignment(simpleMethodCall, parsedBody);
 
     return wrapJsxExpression(selectedNode, baseMethodCall);

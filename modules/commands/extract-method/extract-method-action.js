@@ -1,15 +1,16 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
-const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
 const { buildInfoMessage, parseAndShowMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
 const { openInputBox, openSelectList } = require('../../ui-services/inputService');
 const { getSourceSelection } = require('../../source-utilities');
-const { buildEditLocations } = require('../../edit-utils/textEditTransforms');
+const { buildEditLocations, transformLocationToRange } = require('../../edit-utils/textEditTransforms');
 
 const {
     selectExtractionLocation,
-    retrieveExtractionLocation
+    retrieveExtractionLocation,
+    buildCopyLocation,
+    buildInsertionLocation
 } = require('../../extraction-utils/extraction-location-service');
 
 const {
@@ -27,6 +28,7 @@ const {
 } = require('./extract-method');
 const { last, getNodeType } = require('../../core-utils');
 const { wrapJsxElement } = require('../../react-service');
+const { insertSnippet } = require('../../edit-utils/snippet-service');
 
 function selectExtractionPoint(
     extractionScopeList,
@@ -47,19 +49,6 @@ function selectExtractionPoint(
             return selectExtractionScopes(extractionPath, selectedScope);
         });
 }
-
-
-function getMethodName() {
-    return openInputBox({ title: 'New method name' })
-        .then((methodName) =>
-            validateUserInput({
-                value: methodName,
-                validator: (methodName) => methodName !== '',
-                message: buildInfoMessage('No method name entered; cannot extract method')
-            })
-        );
-}
-
 
 function getEditedParameters(suggestedParameters) {
     return openInputBox({
@@ -84,7 +73,6 @@ function extractMethod() {
     let extractionScopeList = null;
 
     let extractionLocation = null;
-    let newMethodName = null;
     let parameterText = null;
 
     let methodText = null;
@@ -117,37 +105,28 @@ function extractMethod() {
             extractionLocation = retrieveExtractionLocation(extractionPoint))
 
         .then(() =>
-            getMethodName())
-        .then((methodName) =>
-            newMethodName = methodName)
-
-        .then(() =>
             parseSelectedText(actionSetup.source, actionSetup.location))
         .then((parsedSelection) =>
             findAppropriateParameters(
                 parsedSelection,
                 extractionPath,
                 extractionLocation))
-        .then((suggestedParameters) =>
-            getEditedParameters(suggestedParameters))
-        .then((newParameterText) =>
-            parameterText = newParameterText)
 
-        .then(() =>
-            buildMethodText({
+        .then((suggestedParameters) => {
+            return buildMethodText({
                 destinationType: getNodeType(extractionLocation),
-                methodName: newMethodName,
+                methodName: '${1:newMethodName}',
                 methodBody: wrapJsxElement(selectedNode, sourceSelection),
-                parameters: parameterText.split(',').map(parameter => parameter.trim())
-            }))
+                parameters: [`\${2:${suggestedParameters}}`]
+            })
+        })
         .then((newMethodText) =>
             methodText = newMethodText)
 
         .then(() =>
             buildMethodCallText({
                 destinationType: getNodeType(extractionLocation),
-                methodName: newMethodName,
-                parameters: parameterText,
+                parameters: '$2',
                 selectedNode,
                 methodBody: sourceSelection
             }))
@@ -166,11 +145,18 @@ function extractMethod() {
             })
         })
 
-        .then(({ extractionPosition, replacementRange }) =>
-            getNewSourceEdit()
-                .addReplacementEdit(replacementRange, methodCallText)
-                .addInsertEdit(extractionPosition, methodText + '\n\n')
-                .applyEdit())
+        .then(() => {
+            const extractionPoint = selectExtractionLocation(actionSetup.selectionPath, extractionLocation);
+            const copyLocation = buildCopyLocation(extractionPoint, actionSetup.location);
+            const insertionLocation = buildInsertionLocation(extractionPoint, actionSetup.location);
+
+            const copiedSource = getSourceSelection(actionSetup.source, copyLocation);
+
+            const snippetText = `${methodText}\n${copiedSource}${methodCallText}`;
+            const insertionRange = transformLocationToRange(insertionLocation);
+
+            return insertSnippet(snippetText, insertionRange);
+        })
 
         .catch(function (error) {
             parseAndShowMessage(error);

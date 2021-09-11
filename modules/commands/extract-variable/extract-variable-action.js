@@ -21,7 +21,6 @@ const {
 } = require('./extract-variable');
 const { last } = require('../../core-utils');
 const { wrapJsxExpression } = require('../../react-service');
-const { buildLocation } = require('../../edit-utils/location-service');
 const { insertSnippet } = require('../../edit-utils/snippet-service');
 
 
