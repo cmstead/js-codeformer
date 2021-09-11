@@ -26,12 +26,21 @@ function getSelectionPathSegment(selectionPath, startFrom) {
 }
 
 function getSurroundingScope(selectionPath, startFrom = selectionPath[selectionPath.length - 1]) {
+
     const scopeTypes = [BLOCK_STATEMENT, CLASS_BODY, PROGRAM];
     const isNodeAScope = node => scopeTypes.includes(getNodeType(node));
 
     const selectionPathSegment = getSelectionPathSegment(selectionPath, startFrom)
+    const segmentLength = selectionPathSegment.length;
 
-    return reverse(selectionPathSegment).find(isNodeAScope);
+    const nodeParent = selectionPathSegment[segmentLength - 2];
+    const functionTypes = [ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION];
+
+    const nodeParentType = getNodeType(nodeParent);
+
+    return functionTypes.includes(nodeParentType)
+        ? nodeParent.body
+        : reverse(selectionPathSegment).find(isNodeAScope);
 }
 
 const renameableNodeTypes = [
