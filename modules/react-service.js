@@ -10,7 +10,7 @@ function wrapJsxExpression(targetNode, sourceText) {
 }
 
 function wrapJsxElement(selectedNode, sourceText) {
-    return isJsxElement(selectedNode) ? `(${sourceText})` : sourceText;
+    return isJsxElement(selectedNode) ? `return (${sourceText})` : sourceText;
 }
 
 module.exports = {
