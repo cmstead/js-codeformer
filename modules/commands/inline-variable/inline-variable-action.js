@@ -95,7 +95,7 @@ function inlineVariable() {
 
         .catch((error) => {
             parseAndShowMessage(error);
-        }
+        })
 }
 
 module.exports = {

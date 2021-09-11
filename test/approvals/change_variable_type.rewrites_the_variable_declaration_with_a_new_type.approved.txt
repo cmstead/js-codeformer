@@ -1,1 +1,1 @@
-${1|const,let,var|} something = 'foo';
+${99|const,let,var|} something = 'foo';

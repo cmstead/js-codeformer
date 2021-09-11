@@ -37,6 +37,7 @@ function splitOnAllLocations(sourceLocation, sortedPartitioningLocations) {
 }
 
 module.exports = {
+    buildLocation,
     partitionOnLocation,
     splitOnAllLocations
 };

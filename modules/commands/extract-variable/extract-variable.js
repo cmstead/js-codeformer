@@ -29,12 +29,11 @@ const variableTypeList = Object
     .map(key => acceptableVariableTypes[key]);
 
 function buildVariableDeclaration({
-    variableType,
     variableName,
     source
 }) {
     return getNewVariableBuilder({
-        type: variableType,
+        type: variableTypes.SELECT,
         name: variableName,
         value: source
     }).buildVariableDeclaration();

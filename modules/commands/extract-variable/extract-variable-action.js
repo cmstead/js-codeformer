@@ -1,10 +1,9 @@
 const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
-const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
 const { buildInfoMessage, parseAndShowMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
-const { openInputBox, openSelectList } = require('../../ui-services/inputService');
-const { buildEditLocations } = require('../../edit-utils/textEditTransforms');
+const { openSelectList } = require('../../ui-services/inputService');
+const { transformLocationToRange } = require('../../edit-utils/textEditTransforms');
 
 const {
     selectExtractionLocation,
@@ -15,12 +14,13 @@ const {
     buildExtractionScopeList,
     selectExtractionScopes,
     acceptableNodeTypes,
-    variableTypeList,
     buildVariableDeclaration,
     getSourceSelection
 } = require('./extract-variable');
 const { last } = require('../../core-utils');
 const { wrapJsxExpression } = require('../../react-service');
+const { buildLocation } = require('../../edit-utils/location-service');
+const { insertSnippet } = require('../../edit-utils/snippet-service');
 
 
 function selectExtractionPoint(
@@ -44,44 +44,14 @@ function selectExtractionPoint(
 }
 
 
-function selectVariableType() {
-    return openSelectList({
-        values: variableTypeList,
-        title: 'Select variable type'
-    })
-        .then((variableType) =>
-            validateUserInput({
-                value: variableType,
-                validator: (variableType) => variableTypeList.includes(variableType),
-                message: buildInfoMessage('Invalid variable type, or no variable type selected; cannot extract variable')
-            })
-        )
-}
-
-
-function getVariableName() {
-    return openInputBox({ title: 'New variable name' })
-        .then((variableName) =>
-            validateUserInput({
-                value: variableName,
-                validator: (variableName) => variableName !== '',
-                message: buildInfoMessage('No variable name entered; cannot extract variable')
-            })
-        );
-}
-
-
 function extractVariable() {
     let actionSetup = null;
     let sourceSelection = null;
 
-    let nodePath = null;
     let extractionPath = null;
     let extractionScopeList = null;
 
     let extractionLocation = null;
-    let newVariableName = null;
-    let newVariableType = null;
 
     let variableDeclaration = null;
 
@@ -90,7 +60,6 @@ function extractVariable() {
             actionSetup = newActionSetup;
             sourceSelection = getSourceSelection(actionSetup.source, actionSetup.location);
 
-            nodePath = actionSetup.selectionPath;
             extractionPath = buildExtractionPath(actionSetup.selectionPath, acceptableNodeTypes);
             extractionScopeList = buildExtractionScopeList(extractionPath);
         })
@@ -102,42 +71,37 @@ function extractVariable() {
         .then((extractionPoint) =>
             extractionLocation = retrieveExtractionLocation(extractionPoint))
 
-        .then(() => selectVariableType())
-        .then((variableType) =>
-            newVariableType = variableType)
-
-        .then(() => getVariableName())
-        .then((variableName) =>
-            newVariableName = variableName)
 
         .then(() => buildVariableDeclaration({
-            variableType: newVariableType,
-            variableName: newVariableName,
+            variableName: '${1:newVariableName}',
             source: sourceSelection
         }))
         .then((newVariableDeclaration) =>
             variableDeclaration = newVariableDeclaration)
 
         .then(() => {
-            const extractionPoint = selectExtractionLocation(
-                nodePath,
-                extractionLocation
+            const extractionPoint = selectExtractionLocation(actionSetup.selectionPath, extractionLocation);
+
+            const selectedNode = last(actionSetup.selectionPath)
+            const variableNameString = wrapJsxExpression(selectedNode, '$1');
+
+            const copyLocation = buildLocation(
+                extractionPoint.start,
+                actionSetup.location.start
             );
 
-            return buildEditLocations({
-                actionSetup,
-                extractionLocation: extractionPoint
-            })
-        })
+            const insertionLocation = buildLocation(
+                extractionPoint.start,
+                actionSetup.location.end
+            );
 
-        .then(({ extractionPosition, replacementRange }) => {
-            const selectedNode = last(actionSetup.selectionPath)
-            const variableNameString = wrapJsxExpression(selectedNode, newVariableName);
-            
-            return getNewSourceEdit()
-                .addReplacementEdit(replacementRange, variableNameString)
-                .addInsertEdit(extractionPosition, variableDeclaration + '\n')
-                .applyEdit();
+            const insertionRange = transformLocationToRange(insertionLocation);
+
+            const copiedSource = getSourceSelection(actionSetup.source, copyLocation);
+
+            const snippetText = `${variableDeclaration}\n${copiedSource}${variableNameString}`;
+
+            return insertSnippet(snippetText, insertionRange);
         })
 
         .catch(function (error) {

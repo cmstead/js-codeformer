@@ -128,7 +128,7 @@ describe('extract variable', function () {
 
             const variableDeclaration = buildVariableDeclaration({ variableType, variableName, source });
 
-            assert.equal(variableDeclaration, `${variableType} ${variableName} = ${source};`);
+            assert.equal(variableDeclaration, `\${99|const,let,var|} ${variableName} = ${source};`);
         });
 
         it('does not double trailing semicolon if source already contains one', function () {
@@ -138,7 +138,7 @@ describe('extract variable', function () {
 
             const variableDeclaration = buildVariableDeclaration({ variableType, variableName, source });
 
-            assert.equal(variableDeclaration, `${variableType} ${variableName} = ${source}`);
+            assert.equal(variableDeclaration, `\${99|const,let,var|} ${variableName} = ${source}`);
         });
     });
 
