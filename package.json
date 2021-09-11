@@ -325,7 +325,7 @@
             {
                 "command": "cmstead.jscodeformer.suggestAction",
                 "key": "ctrl+alt+.",
-                "mac": "cmd+alt+."
+                "mac": "cmd+shift+j ."
             }
         ],
         "menus": {

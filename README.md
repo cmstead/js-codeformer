@@ -83,7 +83,7 @@ JS CodeFormer can suggest actions you can take given the current state of the do
 To get suggestions, use the following key combination:
 
 - Windows: `ctrl+alt+.`
-- Mac: `cmd+alt+.`
+- Mac: `cmd+shift+j .`
 
 Here's what it looks like in action:
 

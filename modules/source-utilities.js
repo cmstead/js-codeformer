@@ -17,7 +17,7 @@ function getSourceSelection(sourceCode, location) {
 
     const selectedLines = sourceCode.split('\n').slice(startLine, endLine + 1);
 
-    if(selectedLines.length === 0) {
+    if (selectedLines.length === 0) {
         return '';
     } else if (selectedLines.length === 1) {
         return selectedLines[0].slice(startColumn, endColumn)
@@ -32,7 +32,13 @@ function getSourceSelection(sourceCode, location) {
 
 }
 
+function getAllSourceSelections(sourceCode, locations) {
+    return locations.map((location) =>
+        getSourceSelection(sourceCode, location));
+}
+
 module.exports = {
     getSourceSelection,
-    locationToSourceSelection
+    locationToSourceSelection,
+    getAllSourceSelections
 };
