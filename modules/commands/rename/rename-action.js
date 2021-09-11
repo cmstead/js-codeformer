@@ -1,14 +1,11 @@
-const { replace } = require("estraverse");
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { IDENTIFIER, METHOD_DEFINITION, ASSIGNMENT_PATTERN } = require("../../constants/ast-node-types");
 const { getNodeType, first, last } = require("../../core-utils");
 const { splitOnAllLocations } = require("../../edit-utils/location-service");
 const { insertSnippet } = require("../../edit-utils/snippet-service");
-const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { buildCopyLocation, buildInsertionLocation } = require("../../extraction-utils/extraction-location-service");
 const { getAllSourceSelections } = require("../../source-utilities");
-const { openInputBox } = require("../../ui-services/inputService");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const {
