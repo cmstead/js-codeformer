@@ -1,6 +1,7 @@
 const { MethodBuilder } = require("../../builders/MethodBuilder");
 const { VARIABLE_DECLARATOR, ARROW_FUNCTION_EXPRESSION, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, FUNCTION, METHOD_DEFINITION, VARIABLE_DECLARATION } = require("../../constants/ast-node-types");
 const { getNodeType, last, first } = require("../../core-utils");
+const { partitionOnLocation } = require("../../edit-utils/location-service");
 const { findNodeInPath, findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
 
 const { pickVariableDeletionLocation } = require('../../extraction-utils/variable-deletion-utils');
@@ -62,23 +63,6 @@ function getBodyNodeFromFunctionNode(functionNode) {
     return typeof functionNode.value !== 'undefined'
         ? functionNode.value.body
         : functionNode.body
-}
-
-function buildLocation(start, end) {
-    const reverseOrder = start.line > end.line
-        || (start.line === end.line && start.column > end.column)
-
-    return {
-        start: reverseOrder ? end : start,
-        end: reverseOrder ? start : end
-    }
-}
-
-function partitionOnLocation(sourceLocation, partitioningLocation) {
-    return [
-        buildLocation(sourceLocation.start, partitioningLocation.start),
-        buildLocation(partitioningLocation.end, sourceLocation.end)
-    ]
 }
 
 function getFunctionBody(functionNode, sourceText, deletionLocation) {
