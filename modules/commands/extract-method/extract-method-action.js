@@ -2,7 +2,7 @@ const { asyncPrepareActionSetup } = require('../../action-setup');
 const { buildExtractionPath } = require('../../extraction-utils/ExtractionPathBuilder');
 const { buildInfoMessage, parseAndShowMessage } = require('../../ui-services/messageService');
 const { validateUserInput } = require('../../validatorService');
-const { openInputBox, openSelectList } = require('../../ui-services/inputService');
+const { openSelectList } = require('../../ui-services/inputService');
 const { getSourceSelection } = require('../../source-utilities');
 const { buildEditLocations, transformLocationToRange } = require('../../edit-utils/textEditTransforms');
 
@@ -50,20 +50,6 @@ function selectExtractionPoint(
         });
 }
 
-function getEditedParameters(suggestedParameters) {
-    return openInputBox({
-        title: 'Edit method parameters',
-        value: suggestedParameters.join(', ')
-    })
-        .then((parameterText) =>
-            validateUserInput({
-                value: parameterText,
-                validator: () => true,
-                message: buildInfoMessage('Parameter edit canceled; cannot extract method')
-            })
-        );
-}
-
 function extractMethod() {
     let actionSetup = null;
     let sourceSelection = null;
@@ -73,7 +59,6 @@ function extractMethod() {
     let extractionScopeList = null;
 
     let extractionLocation = null;
-    let parameterText = null;
 
     let methodText = null;
     let methodCallText = null;

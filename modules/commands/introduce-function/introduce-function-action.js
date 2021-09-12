@@ -7,7 +7,7 @@ const { transformLocationPartToPosition } = require("../../edit-utils/textEditTr
 const { retrieveExtractionLocation, selectExtractionLocation } = require("../../extraction-utils/extraction-location-service");
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
 const { selectExtractionScopes, buildIntroductionScopeList } = require("../../extraction-utils/extractionScopeService");
-const { openSelectList, openInputBox } = require("../../ui-services/inputService");
+const { openSelectList } = require("../../ui-services/inputService");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { getNameOrCall, getNodeName, getParameterString } = require("./introduce-function");
@@ -70,17 +70,13 @@ function introduceFunction() {
         })
 
         .then(() => getParameterString(identifierNode))
-        .then((parameterString) => openInputBox({
-            title: 'Enter function parameters',
-            value: parameterString
-        }))
 
         .then((parameterString) =>
             getMethodBuilder({
                 functionType: methodTypes.FUNCTION_DECLARATION,
                 functionName: getNodeName(identifierNode),
-                functionParameters: parameterString,
-                functionBody: `\${1:throw new Error('Function not implemented');}`
+                functionParameters: `\${1:${parameterString}}`,
+                functionBody: `\${2:throw new Error('Function not implemented');}`
             })
                 .buildNewMethod())
 
