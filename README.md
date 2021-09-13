@@ -154,21 +154,15 @@ Current Actions:
 
 ### Snippets ###
 
-VS Code comes with a number of basic snippets for generating common code. JS CodeFormer adds a few while trying to limit snippet overlap. This means the snippet selection will be enhanced rather than repeated.
+VS Code comes with a number of basic snippets for generating common code. JS CodeFormer adds a few while trying to limit snippet overlap. This means the snippet selection will be enhanced rather than repeated. The list of snippets is long, and constantly improving, so listing all snippets is unreasonable here.
 
-Current Snippets:
+Current snippets support:
 
-- Variable
-- Parameter
-- Function (enhanced to support async and generators)
-- Arrow Function
-- Promise then
-- Promise catch
-- Try/Catch
-- Constructor
-- Function call
-- Template Literal
-- Immediately Invoked Function Expression (IIFE)
+- variables and parameters
+- functions
+- classes
+- promises
+- literal values
 
 ## Refactorings In Action ##
 

@@ -26,4 +26,15 @@
         ],
         "description": ""
     },
+    "Try/Catch": {
+        "prefix": "try-catch",
+        "body": [
+            "try {",
+            "\t${1:${TM_SELECTED_TEXT}}",
+            "} catch (${2:error}) {",
+            "\t$3",
+            "}"
+        ],
+        "description": "Standard try/catch block"
+    },
 }

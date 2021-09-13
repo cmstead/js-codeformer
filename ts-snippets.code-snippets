@@ -43,16 +43,14 @@
         ],
         "description": "Promise catch function call"
     },
-    "Try/Catch": {
-        "prefix": "try-catch",
+    "Class": {
+        "prefix": "class",
         "body": [
-            "try {",
-            "\t${1:${TM_SELECTED_TEXT}}",
-            "} catch (${2:error}${3:: ${4:typeAnnotation}}) {",
-            "\t$5",
+            "class ${1:ClassName} ${2:extends ${3:ParentClass} }{",
+            "\t${4:super()}${5:${TM_SELECTED_TEXT}}$0",
             "}"
         ],
-        "description": "Standard try/catch block"
+        "description": "Insert new class"
     },
     "Constructor": {
         "scope": "typescript,typescriptreact",
