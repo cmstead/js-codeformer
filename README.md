@@ -110,6 +110,9 @@ Current refactorings:
 - Invert If Statement
     - Windows: `ctrl+shift+j, n`
     - Mac: `cmd+shift+j, n`
+- Invert Ternary Expression
+    - Windows: `ctrl+shift+j, t`
+    - Mac: `cmd+shift+j, t`
 - Rename (important for non js/ts files) [See known issues]
     - Windows: `ctrl+shift+j, r`
     - Mac: `cmd+shift+j, r`
