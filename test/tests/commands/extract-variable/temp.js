@@ -68,5 +68,5 @@ if (true === true) {
 }
 
 module.exports = {
-    convert
+    convert: convert
 };

@@ -3,7 +3,9 @@ let config = {
 };
 
 function setConfigOptions(configOptions) {
-    config = configOptions;
+    Object.keys(configOptions).forEach((key) => {
+        config[key] = configOptions[key];
+    });
 }
 
 function getConfig() {

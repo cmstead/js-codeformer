@@ -25,7 +25,7 @@
     "Arrow Function": {
         "prefix": "arrow-function-lambda",
         "body": [
-            "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}\n}}"
+            "(${1:parameters}) => ${2:{\n\t${TM_SELECTED_TEXT}$0\n}}"
         ],
         "description": "New Arrow Function"
     },

@@ -1,6 +1,6 @@
 const { getNewIfBuilder } = require("../../builders/IfBuilder");
 const { RETURN_STATEMENT, VARIABLE_DECLARATION, PROGRAM, BLOCK_STATEMENT, EXPRESSION_STATEMENT, CONDITIONAL_EXPRESSION } = require("../../constants/ast-node-types");
-const { terminator } = require("../../constants/language-values");
+const languageValues = require("../../constants/language-values");
 const { getNodeType, first } = require("../../core-utils");
 const { getSourceSelection } = require("../../source-utilities");
 
@@ -35,7 +35,7 @@ function getDeclarationSetup(declarationNode) {
     const variableKind = declarationNode.kind === 'var' ? 'var' : 'let';
     const declaratorName = getDeclaratorName(declarationNode);
 
-    return `${variableKind} ${declaratorName}${terminator}`
+    return `${variableKind} ${declaratorName}${languageValues.terminator}`
 }
 
 function buildNewIfStatement(source, parentNode, ternaryExpression) {
@@ -48,8 +48,8 @@ function buildNewIfStatement(source, parentNode, ternaryExpression) {
 
     const newIfStatement = getNewIfBuilder({
         test,
-        consequent: addLinePrefix(parentNode, consequent) + terminator,
-        alternate: addLinePrefix(parentNode, alternate) + terminator
+        consequent: addLinePrefix(parentNode, consequent) + languageValues.terminator,
+        alternate: addLinePrefix(parentNode, alternate) + languageValues.terminator
     }).buildIf();
 
     return getNodeType(parentNode) === VARIABLE_DECLARATION

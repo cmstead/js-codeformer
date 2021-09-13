@@ -1,7 +1,7 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { getMethodBuilder, methodTypes } = require("../../builders/MethodBuilder");
 const astNodeTypes = require("../../constants/ast-node-types");
-const { terminator } = require("../../constants/language-values");
+const languageValues = require("../../constants/language-values");
 const { getNodeType } = require("../../core-utils");
 const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationPartToPosition } = require("../../edit-utils/textEditTransforms");
@@ -77,7 +77,7 @@ function introduceFunction() {
                 functionType: methodTypes.FUNCTION_DECLARATION,
                 functionName: getNodeName(identifierNode),
                 functionParameters: `\${1:${parameterString}}`,
-                functionBody: `\${2:throw new Error('Function not implemented')${terminator}}`
+                functionBody: `\${2:throw new Error('Function not implemented')${languageValues.terminator}}`
             })
                 .buildNewMethod())
 

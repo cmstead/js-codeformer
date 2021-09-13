@@ -9,7 +9,7 @@ const { getMethodBuilder, methodTypes } = require('../../builders/MethodBuilder'
 const { getNodeType, first, last } = require('../../core-utils');
 const { VARIABLE_DECLARATION, IDENTIFIER } = require('../../constants/ast-node-types');
 const { wrapJsxExpression } = require('../../react-service');
-const { terminator } = require('../../constants/language-values');
+const languageValues = require('../../constants/language-values');
 
 const acceptableNodeTypes = [
     astNodeTypes.ARROW_FUNCTION_EXPRESSION,
@@ -90,7 +90,7 @@ function insertReturnStatement(methodBody) {
         const assignedValue = getAssignedValue(methodBody, parsedBody);
         const bodyRemainder = getMethodBodyRemainder(methodBody, parsedBody);
 
-        return `${bodyRemainder}return ${assignedValue}${terminator}`;
+        return `${bodyRemainder}return ${assignedValue}${languageValues.terminator}`;
     } else {
         return methodBody;
     }
