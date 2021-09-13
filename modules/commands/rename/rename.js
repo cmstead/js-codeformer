@@ -1,4 +1,4 @@
-const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ASSIGNMENT_PATTERN, ARRAY_PATTERN, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require('../../constants/ast-node-types');
+const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ASSIGNMENT_PATTERN, ARRAY_PATTERN, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, OBJECT_PATTERN } = require('../../constants/ast-node-types');
 const { getNodeType, reverse, last } = require('../../core-utils');
 
 const {
@@ -38,7 +38,9 @@ function getSurroundingScope(selectionPath, startFrom = selectionPath[selectionP
 
     const nodeParentType = getNodeType(nodeParent);
 
-    return functionTypes.includes(nodeParentType) && nodeParent.id !== startFrom
+    const nodeIsAParameter = functionTypes.includes(nodeParentType) && nodeParent.id !== startFrom;
+    
+    return (nodeIsAParameter) || nodeParentType === OBJECT_PATTERN
         ? nodeParent.body
         : reverse(selectionPathSegment).find(isNodeAScope);
 }
