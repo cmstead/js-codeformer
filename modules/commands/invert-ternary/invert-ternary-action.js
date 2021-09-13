@@ -1,4 +1,6 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
+const { getNewTernaryBuilder } = require("../../builders/ternaryBuilder");
+const { invertTestExpression } = require("../../conditionals-service");
 const { CONDITIONAL_EXPRESSION } = require("../../constants/ast-node-types");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
@@ -6,7 +8,6 @@ const { transformLocationToRange } = require("../../edit-utils/textEditTransform
 const { getSourceSelection } = require("../../source-utilities");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
-const { invertTestExpression, buildTernaryExpression } = require("./invert-ternary");
 
 function invertTernary() {
     let actionSetup = null;
@@ -34,7 +35,11 @@ function invertTernary() {
         .then(() => alternateBody = getSourceSelection(actionSetup.source, ternaryNode.alternate.loc))
         .then(() => testExpression = invertTestExpression(actionSetup.source, ternaryNode.test))
 
-        .then(() => buildTernaryExpression(alternateBody, consequentBody, testExpression))
+        .then(() => getNewTernaryBuilder({
+            test: testExpression,
+            consequent: alternateBody,
+            alternate: consequentBody
+        }).buildTernary())
 
         .then((ifStatement) => {
             const replacementRange = transformLocationToRange(ternaryNode.loc);
