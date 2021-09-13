@@ -48,7 +48,7 @@
         "mocha": "^8.4.0",
         "nyc": "^15.1.0",
         "rimrafx": "^1.0.0",
-        "vsce": "^1.97.0",
+        "vsce": "^1.99.0",
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
