@@ -59,6 +59,8 @@ function doStuff() {
     test1234()
 }
 
+a ? b : c;
+
 if (true === true) {
     console.log('okay');
 } else {

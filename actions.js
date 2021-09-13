@@ -77,6 +77,18 @@ const actions = [
 		}
 	},
 	{
+		commandId: 'cmstead.jscodeformer.invertTernary',
+		path: './modules/commands/invert-ternary/invert-ternary-action',
+		name: 'invertTernary',
+		title: 'Invert Ternary Expression',
+		group: groups.REFACTORINGS,
+		analyzer: ({ selectionPath }) => {
+			const ternaryNode = findNodeInPath(selectionPath, CONDITIONAL_EXPRESSION);
+
+			return ternaryNode !== null;
+		}
+	},
+	{
 		commandId: 'cmstead.jscodeformer.changeVariableType',
 		path: './modules/commands/change-variable-type/change-variable-type-action',
 		name: 'changeVariableType',
@@ -310,7 +322,7 @@ const actions = [
 				&& (
 					getNodeType(parentNode) !== CALL_EXPRESSION
 					|| parentNode.arguments.includes(selectedNode)
-					);
+				);
 		}
 	},
 	{
@@ -321,7 +333,7 @@ const actions = [
 		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			const selectedNode = last(selectionPath);
-			
+
 			let checkCount = 0;
 
 			const parentNode = findAncestorNodeInPath(

@@ -70,6 +70,7 @@
         "onCommand:cmstead.jscodeformer.inlineVariable",
         "onCommand:cmstead.jscodeformer.rename",
         "onCommand:cmstead.jscodeformer.invertIf",
+        "onCommand:cmstead.jscodeformer.invertTernary",
         "onCommand:cmstead.jscodeformer.pickBehavior",
         "onCommand:cmstead.jscodeformer.surroundWith",
         "onCommand:cmstead.jscodeformer.action",
@@ -167,6 +168,11 @@
                 "command": "cmstead.jscodeformer.invertIf",
                 "title": "Invert If Statement",
                 "description": "Invert if/else statement"
+            },
+            {
+                "command": "cmstead.jscodeformer.invertTernary",
+                "title": "Invert Ternary Expression",
+                "description": "Invert Ternary Expression"
             },
             {
                 "command": "cmstead.jscodeformer.surroundWith",
@@ -303,6 +309,11 @@
                 "mac": "cmd+shift+j n"
             },
             {
+                "command": "cmstead.jscodeformer.invertTernary",
+                "key": "ctrl+shift+j t",
+                "mac": "cmd+shift+j t"
+            },
+            {
                 "command": "cmstead.jscodeformer.surroundWith",
                 "key": "ctrl+shift+j w",
                 "mac": "cmd+shift+j w"
@@ -369,6 +380,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.invertIf"
+                },
+                {
+                    "command": "cmstead.jscodeformer.invertTernary"
                 }
             ],
             "cmstead.js-codeformer.conversions": [
