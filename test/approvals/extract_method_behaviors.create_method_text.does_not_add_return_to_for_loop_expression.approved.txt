@@ -1,5 +1,5 @@
 testMethod: function (a, b, c) {
-            for (let index = 0; index < 10; index++) {
+	for (let index = 0; index < 10; index++) {
     console.log(index);
 }
-        },
+},

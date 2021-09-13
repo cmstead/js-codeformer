@@ -1,4 +1,4 @@
 testMethod: function (a, b, c, d) {
-            const something = 'foo';
+	const something = 'foo';
 return `${something} else`;
-        },
+},

@@ -1,3 +1,3 @@
 function* newMethod (a) {
-            const b = a * 3; return b;
-        }
+	const b = a * 3; return b;
+}

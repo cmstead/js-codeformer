@@ -1,4 +1,4 @@
 function () {
-            console.log('foo');
+	console.log('foo');
     return 5 + 6;
-        }
+}

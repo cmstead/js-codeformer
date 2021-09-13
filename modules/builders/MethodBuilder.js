@@ -42,27 +42,35 @@ class MethodBuilder {
     }
 
     buildFunctionDeclaration() {
-        return `${this.asyncPrefix}function${this.generatorInfix} ${this.functionName} (${this.functionParameters}) {
-            ${this.functionBody}
-        }`;
+        return [
+            `${this.asyncPrefix}function${this.generatorInfix} ${this.functionName} (${this.functionParameters}) {`,
+            `\t${this.functionBody}`,
+            `}`
+        ].join('\n');
     }
 
     buildFunctionExpression() {
-        return `${this.asyncPrefix}function${this.generatorInfix} (${this.functionParameters}) {
-            ${this.functionBody}
-        }`;
+        return [
+            `${this.asyncPrefix}function${this.generatorInfix} (${this.functionParameters}) {`,
+            `\t${this.functionBody}`,
+            `}`
+        ].join('\n');
     }
 
     buildClassMethod() {
-        return `${this.asyncPrefix}${this.functionName}${this.generatorInfix} (${this.functionParameters}) {
-            ${this.functionBody}
-        }`;
+        return [
+            `${this.asyncPrefix}${this.functionName}${this.generatorInfix} (${this.functionParameters}) {`,
+            `\t${this.functionBody}`,
+            `}`
+        ].join('\n');
     }
 
     buildObjectMethod() {
-        return `${this.asyncPrefix}${this.functionName}: function${this.generatorInfix} (${this.functionParameters}) {
-            ${this.functionBody}
-        },`;
+        return [
+            `${this.asyncPrefix}${this.functionName}: function${this.generatorInfix} (${this.functionParameters}) {`,
+            `\t${this.functionBody}`,
+            `},`
+        ].join('\n');
     }
 
     isReturnStatement(bodyLines) {
