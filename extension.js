@@ -5,8 +5,6 @@ const actions = require('./actions');
 const { setConfigOptions } = require('./modules/config-service');
 
 function activate(context) {
-	setConfigOptions(vscode.workspace.getConfiguration('js-codeformer'));
-	
 	const formatDocument = () =>
 		vscode.commands.executeCommand("editor.action.formatDocument")
 
@@ -15,6 +13,8 @@ function activate(context) {
 			const disposable = vscode.commands.registerCommand(
 				action.commandId,
 				function () {
+					setConfigOptions(vscode.workspace.getConfiguration('js-codeformer'));
+	
 					try {
 						const codeAction = require(action.path);
 
