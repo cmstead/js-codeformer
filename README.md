@@ -63,6 +63,12 @@ Experimental framework support:
 - Svelte -- requires the Svelte extension to work
     - https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode
 
+## Extension Settings ##
+
+Currently settings are limited to just one: "Use Semicolons"
+
+There are folks who use them and folks who don't. In order to better serve people, semicolons in generated code can be turned on or off. They are on by default -- this is the TC39 recommendation.
+
 ## Refactorings, Conversions, and Actions ##
 
 JS CodeFormer has a number of automated code actions you can take. They are separated into the following categories:

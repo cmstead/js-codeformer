@@ -2,7 +2,11 @@ const vscode = require('vscode');
 
 const actions = require('./actions');
 
+const { setConfigOptions } = require('./modules/config-service');
+
 function activate(context) {
+	setConfigOptions(vscode.workspace.getConfiguration('js-codeformer'));
+	
 	const formatDocument = () =>
 		vscode.commands.executeCommand("editor.action.formatDocument")
 

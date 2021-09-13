@@ -1,3 +1,5 @@
+const { terminator } = require("../constants/language-values");
+
 const variableTypes = {
     CONST: 'const',
     LET: 'let',
@@ -21,7 +23,7 @@ class VariableBuilder {
         this.trailingSemicolon = /.*;$/.test(value.trim())
             || type === variableTypes.PROPERTY
             ? ''
-            : ';'
+            : terminator;
     }
 
     buildVariableDeclaration() {

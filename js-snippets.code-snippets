@@ -2,7 +2,7 @@
     "Variable": {
         "prefix": "var-const-let",
         "body": [
-            "${1|const,let,var|} ${2:variableName} = ${TM_SELECTED_TEXT};"
+            "${1|const,let,var|} ${2:variableName} = ${TM_SELECTED_TEXT}${3:;}"
         ],
         "description": "Basic variable"
     },
@@ -39,7 +39,7 @@
     "Promise catch": {
         "prefix": "promise-catch",
         "body": [
-            ".catch(function(${1:error})${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}});"
+            ".catch(function(${1:error})${2:{\n\t${TM_SELECTED_TEXT}$0\n\\}})${3:;}"
         ],
         "description": "Promise catch function call"
     },
@@ -80,7 +80,7 @@
         "body": [
             "(function() {",
             "\t${TM_SELECTED_TEXT}$0",
-            "})();",
+            "})()${1:;}",
             ""
         ],
         "description": "Insert an immediately invoked function expression"

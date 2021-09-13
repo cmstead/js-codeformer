@@ -92,6 +92,16 @@
         "onCommand:cmstead.jscodeformer.suggestAction"
     ],
     "contributes": {
+        "configuration": {
+            "title": "JS CodeFormer",
+            "properties": {
+                "js-codeformer.useSemicolons": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable or disable semicolons"
+                }
+            }
+        },
         "languages": [
             {
                 "id": "html"
