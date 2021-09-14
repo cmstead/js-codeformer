@@ -1,14 +1,17 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
-const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
-const { transformLocationPartToPosition, transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { retrieveExtractionLocation } = require("../../extraction-utils/extraction-location-service");
+const { insertSnippet } = require("../../edit-utils/snippet-service");
+const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
+const { retrieveExtractionLocation, buildCopyLocation, buildInsertionLocation } = require("../../extraction-utils/extraction-location-service");
 const { buildExtractionPath } = require("../../extraction-utils/ExtractionPathBuilder");
 const { buildExtractionScopeList, selectExtractionScopes } = require("../../extraction-utils/extractionScopeService");
-const { openSelectList, openInputBox } = require("../../ui-services/inputService");
+const { getSourceSelection } = require("../../source-utilities");
+const { openSelectList } = require("../../ui-services/inputService");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { isAnonymousFunction, acceptableNodeTypes, getNewFunctionString } = require("./lift-and-name-function-expression");
+
+const { selectExtractionLocation } = require('../../extraction-utils/extraction-location-service')
 
 
 
@@ -17,7 +20,6 @@ function liftAndNameFunctionExpression() {
     let extractionPath = null;
     let functionNode = null;
     let selectedScopeNode = null;
-    let functionName = null;
 
     const getNearestAnonymousFunction = () => findNodeByCheckFunction(actionSetup.selectionPath, isAnonymousFunction);
 
@@ -53,25 +55,18 @@ function liftAndNameFunctionExpression() {
             selectedScopeNode = retrieveExtractionLocation(extractionScopes)
         })
 
-        .then(() => openInputBox({
-            title: 'What is the name of your function?'
-        }))
-        .then((functionName) => validateUserInput({
-            value: functionName,
-            validator: (functionName) => functionName.trim() !== '',
-            message: buildInfoMessage('No function name provided; canceling lift and name action')
-        }))
-        .then((newFunctionName) => functionName = newFunctionName)
-
-        .then(() => getNewFunctionString(functionNode, functionName, actionSetup.source))
+        .then(() => getNewFunctionString(functionNode, `\${1:newFunctionName}`, actionSetup.source))
         .then((functionString) => {
-            const replacementRange = transformLocationToRange(functionNode.loc);
-            const editPosition = transformLocationPartToPosition(selectedScopeNode.loc.start);
+            const extractionPoint = selectExtractionLocation(actionSetup.selectionPath, selectedScopeNode);
+            const copyLocation = buildCopyLocation(extractionPoint, functionNode.loc);
+            const insertionLocation = buildInsertionLocation(extractionPoint, functionNode.loc);
 
-            return getNewSourceEdit()
-                .addReplacementEdit(replacementRange, functionName)
-                .addInsertEdit(editPosition, `${functionString}\n`)
-                .applyEdit();
+            const copiedSource = getSourceSelection(actionSetup.source, copyLocation);
+
+            const snippetText = `${functionString}\n${copiedSource}\$1`;
+            const insertionRange = transformLocationToRange(insertionLocation);
+
+            return insertSnippet(snippetText, insertionRange);
         })
 
         .catch(function (error) {
