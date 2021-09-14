@@ -2,9 +2,8 @@ const { asyncPrepareActionSetup } = require("../../action-setup");
 const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require("../../constants/ast-node-types");
 const { getNodeType, first } = require("../../core-utils");
 const { findNodeByCheckFunction } = require("../../edit-utils/node-path-utils");
-const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
+const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { openInputBox } = require("../../ui-services/inputService");
 const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { isValidVariableDeclaration, findVariableDeclaration, buildFunctionString } = require("./convert-to-function-declaration");
@@ -43,9 +42,7 @@ function convertToFunctionDeclaration() {
             if (replaceableFunctionTypes.includes(nodeType)) {
                 functionNode = nodeToReplace;
 
-                return openInputBox({
-                    title: 'Enter a name for your function'
-                });
+                return '${1:newFunctionName}';
             } else {
                 const declarator = first(nodeToReplace.declarations);
                 functionNode = declarator.init;
@@ -65,9 +62,7 @@ function convertToFunctionDeclaration() {
         .then((functionString) => {
             const replacementRange = transformLocationToRange(nodeToReplace.loc);
 
-            return getNewSourceEdit()
-                .addReplacementEdit(replacementRange, functionString)
-                .applyEdit();
+            return insertSnippet(functionString, replacementRange);
         })
 
         .catch(function (error) {
