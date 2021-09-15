@@ -1,5 +1,6 @@
-const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ASSIGNMENT_PATTERN, ARRAY_PATTERN, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, OBJECT_PATTERN } = require('../../constants/ast-node-types');
+const { VARIABLE_DECLARATOR, FUNCTION_DECLARATION, PROPERTY, METHOD_DEFINITION, BLOCK_STATEMENT, PROGRAM, CLASS_BODY, IDENTIFIER, ASSIGNMENT_PATTERN, ARRAY_PATTERN, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, OBJECT_PATTERN, VARIABLE_DECLARATION } = require('../../constants/ast-node-types');
 const { getNodeType, reverse, last } = require('../../core-utils');
+const { findNodeByCheckFunction } = require('../../edit-utils/node-path-utils');
 
 const {
     selectReplacementLocations: selectVariableLocations
@@ -39,8 +40,27 @@ function getSurroundingScope(selectionPath, startFrom = selectionPath[selectionP
     const nodeParentType = getNodeType(nodeParent);
 
     const nodeIsAParameter = functionTypes.includes(nodeParentType) && nodeParent.id !== startFrom;
-    
-    return (nodeIsAParameter) || nodeParentType === OBJECT_PATTERN
+
+    if (
+        nodeParentType === PROPERTY
+        && getNodeType(selectionPathSegment[segmentLength - 3]) === OBJECT_PATTERN
+    ) {
+        const nearestParent = findNodeByCheckFunction(selectionPathSegment, (node) => {
+            const nodeType = getNodeType(node);
+
+            return functionTypes.includes(nodeType) 
+                || nodeType === VARIABLE_DECLARATOR
+                || nodeType === VARIABLE_DECLARATION;
+        });
+
+        const nearestParentType = getNodeType(nearestParent);
+
+        return [VARIABLE_DECLARATION, VARIABLE_DECLARATOR].includes(nearestParentType)
+            ? reverse(selectionPathSegment).find(isNodeAScope)
+            : nearestParent.body;
+    }
+
+    return (nodeIsAParameter)
         ? nodeParent.body
         : reverse(selectionPathSegment).find(isNodeAScope);
 }
