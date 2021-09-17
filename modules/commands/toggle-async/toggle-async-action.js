@@ -39,7 +39,8 @@ function toggleAsync() {
             functionName: getFunctionName(functionNode),
             functionParameters: getFunctionParametersString(functionNode, actionSetup.source),
             functionBody: getFunctionBody(functionNode, actionSetup.source),
-            async: !functionNode.async
+            async: !functionNode.async,
+            generator: functionNode.generator
         }).buildNewMethod())
 
         .then((functionString) => {

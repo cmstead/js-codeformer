@@ -50,7 +50,9 @@ function toggleArrowFunctionBraces() {
                 functionName: '',
                 functionType: methodTypes.ARROW_FUNCTION_EXPRESSION,
                 functionBody: getFunctionBody(arrowFunctionNode, actionSetup.source),
-                functionParameters: getFunctionParametersString(arrowFunctionNode, actionSetup.source)
+                functionParameters: getFunctionParametersString(arrowFunctionNode, actionSetup.source),
+                async: arrowFunctionNode.async,
+                generator: arrowFunctionNode.generator
             })
 
             return arrowFunctionNode.expression
