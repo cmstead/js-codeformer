@@ -418,18 +418,6 @@
                     "command": "cmstead.jscodeformer.convertToMethod"
                 },
                 {
-                    "command": "cmstead.jscodeformer.togglePropertyDeclaration"
-                },
-                {
-                    "command": "cmstead.jscodeformer.toggleParametersType"
-                },
-                {
-                    "command": "cmstead.jscodeformer.toggleArgumentsType"
-                },
-                {
-                    "command": "cmstead.jscodeformer.toggleArrowFunctionBraces"
-                },
-                {
                     "command": "cmstead.jscodeformer.convertToTemplateLiteral"
                 },
                 {
@@ -448,6 +436,18 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.toggleAsync"
+                },
+                {
+                    "command": "cmstead.jscodeformer.togglePropertyDeclaration"
+                },
+                {
+                    "command": "cmstead.jscodeformer.toggleParametersType"
+                },
+                {
+                    "command": "cmstead.jscodeformer.toggleArgumentsType"
+                },
+                {
+                    "command": "cmstead.jscodeformer.toggleArrowFunctionBraces"
                 },
                 {
                     "command": "cmstead.jscodeformer.surroundWith"

@@ -137,10 +137,6 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert Function Property to Method
 - Convert Function Variable to Function Declaration
 - Convert Ternary to If/Else [See known issues]
-- Toggle Arrow Function Braces
-- Toggle Function Call Arguments Between Positional and Object Style
-- Toggle Function Parameters between Positional and Object Destructuring Style
-- Toggle Property Declaration Between Standard and Shorthand
 
 ### Actions ###
 
@@ -157,6 +153,11 @@ Current Actions:
 - Introduce variable
 - Introduce function
 - Lift and name function expression
+- Toggle Async Function Property
+- Toggle Arrow Function Braces
+- Toggle Function Call Arguments Between Positional and Object Style
+- Toggle Function Parameters between Positional and Object Destructuring Style
+- Toggle Property Declaration Between Standard and Shorthand
 
 ### Snippets ###
 

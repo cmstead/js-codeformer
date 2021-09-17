@@ -127,7 +127,7 @@ const actions = [
 		path: './modules/commands/toggle-property-declaration/toggle-property-declaration-action',
 		name: 'togglePropertyDeclaration',
 		title: 'Toggle Between Shorthand and Standard Property Declarations',
-		group: groups.CONVERSIONS,
+		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			const propertyNode = findNodeInPath(selectionPath, PROPERTY);
 
@@ -139,7 +139,7 @@ const actions = [
 		path: './modules/commands/toggle-parameters-type/toggle-parameters-type-action',
 		name: 'toggleParametersType',
 		title: 'Toggle Function Parameters Declaration Type',
-		group: groups.CONVERSIONS,
+		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			const functionTypes = [FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION];
 			const functionNode = findNodeByCheckFunction(
@@ -155,7 +155,7 @@ const actions = [
 		path: './modules/commands/toggle-arguments-type/toggle-arguments-type-action',
 		name: 'toggleArgumentsType',
 		title: 'Toggle Function Call Argument Passing Type',
-		group: groups.CONVERSIONS,
+		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			const functionNode = findNodeInPath(selectionPath, CALL_EXPRESSION);
 
@@ -168,7 +168,7 @@ const actions = [
 		path: './modules/commands/toggle-arrow-function-braces/toggle-arrow-function-braces-action',
 		name: 'toggleArrowFunctionBraces',
 		title: 'Toggle braces on an arrow function',
-		group: groups.CONVERSIONS,
+		group: groups.ACTIONS,
 		analyzer: ({ selectionPath }) => {
 			function hasOnlyAReturnLine(body) {
 				const exectuableBodyNodes = body.filter(node => getNodeType(node) !== EMPTY_STATEMENT)
