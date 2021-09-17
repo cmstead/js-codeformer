@@ -52,10 +52,10 @@
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
-        "@typescript-eslint/typescript-estree": "^4.30.0",
+        "@typescript-eslint/typescript-estree": "^4.31.1",
         "estraverse": "^5.2.0",
         "jsonc-parser": "^3.0.0",
-        "typescript": "^4.4.2"
+        "typescript": "^4.4.3"
     },
     "main": "./extension.js",
     "icon": "icon/jscf-icon-vscode.png",
