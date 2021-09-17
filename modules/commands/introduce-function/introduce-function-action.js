@@ -88,6 +88,8 @@ function introduceFunction() {
             return insertSnippet(snippetText, editPosition);
         })
 
+        .then(() => 'Tab to select next input, escape to exit')
+
         .catch(function (error) {
             parseAndShowMessage(error);
         });

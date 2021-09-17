@@ -65,6 +65,10 @@ function convertToFunctionDeclaration() {
             return insertSnippet(functionString, replacementRange);
         })
 
+        .then(() => replaceableFunctionTypes.includes(getNodeType(nodeToReplace))
+            ? 'Press tab or escape to exit'
+            : '')
+
         .catch(function (error) {
             parseAndShowMessage(error);
         });

@@ -11,6 +11,10 @@ const {
     buildArgumentObjectSnippet,
     buildPositionalArgumentString } = require("./toggle-arguments-type");
 
+function areArgumentsPositional(functionNode) {
+    return functionNode.arguments.length > 1
+        || getNodeType(functionNode.arguments[0]) !== OBJECT_EXPRESSION;
+}
 function toggleArgumentsType() {
     let actionSetup = null;
     let functionTypes = [CALL_EXPRESSION];
@@ -37,8 +41,7 @@ function toggleArgumentsType() {
             getArgumentListLocation(functionNode.arguments))
         .then((newArgumentListLocation) => {
             const replacementRange = transformLocationToRange(newArgumentListLocation);
-            const isPositional = functionNode.arguments.length > 1
-                || getNodeType(functionNode.arguments[0]) !== OBJECT_EXPRESSION
+            const isPositional = areArgumentsPositional(functionNode);
 
             const snippetText = isPositional
                 ? buildArgumentObjectSnippet(actionSetup.source, functionNode.arguments)
@@ -46,6 +49,10 @@ function toggleArgumentsType() {
 
             return insertSnippet(snippetText, replacementRange);
         })
+
+        .then(() => areArgumentsPositional(functionNode)
+            ? 'Tab to select next input, escape to exit'
+            : '')
 
         .catch(function (error) {
             parseAndShowMessage(error);

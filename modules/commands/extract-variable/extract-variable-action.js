@@ -95,6 +95,8 @@ function extractVariable() {
             return insertSnippet(snippetText, insertionRange);
         })
 
+        .then(() => 'Tab to select next input, escape to exit')
+
         .catch(function (error) {
             parseAndShowMessage(error);
         });

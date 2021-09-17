@@ -8,6 +8,10 @@ const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/mes
 const { validateUserInput } = require("../../validatorService");
 const { getParameterListLocation, buildParameterObjectSnippet, buildPositionalParameterString } = require("./toggle-parameters-type");
 
+function areParametersPositional(functionNode) {
+    return functionNode.params.length > 1
+        || getNodeType(functionNode.params[0]) !== OBJECT_PATTERN;
+}
 function toggleParametersType() {
     let actionSetup = null;
     let functionTypes = [FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION];
@@ -34,15 +38,17 @@ function toggleParametersType() {
             getParameterListLocation(functionNode.params))
         .then((newParameterListLocation) => {
             const replacementRange = transformLocationToRange(newParameterListLocation);
-            const isPositional = functionNode.params.length > 1
-                || getNodeType(functionNode.params[0]) !== OBJECT_PATTERN
-
+            const isPositional = areParametersPositional(functionNode);
             const snippetText = isPositional
                 ? buildParameterObjectSnippet(actionSetup.source, functionNode.params)
                 : buildPositionalParameterString(actionSetup.source, functionNode.params);
 
             return insertSnippet(snippetText, replacementRange);
         })
+
+        .then(() => areParametersPositional(functionNode)
+            ? 'Tab to select next input, escape to exit'
+            : '')
 
         .catch(function (error) {
             parseAndShowMessage(error);

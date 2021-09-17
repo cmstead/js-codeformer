@@ -149,6 +149,8 @@ function rename() {
             insertSnippet(snippetText, insertRange);
         })
 
+        .then(() => 'Press tab or escape to exit')
+
         .catch(function (error) {
             parseAndShowMessage(error);
         });

@@ -78,6 +78,8 @@ function surroundWith() {
             return insertSnippet(snippetText, selectionRange);
         })
 
+        .then(() => 'Tab to select next input, escape to exit')
+
         .catch(function (error) {
             parseAndShowMessage(error);
         });

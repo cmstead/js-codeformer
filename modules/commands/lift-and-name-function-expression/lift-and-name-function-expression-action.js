@@ -69,6 +69,8 @@ function liftAndNameFunctionExpression() {
             return insertSnippet(snippetText, insertionRange);
         })
 
+        .then(() => 'Press tab or escape to exit')
+
         .catch(function (error) {
             parseAndShowMessage(error);
         });

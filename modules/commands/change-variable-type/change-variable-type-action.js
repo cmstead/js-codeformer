@@ -40,6 +40,8 @@ function changeVariableType() {
             return insertSnippet(newVariableString, replacementRange)
         })
 
+        .then(() => 'Press tab or escape to exit')
+
         .catch(function (error) {
             parseAndShowMessage(error);
         });
