@@ -88,6 +88,7 @@
         "onCommand:cmstead.jscodeformer.changeVariableType",
         "onCommand:cmstead.jscodeformer.introduceVariable",
         "onCommand:cmstead.jscodeformer.introduceFunction",
+        "onCommand:cmstead.jscodeformer.toggleAsync",
         "onCommand:cmstead.jscodeformer.liftAndNameFunctionExpression",
         "onCommand:cmstead.jscodeformer.suggestAction"
     ],
@@ -265,6 +266,11 @@
                 "description": "Lift a function expression from its current location and convert it to a declaration"
             },
             {
+                "command": "cmstead.jscodeformer.toggleAsync",
+                "title": "Toggle Function Async Property",
+                "description": "Toggle async property on current function"
+            },
+            {
                 "command": "cmstead.jscodeformer.convert",
                 "title": "JS CodeFormer: Conversions",
                 "description": "Pick a conversion to run"
@@ -439,6 +445,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.liftAndNameFunctionExpression"
+                },
+                {
+                    "command": "cmstead.jscodeformer.toggleAsync"
                 },
                 {
                     "command": "cmstead.jscodeformer.surroundWith"

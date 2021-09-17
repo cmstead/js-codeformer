@@ -370,6 +370,26 @@ const actions = [
 		}
 	},
 	{
+		commandId: 'cmstead.jscodeformer.toggleAsync',
+		path: './modules/commands/toggle-async/toggle-async-action',
+		name: 'toggleAsync',
+		title: 'Toggle Function Async Property',
+		group: groups.ACTIONS,
+		analyzer: ({ selectionPath }) => {
+			const functionTypes = [
+				FUNCTION_DECLARATION,
+				FUNCTION_EXPRESSION,
+				ARROW_FUNCTION_EXPRESSION,
+				METHOD_DEFINITION];
+
+			const functionNode = findNodeByCheckFunction(
+				selectionPath,
+				(node) => functionTypes.includes(getNodeType(node)));
+
+			return functionNode !== null;
+		}
+	},
+	{
 		commandId: 'cmstead.jscodeformer.action',
 		path: './modules/commands/action/action-action',
 		name: 'action',
