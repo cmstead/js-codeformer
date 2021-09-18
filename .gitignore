@@ -2,6 +2,21 @@ node_modules
 .vscode-test/
 *.vsix
 
+# typescript output
+build
+dist
+out
+
+logs
+*.log
+experiment-*
+.DS_Store
+.env.local
+.env.*.local
+
+.vscode-test
+
 *.received.txt
+*.lcov
 .nyc_output/
 coverage/
