@@ -40,7 +40,11 @@ function getFunctionDeclaration(functionNode, selectionPath) {
 }
 
 function getFunctionName(functionDeclaration) {
-    return functionDeclaration.id.name;
+    if(getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
+        return functionDeclaration.id.name;
+    } else {
+        return functionDeclaration.declarations[0].id.name;
+    }
 }
 
 module.exports = {

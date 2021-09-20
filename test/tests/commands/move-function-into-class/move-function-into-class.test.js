@@ -91,7 +91,7 @@ describe('Move function into class', function () {
             assert.equal(functionName, 'aFunctionDeclaration');
         });
 
-        it.skip('locates a function expression assigned in a declaration', function () {
+        it('locates a function expression assigned in a declaration', function () {
             const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
             const parsedSource = parse(fixtureText);
 
@@ -106,7 +106,9 @@ describe('Move function into class', function () {
 
             const functionDeclarationNode = getFunctionDeclaration(functionNode, selectionPath);
 
-            this.verifyAsJSON(functionDeclarationNode);
+            const functionName = getFunctionName(functionDeclarationNode);
+
+            assert.equal(functionName, 'aFunctionConst');
         });
 
         it.skip('locates a function expression assigned among multiple declarators', function () {
