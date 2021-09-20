@@ -7,6 +7,7 @@ function isSingleDeclaration(declarationNode) {
 }
 
 function findFunctionDeclarator(functionNode, declarationNode) {
+    console.log(declarationNode);
     return declarationNode.declarations
         .find(declarator => declarator.init === functionNode);
 }

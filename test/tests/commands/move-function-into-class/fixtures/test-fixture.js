@@ -5,3 +5,8 @@ function aFunctionDeclaration() {
 const aFunctionConst = function () {
     console.log('Look! A funciton expression');
 }
+
+const someLiteral = 5,
+    myFunction = () => {
+        console.log('WOOOO!');
+    }

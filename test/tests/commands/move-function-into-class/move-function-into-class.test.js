@@ -3,7 +3,7 @@ const { parse } = require('../../../../modules/parser/parser');
 const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require("../../../utilities/editor-to-location-selection-builder");
 const { buildNodePath } = require("../../../../modules/node-path");
 const { findNodeInPath } = require("../../../../modules/edit-utils/node-path-utils");
-const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION } = require("../../../../modules/constants/ast-node-types");
+const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require("../../../../modules/constants/ast-node-types");
 const { getFunctionDeclaration } = require("../../../../modules/commands/move-function-into-class/move-function-into-class");
 
 require('../../../utilities/approvals').configure();
@@ -40,6 +40,24 @@ describe('Move function into class', function () {
             const selectionPath = buildNodePath(parsedSource, selectionLocation);
 
             const functionNode = findNodeInPath(selectionPath, FUNCTION_EXPRESSION);
+
+            const functionDeclarationNode = getFunctionDeclaration(functionNode, selectionPath);
+
+            this.verifyAsJSON(functionDeclarationNode);
+        });
+
+        it('locates a function expression assigned among multiple declarators', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectionLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 10, column: 23 }),
+                end: buildEditorCoordinates({ line: 10, column: 23 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+            const functionNode = findNodeInPath(selectionPath, ARROW_FUNCTION_EXPRESSION);
 
             const functionDeclarationNode = getFunctionDeclaration(functionNode, selectionPath);
 
