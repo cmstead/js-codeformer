@@ -3,7 +3,7 @@ const { getNodeType } = require("../../core-utils");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 
 function isSingleDeclaration(declarationNode) {
-    return declarationNode.declarators.length === 1;
+    return declarationNode.declarations.length === 1;
 }
 
 function findFunctionDeclarator(functionNode, declarationNode) {

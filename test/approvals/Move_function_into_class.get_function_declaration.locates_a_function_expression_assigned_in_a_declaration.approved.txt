@@ -1,0 +1,163 @@
+{
+  "declarations": [
+    {
+      "id": {
+        "loc": {
+          "end": {
+            "column": 20,
+            "line": 5
+          },
+          "start": {
+            "column": 6,
+            "line": 5
+          }
+        },
+        "name": "aFunctionConst",
+        "type": "Identifier"
+      },
+      "init": {
+        "async": false,
+        "body": {
+          "body": [
+            {
+              "expression": {
+                "arguments": [
+                  {
+                    "loc": {
+                      "end": {
+                        "column": 45,
+                        "line": 6
+                      },
+                      "start": {
+                        "column": 16,
+                        "line": 6
+                      }
+                    },
+                    "raw": "'Look! A funciton expression'",
+                    "type": "Literal",
+                    "value": "Look! A funciton expression"
+                  }
+                ],
+                "callee": {
+                  "computed": false,
+                  "loc": {
+                    "end": {
+                      "column": 15,
+                      "line": 6
+                    },
+                    "start": {
+                      "column": 4,
+                      "line": 6
+                    }
+                  },
+                  "object": {
+                    "loc": {
+                      "end": {
+                        "column": 11,
+                        "line": 6
+                      },
+                      "start": {
+                        "column": 4,
+                        "line": 6
+                      }
+                    },
+                    "name": "console",
+                    "type": "Identifier"
+                  },
+                  "optional": false,
+                  "property": {
+                    "loc": {
+                      "end": {
+                        "column": 15,
+                        "line": 6
+                      },
+                      "start": {
+                        "column": 12,
+                        "line": 6
+                      }
+                    },
+                    "name": "log",
+                    "type": "Identifier"
+                  },
+                  "type": "MemberExpression"
+                },
+                "loc": {
+                  "end": {
+                    "column": 46,
+                    "line": 6
+                  },
+                  "start": {
+                    "column": 4,
+                    "line": 6
+                  }
+                },
+                "optional": false,
+                "type": "CallExpression"
+              },
+              "loc": {
+                "end": {
+                  "column": 47,
+                  "line": 6
+                },
+                "start": {
+                  "column": 4,
+                  "line": 6
+                }
+              },
+              "type": "ExpressionStatement"
+            }
+          ],
+          "loc": {
+            "end": {
+              "column": 1,
+              "line": 7
+            },
+            "start": {
+              "column": 35,
+              "line": 5
+            }
+          },
+          "type": "BlockStatement"
+        },
+        "expression": false,
+        "generator": false,
+        "id": null,
+        "loc": {
+          "end": {
+            "column": 1,
+            "line": 7
+          },
+          "start": {
+            "column": 23,
+            "line": 5
+          }
+        },
+        "params": [],
+        "type": "FunctionExpression"
+      },
+      "loc": {
+        "end": {
+          "column": 1,
+          "line": 7
+        },
+        "start": {
+          "column": 6,
+          "line": 5
+        }
+      },
+      "type": "VariableDeclarator"
+    }
+  ],
+  "kind": "const",
+  "loc": {
+    "end": {
+      "column": 1,
+      "line": 7
+    },
+    "start": {
+      "column": 0,
+      "line": 5
+    }
+  },
+  "type": "VariableDeclaration"
+}
