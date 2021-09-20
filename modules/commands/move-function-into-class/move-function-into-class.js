@@ -59,11 +59,18 @@ function getFunctionNode(functionDeclaration) {
 }
 
 function getMethodWriteLocation({ body: classBody }) {
-    const lastBodyNode = last(classBody.body);
-
-    return {
-        start: lastBodyNode.loc.end,
-        end: lastBodyNode.loc.end
+    if(classBody.body.length > 0) {
+        const lastBodyNode = last(classBody.body);
+    
+        return {
+            start: lastBodyNode.loc.end,
+            end: lastBodyNode.loc.end
+        }
+    } else {
+        return {
+            start: { line: classBody.loc.end.line, column: classBody.loc.end.column - 1},
+            end: { line: classBody.loc.end.line, column: classBody.loc.end.column - 1}
+        }
     }
 }
 

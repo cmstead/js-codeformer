@@ -36,8 +36,29 @@ function splitOnAllLocations(sourceLocation, sortedPartitioningLocations) {
     }, [sourceLocation]);
 }
 
+function compareLocations(location1, location2) {
+    const start1 = location1.start;
+    const start2 = location2.start;
+
+    const location1IsGreater = start1.line > start2.line
+        || (start1.line === start2.line
+            && start1.column > start2.column);
+
+    const locationsAreEqual = start1.line === start2.line
+        && start1.column === start2.column;
+
+    if (location1IsGreater) {
+        return 1;
+    } else if (locationsAreEqual) {
+        return 0;
+    } else {
+        return -1;
+    }
+}
+
 module.exports = {
     buildLocation,
+    compareLocations,
     partitionOnLocation,
     splitOnAllLocations
 };

@@ -8,6 +8,7 @@ const { pickParentNode } = require('./modules/commands/convert-ternary-to-if-els
 const { isConvertablePropertyNode } = require('./modules/commands/toggle-property-declaration/toggle-property-declaration');
 const { findFunctionNode } = require('./modules/function-utils/function-node');
 const { checkExpressionTree } = require('./modules/commands/convert-to-template-literal/convert-to-template-literal');
+const { getFunctionDeclaration } = require('./modules/commands/move-function-into-class/move-function-into-class');
 
 const actions = [
 	{
@@ -387,6 +388,26 @@ const actions = [
 				(node) => functionTypes.includes(getNodeType(node)));
 
 			return functionNode !== null;
+		}
+	},
+	{
+		commandId: 'cmstead.jscodeformer.moveFunctionIntoClass',
+		path: './modules/commands/move-function-into-class/move-function-into-class-action',
+		name: 'moveFunctionIntoClass',
+		title: 'Move Independent Function Into Class',
+		group: groups.ACTIONS,
+		analyzer: ({ selectionPath }) => {
+			let functionTypes = [
+				FUNCTION_DECLARATION,
+				FUNCTION_EXPRESSION,
+				ARROW_FUNCTION_EXPRESSION
+			];
+
+			const functionNode = findNodeByCheckFunction(
+				selectionPath,
+				(node) => functionTypes.includes(getNodeType(node)))
+
+			return getFunctionDeclaration(functionNode, selectionPath) !== null
 		}
 	},
 	{

@@ -240,5 +240,22 @@ describe('Move function into class', function () {
 
             this.verifyAsJSON(writeLocation);
         });
+        it('returns the location inside the closing braket when class body is empty', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectionLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 22, column: 20 }),
+                end: buildEditorCoordinates({ line: 22, column: 20 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+            const classNode = findNodeInPath(selectionPath, CLASS_DECLARATION);
+
+            const writeLocation = getMethodWriteLocation(classNode);
+
+            this.verifyAsJSON(writeLocation);
+        });
     });
 });

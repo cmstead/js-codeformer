@@ -16,6 +16,9 @@ const { getFunctionDeclaration, getFunctionName, getFunctionNode, getMethodWrite
 const { getMethodBuilder } = require('../../builders/MethodBuilder');
 const { getFunctionBody, getFunctionParametersString } = require('../../function-utils/function-source');
 const { openSelectList } = require('../../ui-services/inputService');
+const { transformLocationToRange, transformLocationPartToPosition } = require('../../edit-utils/textEditTransforms');
+const { getNewSourceEdit } = require('../../edit-utils/SourceEdit');
+const { compareLocations } = require('../../edit-utils/location-service');
 
 let functionTypes = [
     FUNCTION_DECLARATION,
@@ -29,6 +32,7 @@ function moveFunctionIntoClass() {
     let methodString = null;
     let classNodes = null;
     let receivingClass = null;
+    let functionDeclaration = null;
 
     return asyncPrepareActionSetup()
         .then((newActionSetup) => actionSetup = newActionSetup)
@@ -46,6 +50,8 @@ function moveFunctionIntoClass() {
             message: buildInfoMessage('Unable to find a function declaration to move')
         }))
 
+        .then((newFunctionDeclaration) => functionDeclaration = newFunctionDeclaration)
+
         .then((functionDeclaration) => ({
             functionName: getFunctionName(functionDeclaration),
             functionNode: getFunctionNode(functionDeclaration)
@@ -54,7 +60,7 @@ function moveFunctionIntoClass() {
         .then(({ functionName, functionNode }) => getMethodBuilder({
             functionType: METHOD_DEFINITION,
             functionName,
-            functionBody: getFunctionBody(functionNode),
+            functionBody: getFunctionBody(functionNode, actionSetup.source),
             functionParameters: getFunctionParametersString(functionNode),
             async: functionNode.async,
             generator: functionNode.generator
@@ -62,7 +68,7 @@ function moveFunctionIntoClass() {
 
         .then((newMethodString) => methodString = newMethodString)
 
-        .then(() => first(actionSetup.selectionPath.body).filter(node => getNodeType(node) === CLASS_DECLARATION))
+        .then(() => first(actionSetup.selectionPath).body.filter(node => getNodeType(node) === CLASS_DECLARATION))
         .then((classNodes) => validateUserInput({
             value: classNodes,
             validator: (classNodes) => classNodes.length > 0,
@@ -86,6 +92,25 @@ function moveFunctionIntoClass() {
             || (node.id !== null && node.id.name === className)))
 
         .then(() => getMethodWriteLocation(receivingClass))
+
+        .then((methodWriteLocation) => {
+            const methodWriteIsFirst = compareLocations(methodWriteLocation, functionDeclaration.loc) > 0;
+
+            const methodWritePosition = transformLocationPartToPosition(methodWriteLocation.end);
+            const functionDeleteRange = transformLocationToRange(functionDeclaration.loc);
+
+            const sourceEdit = getNewSourceEdit();
+
+            if (methodWriteIsFirst) {
+                sourceEdit.addReplacementEdit(functionDeleteRange, '');
+                sourceEdit.addInsertEdit(methodWritePosition, `\n${methodString}`);
+            } else {
+                sourceEdit.addInsertEdit(methodWritePosition, `\n${methodString}`);
+                sourceEdit.addReplacementEdit(functionDeleteRange, '');
+            }
+
+            return sourceEdit.applyEdit();
+        })
 
         .catch(function (error) {
             parseAndShowMessage(error);

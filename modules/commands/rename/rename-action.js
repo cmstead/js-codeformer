@@ -1,7 +1,7 @@
 const { asyncPrepareActionSetup } = require("../../action-setup");
 const { IDENTIFIER, METHOD_DEFINITION, ASSIGNMENT_PATTERN } = require("../../constants/ast-node-types");
 const { getNodeType, first, last } = require("../../core-utils");
-const { splitOnAllLocations } = require("../../edit-utils/location-service");
+const { splitOnAllLocations, compareLocations } = require("../../edit-utils/location-service");
 const { insertSnippet } = require("../../edit-utils/snippet-service");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { buildCopyLocation, buildInsertionLocation } = require("../../extraction-utils/extraction-location-service");
@@ -95,25 +95,7 @@ function rename() {
                 replacementLocations.unshift(variableNameLocation);
             }
 
-            replacementLocations.sort((location1, location2) => {
-                const start1 = location1.start;
-                const start2 = location2.start;
-
-                const location1IsGreater = start1.line > start2.line
-                    || (start1.line === start2.line
-                        && start1.column > start2.column);
-
-                const locationsAreEqual = start1.line === start2.line
-                        && start1.column === start2.column;
-
-                if(location1IsGreater) {
-                    return 1;
-                } else if (locationsAreEqual) {
-                    return 0;
-                } else {
-                    return -1;
-                }
-            });
+            replacementLocations.sort(compareLocations);
 
             const tabStops = replacementLocations.map((location) => {
                 const stopString = locationsMatch(variableNameLocation, location)
