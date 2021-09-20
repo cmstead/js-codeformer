@@ -39,7 +39,11 @@ function getFunctionDeclaration(functionNode, selectionPath) {
     }
 }
 
+function getFunctionName(functionDeclaration) {
+    return functionDeclaration.id.name;
+}
 
 module.exports = {
-    getFunctionDeclaration
+    getFunctionDeclaration,
+    getFunctionName
 };
