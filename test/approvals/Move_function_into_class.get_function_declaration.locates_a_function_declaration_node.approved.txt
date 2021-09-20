@@ -1,0 +1,133 @@
+{
+  "async": false,
+  "body": {
+    "body": [
+      {
+        "expression": {
+          "arguments": [
+            {
+              "loc": {
+                "end": {
+                  "column": 47,
+                  "line": 2
+                },
+                "start": {
+                  "column": 16,
+                  "line": 2
+                }
+              },
+              "raw": "'inside a function declaration'",
+              "type": "Literal",
+              "value": "inside a function declaration"
+            }
+          ],
+          "callee": {
+            "computed": false,
+            "loc": {
+              "end": {
+                "column": 15,
+                "line": 2
+              },
+              "start": {
+                "column": 4,
+                "line": 2
+              }
+            },
+            "object": {
+              "loc": {
+                "end": {
+                  "column": 11,
+                  "line": 2
+                },
+                "start": {
+                  "column": 4,
+                  "line": 2
+                }
+              },
+              "name": "console",
+              "type": "Identifier"
+            },
+            "optional": false,
+            "property": {
+              "loc": {
+                "end": {
+                  "column": 15,
+                  "line": 2
+                },
+                "start": {
+                  "column": 12,
+                  "line": 2
+                }
+              },
+              "name": "log",
+              "type": "Identifier"
+            },
+            "type": "MemberExpression"
+          },
+          "loc": {
+            "end": {
+              "column": 48,
+              "line": 2
+            },
+            "start": {
+              "column": 4,
+              "line": 2
+            }
+          },
+          "optional": false,
+          "type": "CallExpression"
+        },
+        "loc": {
+          "end": {
+            "column": 49,
+            "line": 2
+          },
+          "start": {
+            "column": 4,
+            "line": 2
+          }
+        },
+        "type": "ExpressionStatement"
+      }
+    ],
+    "loc": {
+      "end": {
+        "column": 1,
+        "line": 3
+      },
+      "start": {
+        "column": 32,
+        "line": 1
+      }
+    },
+    "type": "BlockStatement"
+  },
+  "expression": false,
+  "generator": false,
+  "id": {
+    "loc": {
+      "end": {
+        "column": 29,
+        "line": 1
+      },
+      "start": {
+        "column": 9,
+        "line": 1
+      }
+    },
+    "name": "aFunctionDeclaration",
+    "type": "Identifier"
+  },
+  "loc": {
+    "end": {
+      "column": 1,
+      "line": 3
+    },
+    "start": {
+      "column": 0,
+      "line": 1
+    }
+  },
+  "params": [],
+  "type": "FunctionDeclaration"
+}
