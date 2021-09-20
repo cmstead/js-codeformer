@@ -49,7 +49,18 @@ function getFunctionName(functionDeclaration) {
     }
 }
 
+function getFunctionNode(functionDeclaration) {
+    if(getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
+        return functionDeclaration;
+    } else if(getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {
+        return functionDeclaration.declarations[0].id.init;
+    } else {
+        return functionDeclaration.id.init;
+    }
+}
+
 module.exports = {
     getFunctionDeclaration,
-    getFunctionName
+    getFunctionName,
+    getFunctionNode
 };
