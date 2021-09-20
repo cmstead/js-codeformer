@@ -42,8 +42,10 @@ function getFunctionDeclaration(functionNode, selectionPath) {
 function getFunctionName(functionDeclaration) {
     if(getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
         return functionDeclaration.id.name;
-    } else {
+    } else if(getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {
         return functionDeclaration.declarations[0].id.name;
+    } else {
+        return functionDeclaration.id.name;
     }
 }
 
