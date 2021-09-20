@@ -68,6 +68,12 @@ describe('Move function into class', function () {
 
             this.verifyAsJSON(functionDeclarationNode);
         });
+
+        it('returns null when function node is null', function () {
+            const functionDeclarationNode = getFunctionDeclaration(null, []);
+
+            assert.equal(functionDeclarationNode, null);
+        });
     });
 
     describe('get function name', function () {
