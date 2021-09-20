@@ -1,5 +1,5 @@
 const { FUNCTION_DECLARATION, VARIABLE_DECLARATION } = require("../../constants/ast-node-types");
-const { getNodeType } = require("../../core-utils");
+const { getNodeType, last } = require("../../core-utils");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 
 function isSingleDeclaration(declarationNode) {
@@ -39,9 +39,9 @@ function getFunctionDeclaration(functionNode, selectionPath) {
 }
 
 function getFunctionName(functionDeclaration) {
-    if(getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
+    if (getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
         return functionDeclaration.id.name;
-    } else if(getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {
+    } else if (getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {
         return functionDeclaration.declarations[0].id.name;
     } else {
         return functionDeclaration.id.name;
@@ -49,17 +49,27 @@ function getFunctionName(functionDeclaration) {
 }
 
 function getFunctionNode(functionDeclaration) {
-    if(getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
+    if (getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
         return functionDeclaration;
-    } else if(getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {
+    } else if (getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {
         return functionDeclaration.declarations[0].init;
     } else {
         return functionDeclaration.init;
     }
 }
 
+function getMethodWriteLocation({ body: classBody }) {
+    const lastBodyNode = last(classBody.body);
+
+    return {
+        start: lastBodyNode.loc.end,
+        end: lastBodyNode.loc.end
+    }
+}
+
 module.exports = {
     getFunctionDeclaration,
     getFunctionName,
-    getFunctionNode
+    getFunctionNode,
+    getMethodWriteLocation
 };

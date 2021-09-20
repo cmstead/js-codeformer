@@ -6,6 +6,7 @@ module.exports = {
     BLOCK_STATEMENT: 'BlockStatement',
     BINARY_EXPRESSION: 'BinaryExpression',
     CALL_EXPRESSION: 'CallExpression',
+    CLASS_DECLARATION: 'ClassDeclaration',
     CLASS_BODY: 'ClassBody',
     CLASS_PROPERTY: 'ClassProperty',
     CONDITIONAL_EXPRESSION: 'ConditionalExpression',

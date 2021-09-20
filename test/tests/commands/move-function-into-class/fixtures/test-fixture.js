@@ -12,3 +12,11 @@ const someLiteral = 5,
     }
 
 [].map(() => { console.log('whatever') });
+
+class TestClassWithMethod {
+    testMethod() {
+        console.log('WOOOOOOOOOO');
+    }
+}
+
+class TestClassWithEmptyBody {}
