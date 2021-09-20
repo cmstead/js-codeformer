@@ -14,7 +14,7 @@ function findFunctionDeclarator(functionNode, declarationNode) {
 
 function findFunctionVariableDeclaration(functionNode, selectionPath) {
     const declarationNode = findNodeInPath(selectionPath, VARIABLE_DECLARATION);
-    const declaratorNode = findFunctionDeclarator(functionNode, declarationNode)
+    const declaratorNode = declarationNode === null ? null : findFunctionDeclarator(functionNode, declarationNode)
 
     if (declaratorNode === null) {
         return null

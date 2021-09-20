@@ -10,3 +10,5 @@ const someLiteral = 5,
     myFunction = () => {
         console.log('WOOOO!');
     }
+
+[].map(() => { console.log('whatever') });

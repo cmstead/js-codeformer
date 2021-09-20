@@ -74,6 +74,24 @@ describe('Move function into class', function () {
 
             assert.equal(functionDeclarationNode, null);
         });
+
+        it('returns null when function node is an expression, but not assigned to anything', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectionLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 14, column: 23 }),
+                end: buildEditorCoordinates({ line: 14, column: 23 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+            const functionNode = findNodeInPath(selectionPath, ARROW_FUNCTION_EXPRESSION);
+
+            const functionDeclarationNode = getFunctionDeclaration(functionNode, selectionPath);
+
+            assert.equal(functionDeclarationNode, null);
+        });
     });
 
     describe('get function name', function () {
