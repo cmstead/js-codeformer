@@ -4,10 +4,11 @@ const { buildLocationFromEditorCoordinates, buildEditorCoordinates } = require("
 const { buildNodePath } = require("../../../../modules/node-path");
 const { findNodeInPath } = require("../../../../modules/edit-utils/node-path-utils");
 const { FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION } = require("../../../../modules/constants/ast-node-types");
-const { 
+const {
     getFunctionDeclaration,
-    getFunctionName
- } = require("../../../../modules/commands/move-function-into-class/move-function-into-class");
+    getFunctionName,
+    getFunctionNode
+} = require("../../../../modules/commands/move-function-into-class/move-function-into-class");
 
 require('../../../utilities/approvals').configure();
 
@@ -95,7 +96,7 @@ describe('Move function into class', function () {
     });
 
     describe('get function name', function () {
-        it('locates a function declaration node', function () {
+        it('returns function name from function declaration', function () {
             const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
             const parsedSource = parse(fixtureText);
 
@@ -115,7 +116,7 @@ describe('Move function into class', function () {
             assert.equal(functionName, 'aFunctionDeclaration');
         });
 
-        it('locates a function expression assigned in a declaration', function () {
+        it('returns variable name from function expression assigned to a single declaration', function () {
             const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
             const parsedSource = parse(fixtureText);
 
@@ -135,7 +136,7 @@ describe('Move function into class', function () {
             assert.equal(functionName, 'aFunctionConst');
         });
 
-        it('locates a function expression assigned among multiple declarators', function () {
+        it('returns variable name from function expression assigned a declarator in a multi-declarator declaration', function () {
             const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
             const parsedSource = parse(fixtureText);
 
@@ -153,6 +154,69 @@ describe('Move function into class', function () {
             const functionName = getFunctionName(functionDeclarationNode);
 
             assert.equal(functionName, 'myFunction');
+
+        });
+    });
+
+    describe('get function name', function () {
+        it('returns function node from function declaration', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectionLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 1, column: 14 }),
+                end: buildEditorCoordinates({ line: 1, column: 14 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+            const functionNode = findNodeInPath(selectionPath, FUNCTION_DECLARATION);
+
+            const functionDeclarationNode = getFunctionDeclaration(functionNode, selectionPath);
+
+            const locatedFunctionNode = getFunctionNode(functionDeclarationNode);
+
+            assert.equal(locatedFunctionNode , functionNode);
+        });
+
+        it('returns function node from function expression assigned to a single declaration', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectionLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 5, column: 28 }),
+                end: buildEditorCoordinates({ line: 5, column: 28 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+            const functionNode = findNodeInPath(selectionPath, FUNCTION_EXPRESSION);
+
+            const functionDeclarationNode = getFunctionDeclaration(functionNode, selectionPath);
+
+            const locatedFunctionNode = getFunctionNode(functionDeclarationNode);
+
+            assert.equal(locatedFunctionNode , functionNode);
+        });
+
+        it.skip('returns function node from function expression assigned a declarator in a multi-declarator declaration', function () {
+            const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(fixtureText);
+
+            const selectionLocation = buildLocationFromEditorCoordinates({
+                start: buildEditorCoordinates({ line: 10, column: 23 }),
+                end: buildEditorCoordinates({ line: 10, column: 23 })
+            });
+
+            const selectionPath = buildNodePath(parsedSource, selectionLocation);
+
+            const functionNode = findNodeInPath(selectionPath, ARROW_FUNCTION_EXPRESSION);
+
+            const functionDeclarationNode = getFunctionDeclaration(functionNode, selectionPath);
+
+            const locatedFunctionNode = getFunctionNode(functionDeclarationNode);
+
+            assert.equal(locatedFunctionNode , functionNode);
 
         });
     });

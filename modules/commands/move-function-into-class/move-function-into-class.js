@@ -7,7 +7,6 @@ function isSingleDeclaration(declarationNode) {
 }
 
 function findFunctionDeclarator(functionNode, declarationNode) {
-    console.log(declarationNode);
     return declarationNode.declarations
         .find(declarator => declarator.init === functionNode);
 }
@@ -50,12 +49,14 @@ function getFunctionName(functionDeclaration) {
 }
 
 function getFunctionNode(functionDeclaration) {
+    console.log(functionDeclaration);
+
     if(getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
         return functionDeclaration;
     } else if(getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {
-        return functionDeclaration.declarations[0].id.init;
+        return functionDeclaration.declarations[0].init;
     } else {
-        return functionDeclaration.id.init;
+        return functionDeclaration.init;
     }
 }
 
