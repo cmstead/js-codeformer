@@ -1,6 +1,6 @@
 const { groups } = require('./groups');
 const { findSymbolToRename } = require('./modules/commands/rename/rename');
-const { VARIABLE_DECLARATOR, BLOCK_STATEMENT, IF_STATEMENT, VARIABLE_DECLARATION, CONDITIONAL_EXPRESSION, RETURN_STATEMENT, PROGRAM, PROPERTY, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, CALL_EXPRESSION, EMPTY_STATEMENT, METHOD_DEFINITION, CLASS_PROPERTY, LITERAL, BINARY_EXPRESSION, IDENTIFIER, ASSIGNMENT_EXPRESSION } = require('./modules/constants/ast-node-types');
+const { VARIABLE_DECLARATOR, BLOCK_STATEMENT, IF_STATEMENT, VARIABLE_DECLARATION, CONDITIONAL_EXPRESSION, RETURN_STATEMENT, PROGRAM, PROPERTY, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, CALL_EXPRESSION, EMPTY_STATEMENT, METHOD_DEFINITION, CLASS_PROPERTY, LITERAL, BINARY_EXPRESSION, IDENTIFIER, ASSIGNMENT_EXPRESSION, CLASS_DECLARATION } = require('./modules/constants/ast-node-types');
 const { getNodeType, last, first } = require('./modules/core-utils');
 const { findNodeInPath, findNodeByCheckFunction, findAncestorNodeInPath } = require('./modules/edit-utils/node-path-utils');
 const { functionNodeTypes } = require('./modules/commands/extract-to-parameter/extract-to-parameter');
@@ -408,6 +408,8 @@ const actions = [
 				(node) => functionTypes.includes(getNodeType(node)))
 
 			return getFunctionDeclaration(functionNode, selectionPath) !== null
+				&& first(selectionPath).body.find((node) =>
+					getNodeType(node) === CLASS_DECLARATION) !== null;
 		}
 	},
 	{

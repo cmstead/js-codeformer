@@ -153,6 +153,7 @@ Current Actions:
 - Introduce variable
 - Introduce function
 - Lift and name function expression
+- Move Function Into Class
 - Toggle Async Function Property
 - Toggle Arrow Function Braces
 - Toggle Function Call Arguments Between Positional and Object Style
