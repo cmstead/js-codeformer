@@ -49,8 +49,6 @@ function getFunctionName(functionDeclaration) {
 }
 
 function getFunctionNode(functionDeclaration) {
-    console.log(functionDeclaration);
-
     if(getNodeType(functionDeclaration) === FUNCTION_DECLARATION) {
         return functionDeclaration;
     } else if(getNodeType(functionDeclaration) === VARIABLE_DECLARATION) {

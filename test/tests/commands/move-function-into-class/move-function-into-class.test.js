@@ -199,7 +199,7 @@ describe('Move function into class', function () {
             assert.equal(locatedFunctionNode , functionNode);
         });
 
-        it.skip('returns function node from function expression assigned a declarator in a multi-declarator declaration', function () {
+        it('returns function node from function expression assigned a declarator in a multi-declarator declaration', function () {
             const fixtureText = readFileSource(__dirname, 'fixtures/test-fixture.js');
             const parsedSource = parse(fixtureText);
 
