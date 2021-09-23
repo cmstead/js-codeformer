@@ -93,7 +93,7 @@ To get suggestions, use the following key combination:
 
 Here's what it looks like in action:
 
-![JS CodeFormer Suggested Actions](./images/suggested-actions.gif)
+![JS CodeFormer Suggested Actions](./images/convert-functions-to-class.gif)
 
 ### Refactorings ###
 
