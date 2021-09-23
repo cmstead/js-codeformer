@@ -17,16 +17,29 @@ function prepareActionSetup(vscode = null) {
     try {
         const ast = parser.parse(source);
         const selectionPath = nodePath.buildNodePath(ast, location);
-    
+
         return {
             activeTextEditor,
             source,
-            
+
+            getLocationsSetup: function () {
+                return activeTextEditor.selections
+                    .map((selection) => {
+                        const location = transformSelectionToLocation(selection);
+                        const selectionPath = nodePath.buildNodePath(ast, location);
+
+                        return {
+                            location,
+                            selectionPath
+                        };
+                    });
+            },
+
             location,
             ast,
             selectionPath
         };
-    
+
     } catch (error) {
         throw new Error('Unable to interpret source code; JS CodeFormer cannot start');
     }
@@ -34,7 +47,7 @@ function prepareActionSetup(vscode = null) {
 
 function asyncPrepareActionSetup(vscode = null) {
     return new Promise(function (resolve, reject) {
-        try{
+        try {
             const actionSetup = prepareActionSetup(vscode);
 
             resolve(actionSetup);

@@ -284,6 +284,34 @@ const actions = [
 		}
 	},
 	{
+		commandId: 'cmstead.jscodeformer.convertFunctionsToClass',
+		path: './modules/commands/convert-functions-to-class/convert-functions-to-class-action',
+		name: 'convertFunctionsToClass',
+		title: 'Convert Selected Functions To Class',
+		group: groups.CONVERSIONS,
+		analyzer: ({ getLocationsSetup }) => {
+			const functionTypes = [
+				FUNCTION_DECLARATION,
+				FUNCTION_EXPRESSION,
+				ARROW_FUNCTION_EXPRESSION
+			];
+
+			const locatedFunctionNodes = getLocationsSetup()
+				.map(({ selectionPath }) => {
+					const functionNode = findNodeByCheckFunction(
+						selectionPath,
+						(node) => functionTypes.includes(getNodeType(node)));
+
+					return functionNode !== null
+						? getFunctionDeclaration(functionNode, selectionPath)
+						: null;
+				})
+				.filter((node) => node !== null);
+
+			return locatedFunctionNodes.length > 0;
+		}
+	},
+	{
 		commandId: 'cmstead.jscodeformer.surroundWith',
 		path: './modules/commands/surround-with/surround-with-action',
 		name: 'surroundWith',

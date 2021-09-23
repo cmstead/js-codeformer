@@ -80,6 +80,7 @@
         "onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
         "onCommand:cmstead.jscodeformer.convertToMethod",
         "onCommand:cmstead.jscodeformer.convertTernaryToIfElse",
+        "onCommand:cmstead.jscodeformer.convertFunctionsToClass",
         "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
         "onCommand:cmstead.jscodeformer.toggleParametersType",
         "onCommand:cmstead.jscodeformer.toggleArgumentsType",
@@ -240,6 +241,11 @@
                 "command": "cmstead.jscodeformer.convertTernaryToIfElse",
                 "title": "Convert Ternary to If/Else",
                 "description": "Convert Ternary to if/else statement"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertFunctionsToClass",
+                "title": "Convert Functions To Class",
+                "description": "Convert selected functions to a class"
             },
             {
                 "command": "cmstead.jscodeformer.togglePropertyDeclaration",
@@ -428,6 +434,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.convertTernaryToIfElse"
+                },
+                {
+                    "command": "cmstead.jscodeformer.convertFunctionsToClass"
                 }
             ],
             "cmstead.js-codeformer.actions": [

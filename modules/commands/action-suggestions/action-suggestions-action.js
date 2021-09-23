@@ -39,7 +39,7 @@ function actionSuggestions() {
         }))
 
         .then(() => actionCommandMap = suggestedActions.reduce((map, action) => {
-            map[action.name] = action.commandId;
+            map[action.title] = action.commandId;
 
             return map;
         }, {}))

@@ -136,7 +136,8 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert Function to Function Expression
 - Convert Function Property to Method
 - Convert Function Variable to Function Declaration
-- Convert Ternary to If/Else [See known issues]
+- Convert Selected Functions to Class [See expected behaviors]
+- Convert Ternary to If/Else [See expected behaviors]
 
 ### Actions ###
 
@@ -220,7 +221,7 @@ Also, every person who submitted a bug or enhancement on JS Refactor, and those 
 The best place to find me is on Twitter: [@cm_stead](https://twitter.com/cm_stead)
 You can also find me on the web: [ChrisStead.net](http://chrisstead.net/)
 
-## Known/Expected Issues ##
+## Known Issues and Expected Behaviors ##
 
 Rename:
 
@@ -228,4 +229,8 @@ Rename:
 
 Convert Ternary to If/Else Statement:
 
-- Currently only supports return statements and variable assignments
+- Only supports return statements, variable assignments, and standalone ternaries
+
+Convert Selected Functions to Class
+
+- Will not convert function expressions and arrow functions which are not part of a variable declaration -- all functions need to have names
