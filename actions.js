@@ -50,9 +50,11 @@ const actions = [
 		name: 'inlineVariable',
 		title: 'Inline Variable',
 		group: groups.REFACTORINGS,
-		analyzer: ({ selectionPath }) =>
-			getNodeType(last(selectionPath)) === VARIABLE_DECLARATOR
+		analyzer: ({ selectionPath }) => {
+			const declaratorNode = findNodeInPath(selectionPath, VARIABLE_DECLARATOR);
 
+			return declaratorNode !== null;
+		}
 	},
 	{
 		commandId: 'cmstead.jscodeformer.rename',
