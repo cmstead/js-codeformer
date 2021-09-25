@@ -1,4 +1,6 @@
-const { first, last } = require("../core-utils");
+const { ARROW_FUNCTION_EXPRESSION } = require("../constants/ast-node-types");
+const { terminator } = require("../constants/language-values");
+const { first, last, getNodeType } = require("../core-utils");
 const { getSourceSelection } = require("../source-utilities");
 
 
@@ -73,7 +75,12 @@ function getFunctionBody(functionNode, sourceText) {
     const functionBody = getBodyNodeFromFunctionNode(functionNode);
     const bodyLocation = getBodyLocation(functionBody);
 
-    return getSourceSelection(sourceText, bodyLocation);
+    const bodySource = getSourceSelection(sourceText, bodyLocation);
+
+    return getNodeType(functionNode) === ARROW_FUNCTION_EXPRESSION
+        && !Array.isArray(functionNode.body)
+        ? `return ${bodySource}${terminator}`
+        : bodySource;
 }
 
 function getFunctionName(functionNode) {
