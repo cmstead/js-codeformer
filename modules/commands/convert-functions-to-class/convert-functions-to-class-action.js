@@ -13,12 +13,22 @@ const { getFunctionDeclaration, getFunctionName, getFunctionNode } = require("./
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
 const { insertSnippet } = require("../../edit-utils/snippet-service");
+const { terminator } = require("../../constants/language-values");
 
 const functionTypes = [
     FUNCTION_DECLARATION,
     FUNCTION_EXPRESSION,
     ARROW_FUNCTION_EXPRESSION
 ];
+
+function getConvertedFunctionBody(functionNode, source) {
+    const bodySource = getFunctionBody(functionNode, source);
+
+    return getNodeType(functionNode) === ARROW_FUNCTION_EXPRESSION
+        && !Array.isArray(functionNode.body)
+        ? `return ${bodySource}${terminator}`
+        : bodySource;
+}
 
 function convertFunctionsToClass() {
     let locationsSetup = null;
@@ -61,7 +71,7 @@ function convertFunctionsToClass() {
                 return getMethodBuilder({
                     functionType: METHOD_DEFINITION,
                     functionName,
-                    functionBody: getFunctionBody(functionNode, actionSetup.source),
+                    functionBody: getConvertedFunctionBody(functionNode, actionSetup.source),
                     functionParameters: getFunctionParametersString(functionNode, actionSetup.source),
                     async: functionNode.async,
                     generator: functionNode.generator

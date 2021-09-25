@@ -75,12 +75,7 @@ function getFunctionBody(functionNode, sourceText) {
     const functionBody = getBodyNodeFromFunctionNode(functionNode);
     const bodyLocation = getBodyLocation(functionBody);
 
-    const bodySource = getSourceSelection(sourceText, bodyLocation);
-
-    return getNodeType(functionNode) === ARROW_FUNCTION_EXPRESSION
-        && !Array.isArray(functionNode.body)
-        ? `return ${bodySource}${terminator}`
-        : bodySource;
+    return getSourceSelection(sourceText, bodyLocation);
 }
 
 function getFunctionName(functionNode) {
