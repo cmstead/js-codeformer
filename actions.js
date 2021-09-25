@@ -9,6 +9,7 @@ const { isConvertablePropertyNode } = require('./modules/commands/toggle-propert
 const { findFunctionNode } = require('./modules/function-utils/function-node');
 const { checkExpressionTree } = require('./modules/commands/convert-to-template-literal/convert-to-template-literal');
 const { getFunctionDeclaration } = require('./modules/commands/move-function-into-class/move-function-into-class');
+const { methodDoesNotUseThis } = require('./modules/commands/move-method-out-of-class/move-method-out-of-class');
 
 const actions = [
 	{
@@ -311,6 +312,20 @@ const actions = [
 				.filter((node) => node !== null);
 
 			return locatedFunctionNodes.length > 0;
+		}
+	},
+	{
+		commandId: 'cmstead.jscodeformer.moveMethodOutOfClass',
+		path: './modules/commands/move-method-out-of-class/move-method-out-of-class-action',
+		name: 'moveMethodOutOfClass',
+		title: 'Move Method Out Of Class',
+		group: groups.ACTIONS,
+		analyzer: ({ selectionPath }) => {
+			const methodNode = findNodeInPath(selectionPath, METHOD_DEFINITION);
+
+			return methodNode !== null
+				&& methodNode.kind === 'method'
+				&& methodDoesNotUseThis(methodNode);
 		}
 	},
 	{

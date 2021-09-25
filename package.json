@@ -91,6 +91,7 @@
         "onCommand:cmstead.jscodeformer.introduceFunction",
         "onCommand:cmstead.jscodeformer.toggleAsync",
         "onCommand:cmstead.jscodeformer.moveFunctionIntoClass",
+        "onCommand:cmstead.jscodeformer.moveMethodOutOfClass",
         "onCommand:cmstead.jscodeformer.liftAndNameFunctionExpression",
         "onCommand:cmstead.jscodeformer.suggestAction"
     ],
@@ -276,6 +277,11 @@
                 "command": "cmstead.jscodeformer.moveFunctionIntoClass",
                 "title": "Move Independent Function Into Class",
                 "description": "Move a function declaration into a class as a method"
+            },
+            {
+                "command": "cmstead.jscodeformer.moveMethodOutOfClass",
+                "title": "Move Method Out Of Class",
+                "description": "Move selected method out of class and convert to function"
             },
             {
                 "command": "cmstead.jscodeformer.toggleAsync",
@@ -466,6 +472,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.moveFunctionIntoClass"
+                },
+                {
+                    "command": "cmstead.jscodeformer.moveMethodOutOfClass"
                 },
                 {
                     "command": "cmstead.jscodeformer.surroundWith"
