@@ -40,5 +40,16 @@ describe('convert import to common js', function () {
 
             assert.isFalse(checkResult);
         });
+
+        it('returns false on empty imports', function () {
+            const testSource = readFileSource(__dirname, 'fixtures/test-fixture.js');
+            const parsedSource = parse(testSource);
+
+            const importNode = parsedSource.body[3];
+
+            const checkResult = validateImportNode(importNode);
+
+            assert.isFalse(checkResult);
+        });
     });
 });

@@ -28,8 +28,11 @@ function convertToRequire(importNode) {
     }).buildRequire();
 }
 
+const isDefaultNode = (node) => node.type === IMPORT_DEFAULT_SPECIFIER;
+
 function validateImportNode(importNode) {
-    return importNode.specifiers.find((node) => node.type === IMPORT_DEFAULT_SPECIFIER) === null;
+    return importNode.specifiers.length > 0
+        && typeof importNode.specifiers.find(isDefaultNode) === 'undefined';
 }
 
 module.exports = {
