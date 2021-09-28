@@ -1,18 +1,16 @@
 const { getRequireBuilder } = require("../../builders/RequireBuilder");
 
+function createSpecifierRecord(specifier) {
+    return {
+        name: specifier.imported.name,
+        alias: specifier.local.name
+    };
+}
+
 function convertToRequire(importNode) {
     return getRequireBuilder({
         filePath: importNode.source.raw,
-        imports: [
-            {
-                name: importNode.specifiers[0].imported.name,
-                alias: importNode.specifiers[0].local.name
-            },
-            {
-                name: importNode.specifiers[1].imported.name,
-                alias: importNode.specifiers[1].local.name
-            }
-        ]
+        imports: importNode.specifiers.map(createSpecifierRecord)
     }).buildRequire();
 }
 
