@@ -1,7 +1,13 @@
+const requireTypes = {
+    NAMESPACE: 'namespace',
+    PROPERTY: 'property'
+};
+
 class RequireBuilder {
     constructor({ filePath, imports }) {
         this.filePath = filePath;
         this.imports = imports;
+        this.importType = imports[0].type;
     }
 
     getImports() {
@@ -13,7 +19,11 @@ class RequireBuilder {
     }
 
     buildRequire() {
-        return `const { ${this.getImports()} } = require(${this.filePath})`;
+        const variableString = this.importType === requireTypes.NAMESPACE
+            ? this.imports[0].name
+            : `{ ${this.getImports()} }`;
+
+        return `const ${variableString} = require(${this.filePath})`;
     }
 }
 
@@ -22,5 +32,6 @@ function getRequireBuilder({ filePath, imports }) {
 }
 
 module.exports = {
-    getRequireBuilder
+    getRequireBuilder,
+    requireTypes
 };

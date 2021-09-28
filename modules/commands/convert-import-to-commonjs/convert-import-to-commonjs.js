@@ -1,8 +1,22 @@
-const { getRequireBuilder } = require("../../builders/RequireBuilder");
+const { getRequireBuilder, requireTypes } = require("../../builders/RequireBuilder");
+const { IMPORT_NAMESPACE_SPECIFIER } = require("../../constants/ast-node-types");
 
 function createSpecifierRecord(specifier) {
+    console.log(specifier);
+
+    const importIsNamespace = specifier.type === IMPORT_NAMESPACE_SPECIFIER;
+
+    const importName = importIsNamespace
+        ? specifier.local.name
+        : specifier.imported.name;
+
+    const requireType = importIsNamespace
+        ? requireTypes.NAMESPACE
+        : requireTypes.PROPERTY;
+
     return {
-        name: specifier.imported.name,
+        type: requireType,
+        name: importName,
         alias: specifier.local.name
     };
 }

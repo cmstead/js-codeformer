@@ -20,6 +20,7 @@ module.exports = {
     FUNCTION_DECLARATION: 'FunctionDeclaration',
     FUNCTION_EXPRESSION: 'FunctionExpression',
     IDENTIFIER: 'Identifier',
+    IMPORT_NAMESPACE_SPECIFIER: 'ImportNamespaceSpecifier',
     IF_STATEMENT: 'IfStatement',
     JSX_ELEMENT: 'JSXElement',
     JSX_EXPRESSION_CONTAINER: 'JSXExpressionContainer',

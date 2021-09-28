@@ -16,14 +16,14 @@ describe('convert import to common js', function () {
         assert.equal(requireValue, expectedValue);
     });
 
-    // it('converts namespace specifier to require statement', function () {
-    //     const testSource = readFileSource(__dirname, 'fixtures/test-fixture.js');
-    //     const parsedSource = parse(testSource);
+    it('converts namespace specifier to require statement', function () {
+        const testSource = readFileSource(__dirname, 'fixtures/test-fixture.js');
+        const parsedSource = parse(testSource);
 
-    //     const requireValue = convertToRequire(parsedSource.body[2]);
+        const requireValue = convertToRequire(parsedSource.body[2]);
 
-    //     const expectedValue = `const bar = require('./some-test')`;
+        const expectedValue = `const bar = require('./some-other-test')`;
        
-    //     assert.equal(requireValue, expectedValue);
-    // });
+        assert.equal(requireValue, expectedValue);
+    });
 });
