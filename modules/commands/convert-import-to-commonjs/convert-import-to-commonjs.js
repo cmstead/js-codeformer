@@ -1,5 +1,5 @@
 const { getRequireBuilder, requireTypes } = require("../../builders/RequireBuilder");
-const { IMPORT_NAMESPACE_SPECIFIER } = require("../../constants/ast-node-types");
+const { IMPORT_NAMESPACE_SPECIFIER, IMPORT_DEFAULT_SPECIFIER } = require("../../constants/ast-node-types");
 
 function createSpecifierRecord(specifier) {
     console.log(specifier);
@@ -28,6 +28,11 @@ function convertToRequire(importNode) {
     }).buildRequire();
 }
 
+function validateImportNode(importNode) {
+    return importNode.specifiers.find((node) => node.type === IMPORT_DEFAULT_SPECIFIER) === null;
+}
+
 module.exports = {
-    convertToRequire
+    convertToRequire,
+    validateImportNode
 };
