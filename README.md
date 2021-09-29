@@ -129,6 +129,7 @@ Conversions may or may not introduce a different behavior. This means they are i
 - Convert Function Property to Method
 - Convert Function Variable to Function Declaration
 - Convert Import Declaration to CommonJS Require (multi-select supported)
+- Convert to Multiple Declarations
 - Convert Selected Functions to Class [See expected behaviors] (multi-select supported)
 - Convert Ternary to If/Else [See expected behaviors]
 
