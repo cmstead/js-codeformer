@@ -20,8 +20,8 @@ class VariableBuilder {
         this.name = name;
         this.value = value;
 
-        this.trailingSemicolon = /.*;$/.test(value.trim())
-            || type === variableTypes.PROPERTY
+        this.trailingSemicolon = typeof value === 'string' && (/.*;$/.test(value.trim())
+            || type === variableTypes.PROPERTY)
             ? ''
             : terminator;
     }
@@ -31,7 +31,9 @@ class VariableBuilder {
             ? ''
             : `${this.type} `;
 
-        return `${type}${this.name} = ${this.value}${this.trailingSemicolon}`;
+        return this.value === null 
+        ? `${type}${this.name}${this.trailingSemicolon}`
+        : `${type}${this.name} = ${this.value}${this.trailingSemicolon}`;
     }
 }
 

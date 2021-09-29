@@ -79,6 +79,7 @@
         "onCommand:cmstead.jscodeformer.convertTernaryToIfElse",
         "onCommand:cmstead.jscodeformer.convertFunctionsToClass",
         "onCommand:cmstead.jscodeformer.convertImportToCommonjs",
+        "onCommand:cmstead.jscodeformer.convertToMultipleDeclarations",
         "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
         "onCommand:cmstead.jscodeformer.toggleParametersType",
         "onCommand:cmstead.jscodeformer.toggleArgumentsType",
@@ -252,6 +253,11 @@
                 "description": "Convert import declaration to Common JS require"
             },
             {
+                "command": "cmstead.jscodeformer.convertToMultipleDeclarations",
+                "title": "Convert to Multiple Declarations",
+                "description": "Convert declaration to multiple declarations"
+            },
+            {
                 "command": "cmstead.jscodeformer.togglePropertyDeclaration",
                 "title": "Toggle Property Declaration Type",
                 "description": "Toggle Between Shorthand and Standard Property Declaration"
@@ -419,6 +425,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.convertImportToCommonjs"
+                },
+                {
+                    "command": "cmstead.jscodeformer.convertToMultipleDeclarations"
                 }
             ],
             "cmstead.js-codeformer.actions": [

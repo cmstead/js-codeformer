@@ -329,6 +329,16 @@ const actions = [
 		}
 	},
 	{
+		commandId: 'cmstead.jscodeformer.convertToMultipleDeclarations',
+		path: './modules/commands/convert-to-multiple-declarations/convert-to-multiple-declarations-action',
+		name: 'convertToMultipleDeclarations',
+		title: 'Convert to Multiple Declarations',
+		group: groups.CONVERSIONS,
+		analyzer: ({ selectionPath }) => {
+			return findNodeInPath(selectionPath, VARIABLE_DECLARATION);
+		}
+	},
+	{
 		commandId: 'cmstead.jscodeformer.moveMethodOutOfClass',
 		path: './modules/commands/move-method-out-of-class/move-method-out-of-class-action',
 		name: 'moveMethodOutOfClass',
