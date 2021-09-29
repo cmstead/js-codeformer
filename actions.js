@@ -474,31 +474,10 @@ const actions = [
 		}
 	},
 	{
-		commandId: 'cmstead.jscodeformer.action',
-		path: './modules/commands/action/action-action',
-		name: 'action',
-		title: 'Pick an Action',
-		group: groups.NONE
-	},
-	{
 		commandId: 'cmstead.jscodeformer.suggestAction',
 		path: './modules/commands/action-suggestions/action-suggestions-action',
 		name: 'actionSuggestions',
 		title: 'Suggest an Action',
-		group: groups.NONE
-	},
-	{
-		commandId: 'cmstead.jscodeformer.pickBehavior',
-		path: './modules/commands/pick-behavior/pick-behavior-action',
-		name: 'pickBehavior',
-		title: 'Pick Action',
-		group: groups.NONE
-	},
-	{
-		commandId: 'cmstead.jscodeformer.convert',
-		path: './modules/commands/convert/convert-action',
-		name: 'convert',
-		title: 'Pick a conversion',
 		group: groups.NONE
 	},
 

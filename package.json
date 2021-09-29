@@ -71,10 +71,7 @@
         "onCommand:cmstead.jscodeformer.rename",
         "onCommand:cmstead.jscodeformer.invertIf",
         "onCommand:cmstead.jscodeformer.invertTernary",
-        "onCommand:cmstead.jscodeformer.pickBehavior",
         "onCommand:cmstead.jscodeformer.surroundWith",
-        "onCommand:cmstead.jscodeformer.action",
-        "onCommand:cmstead.jscodeformer.convert",
         "onCommand:cmstead.jscodeformer.convertToArrowFunction",
         "onCommand:cmstead.jscodeformer.convertToFunctionExpression",
         "onCommand:cmstead.jscodeformer.convertToFunctionDeclaration",
@@ -295,21 +292,6 @@
                 "description": "Toggle async property on current function"
             },
             {
-                "command": "cmstead.jscodeformer.convert",
-                "title": "JS CodeFormer: Conversions",
-                "description": "Pick a conversion to run"
-            },
-            {
-                "command": "cmstead.jscodeformer.action",
-                "title": "JS CodeFormer: Actions",
-                "description": "Pick an action to run"
-            },
-            {
-                "command": "cmstead.jscodeformer.pickBehavior",
-                "title": "JS CodeFormer: Action Palette",
-                "description": "Open JS CodeFormer action palette to pick a behavior"
-            },
-            {
                 "command": "cmstead.jscodeformer.suggestAction",
                 "title": "JS CodeFormer: Suggest an Action",
                 "description": "Analyze document and list suggested actions"
@@ -357,21 +339,6 @@
                 "command": "cmstead.jscodeformer.surroundWith",
                 "key": "ctrl+shift+j w",
                 "mac": "cmd+shift+j w"
-            },
-            {
-                "command": "cmstead.jscodeformer.pickBehavior",
-                "key": "ctrl+shift+j ctrl+shift+j",
-                "mac": "cmd+shift+j cmd+shift+j"
-            },
-            {
-                "command": "cmstead.jscodeformer.convert",
-                "key": "ctrl+shift+j c",
-                "mac": "cmd+shift+j c"
-            },
-            {
-                "command": "cmstead.jscodeformer.action",
-                "key": "ctrl+shift+j a",
-                "mac": "cmd+shift+j a"
             },
             {
                 "command": "cmstead.jscodeformer.suggestAction",
