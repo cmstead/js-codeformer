@@ -7,7 +7,7 @@ const { functionNodeTypes } = require('./modules/commands/extract-to-parameter/e
 const { pickParentNode } = require('./modules/commands/convert-ternary-to-if-else/convert-ternary-to-if-else');
 const { isConvertablePropertyNode } = require('./modules/commands/toggle-property-declaration/toggle-property-declaration');
 const { findFunctionNode } = require('./modules/function-utils/function-node');
-const { checkExpressionTree } = require('./modules/commands/convert-to-template-literal/convert-to-template-literal');
+const { checkExpressionTree, findNearestExpressionToConvert } = require('./modules/commands/convert-to-template-literal/convert-to-template-literal');
 const { getFunctionDeclaration } = require('./modules/commands/move-function-into-class/move-function-into-class');
 const { methodDoesNotUseThis } = require('./modules/commands/move-method-out-of-class/move-method-out-of-class');
 const { validateImportNode } = require('./modules/commands/convert-import-to-commonjs/convert-import-to-commonjs');
@@ -290,16 +290,14 @@ const actions = [
 		name: 'convertToTemplateLiteral',
 		title: 'Convert Expression to Template Literal (Interpolated String)',
 		group: groups.CONVERSIONS,
-		analyzer: ({ selectionPath }) => {
-			function isStringLiteral(node) {
-				return getNodeType(node) === LITERAL && typeof node.value === 'string'
-			}
+		analyzer: ({ getLocationsSetup }) => {
+			const convertableNodes = getLocationsSetup()
+				.map((locationSetup) =>
+					findNearestExpressionToConvert(locationSetup.selectionPath))
+				.filter((node) => node !== null)
+				.filter((node) => checkExpressionTree(node))
 
-			const expressionTree = findNodeByCheckFunction(
-				selectionPath,
-				(node) => isStringLiteral(node) || getNodeType(node) === BINARY_EXPRESSION);
-
-			return checkExpressionTree(expressionTree);
+			return convertableNodes.length > 0;
 		}
 	},
 	{
