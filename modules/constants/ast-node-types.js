@@ -20,6 +20,7 @@ module.exports = {
     FUNCTION_DECLARATION: 'FunctionDeclaration',
     FUNCTION_EXPRESSION: 'FunctionExpression',
     IDENTIFIER: 'Identifier',
+    IMPORT_DECLARATION: 'ImportDeclaration',
     IMPORT_DEFAULT_SPECIFIER: 'ImportDefaultSpecifier',
     IMPORT_NAMESPACE_SPECIFIER: 'ImportNamespaceSpecifier',
     IF_STATEMENT: 'IfStatement',

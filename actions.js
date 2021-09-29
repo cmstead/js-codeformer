@@ -1,6 +1,6 @@
 const { groups } = require('./groups');
 const { findSymbolToRename } = require('./modules/commands/rename/rename');
-const { VARIABLE_DECLARATOR, BLOCK_STATEMENT, IF_STATEMENT, VARIABLE_DECLARATION, CONDITIONAL_EXPRESSION, RETURN_STATEMENT, PROGRAM, PROPERTY, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, CALL_EXPRESSION, EMPTY_STATEMENT, METHOD_DEFINITION, CLASS_PROPERTY, LITERAL, BINARY_EXPRESSION, IDENTIFIER, ASSIGNMENT_EXPRESSION, CLASS_DECLARATION } = require('./modules/constants/ast-node-types');
+const { VARIABLE_DECLARATOR, BLOCK_STATEMENT, IF_STATEMENT, VARIABLE_DECLARATION, CONDITIONAL_EXPRESSION, RETURN_STATEMENT, PROGRAM, PROPERTY, FUNCTION_DECLARATION, FUNCTION_EXPRESSION, ARROW_FUNCTION_EXPRESSION, CALL_EXPRESSION, EMPTY_STATEMENT, METHOD_DEFINITION, CLASS_PROPERTY, LITERAL, BINARY_EXPRESSION, IDENTIFIER, ASSIGNMENT_EXPRESSION, CLASS_DECLARATION, IMPORT_DECLARATION } = require('./modules/constants/ast-node-types');
 const { getNodeType, last, first } = require('./modules/core-utils');
 const { findNodeInPath, findNodeByCheckFunction, findAncestorNodeInPath } = require('./modules/edit-utils/node-path-utils');
 const { functionNodeTypes } = require('./modules/commands/extract-to-parameter/extract-to-parameter');
@@ -10,6 +10,7 @@ const { findFunctionNode } = require('./modules/function-utils/function-node');
 const { checkExpressionTree } = require('./modules/commands/convert-to-template-literal/convert-to-template-literal');
 const { getFunctionDeclaration } = require('./modules/commands/move-function-into-class/move-function-into-class');
 const { methodDoesNotUseThis } = require('./modules/commands/move-method-out-of-class/move-method-out-of-class');
+const { validateImportNode } = require('./modules/commands/convert-import-to-commonjs/convert-import-to-commonjs');
 
 const actions = [
 	{
@@ -124,6 +125,18 @@ const actions = [
 			];
 
 			return ternaryNode !== null && pickParentNode(parentNodes, ternaryNode) !== null;
+		}
+	},
+	{
+		commandId: 'cmstead.jscodeformer.convertImportToCommonjs',
+		path: './modules/commands/convert-import-to-commonjs/convert-import-to-commonjs-action',
+		name: 'convertImportToCommonjs',
+		title: 'Convert Import Declaration to CommonJS Require',
+		group: groups.CONVERSIONS,
+		analyzer: ({ selectionPath }) => {
+			const importNode = findNodeInPath(selectionPath, IMPORT_DECLARATION);
+
+			return importNode !== null && validateImportNode(importNode);
 		}
 	},
 	{

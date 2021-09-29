@@ -81,6 +81,7 @@
         "onCommand:cmstead.jscodeformer.convertToMethod",
         "onCommand:cmstead.jscodeformer.convertTernaryToIfElse",
         "onCommand:cmstead.jscodeformer.convertFunctionsToClass",
+        "onCommand:cmstead.jscodeformer.convertImportToCommonjs",
         "onCommand:cmstead.jscodeformer.togglePropertyDeclaration",
         "onCommand:cmstead.jscodeformer.toggleParametersType",
         "onCommand:cmstead.jscodeformer.toggleArgumentsType",
@@ -247,6 +248,11 @@
                 "command": "cmstead.jscodeformer.convertFunctionsToClass",
                 "title": "Convert Functions To Class",
                 "description": "Convert selected functions to a class"
+            },
+            {
+                "command": "cmstead.jscodeformer.convertImportToCommonjs",
+                "title": "Convert Import Declaration to CommonJS Require",
+                "description": "Convert import declaration to Common JS require"
             },
             {
                 "command": "cmstead.jscodeformer.togglePropertyDeclaration",
@@ -443,6 +449,9 @@
                 },
                 {
                     "command": "cmstead.jscodeformer.convertFunctionsToClass"
+                },
+                {
+                    "command": "cmstead.jscodeformer.convertImportToCommonjs"
                 }
             ],
             "cmstead.js-codeformer.actions": [

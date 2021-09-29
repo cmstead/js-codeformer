@@ -2,8 +2,6 @@ const { getRequireBuilder, requireTypes } = require("../../builders/RequireBuild
 const { IMPORT_NAMESPACE_SPECIFIER, IMPORT_DEFAULT_SPECIFIER } = require("../../constants/ast-node-types");
 
 function createSpecifierRecord(specifier) {
-    console.log(specifier);
-
     const importIsNamespace = specifier.type === IMPORT_NAMESPACE_SPECIFIER;
 
     const importName = importIsNamespace
