@@ -3,44 +3,60 @@ const { IMPORT_DECLARATION } = require("../../constants/ast-node-types");
 const { findNodeInPath } = require("../../edit-utils/node-path-utils");
 const { getNewSourceEdit } = require("../../edit-utils/SourceEdit");
 const { transformLocationToRange } = require("../../edit-utils/textEditTransforms");
-const { buildInfoMessage, parseAndShowMessage } = require("../../ui-services/messageService");
+const { buildInfoMessage, parseAndShowMessage, showInfoMessage } = require("../../ui-services/messageService");
 const { validateUserInput } = require("../../validatorService");
 const { validateImportNode, convertToRequire } = require("./convert-import-to-commonjs");
 
+const conversionRequirements = 'cannot convert empty imports, or default imports';
+
 function convertImportToCommonjs() {
     let actionSetup = null;
-    let importNode = null;
+    let locationsSetup = null;
+    let allImportNodes = null;
+    let importNodes = null;
 
     return asyncPrepareActionSetup()
         .then((newActionSetup) => actionSetup = newActionSetup)
+        .then(() => actionSetup.getLocationsSetup())
+        .then((newLocationsSetup) => locationsSetup = newLocationsSetup)
 
-        .then(() => findNodeInPath(actionSetup.selectionPath, IMPORT_DECLARATION))
+        .then(() => allImportNodes = locationsSetup
+            .map((locationSetup) =>
+                findNodeInPath(locationSetup.selectionPath, IMPORT_DECLARATION)))
 
-        .then((importNode) => validateUserInput({
-            value: importNode,
-            validator: (importNode) => importNode !== null,
-            message: buildInfoMessage('No import declaration found')
+        .then(() => importNodes = allImportNodes
+            .filter((node) => node !== null && validateImportNode(node)))
+
+        .then(() => validateUserInput({
+            value: importNodes,
+            validator: (importNodes) => importNodes.length > 0,
+            message: buildInfoMessage(`No valid imports found: ${conversionRequirements}`)
         }))
 
-        .then((importNode) => validateUserInput({
-            value: importNode,
-            validator: (importNode) => validateImportNode(importNode),
-            message: buildInfoMessage('Import declaration contains default import, or no imports')
-        }))
+        .then(() => importNodes.map((importNode) => ({
+            loc: importNode.loc,
+            requireString: convertToRequire(importNode)
+        })))
 
-        .then((newImportNode) => importNode = newImportNode)
+        .then((replacements) => {
+            const sourceEdit = getNewSourceEdit();
 
-        .then(() => convertToRequire(importNode))
+            replacements.slice(0).reverse().forEach((replacement) => {
+                const replacementRange = transformLocationToRange(replacement.loc);
 
-        .then((requireStatement) => {
-            const replacementRange = transformLocationToRange(importNode.loc);
+                sourceEdit.addReplacementEdit(replacementRange, replacement.requireString);
+            });
 
-            return getNewSourceEdit()
-                .addReplacementEdit(replacementRange, requireStatement)
-                .applyEdit();
+            return sourceEdit.applyEdit();
         })
 
-        .catch(function(error){
+        .then(() => {
+            if (allImportNodes.length !== importNodes.length) {
+                showInfoMessage(`Some imports were not converted: ${conversionRequirements}`);
+            }
+        })
+
+        .catch(function (error) {
             parseAndShowMessage(error);
         });
 }

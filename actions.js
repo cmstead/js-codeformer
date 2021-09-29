@@ -133,10 +133,13 @@ const actions = [
 		name: 'convertImportToCommonjs',
 		title: 'Convert Import Declaration to CommonJS Require',
 		group: groups.CONVERSIONS,
-		analyzer: ({ selectionPath }) => {
-			const importNode = findNodeInPath(selectionPath, IMPORT_DECLARATION);
+		analyzer: (actionSetup) => {
+			const acceptableImports = actionSetup.getLocationsSetup()
+				.map((locationSetup) =>
+					findNodeInPath(locationSetup.selectionPath, IMPORT_DECLARATION))
+				.filter((node) => node !== null && validateImportNode(node));
 
-			return importNode !== null && validateImportNode(importNode);
+			return acceptableImports.length > 0;
 		}
 	},
 	{
