@@ -131,13 +131,13 @@ Conversions may or may not introduce a different behavior. This means they are i
     - Windows: `ctrl+shift+j, c`
     - Mac: `cmd+shift+j, c`
 - Change Variable Type
-- Convert Expression to Template Literal
+- Convert Expression to Template Literal (multi-select supported)
 - Convert Function to Arrow Function
 - Convert Function to Function Expression
 - Convert Function Property to Method
 - Convert Function Variable to Function Declaration
-- Convert Import Declaration to CommonJS Require
-- Convert Selected Functions to Class [See expected behaviors]
+- Convert Import Declaration to CommonJS Require (multi-select supported)
+- Convert Selected Functions to Class [See expected behaviors] (multi-select supported)
 - Convert Ternary to If/Else [See expected behaviors]
 
 ### Actions ###
