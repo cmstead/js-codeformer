@@ -77,11 +77,6 @@ JS CodeFormer has a number of automated code actions you can take. They are sepa
 - Conversions: Conversion of common structures from one common form to another
 - Actions: A variety of other automated behaviors useful for making common changes
 
-For a top-level menu of all options, you can open the JS CodeFormer actions palette. This is available by the following key combinations:
-
-- Windows: `ctrl+shift+j, ctrl+shift+j`
-- Mac: `cmd+shift+j, cmd+shift+j`
-
 ### Suggested Actions ###
 
 JS CodeFormer can suggest actions you can take given the current state of the document. By analyzing the document, cursor position, and selection state, you can get a list of actions possible right now.
@@ -127,9 +122,6 @@ Current refactorings:
 
 Conversions may or may not introduce a different behavior. This means they are in a class of their own. The following conversions are currently available:
 
-- Select Conversion
-    - Windows: `ctrl+shift+j, c`
-    - Mac: `cmd+shift+j, c`
 - Change Variable Type
 - Convert Expression to Template Literal (multi-select supported)
 - Convert Function to Arrow Function
@@ -146,9 +138,6 @@ Not everything we want to do with our code is a refactoring. That doesn't mean w
 
 Current Actions:
 
-- Select Action
-    - Windows: `ctrl+shift+j, a`
-    - Mac: `cmd+shift+j, a`
 - Surround with (open options list)
     - Windows: `ctrl+shift+j, w`
     - Mac: `cmd+shift+j, w`
