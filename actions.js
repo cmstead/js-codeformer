@@ -103,9 +103,7 @@ const actions = [
 			const declarationNode = findNodeInPath(selectionPath, VARIABLE_DECLARATION);
 			const currentNode = last(selectionPath);
 
-			return getNodeType(currentNode) === IDENTIFIER
-				&& declarationNode !== null
-				&& declarationNode.declarations.length === 1
+			return getNodeType(currentNode) === IDENTIFIER && declarationNode !== null;
 		}
 	},
 	{

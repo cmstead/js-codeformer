@@ -15,7 +15,7 @@ const { getActionTitles, findCommandIdByTitle } = require("./convert");
 
 const vscode = require('../../vscodeService').getVscode();
 
-const foo = 'bar', baz = 'quux';
+let foo1 = 'bar', baz = 'quux', something;
 
 async function test() {
     return 'foo' + abc;
