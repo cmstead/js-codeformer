@@ -79,16 +79,13 @@ JS CodeFormer has a number of automated code actions you can take. They are sepa
 
 ### Suggested Actions ###
 
-JS CodeFormer can suggest actions you can take given the current state of the document. By analyzing the document, cursor position, and selection state, you can get a list of actions possible right now.
+JS CodeFormer can suggest refactorings, conversions, and actions based on your current selection -- which is how I prefer to work. This reduces hotkey overload by giving you access to actions you can take without memorizing a bunch of key combinations.
 
-To get suggestions, use the following key combination:
+- **Suggested Actions Hotkey**
+    - Windows: `ctrl+alt+.`
+    - Mac: `cmd+shift+alt+.`
 
-- Windows: `ctrl+alt+.`
-- Mac: `cmd+shift+alt+.`
-
-Here's what it looks like in action:
-
-![JS CodeFormer Suggested Actions](./images/convert-functions-to-class.gif)
+Important note: this is not wired into the refactoring menu in order to ensure JS CodeFormer is available to you even if you are in a Live Share session.
 
 ### Refactorings ###
 
@@ -97,26 +94,12 @@ JS CodeFormer automated refactorings are built upon years of experience to be st
 Current refactorings:
 
 - Extract Method/Function
-    - Windows: `ctrl+shift+j, m`
-    - Mac: `cmd+shift+j, m`
 - Extract Variable to Parameter
-    - Windows: `ctrl+shift+j, p`
-    - Mac: `cmd+shift+j, p`
 - Extract Variable
-    - Windows: `ctrl+shift+j, v`
-    - Mac: `cmd+shift+j, v`
 - Inline Variable
-    - Windows: `ctrl+shift+j, i`
-    - Mac: `cmd+shift+j, i`
 - Invert If Statement
-    - Windows: `ctrl+shift+j, n`
-    - Mac: `cmd+shift+j, n`
 - Invert Ternary Expression
-    - Windows: `ctrl+shift+j, t`
-    - Mac: `cmd+shift+j, t`
 - Rename (important for non js/ts files) [See known issues]
-    - Windows: `ctrl+shift+j, r`
-    - Mac: `cmd+shift+j, r`
 
 ### Conversions ###
 
@@ -140,8 +123,6 @@ Not everything we want to do with our code is a refactoring. That doesn't mean w
 Current Actions:
 
 - Surround with (open options list)
-    - Windows: `ctrl+shift+j, w`
-    - Mac: `cmd+shift+j, w`
 - Introduce variable
 - Introduce function
 - Lift and name function expression
@@ -164,7 +145,38 @@ Current snippets support:
 - promises
 - literal values
 
+### JS Refactor Keybinding Backwards Compatibility ###
+
+- Extract Method/Function
+    - Windows: `ctrl+shift+j, m`
+    - Mac: `cmd+shift+j, m`
+- Extract Variable to Parameter
+    - Windows: `ctrl+shift+j, p`
+    - Mac: `cmd+shift+j, p`
+- Extract Variable
+    - Windows: `ctrl+shift+j, v`
+    - Mac: `cmd+shift+j, v`
+- Inline Variable
+    - Windows: `ctrl+shift+j, i`
+    - Mac: `cmd+shift+j, i`
+- Invert If Statement
+    - Windows: `ctrl+shift+j, n`
+    - Mac: `cmd+shift+j, n`
+- Invert Ternary Expression
+    - Windows: `ctrl+shift+j, t`
+    - Mac: `cmd+shift+j, t`
+- Rename (important for non js/ts files) [See known issues]
+    - Windows: `ctrl+shift+j, r`
+    - Mac: `cmd+shift+j, r`
+- Surround with (open options list)
+    - Windows: `ctrl+shift+j, w`
+    - Mac: `cmd+shift+j, w`
+
 ## Refactorings In Action ##
+
+**Suggested Actions**
+
+![JS CodeFormer Suggested Actions](./images/convert-functions-to-class.gif)
 
 **Extract Method**
 
