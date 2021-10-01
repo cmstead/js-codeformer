@@ -6,6 +6,24 @@ JS CodeFormer is a JS refactoring and code automation extension for VS Code. Bor
 
 JS CodeFormer is a suite of tools purpose built to simplify the process of creating and editing software in a JavaScript environment.
 
+## Getting Started ##
+
+### 1 - Install it ###
+
+JS CodeFormer is an extension for Visual Studio Code. Install it from the Visual Studio Marketplace:
+
+- [JS CodeFormer on the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=cmstead.js-codeformer)
+
+### 2 - Use it ###
+
+Make a selection or place your cursor on the code you are working with, then either:
+
+- **Choose from suggested actions:**
+    - `ctrl+alt+.` -- Windows
+    - `shift+cmd+alt+.` -- Mac
+- **Choose from a menu:**
+    - right click to open the context menu
+
 ## Core Principles ##
 
 JS CodeFormer is not just a code refactoring and automation extension, it is an extension which is built upon these core principles:
@@ -176,6 +194,7 @@ Current snippets support:
 
 **Suggested Actions**
 
+Get action suggestions based on your current selection:
 ![JS CodeFormer Suggested Actions](./images/convert-functions-to-class.gif)
 
 **Extract Method**
