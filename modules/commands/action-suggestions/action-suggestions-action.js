@@ -9,17 +9,21 @@ const vscode = require('../../vscodeService').getVscode();
 
 function actionSuggestions() {
     let actionSetup = null;
+    let locationsSetup = null;
     let suggestedActions = null;
     let actionCommandMap = null;
 
     return asyncPrepareActionSetup()
-        .then((newActionSetup) => actionSetup = newActionSetup)
+        .then((newActionSetup) => {
+            actionSetup = newActionSetup;
+            locationsSetup = actionSetup.getLocationsSetup();
+        })
 
         .then(() => actions
             .filter(action =>
                 action.group !== groups.NONE
                 && typeof action.analyzer === 'function'
-                && action.analyzer(actionSetup)))
+                && action.analyzer(actionSetup, locationsSetup)))
 
         .then((filteredActions) => suggestedActions = filteredActions)
 
@@ -27,11 +31,11 @@ function actionSuggestions() {
             const group1Index = groupOrder[action1.group];
             const group2Index = groupOrder[action2.group];
 
-            if(group1Index !== group2Index) {
+            if (group1Index !== group2Index) {
                 return group1Index - group2Index;
-            } else if(action1.name < action2.name) {
+            } else if (action1.name < action2.name) {
                 return 1;
-            } else if(action1.name > action2.name) {
+            } else if (action1.name > action2.name) {
                 return -1;
             }
 
@@ -61,7 +65,7 @@ function actionSuggestions() {
         }))
         .then((selectedAction) => {
             const selectedCommandId = actionCommandMap[selectedAction];
-            
+
             return vscode.commands.executeCommand(selectedCommandId);
         })
 

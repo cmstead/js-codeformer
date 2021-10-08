@@ -131,8 +131,8 @@ const actions = [
 		name: 'convertImportToCommonjs',
 		title: 'Convert Import Declaration to CommonJS Require',
 		group: groups.CONVERSIONS,
-		analyzer: (actionSetup) => {
-			const acceptableImports = actionSetup.getLocationsSetup()
+		analyzer: (_, locationsSetup) => {
+			const acceptableImports = locationsSetup
 				.map((locationSetup) =>
 					findNodeInPath(locationSetup.selectionPath, IMPORT_DECLARATION))
 				.filter((node) => node !== null && validateImportNode(node));
@@ -288,8 +288,8 @@ const actions = [
 		name: 'convertToTemplateLiteral',
 		title: 'Convert Expression to Template Literal (Interpolated String)',
 		group: groups.CONVERSIONS,
-		analyzer: ({ getLocationsSetup }) => {
-			const convertableNodes = getLocationsSetup()
+		analyzer: (_, locationsSetup) => {
+			const convertableNodes = locationsSetup
 				.map((locationSetup) =>
 					findNearestExpressionToConvert(locationSetup.selectionPath))
 				.filter((node) => node !== null)
@@ -304,14 +304,14 @@ const actions = [
 		name: 'convertFunctionsToClass',
 		title: 'Convert Selected Functions To Class',
 		group: groups.CONVERSIONS,
-		analyzer: ({ getLocationsSetup }) => {
+		analyzer: (_, locationsSetup) => {
 			const functionTypes = [
 				FUNCTION_DECLARATION,
 				FUNCTION_EXPRESSION,
 				ARROW_FUNCTION_EXPRESSION
 			];
 
-			const locatedFunctionNodes = getLocationsSetup()
+			const locatedFunctionNodes = locationsSetup
 				.map(({ selectionPath }) => {
 					const functionNode = findNodeByCheckFunction(
 						selectionPath,
