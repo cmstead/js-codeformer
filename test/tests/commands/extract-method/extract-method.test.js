@@ -48,7 +48,7 @@ describe('extract method behaviors', function () {
             this.verifyAsJSON(parsedSelection);
         });
 
-        it('throws human readable error when selection is unparseable', function () {
+        it('returns null of selected text is unparseable', function () {
             const selectedLocation = buildLocationFromEditorCoordinates({
                 start: buildEditorCoordinates({ line: 9, column: 33 }),
                 end: buildEditorCoordinates({ line: 12, column: 26 })
@@ -56,10 +56,9 @@ describe('extract method behaviors', function () {
 
             const testSource = readFileSource(__dirname, 'fixtures/test-source.js');
 
-            assert.throws(
-                () => parseSelectedText(testSource, selectedLocation),
-                'Selected source cannot be interpreted, unable to extract method'
-            );
+            const parseResult =  parseSelectedText(testSource, selectedLocation);
+
+            assert.equal(parseResult, null);
         });
     });
 

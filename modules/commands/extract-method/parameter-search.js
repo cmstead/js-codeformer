@@ -129,10 +129,14 @@ function findAppropriateParameters(
     extractionPath,
     extractionLocation
 ) {
-    const collectedParameters = getSubordinateScopeParameters(parsedSelectionSource);
-    const ancestorDeclarations = getLocallyScopedDeclarations(extractionPath, extractionLocation);
-
-    return collectedParameters.filter(key => !ancestorDeclarations.includes(key));
+    if(parsedSelectionSource !== null) {
+        const collectedParameters = getSubordinateScopeParameters(parsedSelectionSource);
+        const ancestorDeclarations = getLocallyScopedDeclarations(extractionPath, extractionLocation);
+    
+        return collectedParameters.filter(key => !ancestorDeclarations.includes(key));    
+    } else {
+        return [];
+    }
 }
 
 module.exports = {

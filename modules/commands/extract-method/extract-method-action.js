@@ -29,6 +29,7 @@ const {
 const { last, getNodeType } = require('../../core-utils');
 const { wrapJsxElement } = require('../../react-service');
 const { insertSnippet } = require('../../edit-utils/snippet-service');
+const { areLocationsEqual } = require('../../edit-utils/location-service');
 
 function selectExtractionPoint(
     extractionScopeList,
@@ -98,11 +99,16 @@ function extractMethod() {
                 extractionLocation))
 
         .then((suggestedParameters) => {
+            const nearestNode = last(actionSetup.selectionPath);
+
             return buildMethodText({
                 destinationType: getNodeType(extractionLocation),
                 methodName: '${1:newMethodName}',
                 methodBody: wrapJsxElement(selectedNode, sourceSelection),
-                parameters: [`\${2:${suggestedParameters}}`]
+                parameters: [`\${2:${suggestedParameters}}`],
+                selectedNode: areLocationsEqual(actionSetup.location, nearestNode.loc)
+                    ? nearestNode
+                    : null
             })
         })
         .then((newMethodText) =>

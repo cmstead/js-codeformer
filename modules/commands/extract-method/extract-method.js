@@ -1,4 +1,4 @@
-const { parse } = require('../../parser/parser');
+const { parseOrNull } = require('../../parser/parser');
 const { getSourceSelection } = require('../../source-utilities');
 const { selectExtractionLocation } = require('../../extraction-utils/extraction-location-service');
 
@@ -28,11 +28,7 @@ const terminalNodes = [
 function parseSelectedText(sourceCodeText, selectionLocation) {
     const sourceSelection = getSourceSelection(sourceCodeText, selectionLocation);
 
-    try {
-        return parse(sourceSelection);
-    } catch (_) {
-        throw new Error('Selected source cannot be interpreted, unable to extract method');
-    }
+    return parseOrNull(sourceSelection);
 }
 
 function isBodyReturnable(parsedBody) {
@@ -81,10 +77,14 @@ function getMethodBodyRemainder(methodBody, parsedBody) {
     return getSourceSelection(methodBody, selection) + '\n';
 }
 
-function insertReturnStatement(methodBody) {
-    const parsedBody = parse(methodBody);
+function insertReturnStatement(methodBody, selectedNode) {
+    let parsedBody = parseOrNull(methodBody);
 
-    if (isBodyReturnable(parsedBody)) {
+    if(parsedBody === null) {
+        return isBodyReturnable({ body: [selectedNode] })
+            ? `return ${methodBody}`
+            : methodBody;
+    } else if (isBodyReturnable(parsedBody)) {
         return `return ${methodBody}`;
     } else if (isFinalLineADeclaration(parsedBody)) {
         const assignedValue = getAssignedValue(methodBody, parsedBody);
@@ -112,10 +112,11 @@ function buildMethodText({
     destinationType,
     methodBody,
     methodName: functionName,
-    parameters
+    parameters,
+    selectedNode = null
 }) {
     const functionParameters = parameters.join(', ');
-    const functionBody = insertReturnStatement(methodBody);
+    const functionBody = insertReturnStatement(methodBody, selectedNode);
     const functionType = getFunctionType(destinationType);
 
     return getMethodBuilder({
@@ -149,11 +150,14 @@ function buildMethodCallText({
     selectedNode = null,
     methodBody = ''
 }) {
-    const parsedBody = parse(methodBody);
     const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
-
     const simpleMethodCall = `${prefix}$1(${parameters})`;
-    const baseMethodCall = attachAssignment(simpleMethodCall, parsedBody);
+
+    const parsedBody = parseOrNull(methodBody);
+
+    const baseMethodCall = parsedBody === null
+        ? simpleMethodCall
+        : attachAssignment(simpleMethodCall, parsedBody);
 
     return wrapJsxExpression(selectedNode, baseMethodCall);
 }

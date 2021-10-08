@@ -3,6 +3,13 @@ function arePositionsReversed(start, end) {
         || (start.line === end.line && start.column > end.column);
 }
 
+function areLocationsEqual(location1, location2) {
+    return location1.start.line === location2.start.line
+        && location1.start.column === location2.start.column
+        && location1.end.line === location2.end.line
+        && location1.end.column === location2.end.column;
+}
+
 function buildLocation(start, end) {
     const reverseOrder = arePositionsReversed(start, end);
 
@@ -57,6 +64,7 @@ function compareLocations(location1, location2) {
 }
 
 module.exports = {
+    areLocationsEqual,
     buildLocation,
     compareLocations,
     partitionOnLocation,

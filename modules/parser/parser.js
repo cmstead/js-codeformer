@@ -44,6 +44,15 @@ function parse(originalSource) {
     return parseText(parseableSource, { useJsx: false });
 }
 
+function parseOrNull(sourceText) {
+    try {
+        return parse(sourceText);
+    } catch (error) {
+        return null;
+    }
+}
+
 module.exports = {
-    parse
+    parse,
+    parseOrNull
 };
