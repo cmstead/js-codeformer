@@ -1,5 +1,3 @@
-name: Tag Latest Version
-
 on:
   workflow_call:
     
@@ -7,16 +5,12 @@ jobs:
   tag:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 16.x
         cache: 'npm'
     - run: npm --no-git-tag-version version prerelease --preid=pre
     - name: get-npm-version
@@ -30,4 +24,3 @@ jobs:
         git_commit_sha: ${{ github.sha }}
         version: ${{ steps.package-version.outputs.current-version}}
         git_tag_prefix: "v"
-#    - run: echo ${{ steps.package-version.outputs.current-version}}
