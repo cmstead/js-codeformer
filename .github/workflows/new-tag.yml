@@ -16,31 +16,18 @@ jobs:
       with:
         node-version: 16.x
         cache: 'npm'
-    - run: npm --no-git-tag-version version prerelease --preid=pre
-    
-    - name: get-npm-version
-      id: package-version
-      uses: martinbeentjes/npm-get-version-action@master
-
     - name: setup git config
       run: |
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
 
-    - name: Commit all this stuff
-      run: |
-        git commit -am "New version ${{ steps.package-version.outputs.current-version }}"
-        git push origin main
-
-    - name: package-version-to-git-tag
-      uses: pkgdeps/git-tag-action@v2
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        github_repo: ${{ github.repository }}
-        git_commit_sha: ${{ github.sha }}
-        version: ${{ steps.package-version.outputs.current-version }}
-        git_tag_prefix: "v"
+    - run: npm version prerelease --preid=pre
+    - run: git push origin main
     
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
+
     - run: npm ci
     - run: npm run build
     
