@@ -29,6 +29,12 @@ jobs:
     - run: npm ci
     - run: npm run test-only
     - run: npm --no-git-tag-version version prerelease --preid=pre
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@master
+    - run: echo ${{ steps.package-version.outputs.current-version}}
+
+echo $PACKAGE_VERSION
 
 #   build:
 #     runs-on: ubuntu-latest
