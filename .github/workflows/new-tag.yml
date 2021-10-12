@@ -21,10 +21,9 @@ jobs:
     - name: get-npm-version
       id: package-version
       uses: martinbeentjes/npm-get-version-action@master
-      
-    - run: npm ci
-    - run: npm run build
-    
+
+    - run: git commit -am "New version ${{ steps.package-version.outputs.current-version }}"
+
     - name: package-version-to-git-tag
       uses: pkgdeps/git-tag-action@v2
       with:
@@ -34,12 +33,15 @@ jobs:
         version: ${{ steps.package-version.outputs.current-version }}
         git_tag_prefix: "v"
     
+    - run: npm ci
+    - run: npm run build
+    
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: js-codeformer-${{ steps.package-version.outputs.current-version }}.vsix
         asset_name: js-codeformer-${{ steps.package-version.outputs.current-version }}.vsix
-        tag: ${{ github.ref }}
+        tag: v${{ steps.package-version.outputs.current-version }}
         overwrite: true
         body: "JS CodeFormer Prerelease v${{ steps.package-version.outputs.current-version }}"
