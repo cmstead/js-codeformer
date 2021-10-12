@@ -28,11 +28,11 @@ jobs:
       id: package-version
       uses: martinbeentjes/npm-get-version-action@master
     - name: package-version-to-git-tag
-        uses: pkgdeps/git-tag-action@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_repo: ${{ github.repository }}
-          git_commit_sha: ${{ github.sha }}
-          version: ${{ steps.package-version.outputs.current-version}}
-          git_tag_prefix: "v"
+      uses: pkgdeps/git-tag-action@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_repo: ${{ github.repository }}
+        git_commit_sha: ${{ github.sha }}
+        version: ${{ steps.package-version.outputs.current-version}}
+        git_tag_prefix: "v"
 #    - run: echo ${{ steps.package-version.outputs.current-version}}
