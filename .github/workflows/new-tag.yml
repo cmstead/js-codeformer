@@ -17,14 +17,26 @@ jobs:
         node-version: 16.x
         cache: 'npm'
     - run: npm --no-git-tag-version version prerelease --preid=pre
+    
     - name: get-npm-version
       id: package-version
       uses: martinbeentjes/npm-get-version-action@master
+      
     - name: package-version-to-git-tag
       uses: pkgdeps/git-tag-action@v2
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         github_repo: ${{ github.repository }}
         git_commit_sha: ${{ github.sha }}
-        version: ${{ steps.package-version.outputs.current-version}}
+        version: ${{ steps.package-version.outputs.current-version }}
         git_tag_prefix: "v"
+    
+    - name: Upload binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: js-codeformer-${{ steps.package-version.outputs.current-version }}.vsix
+        asset_name: js-codeformer-${{ steps.package-version.outputs.current-version }}.vsix
+        tag: ${{ github.ref }}
+        overwrite: true
+        body: "JS CodeFormer Prerelease v${{ steps.package-version.outputs.current-version }}"
