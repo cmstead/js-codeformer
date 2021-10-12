@@ -1,0 +1,15 @@
+
+name: Test And Release
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-release:
+    test:
+      uses: cmstead/js-codeformer/blob/main/.github/workflows/node.js.yml@b0894944b6395dfbb46f3def228ee13e6f110d23
+    tag:
+      uses: cmstead/js-codeformer/blob/main/.github/workflows/new-tag.yml@42d03b821eab9ad8266a754d26706963d1c2414e
