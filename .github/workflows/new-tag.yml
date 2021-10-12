@@ -1,5 +1,9 @@
 on:
   workflow_call:
+    inputs:
+      github-token:
+        default: ${{ secrets.GITHUB_TOKEN }}
+        type: string
     
 jobs:
   tag:
@@ -19,7 +23,7 @@ jobs:
     - name: package-version-to-git-tag
       uses: pkgdeps/git-tag-action@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ github-token }}
         github_repo: ${{ github.repository }}
         git_commit_sha: ${{ github.sha }}
         version: ${{ steps.package-version.outputs.current-version}}
