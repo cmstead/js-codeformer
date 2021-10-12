@@ -5,11 +5,6 @@ name: Test
 
 on:
   workflow_call:
-    inputs:
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
 
 jobs:
   test:
