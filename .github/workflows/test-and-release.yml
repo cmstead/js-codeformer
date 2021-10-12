@@ -9,6 +9,6 @@ on:
 
 jobs:
   test:
-    uses: cmstead/js-codeformer/.github/workflows/node.js.yml@b0894944b6395dfbb46f3def228ee13e6f110d23
+    uses: cmstead/js-codeformer/.github/workflows/node.js.yml@866c2504302451517c8d31a921137f042da72518
   tag:
-    uses: cmstead/js-codeformer/.github/workflows/new-tag.yml@42d03b821eab9ad8266a754d26706963d1c2414e
+    uses: cmstead/js-codeformer/.github/workflows/new-tag.yml@866c2504302451517c8d31a921137f042da72518
