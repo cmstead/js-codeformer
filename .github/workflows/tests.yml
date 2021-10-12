@@ -1,6 +1,9 @@
 on:
   workflow_call:
-
+    inputs:
+      github-token:
+        default: ${{ secrets.GITHUB_TOKEN }}
+        type: string
 jobs:
   test:
 
