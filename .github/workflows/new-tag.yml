@@ -22,6 +22,9 @@ jobs:
       id: package-version
       uses: martinbeentjes/npm-get-version-action@master
       
+    - run: npm ci
+    - run: npm run build
+    
     - name: package-version-to-git-tag
       uses: pkgdeps/git-tag-action@v2
       with:
