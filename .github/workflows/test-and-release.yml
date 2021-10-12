@@ -14,4 +14,4 @@ jobs:
     uses: cmstead/js-codeformer/.github/workflows/tests.yml@df75378e06f412be582ac5690eae509bfaaff0c9
   tag:
     needs: test
-    uses: cmstead/js-codeformer/.github/workflows/new-tag.yml@ffad9df43a700c2f99b5c9cc12bf6925e4a057d4
+    uses: cmstead/js-codeformer/.github/workflows/new-tag.yml@4dbfae2aa596fd49d4f31ea3a21ebd742532a0d4
