@@ -103,21 +103,21 @@ function extractMethod() {
 
             return buildMethodText({
                 destinationType: getNodeType(extractionLocation),
-                methodName: '${1:newMethodName}',
+                methodName: '${2:newMethodName}',
                 methodBody: wrapJsxElement(selectedNode, sourceSelection),
-                parameters: [`\${2:${suggestedParameters}}`],
+                parameters: [`\${3:${suggestedParameters}}`],
                 selectedNode: areLocationsEqual(actionSetup.location, nearestNode.loc)
                     ? nearestNode
                     : null
             })
         })
         .then((newMethodText) =>
-            methodText = newMethodText)
+            methodText = '${1:async }' + newMethodText)
 
         .then(() =>
             buildMethodCallText({
                 destinationType: getNodeType(extractionLocation),
-                parameters: '$2',
+                parameters: '$3',
                 selectedNode,
                 methodBody: sourceSelection
             }))
