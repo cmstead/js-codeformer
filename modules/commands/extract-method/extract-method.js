@@ -151,7 +151,7 @@ function buildMethodCallText({
     methodBody = ''
 }) {
     const prefix = isObjectMethodCall(destinationType) ? 'this.' : '';
-    const simpleMethodCall = '${1/async/await/}' + `${prefix}$2(${parameters})`;
+    const simpleMethodCall = '$4${1/async/await/}' + `${prefix}$2(${parameters})`;
 
     const parsedBody = parseOrNull(methodBody);
 
